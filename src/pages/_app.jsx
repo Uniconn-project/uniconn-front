@@ -2,9 +2,9 @@ import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { ThemeProvider } from '@material-ui/core/styles'
 import CssBaseline from '@material-ui/core/CssBaseline'
-import theme from '../src/theme'
+import theme from '../styles/theme'
 
-export default function MyApp (props) {
+export default function MyApp(props) {
   const { Component, pageProps } = props
 
   useEffect(() => {
