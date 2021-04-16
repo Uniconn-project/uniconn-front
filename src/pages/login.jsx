@@ -1,9 +1,7 @@
 import React from 'react'
 import TextField from '@material-ui/core/TextField'
-import IconButton from '@material-ui/core/IconButton'
-import ArrowForwardIcon from '@material-ui/icons/ArrowForward'
-import Link from 'next/link'
 import Page from '../components/Page'
+import PrimaryLink from '../components/helpers/PrimaryLink'
 
 export default function Login() {
   return (
@@ -14,12 +12,9 @@ export default function Login() {
         <TextField label="Senha" />
       </div>
       <div className="flex items-center text-xs">
-        <spa>Inscrever-se na Uniconn</spa>
-        <Link href="/signup">
-          <IconButton color="primary">
-            <ArrowForwardIcon />
-          </IconButton>
-        </Link>
+        <PrimaryLink href="/signup">
+          <span>Inscrever-se na Uniconn</span>
+        </PrimaryLink>
       </div>
     </Page>
   )

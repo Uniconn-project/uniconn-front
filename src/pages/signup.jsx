@@ -5,6 +5,7 @@ import PersonIcon from '@material-ui/icons/Person'
 import SchoolIcon from '@material-ui/icons/School'
 import { makeStyles } from '@material-ui/core'
 import Page from '../components/Page'
+import PrimaryLink from '../components/helpers/PrimaryLink'
 
 const useStyles = makeStyles(theme => ({
   button: {
@@ -43,6 +44,11 @@ export default function Signup() {
               Sou aluno
             </Button>
           </Link>
+        </div>
+        <div>
+          <PrimaryLink href="/login">
+            <span>Já tem uma conta?</span>
+          </PrimaryLink>
         </div>
       </div>
     </Page>
