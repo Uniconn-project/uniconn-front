@@ -1,6 +1,6 @@
 import React from 'react'
 import IconButton from '@material-ui/core/IconButton'
-import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace'
+import ArrowBackIcon from '@material-ui/icons/ArrowBack'
 import Page from '../../components/Page'
 
 export default function Student() {
@@ -8,7 +8,7 @@ export default function Student() {
     <Page title="Signup | Uniconn">
       <h1>Aluno</h1>
       <IconButton color="primary" onClick={() => window.history.back()}>
-        <KeyboardBackspaceIcon />
+        <ArrowBackIcon />
       </IconButton>
     </Page>
   )

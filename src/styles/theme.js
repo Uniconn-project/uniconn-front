@@ -19,6 +19,16 @@ const theme = createMuiTheme({
     text: {
       main: '#fff'
     }
+  },
+  overrides: {
+    MuiInputBase: {
+      root: {
+        color: '#fff'
+      },
+      input: {
+        color: '#fff'
+      }
+    }
   }
 })
 
