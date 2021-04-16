@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import Image from 'next/image'
 import Button from '@material-ui/core/Button'
 import IconButton from '@material-ui/core/IconButton'
 import FilledInput from '@material-ui/core/FilledInput'
@@ -18,36 +19,37 @@ export default function Login() {
 
   return (
     <Page title="Login | Uniconn">
-      <h1>Entrar</h1>
-      <div className="flex flex-col mt-10 mb-4">
-        <FilledInput
-          type="text"
-          className="mb-4"
-          placeholder="E-mail"
-          onChange={handleChange('email')}
-        />
-        <FilledInput
-          type={showPassword ? 'text' : 'password'}
-          className="mb-4"
-          placeholder="Senha"
-          onChange={handleChange('password')}
-          endAdornment={
-            <InputAdornment position="end">
-              <IconButton
-                aria-label="toggle password visibility"
-                onClick={() => setShowPassword(!showPassword)}
-                edge="end"
-              >
-                {showPassword ? <Visibility /> : <VisibilityOff />}
-              </IconButton>
-            </InputAdornment>
-          }
-        />
-        <Button variant="contained" color="primary">
-          Entrar
-        </Button>
-      </div>
-      <div className="flex items-center text-xs">
+      <div className="h-full flex flex-col justify-start items-center pt-10">
+        <Image src="/unicorn.svg" height={100} width={100} />
+        <h1 className="m-6">Entrar na Uniconn</h1>
+        <div className="flex flex-col my-4">
+          <FilledInput
+            type="text"
+            className="mb-4"
+            placeholder="E-mail"
+            onChange={handleChange('email')}
+          />
+          <FilledInput
+            type={showPassword ? 'text' : 'password'}
+            className="mb-4"
+            placeholder="Senha"
+            onChange={handleChange('password')}
+            endAdornment={
+              <InputAdornment position="end">
+                <IconButton
+                  aria-label="toggle password visibility"
+                  onClick={() => setShowPassword(!showPassword)}
+                  edge="end"
+                >
+                  {showPassword ? <Visibility /> : <VisibilityOff />}
+                </IconButton>
+              </InputAdornment>
+            }
+          />
+          <Button variant="contained" color="primary">
+            Entrar
+          </Button>
+        </div>
         <PrimaryLink href="/signup">
           <span>Inscrever-se na Uniconn</span>
         </PrimaryLink>

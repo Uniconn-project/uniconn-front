@@ -17,12 +17,7 @@ export default class MyDocument extends Document {
           <meta name="description" content="Description" />
           <meta name="keywords" content="Keywords" />
           <link rel="manifest" href="/manifest.json" />
-          <link
-            href="icons/icon-32x32.png"
-            rel="icon"
-            type="image/png"
-            sizes="32x32"
-          />
+          <link href="unicorn.svg" rel="icon" type="svg" sizes="32x32" />
           <link rel="apple-touch-icon" href="/apple-icon.png"></link>
           <meta name="theme-color" content={theme.palette.primary.main} />
         </Head>

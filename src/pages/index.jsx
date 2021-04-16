@@ -1,6 +1,8 @@
 import React, { useContext, useEffect } from 'react'
+import CircularProgress from '@material-ui/core/CircularProgress'
 import { useRouter } from 'next/router'
 import { IsAuthContext } from '../context/IsAuth'
+import Page from '../components/Page'
 
 export default function Index() {
   const [isAuth] = useContext(IsAuthContext)
@@ -18,8 +20,8 @@ export default function Index() {
   }, [isAuth])
 
   return (
-    <div className="flex justify-center items-center">
-      <div>Loading...</div>
-    </div>
+    <Page title="Uniconn">
+      <CircularProgress color="primary" />
+    </Page>
   )
 }

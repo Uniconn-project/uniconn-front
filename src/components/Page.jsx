@@ -3,7 +3,7 @@ import Head from 'next/head'
 
 export default function Page({ children, title }) {
   return (
-    <>
+    <div>
       <Head>
         <title>{title}</title>
       </Head>
@@ -12,6 +12,6 @@ export default function Page({ children, title }) {
           {children}
         </div>
       </div>
-    </>
+    </div>
   )
 }
