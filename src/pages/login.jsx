@@ -1,15 +1,51 @@
-import React from 'react'
-import TextField from '@material-ui/core/TextField'
+import React, { useState } from 'react'
+import Button from '@material-ui/core/Button'
+import IconButton from '@material-ui/core/IconButton'
+import FilledInput from '@material-ui/core/FilledInput'
+import InputAdornment from '@material-ui/core/InputAdornment'
+import Visibility from '@material-ui/icons/Visibility'
+import VisibilityOff from '@material-ui/icons/VisibilityOff'
 import Page from '../components/Page'
 import PrimaryLink from '../components/helpers/PrimaryLink'
 
 export default function Login() {
+  const [showPassword, setShowPassword] = useState(false)
+  const [postData, setPostData] = useState({ email: '', password: '' })
+
+  const handleChange = key => e => {
+    setPostData({ ...postData, [key]: e.target.value })
+  }
+
   return (
     <Page title="Login | Uniconn">
       <h1>Entrar</h1>
-      <div className="flex flex-col">
-        <TextField label="E-mail" />
-        <TextField label="Senha" />
+      <div className="flex flex-col mt-10 mb-4">
+        <FilledInput
+          type="text"
+          className="mb-4"
+          placeholder="E-mail"
+          onChange={handleChange('email')}
+        />
+        <FilledInput
+          type={showPassword ? 'text' : 'password'}
+          className="mb-4"
+          placeholder="Senha"
+          onChange={handleChange('password')}
+          endAdornment={
+            <InputAdornment position="end">
+              <IconButton
+                aria-label="toggle password visibility"
+                onClick={() => setShowPassword(!showPassword)}
+                edge="end"
+              >
+                {showPassword ? <Visibility /> : <VisibilityOff />}
+              </IconButton>
+            </InputAdornment>
+          }
+        />
+        <Button variant="contained" color="primary">
+          Entrar
+        </Button>
       </div>
       <div className="flex items-center text-xs">
         <PrimaryLink href="/signup">
