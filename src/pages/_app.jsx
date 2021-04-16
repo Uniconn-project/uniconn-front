@@ -4,6 +4,7 @@ import { ThemeProvider } from '@material-ui/core/styles'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import theme from '../styles/theme'
 import '../styles/globals.css'
+import IsAuthProvider from '../context/IsAuth'
 
 export default function MyApp(props) {
   const { Component, pageProps } = props
@@ -20,7 +21,9 @@ export default function MyApp(props) {
     <ThemeProvider theme={theme}>
       {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
       <CssBaseline />
-      <Component {...pageProps} />
+      <IsAuthProvider>
+        <Component {...pageProps} />
+      </IsAuthProvider>
     </ThemeProvider>
   )
 }
