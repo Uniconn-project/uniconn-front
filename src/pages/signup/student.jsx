@@ -11,10 +11,21 @@ import Page from '../../components/Page'
 import ProfileBaseForm from '../../components/pages/signup/ProfileBaseForm'
 
 export default function Student() {
-  const [postData, setPostData] = useState({ university: '', major: '' })
+  const [postData, setPostData] = useState({
+    profileData: {},
+    university: '',
+    major: ''
+  })
 
   const handleChange = key => e => {
     setPostData({ ...postData, [key]: e.target.value })
+  }
+
+  const handleProfileDataChange = (key, value) => {
+    setPostData({
+      ...postData,
+      profileData: { ...postData.profileData, [key]: value }
+    })
   }
 
   return (
@@ -22,7 +33,7 @@ export default function Student() {
       <div className="h-full flex flex-col justify-start items-center pt-10">
         <h1>Aluno</h1>
         <div className="flex flex-col items-center my-4">
-          <ProfileBaseForm />
+          <ProfileBaseForm handleChange={handleProfileDataChange} />
           <FormGroup className="w-full mb-4 justify-center items-center" row>
             <FormControl className="w-2/5" style={{ marginRight: '.5rem' }}>
               <InputLabel id="university-input-label">Universidade</InputLabel>

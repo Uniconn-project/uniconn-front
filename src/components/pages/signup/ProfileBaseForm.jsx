@@ -7,17 +7,23 @@ import InputAdornment from '@material-ui/core/InputAdornment'
 import Visibility from '@material-ui/icons/Visibility'
 import VisibilityOff from '@material-ui/icons/VisibilityOff'
 
-export default function ProfileBaseForm() {
+export default function ProfileBaseForm({ handleChange }) {
   const [showPassword, setShowPassword] = useState(false)
 
   return (
     <>
       <FormGroup className="w-full mb-4 justify-center items-center" row>
-        <FilledInput type="text" className="w-2/5 mr-2" placeholder="Nome" />
+        <FilledInput
+          type="text"
+          className="w-2/5 mr-2"
+          placeholder="Nome"
+          onChange={e => handleChange('first_name', e.target.value)}
+        />
         <FilledInput
           type="text"
           className="w-2/5 ml-2"
           placeholder="Sobrenome"
+          onChange={e => handleChange('last_name', e.target.value)}
         />
       </FormGroup>
       <FormGroup className="w-full mb-4 justify-center items-center" row>
@@ -25,8 +31,14 @@ export default function ProfileBaseForm() {
           type="text"
           className="w-2/5 mr-2"
           placeholder="Nome de usuário"
+          onChange={e => handleChange('username', e.target.value)}
         />
-        <FilledInput type="email" className="w-2/5 ml-2" placeholder="E-mail" />
+        <FilledInput
+          type="email"
+          className="w-2/5 ml-2"
+          placeholder="E-mail"
+          onChange={e => handleChange('email', e.target.value)}
+        />
       </FormGroup>
       <FormGroup className="w-full mb-4 justify-center items-center" row>
         <TextField
@@ -34,6 +46,7 @@ export default function ProfileBaseForm() {
           label="Data de nascimento"
           type="date"
           className="w-4/5 mr-2"
+          onChange={e => handleChange('birth_date', e.target.value)}
           InputLabelProps={{
             shrink: true
           }}
@@ -44,6 +57,7 @@ export default function ProfileBaseForm() {
           type={showPassword ? 'text' : 'password'}
           className="w-2/5 mr-2"
           placeholder="Senha"
+          onChange={e => handleChange('password', e.target.value)}
           endAdornment={
             <InputAdornment position="end">
               <IconButton
@@ -60,6 +74,7 @@ export default function ProfileBaseForm() {
           type={showPassword ? 'text' : 'password'}
           className="w-2/5 ml-2"
           placeholder="Confirmar senha"
+          onChange={e => handleChange('passwordc', e.target.value)}
           endAdornment={
             <InputAdornment position="end">
               <IconButton
