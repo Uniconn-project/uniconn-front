@@ -1,5 +1,4 @@
 import React from 'react'
-import Image from 'next/image'
 import IconButton from '@material-ui/core/IconButton'
 import Button from '@material-ui/core/Button'
 import ArrowBackIcon from '@material-ui/icons/ArrowBack'
@@ -9,15 +8,18 @@ import ProfileBaseForm from '../../components/pages/signup/ProfileBaseForm'
 export default function Student() {
   return (
     <Page title="Signup | Uniconn">
-      <Image src="/unicorn.svg" height={100} width={100} />
-      <h1>Aluno</h1>
-      <ProfileBaseForm />
-      <Button variant="contained" color="primary">
-        Criar conta
-      </Button>
-      <IconButton color="primary" onClick={() => window.history.back()}>
-        <ArrowBackIcon />
-      </IconButton>
+      <div className="h-full flex flex-col justify-start items-center pt-10">
+        <h1>Aluno</h1>
+        <div className="flex flex-col items-center my-4">
+          <ProfileBaseForm />
+        </div>
+        <Button variant="contained" color="primary">
+          Criar conta
+        </Button>
+        <IconButton color="primary" onClick={() => window.history.back()}>
+          <ArrowBackIcon />
+        </IconButton>
+      </div>
     </Page>
   )
 }

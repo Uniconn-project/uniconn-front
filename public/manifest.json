@@ -1,10 +1,12 @@
 {
   "name": "Uniconn",
   "short_name": "Uniconn",
-  "icons": [],
-  "theme_color": "#FFFFFF",
-  "background_color": "#FFFFFF",
+  "theme_color": "#ffffff",
+  "background_color": "#004740",
+  "display": "fullscreen",
+  "orientation": "portrait",
+  "scope": "/",
   "start_url": "/",
-  "display": "standalone",
-  "orientation": "portrait"
+  "icons": [],
+  "splash_pages": null
 }

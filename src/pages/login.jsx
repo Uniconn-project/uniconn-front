@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import Image from 'next/image'
 import Button from '@material-ui/core/Button'
 import IconButton from '@material-ui/core/IconButton'
 import FilledInput from '@material-ui/core/FilledInput'
@@ -20,7 +19,6 @@ export default function Login() {
   return (
     <Page title="Login | Uniconn">
       <div className="h-full flex flex-col justify-start items-center pt-10">
-        <Image src="/unicorn.svg" height={100} width={100} />
         <h1 className="m-6">Entrar na Uniconn</h1>
         <div className="flex flex-col my-4">
           <FilledInput

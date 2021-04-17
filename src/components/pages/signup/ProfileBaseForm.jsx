@@ -12,32 +12,37 @@ export default function ProfileBaseForm() {
 
   return (
     <>
-      <FormGroup className="mb-4" row>
-        <FilledInput type="text" className="mr-2" placeholder="Nome" />
-        <FilledInput type="text" className="ml-2" placeholder="Sobrenome" />
-      </FormGroup>
-      <FormGroup className="mb-4" row>
+      <FormGroup className="w-full mb-4 justify-center items-center" row>
+        <FilledInput type="text" className="w-2/5 mr-2" placeholder="Nome" />
         <FilledInput
           type="text"
-          className="mr-2"
+          className="w-2/5 ml-2"
+          placeholder="Sobrenome"
+        />
+      </FormGroup>
+      <FormGroup className="w-full mb-4 justify-center items-center" row>
+        <FilledInput
+          type="text"
+          className="w-2/5 mr-2"
           placeholder="Nome de usuário"
         />
-        <FilledInput type="email" className="ml-2" placeholder="E-mail" />
+        <FilledInput type="email" className="w-2/5 ml-2" placeholder="E-mail" />
       </FormGroup>
-      <TextField
-        id="date"
-        label="Data de nascimento"
-        type="date"
-        defaultValue="2017-05-24"
-        className="mb-4"
-        InputLabelProps={{
-          shrink: true
-        }}
-      />
-      <FormGroup className="mb-4" row>
+      <FormGroup className="w-full mb-4 justify-center items-center" row>
+        <TextField
+          id="date"
+          label="Data de nascimento"
+          type="date"
+          className="w-4/5 mr-2"
+          InputLabelProps={{
+            shrink: true
+          }}
+        />
+      </FormGroup>
+      <FormGroup className="w-full mb-4 justify-center items-center" row>
         <FilledInput
           type={showPassword ? 'text' : 'password'}
-          className="mr-2"
+          className="w-2/5 mr-2"
           placeholder="Senha"
           endAdornment={
             <InputAdornment position="end">
@@ -53,7 +58,7 @@ export default function ProfileBaseForm() {
         />
         <FilledInput
           type={showPassword ? 'text' : 'password'}
-          className="mr-2"
+          className="w-2/5 ml-2"
           placeholder="Confirmar senha"
           endAdornment={
             <InputAdornment position="end">
