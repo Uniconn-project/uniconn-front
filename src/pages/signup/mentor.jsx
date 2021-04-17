@@ -23,7 +23,7 @@ export default function Mentor() {
         <h1>Mentor</h1>
         <div className="flex flex-col items-center my-4">
           <ProfileBaseForm />
-          <FormControl className="w-4/5">
+          <FormControl className="w-4/5" style={{ marginBottom: '1rem' }}>
             <InputLabel id="demo-mutiple-chip-label">
               Em quais mercados você atua?
             </InputLabel>
