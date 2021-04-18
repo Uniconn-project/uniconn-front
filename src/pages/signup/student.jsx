@@ -33,6 +33,8 @@ export default function Student() {
     'api/universities/get-universities-name-list'
   )
 
+  const { data: majors } = useFetch('api/universities/get-majors-name-list')
+
   const handleChange = key => e => {
     setPostData({ ...postData, [key]: e.target.value })
   }
@@ -59,7 +61,7 @@ export default function Student() {
       })
   }
 
-  if (!universities) {
+  if (!universities || !majors) {
     return (
       <Page title="Signup | Uniconn">
         <CircularProgress color="primary" />
@@ -100,16 +102,12 @@ export default function Student() {
                 value={postData.major}
                 onChange={handleChange('major')}
               >
-                <MenuItem value="direito">Direito</MenuItem>
-                <MenuItem value="engenharia da computação">
-                  Engenharia da Computação
-                </MenuItem>
-                <MenuItem value="engenharia elétrica">
-                  Engenharia Elétrica
-                </MenuItem>
-                <MenuItem value="ciências econômicas">
-                  Ciências Econômicas
-                </MenuItem>
+                {majors.map(major => (
+                  <MenuItem key={major.id} value={major.name}>
+                    {major.name[0].toUpperCase()}
+                    {major.name.slice(1)}
+                  </MenuItem>
+                ))}
               </Select>
             </FormControl>
           </FormGroup>
