@@ -30,10 +30,10 @@ export default function Student() {
   })
 
   const { data: universities } = useFetch(
-    'api/universities/get-universities-name-list'
+    'universities/get-universities-name-list'
   )
 
-  const { data: majors } = useFetch('api/universities/get-majors-name-list')
+  const { data: majors } = useFetch('universities/get-majors-name-list')
 
   const handleChange = key => e => {
     setPostData({ ...postData, [key]: e.target.value })
@@ -44,7 +44,7 @@ export default function Student() {
   }
 
   const handleSubmit = () => {
-    fetch('http://127.0.0.1:8000/api/profiles/student/post-signup', {
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}profiles/student/post-signup`, {
       method: 'POST',
       headers: {
         'Content-type': 'application/json'
