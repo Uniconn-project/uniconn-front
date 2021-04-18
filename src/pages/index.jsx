@@ -1,26 +1,27 @@
 import React, { useContext, useEffect } from 'react'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import { useRouter } from 'next/router'
-import { IsAuthContext } from '../context/IsAuth'
+import { AuthContext } from '../context/IsAuth'
 import Page from '../components/Page'
 
 export default function Index() {
-  const [isAuth] = useContext(IsAuthContext)
+  const [auth] = useContext(AuthContext)
 
   const router = useRouter()
 
   useEffect(() => {
-    if (isAuth === null) return
+    if (!auth) return
 
-    if (isAuth) {
+    if (auth.is_auth) {
       router.replace('/home')
     } else {
       router.replace('/login')
     }
-  }, [isAuth])
+  }, [auth, router])
 
   return (
     <Page title="Uniconn">
+      {console.log(auth)}
       <CircularProgress color="primary" />
     </Page>
   )

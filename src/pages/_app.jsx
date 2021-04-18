@@ -5,7 +5,7 @@ import { ThemeProvider } from '@material-ui/core/styles'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import theme from '../styles/theme'
 import '../styles/globals.css'
-import IsAuthProvider from '../context/IsAuth'
+import AuthProvider from '../context/IsAuth'
 
 export default function MyApp(props) {
   const { Component, pageProps } = props
@@ -28,9 +28,9 @@ export default function MyApp(props) {
           content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"
         />
       </Head>
-      <IsAuthProvider>
+      <AuthProvider>
         <Component {...pageProps} />
-      </IsAuthProvider>
+      </AuthProvider>
     </ThemeProvider>
   )
 }

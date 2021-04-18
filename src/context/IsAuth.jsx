@@ -1,13 +1,20 @@
-import React, { useState, createContext } from 'react'
+import React, { useState, createContext, useEffect } from 'react'
+import useFetch from '../hooks/useFetch'
 
-export const IsAuthContext = createContext()
+export const AuthContext = createContext()
 
-export default function IsAuthProvider({ children }) {
-  const [isAuth, setIsAuth] = useState(false)
+export default function AuthProvider({ children }) {
+  const [auth, setAuth] = useState(null)
+
+  const { data } = useFetch('profiles/is-auth')
+
+  useEffect(() => {
+    setAuth(data)
+  }, [data])
 
   return (
-    <IsAuthContext.Provider value={[isAuth, setIsAuth]}>
+    <AuthContext.Provider value={[auth, setAuth]}>
       {children}
-    </IsAuthContext.Provider>
+    </AuthContext.Provider>
   )
 }
