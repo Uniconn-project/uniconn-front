@@ -1,4 +1,6 @@
 import React, { useState } from 'react'
+import CircularProgress from '@material-ui/core/CircularProgress'
+import Alert from '@material-ui/lab/Alert'
 import IconButton from '@material-ui/core/IconButton'
 import Button from '@material-ui/core/Button'
 import InputLabel from '@material-ui/core/InputLabel'
@@ -9,29 +11,71 @@ import MenuItem from '@material-ui/core/MenuItem'
 import ArrowBackIcon from '@material-ui/icons/ArrowBack'
 import Page from '../../components/Page'
 import ProfileBaseForm from '../../components/pages/signup/ProfileBaseForm'
+import useFetch from '../../hooks/useFetch'
 
 export default function Student() {
+  const [errMessage, setErrMessage] = useState(null)
   const [postData, setPostData] = useState({
-    profileData: {},
     university: '',
     major: ''
   })
+  const [profilePostData, setProfilePostData] = useState({
+    first_name: '',
+    last_name: '',
+    username: '',
+    email: '',
+    birth_date: '',
+    password: '',
+    passwordc: ''
+  })
+
+  const { data: universities } = useFetch(
+    'api/universities/get-universities-name-list'
+  )
 
   const handleChange = key => e => {
     setPostData({ ...postData, [key]: e.target.value })
   }
 
   const handleProfileDataChange = (key, value) => {
-    setPostData({
-      ...postData,
-      profileData: { ...postData.profileData, [key]: value }
+    setProfilePostData({ ...profilePostData, [key]: value })
+  }
+
+  const handleSubmit = () => {
+    fetch('http://127.0.0.1:8000/api/profiles/student/post-signup', {
+      method: 'POST',
+      headers: {
+        'Content-type': 'application/json'
+      },
+      body: JSON.stringify({ ...profilePostData, ...postData })
     })
+      .then(response => response.json())
+      .then(data => {
+        if (data === 'success') {
+          process.env.NODE_ENV === 'development' && console.log(data)
+        } else {
+          setErrMessage(data)
+        }
+      })
+  }
+
+  if (!universities) {
+    return (
+      <Page title="Signup | Uniconn">
+        <CircularProgress color="primary" />
+      </Page>
+    )
   }
 
   return (
     <Page title="Signup | Uniconn">
       <div className="h-full flex flex-col justify-start items-center pt-10">
         <h1>Aluno</h1>
+        {errMessage !== null && (
+          <div>
+            <Alert severity="error">{errMessage}</Alert>
+          </div>
+        )}
         <div className="flex flex-col items-center my-4">
           <ProfileBaseForm handleChange={handleProfileDataChange} />
           <FormGroup className="w-full mb-4 justify-center items-center" row>
@@ -42,9 +86,11 @@ export default function Student() {
                 value={postData.university}
                 onChange={handleChange('university')}
               >
-                <MenuItem value="estácio de sa">Estácio de Sa</MenuItem>
-                <MenuItem value="ufrj">UFRJ</MenuItem>
-                <MenuItem value="uff">UFF</MenuItem>
+                {universities.map(university => (
+                  <MenuItem key={university.id} value={university.name}>
+                    {university.name}
+                  </MenuItem>
+                ))}
               </Select>
             </FormControl>
             <FormControl className="w-2/5" style={{ marginLeft: '0.5rem' }}>
@@ -68,7 +114,12 @@ export default function Student() {
             </FormControl>
           </FormGroup>
         </div>
-        <Button variant="contained" color="primary" className="w-4/5">
+        <Button
+          variant="contained"
+          color="primary"
+          className="w-4/5"
+          onClick={handleSubmit}
+        >
           Criar conta
         </Button>
         <IconButton color="primary" onClick={() => window.history.back()}>
