@@ -51,7 +51,7 @@ export default function Student() {
     for (const value of valuesInput) {
       if (!value) {
         error = true
-        setErrMessage('Error in front')
+        setErrMessage('Todos os campos devem ser preenchidos!')
         break
       }
     }
