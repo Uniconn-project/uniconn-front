@@ -44,6 +44,20 @@ export default function Student() {
   }
 
   const handleSubmit = () => {
+    let error = false
+
+    const valuesInput = Object.values({ ...postData, ...profilePostData })
+
+    for (const value of valuesInput) {
+      if (!value) {
+        error = true
+        setErrMessage('Error in front')
+        break
+      }
+    }
+
+    if (error) return
+
     fetch(`${process.env.NEXT_PUBLIC_API_URL}profiles/student/post-signup`, {
       method: 'POST',
       headers: {
