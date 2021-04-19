@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
+import Router from 'next/router'
 import Alert from '@material-ui/lab/Alert'
 import Button from '@material-ui/core/Button'
 import IconButton from '@material-ui/core/IconButton'
@@ -8,19 +9,21 @@ import Visibility from '@material-ui/icons/Visibility'
 import VisibilityOff from '@material-ui/icons/VisibilityOff'
 import Page from '../components/Page'
 import PrimaryLink from '../components/helpers/PrimaryLink'
+import { AuthContext } from '../context/Auth'
 
 export default function Login() {
   const [errMessage, setErrMessage] = useState(null)
   const [showPassword, setShowPassword] = useState(false)
   const [postData, setPostData] = useState({ username: '', password: '' })
+  const { loading, isAuthenticated, login } = useContext(AuthContext)
 
   const handleChange = key => e => {
     setPostData({ ...postData, [key]: e.target.value })
   }
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
+    setErrMessage('')
     let error = false
-
     const valuesInput = Object.values(postData)
 
     for (const value of valuesInput) {
@@ -33,7 +36,18 @@ export default function Login() {
 
     if (error) return
 
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}token/`, {
+    try {
+      const resp = await login(postData.username, postData.password)
+      if (resp.status === 401) {
+        setErrMessage('Invalid login credentials')
+      }
+    } catch (error) {
+      console.error(error)
+      // TODO: actually parse api 400 error messages
+      setErrMessage(error.message)
+    }
+
+    /* fetch(`${process.env.NEXT_PUBLIC_API_URL}token/`, {
       method: 'POST',
       headers: {
         'Content-type': 'application/json'
@@ -48,8 +62,10 @@ export default function Login() {
         } else {
           process.env.NODE_ENV === 'development' && console.log(data)
         }
-      })
+      }) */
   }
+
+  if (!loading && isAuthenticated) Router.push('/')
 
   return (
     <Page title="Login | Uniconn">

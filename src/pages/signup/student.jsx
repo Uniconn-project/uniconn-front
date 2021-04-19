@@ -58,13 +58,16 @@ export default function Student() {
 
     if (error) return
 
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}profiles/student/post-signup`, {
-      method: 'POST',
-      headers: {
-        'Content-type': 'application/json'
-      },
-      body: JSON.stringify({ ...profilePostData, ...postData })
-    })
+    fetch(
+      `${process.env.NEXT_PUBLIC_API_HOST}/api/profiles/student/post-signup`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-type': 'application/json'
+        },
+        body: JSON.stringify({ ...profilePostData, ...postData })
+      }
+    )
       .then(response => response.json())
       .then(data => {
         if (data === 'success') {
