@@ -10,7 +10,7 @@ import InputAdornment from '@material-ui/core/InputAdornment'
 import Visibility from '@material-ui/icons/Visibility'
 import VisibilityOff from '@material-ui/icons/VisibilityOff'
 
-export default function ProfileBaseForm({ children, parentPostData, type }) {
+export default function BaseForm({ children, parentPostData, type }) {
   const [errMessage, setErrMessage] = useState(null)
   const [showPassword, setShowPassword] = useState(false)
   const [profilePostData, setProfilePostData] = useState({
