@@ -1,17 +1,13 @@
 import React, { useState, useContext } from 'react'
 import { useRouter } from 'next/router'
 import CircularProgress from '@material-ui/core/CircularProgress'
-import Alert from '@material-ui/lab/Alert'
-import IconButton from '@material-ui/core/IconButton'
-import Button from '@material-ui/core/Button'
 import InputLabel from '@material-ui/core/InputLabel'
 import FormGroup from '@material-ui/core/FormGroup'
 import FormControl from '@material-ui/core/FormControl'
 import Select from '@material-ui/core/Select'
 import MenuItem from '@material-ui/core/MenuItem'
-import ArrowBackIcon from '@material-ui/icons/ArrowBack'
 import Page from '../../components/Page'
-import ProfileBaseForm from '../../components/pages/signup/ProfileBaseForm'
+import BaseForm from '../../components/pages/signup/BaseForm'
 import { AuthContext } from '../../context/Auth'
 import useFetch, { fetcher } from '../../hooks/useFetch'
 
@@ -28,19 +24,9 @@ export const getStaticProps = async () => {
 }
 
 export default function Student(props) {
-  const [errMessage, setErrMessage] = useState(null)
   const [postData, setPostData] = useState({
     university: '',
     major: ''
-  })
-  const [profilePostData, setProfilePostData] = useState({
-    first_name: '',
-    last_name: '',
-    username: '',
-    email: '',
-    birth_date: '',
-    password: '',
-    passwordc: ''
   })
 
   const router = useRouter()
@@ -63,45 +49,6 @@ export default function Student(props) {
     setPostData({ ...postData, [key]: e.target.value })
   }
 
-  const handleProfileDataChange = (key, value) => {
-    setProfilePostData({ ...profilePostData, [key]: value })
-  }
-
-  const handleSubmit = () => {
-    let error = false
-
-    const valuesInput = Object.values({ ...postData, ...profilePostData })
-
-    for (const value of valuesInput) {
-      if (!value) {
-        error = true
-        setErrMessage('Todos os campos devem ser preenchidos!')
-        break
-      }
-    }
-
-    if (error) return
-
-    fetch(
-      `${process.env.NEXT_PUBLIC_API_HOST}/api/profiles/student/post-signup`,
-      {
-        method: 'POST',
-        headers: {
-          'Content-type': 'application/json'
-        },
-        body: JSON.stringify({ ...profilePostData, ...postData })
-      }
-    )
-      .then(response => response.json())
-      .then(data => {
-        if (data === 'success') {
-          process.env.NODE_ENV === 'development' && console.log(data)
-        } else {
-          setErrMessage(data)
-        }
-      })
-  }
-
   if (!universities || !majors) {
     return (
       <Page title="Signup | Uniconn">
@@ -114,13 +61,7 @@ export default function Student(props) {
     <Page title="Signup | Uniconn">
       <div className="h-full flex flex-col justify-start items-center pt-10">
         <h1>Aluno</h1>
-        {errMessage !== null && (
-          <div>
-            <Alert severity="error">{errMessage}</Alert>
-          </div>
-        )}
-        <div className="flex flex-col items-center my-4">
-          <ProfileBaseForm handleChange={handleProfileDataChange} />
+        <BaseForm parentPostData={postData} type="student">
           <FormGroup className="w-full mb-4 justify-center items-center" row>
             <FormControl className="w-2/5" style={{ marginRight: '.5rem' }}>
               <InputLabel id="university-input-label">Universidade</InputLabel>
@@ -152,18 +93,7 @@ export default function Student(props) {
               </Select>
             </FormControl>
           </FormGroup>
-        </div>
-        <Button
-          variant="contained"
-          color="primary"
-          className="w-4/5"
-          onClick={handleSubmit}
-        >
-          Criar conta
-        </Button>
-        <IconButton color="primary" onClick={() => window.history.back()}>
-          <ArrowBackIcon />
-        </IconButton>
+        </BaseForm>
       </div>
     </Page>
   )

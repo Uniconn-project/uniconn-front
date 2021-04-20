@@ -1,17 +1,13 @@
 import React, { useState, useContext } from 'react'
 import { useRouter } from 'next/router'
 import CircularProgress from '@material-ui/core/CircularProgress'
-import Alert from '@material-ui/lab/Alert'
-import IconButton from '@material-ui/core/IconButton'
 import Chip from '@material-ui/core/Chip'
 import InputLabel from '@material-ui/core/InputLabel'
 import FormControl from '@material-ui/core/FormControl'
 import Select from '@material-ui/core/Select'
 import MenuItem from '@material-ui/core/MenuItem'
-import Button from '@material-ui/core/Button'
-import ArrowBackIcon from '@material-ui/icons/ArrowBack'
 import Page from '../../components/Page'
-import ProfileBaseForm from '../../components/pages/signup/ProfileBaseForm'
+import BaseForm from '../../components/pages/signup/BaseForm'
 import { AuthContext } from '../../context/Auth'
 import useFetch, { fetcher } from '../../hooks/useFetch'
 
@@ -26,17 +22,7 @@ export const getStaticProps = async () => {
 }
 
 export default function Mentor(props) {
-  const [errMessage, setErrMessage] = useState(null)
   const [postData, setPostData] = useState({ markets: [] })
-  const [profilePostData, setProfilePostData] = useState({
-    first_name: '',
-    last_name: '',
-    username: '',
-    email: '',
-    birth_date: '',
-    password: '',
-    passwordc: ''
-  })
 
   const router = useRouter()
 
@@ -51,45 +37,6 @@ export default function Mentor(props) {
     setPostData({ ...postData, [key]: e.target.value })
   }
 
-  const handleProfileDataChange = (key, value) => {
-    setProfilePostData({ ...profilePostData, [key]: value })
-  }
-
-  const handleSubmit = () => {
-    let error = false
-
-    const valuesInput = Object.values({ ...postData, ...profilePostData })
-
-    for (const value of valuesInput) {
-      if (!value) {
-        error = true
-        setErrMessage('Todos os campos devem ser preenchidos!')
-        break
-      }
-    }
-
-    if (error) return
-
-    fetch(
-      `${process.env.NEXT_PUBLIC_API_HOST}/api/profiles/mentor/post-signup`,
-      {
-        method: 'POST',
-        headers: {
-          'Content-type': 'application/json'
-        },
-        body: JSON.stringify({ ...profilePostData, ...postData })
-      }
-    )
-      .then(response => response.json())
-      .then(data => {
-        if (data === 'success') {
-          process.env.NODE_ENV === 'development' && console.log(data)
-        } else {
-          setErrMessage(data)
-        }
-      })
-  }
-
   if (!markets) {
     return (
       <Page title="Signup | Uniconn">
@@ -102,13 +49,7 @@ export default function Mentor(props) {
     <Page title="Signup | Uniconn">
       <div className="h-full flex flex-col justify-start items-center pt-10">
         <h1>Mentor</h1>
-        {errMessage !== null && (
-          <div>
-            <Alert severity="error">{errMessage}</Alert>
-          </div>
-        )}
-        <div className="flex flex-col items-center my-4">
-          <ProfileBaseForm handleChange={handleProfileDataChange} />
+        <BaseForm parentPostData={postData} type="mentor">
           <FormControl className="w-4/5" style={{ marginBottom: '1rem' }}>
             <InputLabel id="demo-mutiple-chip-label">
               Em quais mercados você atua?
@@ -135,18 +76,7 @@ export default function Mentor(props) {
               ))}
             </Select>
           </FormControl>
-        </div>
-        <Button
-          variant="contained"
-          color="primary"
-          className="w-4/5"
-          onClick={handleSubmit}
-        >
-          Criar conta
-        </Button>
-        <IconButton color="primary" onClick={() => window.history.back()}>
-          <ArrowBackIcon />
-        </IconButton>
+        </BaseForm>
       </div>
     </Page>
   )
