@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import Alert from '@material-ui/lab/Alert'
 import Button from '@material-ui/core/Button'
@@ -12,26 +12,33 @@ import PrimaryLink from '../components/helpers/PrimaryLink'
 import { AuthContext } from '../context/Auth'
 
 export default function Login() {
-  const [errMessage, setErrMessage] = useState(null)
+  const router = useRouter()
+
+  const [errorMsg, setErrorMsg] = useState(null)
+  const [successMsg, setSuccessMsg] = useState(router.query.success || null)
   const [showPassword, setShowPassword] = useState(false)
   const [postData, setPostData] = useState({ username: '', password: '' })
   const { loading, isAuthenticated, login } = useContext(AuthContext)
 
-  const router = useRouter()
+  useEffect(() => {
+    if (errorMsg !== null) {
+      setSuccessMsg(null)
+    }
+  }, [errorMsg])
 
   const handleChange = key => e => {
     setPostData({ ...postData, [key]: e.target.value })
   }
 
   const handleSubmit = async () => {
-    setErrMessage(null)
+    setErrorMsg(null)
     let error = false
     const valuesInput = Object.values(postData)
 
     for (const value of valuesInput) {
       if (!value) {
         error = true
-        setErrMessage('Todos os campos devem ser preenchidos!')
+        setErrorMsg('Todos os campos devem ser preenchidos!')
         break
       }
     }
@@ -41,11 +48,11 @@ export default function Login() {
     try {
       const resp = await login(postData.username, postData.password)
       if (resp.status === 401) {
-        setErrMessage('Credenciais inválidas!')
+        setErrorMsg('Credenciais inválidas!')
       }
     } catch (error) {
       console.error(error)
-      setErrMessage('Occoreu um erro, por favor tente novamente.')
+      setErrorMsg('Occoreu um erro, por favor tente novamente.')
     }
   }
 
@@ -55,9 +62,14 @@ export default function Login() {
     <Page title="Login | Uniconn">
       <div className="h-full flex flex-col justify-start items-center pt-10">
         <h1 className="m-6">Entrar na Uniconn</h1>
-        {errMessage !== null && (
+        {errorMsg !== null && (
           <div>
-            <Alert severity="error">{errMessage}</Alert>
+            <Alert severity="error">{errorMsg}</Alert>
+          </div>
+        )}
+        {successMsg !== null && (
+          <div>
+            <Alert severity="success">{successMsg}</Alert>
           </div>
         )}
         <div className="flex flex-col my-4">
@@ -66,12 +78,14 @@ export default function Login() {
             className="mb-4"
             placeholder="Nome de usuário"
             onChange={handleChange('username')}
+            onKeyUp={e => e.key === 'Enter' && handleSubmit()}
           />
           <FilledInput
             type={showPassword ? 'text' : 'password'}
             className="mb-4"
             placeholder="Senha"
             onChange={handleChange('password')}
+            onKeyUp={e => e.key === 'Enter' && handleSubmit()}
             endAdornment={
               <InputAdornment position="end">
                 <IconButton

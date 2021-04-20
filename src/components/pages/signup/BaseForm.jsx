@@ -11,7 +11,7 @@ import Visibility from '@material-ui/icons/Visibility'
 import VisibilityOff from '@material-ui/icons/VisibilityOff'
 
 export default function BaseForm({ children, parentPostData, type }) {
-  const [errMessage, setErrMessage] = useState(null)
+  const [errorMsg, setErrorMsg] = useState(null)
   const [showPassword, setShowPassword] = useState(false)
   const [profilePostData, setProfilePostData] = useState({
     first_name: '',
@@ -35,14 +35,14 @@ export default function BaseForm({ children, parentPostData, type }) {
     for (const value of valuesInput) {
       if (!value) {
         error = true
-        setErrMessage('Todos os campos devem ser preenchidos!')
+        setErrorMsg('Todos os campos devem ser preenchidos!')
         break
       }
     }
 
     if (profilePostData.password !== profilePostData.passwordc) {
       error = true
-      setErrMessage('As senhas devem ser iguais!')
+      setErrorMsg('As senhas devem ser iguais!')
     }
 
     if (error) return
@@ -62,16 +62,16 @@ export default function BaseForm({ children, parentPostData, type }) {
         if (data === 'success') {
           process.env.NODE_ENV === 'development' && console.log(data)
         } else {
-          setErrMessage(data)
+          setErrorMsg(data)
         }
       })
   }
 
   return (
     <>
-      {errMessage !== null && (
+      {errorMsg !== null && (
         <div>
-          <Alert severity="error">{errMessage}</Alert>
+          <Alert severity="error">{errorMsg}</Alert>
         </div>
       )}
       <div className="flex flex-col items-center my-4">
