@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
+import { useRouter } from 'next/router'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import Alert from '@material-ui/lab/Alert'
 import IconButton from '@material-ui/core/IconButton'
@@ -11,9 +12,22 @@ import MenuItem from '@material-ui/core/MenuItem'
 import ArrowBackIcon from '@material-ui/icons/ArrowBack'
 import Page from '../../components/Page'
 import ProfileBaseForm from '../../components/pages/signup/ProfileBaseForm'
-import useFetch from '../../hooks/useFetch'
+import { AuthContext } from '../../context/Auth'
+import useFetch, { fetcher } from '../../hooks/useFetch'
 
-export default function Student() {
+export const getStaticProps = async () => {
+  const universities = await fetcher('universities/get-universities-name-list')
+  const majors = await fetcher('universities/get-majors-name-list')
+
+  return {
+    props: {
+      universities,
+      majors
+    }
+  }
+}
+
+export default function Student(props) {
   const [errMessage, setErrMessage] = useState(null)
   const [postData, setPostData] = useState({
     university: '',
@@ -29,11 +43,21 @@ export default function Student() {
     passwordc: ''
   })
 
+  const router = useRouter()
+
+  const { loading, isAuthenticated } = useContext(AuthContext)
+  if (!loading && isAuthenticated) router.push('/')
+
   const { data: universities } = useFetch(
-    'universities/get-universities-name-list'
+    'universities/get-universities-name-list',
+    {
+      initialData: props.universities
+    }
   )
 
-  const { data: majors } = useFetch('universities/get-majors-name-list')
+  const { data: majors } = useFetch('universities/get-majors-name-list', {
+    initialData: props.majors
+  })
 
   const handleChange = key => e => {
     setPostData({ ...postData, [key]: e.target.value })

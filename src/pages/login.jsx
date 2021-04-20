@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react'
-import Router from 'next/router'
+import { useRouter } from 'next/router'
 import Alert from '@material-ui/lab/Alert'
 import Button from '@material-ui/core/Button'
 import IconButton from '@material-ui/core/IconButton'
@@ -17,12 +17,14 @@ export default function Login() {
   const [postData, setPostData] = useState({ username: '', password: '' })
   const { loading, isAuthenticated, login } = useContext(AuthContext)
 
+  const router = useRouter()
+
   const handleChange = key => e => {
     setPostData({ ...postData, [key]: e.target.value })
   }
 
   const handleSubmit = async () => {
-    setErrMessage('')
+    setErrMessage(null)
     let error = false
     const valuesInput = Object.values(postData)
 
@@ -39,33 +41,15 @@ export default function Login() {
     try {
       const resp = await login(postData.username, postData.password)
       if (resp.status === 401) {
-        setErrMessage('Invalid login credentials')
+        setErrMessage('Credenciais inválidas!')
       }
     } catch (error) {
       console.error(error)
-      // TODO: actually parse api 400 error messages
-      setErrMessage(error.message)
+      setErrMessage('Occoreu um erro, por favor tente novamente.')
     }
-
-    /* fetch(`${process.env.NEXT_PUBLIC_API_URL}token/`, {
-      method: 'POST',
-      headers: {
-        'Content-type': 'application/json'
-      },
-      body: JSON.stringify(postData)
-    })
-      .then(response => response.json())
-      .then(data => {
-        const keys = Object.keys(data)
-        if (!keys.includes('access') || !keys.includes('refresh')) {
-          setErrMessage('Credenciais inválidas!')
-        } else {
-          process.env.NODE_ENV === 'development' && console.log(data)
-        }
-      }) */
   }
 
-  if (!loading && isAuthenticated) Router.push('/')
+  if (!loading && isAuthenticated) router.push('/')
 
   return (
     <Page title="Login | Uniconn">

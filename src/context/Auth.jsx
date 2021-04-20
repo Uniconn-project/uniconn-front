@@ -118,7 +118,8 @@ export default function AuthProvider({ children }) {
   const logout = () => {
     setAccessToken('')
     setAccessTokenExpiry(null)
-    setNotAuthenticated()
+    setIsAuthenticated(false)
+    setLoading(true)
     const url = makeUrl('/token/logout/')
     fetch(url, {
       method: 'POST',

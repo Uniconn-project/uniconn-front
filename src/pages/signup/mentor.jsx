@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
+import { useRouter } from 'next/router'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import Alert from '@material-ui/lab/Alert'
 import IconButton from '@material-ui/core/IconButton'
@@ -11,9 +12,20 @@ import Button from '@material-ui/core/Button'
 import ArrowBackIcon from '@material-ui/icons/ArrowBack'
 import Page from '../../components/Page'
 import ProfileBaseForm from '../../components/pages/signup/ProfileBaseForm'
-import useFetch from '../../hooks/useFetch'
+import { AuthContext } from '../../context/Auth'
+import useFetch, { fetcher } from '../../hooks/useFetch'
 
-export default function Mentor() {
+export const getStaticProps = async () => {
+  const markets = await fetcher('projects/get-markets-name-list')
+
+  return {
+    props: {
+      markets
+    }
+  }
+}
+
+export default function Mentor(props) {
   const [errMessage, setErrMessage] = useState(null)
   const [postData, setPostData] = useState({ markets: [] })
   const [profilePostData, setProfilePostData] = useState({
@@ -26,7 +38,14 @@ export default function Mentor() {
     passwordc: ''
   })
 
-  const { data: markets } = useFetch('projects/get-markets-name-list')
+  const router = useRouter()
+
+  const { loading, isAuthenticated } = useContext(AuthContext)
+  if (!loading && isAuthenticated) router.push('/')
+
+  const { data: markets } = useFetch('projects/get-markets-name-list', {
+    initialData: props.markets
+  })
 
   const handleChange = key => e => {
     setPostData({ ...postData, [key]: e.target.value })
@@ -81,7 +100,6 @@ export default function Mentor() {
 
   return (
     <Page title="Signup | Uniconn">
-      {console.log(postData, profilePostData)}
       <div className="h-full flex flex-col justify-start items-center pt-10">
         <h1>Mentor</h1>
         {errMessage !== null && (

@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { useRouter } from 'next/router'
 import Link from 'next/link'
 import Button from '@material-ui/core/Button'
 import PersonIcon from '@material-ui/icons/Person'
@@ -6,6 +7,7 @@ import SchoolIcon from '@material-ui/icons/School'
 import { makeStyles } from '@material-ui/core'
 import Page from '../components/Page'
 import PrimaryLink from '../components/helpers/PrimaryLink'
+import { AuthContext } from '../context/Auth'
 
 const useStyles = makeStyles(theme => ({
   button: {
@@ -15,6 +17,11 @@ const useStyles = makeStyles(theme => ({
 }))
 
 export default function Signup() {
+  const router = useRouter()
+
+  const { loading, isAuthenticated } = useContext(AuthContext)
+  if (!loading && isAuthenticated) router.push('/')
+
   const classes = useStyles()
 
   return (

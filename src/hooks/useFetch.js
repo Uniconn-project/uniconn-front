@@ -1,13 +1,13 @@
 import useSWR from 'swr'
 
-export default function useFetch(url) {
-  const { data, err, mutate } = useSWR(url, async url => {
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_HOST}/api/${url}`
-    )
-    const data = await response.json()
-    return data
-  })
+export const fetcher = async url => {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_API_HOST}/api/${url}`)
+  const data = await response.json()
+  return data
+}
+
+export default function useFetch(url, config) {
+  const { data, err, mutate } = useSWR(url, fetcher, config)
 
   return { data, err, mutate }
 }
