@@ -31,7 +31,6 @@ export default function Login() {
   }
 
   const handleSubmit = async () => {
-    setErrorMsg(null)
     let error = false
     const valuesInput = Object.values(postData)
 

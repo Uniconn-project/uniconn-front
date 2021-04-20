@@ -6,7 +6,7 @@ export default function Home() {
   return (
     <Page title="Home | Uniconn">
       <h1>Home</h1>
-      <Logout className="m-4" />
+      <Logout className="m-4 cursor-pointer" />
     </Page>
   )
 }

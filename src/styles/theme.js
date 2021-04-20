@@ -1,23 +1,28 @@
 import { createMuiTheme } from '@material-ui/core/styles'
-import { red, purple, green } from '@material-ui/core/colors'
+import { red, purple, orange, grey } from '@material-ui/core/colors'
 
 // Create a theme instance.
 const type = 'dark'
 const palette = {
   type,
   primary: {
-    main: purple[500],
     light: purple[400],
+    main: purple[500],
     dark: purple[700]
   },
   secondary: {
-    main: green.A400
+    light: orange[400],
+    main: orange[500],
+    dark: orange[700]
   },
   error: {
     main: red.A400
   },
+  text: {
+    primary: type === 'dark' ? grey[300] : '#313131'
+  },
   background: {
-    default: type === 'dark' ? '#212124' : '#fff'
+    default: type === 'dark' ? '#303035' : '#fafafa'
   }
 }
 

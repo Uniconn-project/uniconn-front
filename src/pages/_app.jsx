@@ -1,10 +1,11 @@
+import '../styles/global.scss'
+
 import React, { useEffect } from 'react'
 import Head from 'next/head'
 import PropTypes from 'prop-types'
 import { ThemeProvider } from '@material-ui/core/styles'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import theme from '../styles/theme'
-import '../styles/globals.css'
 import AuthProvider from '../context/Auth'
 
 export default function MyApp(props) {

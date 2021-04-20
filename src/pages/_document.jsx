@@ -16,6 +16,15 @@ export default class MyDocument extends Document {
           <link href="logo.svg" rel="icon" type="svg" sizes="32x32" />
           <link rel="apple-touch-icon" href="/apple-icon.png"></link>
           <meta name="theme-color" content={theme.palette.primary.main} />
+          <link rel="preconnect" href="https://fonts.gstatic.com" />
+          <link
+            href="https://fonts.googleapis.com/css2?family=Lexend&display=swap"
+            rel="stylesheet"
+          />
+          <link
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600&display=swap"
+            rel="stylesheet"
+          />
         </Head>
         <body>
           <Main />
