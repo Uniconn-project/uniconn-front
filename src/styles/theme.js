@@ -2,7 +2,7 @@ import { createMuiTheme } from '@material-ui/core/styles'
 import { red, purple, orange, grey } from '@material-ui/core/colors'
 
 // Create a theme instance.
-const type = 'dark'
+const type = 'light'
 const palette = {
   type,
   primary: {

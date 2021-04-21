@@ -8,7 +8,7 @@ export default function Page({ children, title }) {
         <title>{title}</title>
       </Head>
       <div className="w-screen h-screen">
-        <div className="w-full h-full flex flex-col justify-center items-center">
+        <div className="w-full h-full flex flex-col justify-start items-center">
           {children}
         </div>
       </div>
