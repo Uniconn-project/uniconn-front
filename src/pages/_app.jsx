@@ -7,6 +7,7 @@ import { ThemeProvider } from '@material-ui/core/styles'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import theme from '../styles/theme'
 import AuthProvider from '../context/Auth'
+import MyProfileProvider from '../context/MyProfile'
 
 export default function MyApp(props) {
   const { Component, pageProps } = props
@@ -30,7 +31,9 @@ export default function MyApp(props) {
         />
       </Head>
       <AuthProvider>
-        <Component {...pageProps} />
+        <MyProfileProvider>
+          <Component {...pageProps} />
+        </MyProfileProvider>
       </AuthProvider>
     </ThemeProvider>
   )
