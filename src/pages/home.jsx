@@ -1,7 +1,6 @@
 import React, { useContext } from 'react'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import Page from '../components/Page'
-import Header from '../components/Header'
 import { MyProfileContext } from '../context/MyProfile'
 
 export default function Home() {
@@ -9,19 +8,16 @@ export default function Home() {
 
   if (!myProfile) {
     return (
-      <Page title="Home | Uniconn" loginRequired>
+      <Page title="Home | Uniconn" loginRequired center>
         <CircularProgress color="primary" />
       </Page>
     )
   }
 
   return (
-    <Page title="Home | Uniconn" loginRequired>
-      <div className="flex flex-col w-full h-full justify-start items-center">
-        <Header />
-        <div className="flex h-full justify-center items-center">
-          <h1>Bem vindo, {myProfile.first_name}!</h1>
-        </div>
+    <Page title="Home | Uniconn" loginRequired header>
+      <div className="flex h-full justify-center items-center">
+        <h1>Bem vindo, {myProfile.first_name}!</h1>
       </div>
     </Page>
   )

@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import Router from 'next/router'
 import Button from '@material-ui/core/Button'
 import IconButton from '@material-ui/core/IconButton'
 import ArrowBackIcon from '@material-ui/icons/ArrowBack'
@@ -61,6 +62,7 @@ export default function BaseForm({ children, parentPostData, type }) {
       .then(data => {
         if (data === 'success') {
           process.env.NODE_ENV === 'development' && console.log(data)
+          Router.push('/home')
         } else {
           setErrorMsg(data)
         }

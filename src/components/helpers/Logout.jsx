@@ -16,8 +16,18 @@ export default function Logout({ className }) {
     }
   }, [isAuthenticated])
 
+  const handleLogout = () => {
+    if (
+      window.confirm(
+        'Tem certeza que deseja sair? \n Você poderá voltar quando quiser.'
+      )
+    ) {
+      logout()
+    }
+  }
+
   return (
-    <div className={className} onClick={logout}>
+    <div className={className} onClick={handleLogout}>
       Sair
     </div>
   )

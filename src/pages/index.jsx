@@ -20,7 +20,7 @@ export default function Index() {
   }, [loading, isAuthenticated, router])
 
   return (
-    <Page title="Uniconn">
+    <Page title="Uniconn" center>
       <CircularProgress color="primary" />
     </Page>
   )

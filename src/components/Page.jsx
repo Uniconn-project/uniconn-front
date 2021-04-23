@@ -1,11 +1,18 @@
 import React, { useCallback, useContext, useEffect } from 'react'
 import Router from 'next/router'
 import Head from 'next/head'
+import Header from './Header'
 import { AuthContext } from '../context/Auth'
 import { MyProfileContext } from '../context/MyProfile'
 import { fetcher } from '../hooks/useFetch'
 
-export default function Page({ children, title, loginRequired = false }) {
+export default function Page({
+  children,
+  title,
+  loginRequired = false,
+  center = false,
+  header = false
+}) {
   const { isAuthenticated, getToken } = useContext(AuthContext)
   const { myProfile, setMyProfile } = useContext(MyProfileContext)
 
@@ -37,7 +44,12 @@ export default function Page({ children, title, loginRequired = false }) {
         <title>{title}</title>
       </Head>
       <div className="w-screen h-screen">
-        <div className="w-full h-full flex flex-col justify-center items-center">
+        <div
+          className={`w-full h-full flex flex-col justify-${
+            center ? 'center' : 'start'
+          } items-center`}
+        >
+          {header && <Header />}
           {children}
         </div>
       </div>

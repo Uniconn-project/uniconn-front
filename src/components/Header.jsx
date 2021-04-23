@@ -1,4 +1,5 @@
 import React, { useContext } from 'react'
+import Link from 'next/link'
 import { makeStyles } from '@material-ui/core/styles'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
@@ -17,7 +18,8 @@ const useStyles = makeStyles(theme => ({
     display: 'none',
     [theme.breakpoints.up('sm')]: {
       display: 'block'
-    }
+    },
+    cursor: 'pointer'
   },
   sectionDesktop: {
     display: 'none',
@@ -66,6 +68,7 @@ export default function PrimarySearchAppBar() {
     <img
       width={40}
       height={40}
+      style={{ borderRadius: '50%' }}
       src={`${process.env.NEXT_PUBLIC_API_HOST}${myProfile.photo}`}
     />
   )
@@ -81,7 +84,9 @@ export default function PrimarySearchAppBar() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>Perfil</MenuItem>
+      <MenuItem onClick={handleMenuClose}>
+        <Link href="/profile">Perfil</Link>
+      </MenuItem>
       <MenuItem onClick={handleMenuClose}>
         <Logout />
       </MenuItem>
@@ -125,9 +130,9 @@ export default function PrimarySearchAppBar() {
     <div className="w-full">
       <AppBar position="static">
         <Toolbar>
-          <Typography className={classes.title} variant="h4" noWrap>
-            Uniconn
-          </Typography>
+          <Link href="/home">
+            <h1 className={classes.title}>Uniconn</h1>
+          </Link>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
             <IconButton aria-label="show 17 new notifications" color="inherit">
