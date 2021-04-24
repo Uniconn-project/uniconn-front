@@ -1,10 +1,8 @@
-import React, { useCallback, useContext, useEffect } from 'react'
+import React, { useContext, useEffect } from 'react'
 import Router from 'next/router'
 import Head from 'next/head'
 import Header from './Header'
 import { AuthContext } from '../contexts/Auth'
-import { MyProfileContext } from '../contexts/MyProfile'
-import { fetcher } from '../hooks/useFetch'
 
 export default function Page({
   children,
@@ -13,15 +11,7 @@ export default function Page({
   center = false,
   header = false
 }) {
-  const { isAuthenticated, getToken } = useContext(AuthContext)
-  const { myProfile, setMyProfile } = useContext(MyProfileContext)
-
-  const fetchMyProfile = useCallback(async () => {
-    const data = await fetcher('profiles/student/get-my-profile', {
-      Authorization: 'JWT ' + (await getToken())
-    })
-    setMyProfile(data)
-  }, [setMyProfile, getToken])
+  const { isAuthenticated } = useContext(AuthContext)
 
   useEffect(() => {
     if (
@@ -29,14 +19,9 @@ export default function Page({
       (!loginRequired && isAuthenticated)
     ) {
       Router.replace('/')
+      console.log('page in', loginRequired, isAuthenticated, title)
     }
   }, [loginRequired, isAuthenticated])
-
-  useEffect(() => {
-    if (!myProfile && isAuthenticated) {
-      fetchMyProfile()
-    }
-  }, [myProfile, isAuthenticated, fetchMyProfile])
 
   return (
     <div>

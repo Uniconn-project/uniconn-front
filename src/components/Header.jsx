@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import Link from 'next/link'
 import { makeStyles } from '@material-ui/core/styles'
 import AppBar from '@material-ui/core/AppBar'
@@ -38,8 +38,8 @@ const useStyles = makeStyles(theme => ({
 export default function PrimarySearchAppBar() {
   const { myProfile } = useContext(MyProfileContext)
 
-  const [anchorEl, setAnchorEl] = React.useState(null)
-  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null)
+  const [anchorEl, setAnchorEl] = useState(null)
+  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null)
 
   const isMenuOpen = Boolean(anchorEl)
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl)

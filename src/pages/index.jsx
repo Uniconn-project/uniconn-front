@@ -1,27 +1,35 @@
 import React, { useContext, useEffect } from 'react'
+import Head from 'next/head'
 import CircularProgress from '@material-ui/core/CircularProgress'
-import { useRouter } from 'next/router'
+import Router from 'next/router'
 import { AuthContext } from '../contexts/Auth'
-import Page from '../components/Page'
 
 export default function Index() {
   const { loading, isAuthenticated } = useContext(AuthContext)
 
-  const router = useRouter()
-
   useEffect(() => {
+    console.log('index')
     if (loading) return
 
     if (isAuthenticated) {
-      router.replace('/home')
+      Router.replace('/home')
     } else {
-      router.replace('/login')
+      Router.replace('/login')
     }
-  }, [loading, isAuthenticated, router])
+  }, [loading, isAuthenticated])
 
   return (
-    <Page title="Uniconn" center>
-      <CircularProgress color="primary" />
-    </Page>
+    <div>
+      <Head>
+        <title>Uniconn</title>
+      </Head>
+      <div className="w-screen h-screen">
+        <div
+          className={'w-full h-full flex flex-col justify-center items-center'}
+        >
+          <CircularProgress color="primary" />
+        </div>
+      </div>
+    </div>
   )
 }

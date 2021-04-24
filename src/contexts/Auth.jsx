@@ -1,5 +1,5 @@
-import React, { useState, useEffect, createContext, useContext } from 'react'
-import { MyProfileContext } from './MyProfile'
+import React, { useState, useEffect, createContext } from 'react'
+import Router from 'next/router'
 
 const API_BASE = process.env.NEXT_PUBLIC_API_HOST
 
@@ -29,8 +29,6 @@ const fetchNewToken = () => {
 export const AuthContext = createContext()
 
 export default function AuthProvider({ children }) {
-  const { setMyProfile } = useContext(MyProfileContext)
-
   const [loading, setLoading] = useState(true)
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [accessToken, setAccessToken] = useState('')
@@ -118,15 +116,21 @@ export default function AuthProvider({ children }) {
     setAccessTokenExpiry(null)
     setIsAuthenticated(false)
     setLoading(true)
-    setMyProfile(null)
     const url = API_BASE + '/token/logout/'
     fetch(url, {
       method: 'POST',
       credentials: 'include'
     })
       .then(response => response.json())
-      .then(() => setLoading(false))
-    // TODO: call endpoint to delete cookie
+      .then(() => {
+        setLoading(false)
+        Router.push({
+          pathname: '/login',
+          query: {
+            success: 'Deslogado com sucesso'
+          }
+        })
+      })
   }
 
   const value = {

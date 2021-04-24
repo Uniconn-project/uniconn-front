@@ -30,11 +30,11 @@ export default function MyApp(props) {
           content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"
         />
       </Head>
-      <MyProfileProvider>
-        <AuthProvider>
+      <AuthProvider>
+        <MyProfileProvider>
           <Component {...pageProps} />
-        </AuthProvider>
-      </MyProfileProvider>
+        </MyProfileProvider>
+      </AuthProvider>
     </ThemeProvider>
   )
 }

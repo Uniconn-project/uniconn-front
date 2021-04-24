@@ -1,20 +1,11 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext } from 'react'
 import Router from 'next/router'
 import { AuthContext } from '../../contexts/Auth'
+import { MyProfileContext } from '../../contexts/MyProfile'
 
 export default function Logout({ className }) {
-  const { isAuthenticated, logout } = useContext(AuthContext)
-
-  useEffect(() => {
-    if (!isAuthenticated) {
-      Router.push({
-        pathname: '/login',
-        query: {
-          success: 'Deslogado com sucesso'
-        }
-      })
-    }
-  }, [isAuthenticated])
+  const { logout } = useContext(AuthContext)
+  const { setMyProfile } = useContext(MyProfileContext)
 
   const handleLogout = () => {
     if (
@@ -23,6 +14,8 @@ export default function Logout({ className }) {
       )
     ) {
       logout()
+      setMyProfile(null)
+      Router.push('/')
     }
   }
 
