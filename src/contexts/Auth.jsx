@@ -1,14 +1,10 @@
-import React, { useState, useEffect, createContext } from 'react'
+import React, { useState, useEffect, createContext, useContext } from 'react'
+import { MyProfileContext } from './MyProfile'
 
 const API_BASE = process.env.NEXT_PUBLIC_API_HOST
 
-const makeUrl = endpoint => {
-  return API_BASE + endpoint
-}
-
 const fetchToken = (username, password) => {
-  const url = makeUrl('/token/')
-  console.log(url)
+  const url = API_BASE + '/token/'
   return fetch(url, {
     method: 'POST',
     body: JSON.stringify({ username, password }),
@@ -20,7 +16,7 @@ const fetchToken = (username, password) => {
 }
 
 const fetchNewToken = () => {
-  const url = makeUrl('/token/refresh/')
+  const url = API_BASE + '/token/refresh/'
   return fetch(url, {
     method: 'POST',
     headers: {
@@ -33,6 +29,8 @@ const fetchNewToken = () => {
 export const AuthContext = createContext()
 
 export default function AuthProvider({ children }) {
+  const { setMyProfile } = useContext(MyProfileContext)
+
   const [loading, setLoading] = useState(true)
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [accessToken, setAccessToken] = useState('')
@@ -120,11 +118,14 @@ export default function AuthProvider({ children }) {
     setAccessTokenExpiry(null)
     setIsAuthenticated(false)
     setLoading(true)
-    const url = makeUrl('/token/logout/')
+    setMyProfile(null)
+    const url = API_BASE + '/token/logout/'
     fetch(url, {
       method: 'POST',
       credentials: 'include'
     })
+      .then(response => response.json())
+      .then(() => setLoading(false))
     // TODO: call endpoint to delete cookie
   }
 

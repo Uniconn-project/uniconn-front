@@ -4,14 +4,13 @@ import { makeStyles } from '@material-ui/core/styles'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import IconButton from '@material-ui/core/IconButton'
-import Typography from '@material-ui/core/Typography'
 import Badge from '@material-ui/core/Badge'
 import MenuItem from '@material-ui/core/MenuItem'
 import Menu from '@material-ui/core/Menu'
 import NotificationsIcon from '@material-ui/icons/Notifications'
 import MoreIcon from '@material-ui/icons/MoreVert'
 import Logout from './helpers/Logout'
-import { MyProfileContext } from '../context/MyProfile'
+import { MyProfileContext } from '../contexts/MyProfile'
 
 const useStyles = makeStyles(theme => ({
   title: {
@@ -32,7 +31,8 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     [theme.breakpoints.up('md')]: {
       display: 'none'
-    }
+    },
+    marginLeft: 'auto'
   }
 }))
 

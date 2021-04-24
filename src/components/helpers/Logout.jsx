@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react'
 import Router from 'next/router'
-import { AuthContext } from '../../context/Auth'
+import { AuthContext } from '../../contexts/Auth'
 
 export default function Logout({ className }) {
   const { isAuthenticated, logout } = useContext(AuthContext)

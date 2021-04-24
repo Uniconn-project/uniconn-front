@@ -7,7 +7,7 @@ import SchoolIcon from '@material-ui/icons/School'
 import { makeStyles } from '@material-ui/core'
 import Page from '../components/Page'
 import PrimaryLink from '../components/helpers/PrimaryLink'
-import { AuthContext } from '../context/Auth'
+import { AuthContext } from '../contexts/Auth'
 
 const useStyles = makeStyles(theme => ({
   button: {

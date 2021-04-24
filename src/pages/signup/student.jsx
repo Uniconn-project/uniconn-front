@@ -8,7 +8,7 @@ import Select from '@material-ui/core/Select'
 import MenuItem from '@material-ui/core/MenuItem'
 import Page from '../../components/Page'
 import BaseForm from '../../components/pages/signup/BaseForm'
-import { AuthContext } from '../../context/Auth'
+import { AuthContext } from '../../contexts/Auth'
 import useFetch, { fetcher } from '../../hooks/useFetch'
 
 export const getStaticProps = async () => {
@@ -19,7 +19,8 @@ export const getStaticProps = async () => {
     props: {
       universities,
       majors
-    }
+    },
+    revalidate: 60 * 60 * 8 // 8 hours
   }
 }
 

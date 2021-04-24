@@ -2,8 +2,8 @@ import React, { useCallback, useContext, useEffect } from 'react'
 import Router from 'next/router'
 import Head from 'next/head'
 import Header from './Header'
-import { AuthContext } from '../context/Auth'
-import { MyProfileContext } from '../context/MyProfile'
+import { AuthContext } from '../contexts/Auth'
+import { MyProfileContext } from '../contexts/MyProfile'
 import { fetcher } from '../hooks/useFetch'
 
 export default function Page({

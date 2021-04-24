@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from 'react'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import { useRouter } from 'next/router'
-import { AuthContext } from '../context/Auth'
+import { AuthContext } from '../contexts/Auth'
 import Page from '../components/Page'
 
 export default function Index() {

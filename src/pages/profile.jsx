@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import Page from '../components/Page'
-import { MyProfileContext } from '../context/MyProfile'
+import { MyProfileContext } from '../contexts/MyProfile'
 
 export default function MyProfile() {
   const { myProfile } = useContext(MyProfileContext)

@@ -9,7 +9,7 @@ import Visibility from '@material-ui/icons/Visibility'
 import VisibilityOff from '@material-ui/icons/VisibilityOff'
 import Page from '../components/Page'
 import PrimaryLink from '../components/helpers/PrimaryLink'
-import { AuthContext } from '../context/Auth'
+import { AuthContext } from '../contexts/Auth'
 
 export default function Login() {
   const router = useRouter()

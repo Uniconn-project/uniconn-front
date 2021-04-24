@@ -6,8 +6,8 @@ import PropTypes from 'prop-types'
 import { ThemeProvider } from '@material-ui/core/styles'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import theme from '../styles/theme'
-import AuthProvider from '../context/Auth'
-import MyProfileProvider from '../context/MyProfile'
+import AuthProvider from '../contexts/Auth'
+import MyProfileProvider from '../contexts/MyProfile'
 
 export default function MyApp(props) {
   const { Component, pageProps } = props
@@ -30,11 +30,11 @@ export default function MyApp(props) {
           content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"
         />
       </Head>
-      <AuthProvider>
-        <MyProfileProvider>
+      <MyProfileProvider>
+        <AuthProvider>
           <Component {...pageProps} />
-        </MyProfileProvider>
-      </AuthProvider>
+        </AuthProvider>
+      </MyProfileProvider>
     </ThemeProvider>
   )
 }
