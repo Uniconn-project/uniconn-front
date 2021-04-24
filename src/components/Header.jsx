@@ -7,8 +7,9 @@ import IconButton from '@material-ui/core/IconButton'
 import Badge from '@material-ui/core/Badge'
 import MenuItem from '@material-ui/core/MenuItem'
 import Menu from '@material-ui/core/Menu'
+import HomeIcon from '@material-ui/icons/Home'
 import NotificationsIcon from '@material-ui/icons/Notifications'
-import MoreIcon from '@material-ui/icons/MoreVert'
+import MenuIcon from '@material-ui/icons/Menu'
 import Logout from './helpers/Logout'
 import { MyProfileContext } from '../contexts/MyProfile'
 
@@ -24,15 +25,13 @@ const useStyles = makeStyles(theme => ({
     display: 'none',
     [theme.breakpoints.up('md')]: {
       display: 'flex'
-    },
-    marginLeft: 'auto'
+    }
   },
   sectionMobile: {
     display: 'flex',
     [theme.breakpoints.up('md')]: {
       display: 'none'
-    },
-    marginLeft: 'auto'
+    }
   }
 }))
 
@@ -66,9 +65,7 @@ export default function PrimarySearchAppBar() {
 
   const profileImg = (
     <img
-      width={40}
-      height={40}
-      style={{ borderRadius: '50%' }}
+      style={{ borderRadius: '50%', width: '40px' }}
       src={`${process.env.NEXT_PUBLIC_API_HOST}${myProfile.photo}`}
     />
   )
@@ -104,6 +101,14 @@ export default function PrimarySearchAppBar() {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
+      <Link href="/home">
+        <MenuItem>
+          <IconButton aria-label="show 11 new notifications" color="inherit">
+            <HomeIcon />
+          </IconButton>
+          <p>Home</p>
+        </MenuItem>
+      </Link>
       <MenuItem>
         <IconButton aria-label="show 11 new notifications" color="inherit">
           <Badge badgeContent={11} color="secondary">
@@ -112,17 +117,6 @@ export default function PrimarySearchAppBar() {
         </IconButton>
         <p>Notificações</p>
       </MenuItem>
-      <MenuItem onClick={handleProfileMenuOpen}>
-        <IconButton
-          aria-label="account of current user"
-          aria-controls="primary-search-account-menu"
-          aria-haspopup="true"
-          color="inherit"
-        >
-          {profileImg}
-        </IconButton>
-        <p>Perfil</p>
-      </MenuItem>
     </Menu>
   )
 
@@ -130,28 +124,32 @@ export default function PrimarySearchAppBar() {
     <div className="w-full">
       <AppBar position="static">
         <Toolbar>
-          <Link href="/home">
-            <h1 className={classes.title}>Uniconn</h1>
-          </Link>
-          <div className={classes.grow} />
-          <div className={classes.sectionDesktop}>
-            <IconButton aria-label="show 17 new notifications" color="inherit">
-              <Badge badgeContent={17} color="secondary">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
-            <IconButton
-              edge="end"
-              aria-label="account of current user"
-              aria-controls={menuId}
-              aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
-              color="inherit"
-            >
-              {profileImg}
-            </IconButton>
+          <div className={`${classes.sectionDesktop} w-full items-center`}>
+            <Link href="/home">
+              <h1 className={`${classes.title} cursor-pointer`}>Uniconn</h1>
+            </Link>
+            <div className="ml-auto">
+              <IconButton
+                aria-label="show 17 new notifications"
+                color="inherit"
+              >
+                <Badge badgeContent={17} color="secondary">
+                  <NotificationsIcon />
+                </Badge>
+              </IconButton>
+              <IconButton
+                edge="end"
+                aria-label="account of current user"
+                aria-controls={menuId}
+                aria-haspopup="true"
+                onClick={handleProfileMenuOpen}
+                color="inherit"
+              >
+                {profileImg}
+              </IconButton>
+            </div>
           </div>
-          <div className={classes.sectionMobile}>
+          <div className={`${classes.sectionMobile} w-full items-center`}>
             <IconButton
               aria-label="show more"
               aria-controls={mobileMenuId}
@@ -159,7 +157,21 @@ export default function PrimarySearchAppBar() {
               onClick={handleMobileMenuOpen}
               color="inherit"
             >
-              <MoreIcon />
+              <MenuIcon />
+            </IconButton>
+            <Link href="/home">
+              <h1 className={`${classes.title} cursor-pointer`}>Uniconn</h1>
+            </Link>
+            <IconButton
+              edge="end"
+              aria-label="account of current user"
+              aria-controls={menuId}
+              aria-haspopup="true"
+              onClick={handleProfileMenuOpen}
+              color="inherit"
+              style={{ marginLeft: 'auto' }}
+            >
+              {profileImg}
             </IconButton>
           </div>
         </Toolbar>
