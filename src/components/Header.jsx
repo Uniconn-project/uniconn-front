@@ -9,6 +9,7 @@ import MenuItem from '@material-ui/core/MenuItem'
 import Menu from '@material-ui/core/Menu'
 import HomeIcon from '@material-ui/icons/Home'
 import NotificationsIcon from '@material-ui/icons/Notifications'
+import SettingsIcon from '@material-ui/icons/Settings'
 import MenuIcon from '@material-ui/icons/Menu'
 import Logout from './helpers/Logout'
 import { MyProfileContext } from '../contexts/MyProfile'
@@ -32,10 +33,13 @@ const useStyles = makeStyles(theme => ({
     [theme.breakpoints.up('md')]: {
       display: 'none'
     }
+  },
+  activeMenuItem: {
+    fontWeight: 'bold'
   }
 }))
 
-export default function PrimarySearchAppBar() {
+export default function Header({ page }) {
   const { myProfile } = useContext(MyProfileContext)
 
   const [anchorEl, setAnchorEl] = useState(null)
@@ -70,22 +74,22 @@ export default function PrimarySearchAppBar() {
     />
   )
 
-  const menuId = 'primary-search-account-menu'
-  const menu = (
+  const profileMenuId = 'primary-search-account-menu'
+  const profileMenu = (
     <Menu
       anchorEl={anchorEl}
       anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-      id={menuId}
+      id={profileMenuId}
       keepMounted
       transformOrigin={{ vertical: 'top', horizontal: 'right' }}
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
+      <Link href="/profile">
+        <MenuItem onClick={handleMenuClose}>Perfil</MenuItem>
+      </Link>
       <MenuItem onClick={handleMenuClose}>
-        <Link href="/profile">Perfil</Link>
-      </MenuItem>
-      <MenuItem onClick={handleMenuClose}>
-        <Logout />
+        <Logout className="w-full h-full" />
       </MenuItem>
     </Menu>
   )
@@ -109,14 +113,24 @@ export default function PrimarySearchAppBar() {
           <p>Home</p>
         </MenuItem>
       </Link>
-      <MenuItem>
-        <IconButton aria-label="show 11 new notifications" color="inherit">
-          <Badge badgeContent={11} color="secondary">
-            <NotificationsIcon />
-          </Badge>
-        </IconButton>
-        <p>Notificações</p>
-      </MenuItem>
+      <Link href="/notifications">
+        <MenuItem>
+          <IconButton aria-label="show 11 new notifications" color="inherit">
+            <Badge badgeContent={11} color="secondary">
+              <NotificationsIcon />
+            </Badge>
+          </IconButton>
+          <p>Notificações</p>
+        </MenuItem>
+      </Link>
+      <Link href="/settings">
+        <MenuItem>
+          <IconButton aria-label="show 11 new notifications" color="inherit">
+            <SettingsIcon />
+          </IconButton>
+          <p>Configurações</p>
+        </MenuItem>
+      </Link>
     </Menu>
   )
 
@@ -128,19 +142,56 @@ export default function PrimarySearchAppBar() {
             <Link href="/home">
               <h1 className={`${classes.title} cursor-pointer`}>Uniconn</h1>
             </Link>
+            <div className="flex items-center ml-12">
+              <Link href="/home">
+                <div className="mx-4 cursor-pointer">
+                  <h3
+                    className={`font-medium ${
+                      page === 'home' ? classes.activeMenuItem : ''
+                    }`}
+                  >
+                    Home
+                  </h3>
+                </div>
+              </Link>
+              <Link href="/profile">
+                <div className="mx-4 cursor-pointer">
+                  <h3
+                    className={`font-medium ${
+                      page === 'profile' ? classes.activeMenuItem : ''
+                    }`}
+                  >
+                    Perfil
+                  </h3>
+                </div>
+              </Link>
+              <Link href="/settings">
+                <div className="mx-4 cursor-pointer">
+                  <h3
+                    className={`font-medium ${
+                      page === 'settings' ? classes.activeMenuItem : ''
+                    }`}
+                  >
+                    Configurações
+                  </h3>
+                </div>
+              </Link>
+            </div>
             <div className="ml-auto">
-              <IconButton
-                aria-label="show 17 new notifications"
-                color="inherit"
-              >
-                <Badge badgeContent={17} color="secondary">
-                  <NotificationsIcon />
-                </Badge>
-              </IconButton>
+              <Link href="/notifications">
+                <IconButton
+                  aria-label="show 17 new notifications"
+                  color="inherit"
+                >
+                  <Badge badgeContent={17} color="secondary">
+                    <NotificationsIcon />
+                  </Badge>
+                </IconButton>
+              </Link>
               <IconButton
                 edge="end"
                 aria-label="account of current user"
-                aria-controls={menuId}
+                aria-controls={profileMenuId}
                 aria-haspopup="true"
                 onClick={handleProfileMenuOpen}
                 color="inherit"
@@ -165,7 +216,7 @@ export default function PrimarySearchAppBar() {
             <IconButton
               edge="end"
               aria-label="account of current user"
-              aria-controls={menuId}
+              aria-controls={profileMenuId}
               aria-haspopup="true"
               onClick={handleProfileMenuOpen}
               color="inherit"
@@ -177,7 +228,7 @@ export default function PrimarySearchAppBar() {
         </Toolbar>
       </AppBar>
       {mobileMenu}
-      {menu}
+      {profileMenu}
     </div>
   )
 }

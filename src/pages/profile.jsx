@@ -15,7 +15,7 @@ export default function MyProfile() {
   }
 
   return (
-    <Page title="Perfil | Uniconn" loginRequired header>
+    <Page title="Perfil | Uniconn" page="profile" loginRequired header>
       <div className="flex flex-col h-full justify-center items-center">
         <img
           src={process.env.NEXT_PUBLIC_API_HOST + myProfile.photo}

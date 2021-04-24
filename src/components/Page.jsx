@@ -7,21 +7,23 @@ import { AuthContext } from '../contexts/Auth'
 export default function Page({
   children,
   title,
+  page,
   loginRequired = false,
   center = false,
   header = false
 }) {
-  const { isAuthenticated } = useContext(AuthContext)
+  const { isAuthenticated, loading } = useContext(AuthContext)
 
   useEffect(() => {
+    if (loading) return
+
     if (
       (loginRequired && !isAuthenticated) ||
       (!loginRequired && isAuthenticated)
     ) {
       Router.replace('/')
-      console.log('page in', loginRequired, isAuthenticated, title)
     }
-  }, [loginRequired, isAuthenticated])
+  }, [loginRequired, isAuthenticated, loading])
 
   return (
     <div>
@@ -34,7 +36,7 @@ export default function Page({
             center ? 'center' : 'start'
           } items-center`}
         >
-          {header && <Header />}
+          {header && <Header page={page} />}
           {children}
         </div>
       </div>

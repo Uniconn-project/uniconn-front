@@ -4,22 +4,27 @@ import Page from '../components/Page'
 import { MyProfileContext } from '../contexts/MyProfile'
 import { AuthContext } from '../contexts/Auth'
 
-export default function Home() {
+export default function Notifications() {
   const { loading } = useContext(AuthContext)
   const { myProfile } = useContext(MyProfileContext)
 
   if (!myProfile) {
     return (
-      <Page title="Home | Uniconn" loginRequired={!loading} center>
+      <Page title="Notificações | Uniconn" loginRequired={!loading} center>
         <CircularProgress color="primary" />
       </Page>
     )
   }
 
   return (
-    <Page title="Home | Uniconn" page="home" loginRequired header>
+    <Page
+      title="Notificações | Uniconn"
+      page="notifications"
+      loginRequired
+      header
+    >
       <div className="flex h-full justify-center items-center">
-        <h1>Bem vindo, {myProfile.first_name}!</h1>
+        <h1>Notificações</h1>
       </div>
     </Page>
   )

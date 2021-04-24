@@ -8,7 +8,6 @@ export default function Index() {
   const { loading, isAuthenticated } = useContext(AuthContext)
 
   useEffect(() => {
-    console.log('index')
     if (loading) return
 
     if (isAuthenticated) {
