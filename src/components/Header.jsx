@@ -3,7 +3,7 @@ import React from 'react'
 export default function Header({ page }) {
   return (
     <div>
-      <strong>{page}</strong>
+      <span className='text-white text-2xl'>{page}</span>
     </div>
   )
 }
