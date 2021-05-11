@@ -3,6 +3,7 @@
   color: var(--btn-text) !important;
 }
 
+.MuiInput-underline:after,
 .MuiFilledInput-underline:after {
-  border-bottom: none !important;
+  border-bottom: 2px solid var(--primary-color) !important;
 }

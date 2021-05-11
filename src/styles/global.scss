@@ -75,8 +75,12 @@ a:hover {
 }
 
 button.btn-primary {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background-color: var(--primary-color);
   color: var(--btn-text);
+  margin: 10px;
   padding: 6px 16px;
   border-radius: 4px;
 }

@@ -1,7 +1,6 @@
 import React from 'react'
 import Document, { Html, Head, Main, NextScript } from 'next/document'
 import { ServerStyleSheets } from '@material-ui/core/styles'
-import theme from '../styles/theme'
 
 export default class MyDocument extends Document {
   render() {
@@ -15,7 +14,6 @@ export default class MyDocument extends Document {
           <link rel="manifest" href="/manifest.json" />
           <link href="logo.svg" rel="icon" type="svg" sizes="32x32" />
           <link rel="apple-touch-icon" href="/apple-icon.png"></link>
-          <meta name="theme-color" content={theme.palette.primary.main} />
           <link rel="preconnect" href="https://fonts.gstatic.com" />
           <link
             href="https://fonts.googleapis.com/css2?family=Lexend&display=swap"

@@ -155,14 +155,9 @@ export default function BaseForm({ children, parentPostData, type }) {
         </FormGroup>
         {children}
       </div>
-      <Button
-        variant="contained"
-        color="primary"
-        className="w-4/5"
-        onClick={handleSubmit}
-      >
+      <button className="btn-primary w-4/5" onClick={handleSubmit}>
         Criar conta
-      </Button>
+      </button>
       <IconButton color="primary" onClick={() => window.history.back()}>
         <ArrowBackIcon />
       </IconButton>
