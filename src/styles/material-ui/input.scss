@@ -3,7 +3,23 @@
   color: var(--btn-text) !important;
 }
 
+.MuiFilledInput-root {
+  background-color: rgba(0, 0, 0, 0.2) !important;
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.3) !important;
+  }
+}
+
 .MuiInput-underline:after,
 .MuiFilledInput-underline:after {
   border-bottom: 2px solid var(--primary-color) !important;
+}
+
+.MuiFormLabel-root {
+  color: var(--paragraph) !important;
+
+  &.Mui-focused {
+    color: var(--primary-color) !important;
+  }
 }

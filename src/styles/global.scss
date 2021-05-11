@@ -17,7 +17,8 @@
 :root {
   --primary-color: #7f5af0;
   --primary-color-hover: rgba(127, 90, 240, 0.75);
-  --background: #16161a;
+  --background-dark: #16161a;
+  --background-light: #242629;
   --btn-text: #fffffe;
   --headline: #fffffe;
   --paragraph: #94a1b2;
@@ -34,7 +35,7 @@
 }
 
 body {
-  background-color: var(--background);
+  background-color: var(--background-dark);
 }
 
 h1,
