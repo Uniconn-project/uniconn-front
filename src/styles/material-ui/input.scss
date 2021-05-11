@@ -1,0 +1,8 @@
+.MuiInputBase-input,
+.MuiIconButton-root {
+  color: var(--btn-text) !important;
+}
+
+.MuiFilledInput-underline:after {
+  border-bottom: none !important;
+}

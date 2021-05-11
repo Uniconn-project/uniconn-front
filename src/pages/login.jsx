@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import Alert from '@material-ui/lab/Alert'
-import Button from '@material-ui/core/Button'
 import IconButton from '@material-ui/core/IconButton'
 import FilledInput from '@material-ui/core/FilledInput'
 import InputAdornment from '@material-ui/core/InputAdornment'
@@ -97,9 +96,9 @@ export default function Login() {
               </InputAdornment>
             }
           />
-          <Button variant="contained" color="primary" onClick={handleSubmit}>
+          <button className="btn-primary" onClick={handleSubmit}>
             Entrar
-          </Button>
+          </button>
         </div>
         <PrimaryLink href="/signup">
           <span>Inscrever-se na Uniconn</span>

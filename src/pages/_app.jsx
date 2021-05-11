@@ -1,11 +1,10 @@
 import '../styles/global.scss'
+import '../styles/material-ui/alert.scss'
+import '../styles/material-ui/input.scss'
 
 import React, { useEffect } from 'react'
 import Head from 'next/head'
 import PropTypes from 'prop-types'
-import { ThemeProvider } from '@material-ui/core/styles'
-import CssBaseline from '@material-ui/core/CssBaseline'
-import theme from '../styles/theme'
 import AuthProvider from '../contexts/Auth'
 import MyProfileProvider from '../contexts/MyProfile'
 
@@ -21,9 +20,7 @@ export default function MyApp(props) {
   }, [])
 
   return (
-    <ThemeProvider theme={theme}>
-      {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-      <CssBaseline />
+    <>
       <Head>
         <meta
           name="viewport"
@@ -35,7 +32,7 @@ export default function MyApp(props) {
           <Component {...pageProps} />
         </MyProfileProvider>
       </AuthProvider>
-    </ThemeProvider>
+    </>
   )
 }
 
