@@ -9,7 +9,6 @@ export default function Page({
   title,
   page,
   loginRequired = false,
-  center = false,
   header = false
 }) {
   const { isAuthenticated, loading } = useContext(AuthContext)
@@ -31,11 +30,7 @@ export default function Page({
         <title>{title}</title>
       </Head>
       <div className="w-screen h-screen">
-        <div
-          className={`w-full h-full flex flex-col justify-${
-            center ? 'center' : 'start'
-          } items-center`}
-        >
+        <div className="w-full h-full flex flex-col justify-start items-center pt-32">
           {header && <Header page={page} />}
           {children}
         </div>

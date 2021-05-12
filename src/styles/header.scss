@@ -1,0 +1,13 @@
+header.header {
+  .nav-link {
+    cursor: pointer;
+
+    &:hover {
+      color: var(--headline);
+    }
+
+    &.active {
+      border-bottom: 3px solid var(--primary-color);
+    }
+  }
+}
