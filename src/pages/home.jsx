@@ -1,7 +1,7 @@
 import React from 'react'
 import Header from '../components/Header'
-import Projects from '../components/Projects'
-import ProfileMetrics from '../components/ProfileMetrics'
+import Projects from '../components/pages/home/Projects'
+import ProfileMetrics from '../components/pages/home/ProfileMetrics'
 
 export default function Home() {
   return (

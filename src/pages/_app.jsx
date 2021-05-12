@@ -1,6 +1,7 @@
 import '../styles/global.scss'
 import '../styles/material-ui/alert.scss'
 import '../styles/material-ui/input.scss'
+import '../styles/material-ui/loader.scss'
 
 import React, { useEffect } from 'react'
 import Head from 'next/head'
