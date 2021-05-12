@@ -30,7 +30,11 @@ export default function Page({
         <title>{title}</title>
       </Head>
       <div className="w-screen h-screen">
-        <div className="w-full h-full flex flex-col justify-start items-center pt-32">
+        <div
+          className={
+            'w-full h-full flex flex-col justify-start items-center pt-32'
+          }
+        >
           {header && <Header page={page} />}
           {children}
         </div>

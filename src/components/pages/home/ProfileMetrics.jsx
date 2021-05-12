@@ -2,7 +2,10 @@ import React from 'react'
 
 function ProfileMetrics() {
   return (
-    <div className="bg-transparent w-full h-full rounded-md shadow-lg"></div>
+    <div
+      className="bg-transparent h-full rounded-md shadow-lg"
+      style={{ width: 225 }}
+    ></div>
   )
 }
 
