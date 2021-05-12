@@ -1,4 +1,5 @@
 import '../styles/global.scss'
+import '../styles/utils/background.scss'
 import '../styles/material-ui/alert.scss'
 import '../styles/material-ui/input.scss'
 import '../styles/material-ui/loader.scss'

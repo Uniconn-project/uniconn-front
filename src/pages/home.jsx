@@ -1,20 +1,24 @@
 import React from 'react'
-import Header from '../components/Header'
+import Page from '../components/Page'
 import Projects from '../components/pages/home/Projects'
 import ProfileMetrics from '../components/pages/home/ProfileMetrics'
 
 export default function Home() {
   return (
-    <div className="w-screen h-screen">
-      <Header page={'Uniccon'}></Header>
-      <div className="flex justify-between w-full">
-        <div>
-          <ProfileMetrics></ProfileMetrics>
+    <Page page="Home" loginRequired header>
+      <div className="w-full h-20"></div>
+      <div className="w-full flex">
+        <div className="flex-grow flex justify-end mr-10">
+          <div style={{ width: 225 }}>
+            <ProfileMetrics />
+          </div>
         </div>
-        <div>
-          <Projects></Projects>
+        <div className="flex-grow flex justify-start">
+          <div style={{ width: 600 }}>
+            <Projects />
+          </div>
         </div>
       </div>
-    </div>
+    </Page>
   )
 }
