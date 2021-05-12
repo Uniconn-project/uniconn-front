@@ -6,7 +6,6 @@ import ProfileMetrics from '../components/pages/home/ProfileMetrics'
 export default function Home() {
   return (
     <Page page="Home" loginRequired header>
-      <div className="w-full h-10"></div>
       <div className="w-full h-full flex">
         <div className="flex-grow flex justify-end mr-10">
           <div style={{ width: 225 }}>

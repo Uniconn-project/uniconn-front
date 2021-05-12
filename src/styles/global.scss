@@ -22,6 +22,7 @@
   --btn-text: #fffffe;
   --headline: #fffffe;
   --paragraph: #94a1b2;
+  --transparent: rgba(255, 255, 255, 0.02);
 }
 
 * {
@@ -35,7 +36,11 @@
 }
 
 body {
-  background-color: var(--background-dark);
+  background: linear-gradient(
+    45deg,
+    var(--background-dark),
+    var(--background-light)
+  );
   color: var(--paragraph);
 }
 
