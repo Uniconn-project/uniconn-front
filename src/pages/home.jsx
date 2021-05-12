@@ -4,22 +4,18 @@ import Projects from '../components/pages/home/Projects'
 import ProfileMetrics from '../components/pages/home/ProfileMetrics'
 
 export default function Home() {
-  const isMobile = typeof window !== 'undefined' && window.visualViewport.width <= 900
-  // console.log(isMobile)
   return (
     <Page page="home" loginRequired header>
-      <div className="w-full h-full flex">
-        {!isMobile && (
-          <div className="flex-grow flex justify-end mr-10 box-border">
-            <div style={{ width: 225 }}>
-              <div className="h-full fixed top-32">
-                <ProfileMetrics />
-              </div>
+      <div className="justify-center w-full h-full flex">
+        <div className="hidden lg:flex-grow lg:flex lg:justify-end lg:mr-10 lg:box-border">
+          <div style={{ width: 225 }}>
+            <div className="h-full fixed top-32">
+              <ProfileMetrics />
             </div>
           </div>
-        )}
-        <div className="flex-grow flex justify-start box-border">
-          <div style={{ width: 600 }}>
+        </div>
+        <div className="justify-center lg:flex-grow lg:flex lg:justify-start lg:box-border">
+          <div className="w-full" style={{ maxWidth: 600 }}>
             <Projects />
           </div>
         </div>

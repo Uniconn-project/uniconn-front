@@ -1,13 +1,25 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Link from 'next/link'
+import Drawer from '@material-ui/core/Drawer'
+import Button from '@material-ui/core/Button'
+import List from '@material-ui/core/List'
+import ListItem from '@material-ui/core/ListItem'
+import ListItemIcon from '@material-ui/core/ListItemIcon'
+import ListItemText from '@material-ui/core/ListItemText'
+import MoreVertIcon from '@material-ui/icons/MoreVert'
+import HomeIcon from '@material-ui/icons/Home'
+import ProfileIcon from '@material-ui/icons/Person'
 
 export default function Header({ page }) {
   return (
-    <header className="fixed top-0 w-full h-20 flex items-center px-8 py-2 header">
+    <header className="px-0 fixed top-0 w-full h-20 flex items-center py-2 header sm:px-8">
+      <div className="sm:hidden">
+        <MobileMenu />
+      </div>
       <div>
         <h1>Uniconn</h1>
       </div>
-      <div className="flex ml-32">
+      <div className="hidden sm:flex sm:ml-32">
         <Link href="/home">
           <div
             className={`p-3 mr-2 nav-link ${page === 'home' ? 'active' : ''}`}
@@ -26,5 +38,50 @@ export default function Header({ page }) {
         </Link>
       </div>
     </header>
+  )
+}
+
+function MobileMenu() {
+  const [mobileMenuIsOpen, setMobileMenuIsOpen] = useState(false)
+
+  return (
+    <div>
+      <Button onClick={() => setMobileMenuIsOpen(!mobileMenuIsOpen)}>
+        <MoreVertIcon
+          className="text-4xl"
+          style={{ color: 'var(--primary-color)' }}
+        />
+      </Button>
+      <Drawer
+        anchor="left"
+        open={mobileMenuIsOpen}
+        onClose={() => setMobileMenuIsOpen(false)}
+      >
+        <div
+          role="presentation"
+          onClick={() => setMobileMenuIsOpen(!mobileMenuIsOpen)}
+        >
+          <List>
+            <Link href="/home">
+              <ListItem button>
+                <ListItemIcon>
+                  <HomeIcon />
+                </ListItemIcon>
+                <ListItemText primary={'Home'} />
+              </ListItem>
+            </Link>
+            <Link href="/profile">
+              <ListItem button>
+                <ListItemIcon>
+                  <ProfileIcon />
+                </ListItemIcon>
+                <ListItemText primary={'Perfil'} />
+              </ListItem>
+            </Link>
+          </List>
+        </div>
+        )
+      </Drawer>
+    </div>
   )
 }
