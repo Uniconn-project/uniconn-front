@@ -17,6 +17,7 @@
 :root {
   --primary-color: #7f5af0;
   --primary-color-hover: rgba(127, 90, 240, 0.75);
+  --secondary-color: #e45858;
   --background-dark: #16161a;
   --background-light: #242629;
   --btn-text: #fffffe;
@@ -42,6 +43,8 @@ body {
     var(--background-light)
   );
   color: var(--paragraph);
+  overflow-y: scroll;
+  overflow-x: hidden;
 }
 
 h1,
