@@ -87,11 +87,25 @@ button.btn-primary {
   align-items: center;
   background-color: var(--primary-color);
   color: var(--btn-text);
-  margin: 10px;
   padding: 6px 16px;
-  border-radius: 4px;
+  border-radius: 15px;
 }
 
 button.btn-primary:hover {
   background-color: var(--primary-color-hover);
+}
+
+button.btn-secondary {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: none;
+  color: var(--btn-text);
+  padding: 6px 16px;
+  border-radius: 15px;
+  border: 2px solid var(--primary-color);
+}
+
+button.btn-secondary:hover {
+  background-color: var(--primary-color);
 }

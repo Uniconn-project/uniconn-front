@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from 'react'
 import Router from 'next/router'
 import Head from 'next/head'
+import CircularProgress from '@material-ui/core/CircularProgress'
 import Header from './Header'
 import { AuthContext } from '../contexts/Auth'
 
@@ -23,6 +24,25 @@ export default function Page({
       Router.replace('/')
     }
   }, [loginRequired, isAuthenticated, loading])
+
+  if (loading) {
+    return (
+      <div>
+        <Head>
+          <title>Uniconn</title>
+        </Head>
+        <div className="w-screen h-screen">
+          <div
+            className={
+              'w-full h-full flex flex-col justify-center items-center'
+            }
+          >
+            <CircularProgress color="primary" />
+          </div>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div>

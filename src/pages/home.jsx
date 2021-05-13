@@ -5,7 +5,7 @@ import ProfileMetrics from '../components/pages/home/ProfileMetrics'
 
 export default function Home() {
   return (
-    <Page page="home" loginRequired header>
+    <Page title="Home | Uniconn" page="home" loginRequired header>
       <div className="justify-center w-full h-full flex">
         <div className="hidden lg:flex-grow lg:flex lg:justify-end lg:mr-10 lg:box-border">
           <div style={{ width: 225 }}>
