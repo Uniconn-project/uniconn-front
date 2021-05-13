@@ -80,7 +80,6 @@ function MobileMenu() {
             </Link>
           </List>
         </div>
-        )
       </Drawer>
     </div>
   )

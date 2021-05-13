@@ -5,6 +5,7 @@ import '../styles/material-ui/alert.scss'
 import '../styles/material-ui/icon.scss'
 import '../styles/material-ui/input.scss'
 import '../styles/material-ui/loader.scss'
+import '../styles/material-ui/mobile_menu.scss'
 
 import React, { useEffect } from 'react'
 import Head from 'next/head'
