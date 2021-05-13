@@ -32,7 +32,7 @@ export default function Page({
       <div className="w-screen h-screen">
         <div
           className={
-            'w-full h-full flex flex-col justify-start items-center pt-32'
+            'w-full h-full flex flex-col justify-start items-center pt-28 sm:pt-32'
           }
         >
           {header && <Header page={page} />}

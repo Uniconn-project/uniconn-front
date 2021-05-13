@@ -15,7 +15,7 @@ export default function Signup() {
 
   return (
     <Page title="Signup | Uniconn">
-      <div className="h-full flex flex-col justify-start items-center pt-40">
+      <div className="h-full flex flex-col justify-start items-center">
         <div className="m-10">
           <h1>Uniconn</h1>
         </div>

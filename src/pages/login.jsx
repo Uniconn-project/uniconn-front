@@ -58,7 +58,7 @@ export default function Login() {
 
   return (
     <Page title="Login | Uniconn">
-      <div className="h-full flex flex-col justify-start items-center pt-10">
+      <div className="h-full flex flex-col justify-start items-center">
         <h1 className="m-6">Entrar na Uniconn</h1>
         {errorMsg !== null && (
           <div>

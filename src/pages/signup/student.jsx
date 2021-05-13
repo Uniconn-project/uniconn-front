@@ -60,7 +60,7 @@ export default function Student(props) {
 
   return (
     <Page title="Signup | Uniconn">
-      <div className="h-full flex flex-col justify-start items-center pt-10">
+      <div className="h-full flex flex-col justify-start items-center">
         <h1>Aluno</h1>
         <BaseForm parentPostData={postData} type="student">
           <FormGroup className="w-full mb-4 justify-center items-center" row>
