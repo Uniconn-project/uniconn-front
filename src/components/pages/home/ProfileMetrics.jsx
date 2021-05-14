@@ -11,7 +11,7 @@ function ProfileMetrics() {
 
   return (
     <div
-      className="bg-transparent h-full rounded-md shadow-lg pt-4"
+      className="bg-transparent h-4/5 rounded-md shadow-lg pt-4"
       style={{ width: 225 }}
     >
       <div className="flex flex-col items-center">

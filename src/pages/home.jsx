@@ -1,10 +1,19 @@
-import React from 'react'
-import FilterListIcon from '@material-ui/icons/FilterList'
+import React, { useEffect, useState } from 'react'
 import Page from '../components/Page'
 import Projects from '../components/pages/home/Projects'
 import ProfileMetrics from '../components/pages/home/ProfileMetrics'
+import ProjectsFilter from '../components/pages/home/ProjectsFilter'
+import useFetch from '../hooks/useFetch'
 
 export default function Home() {
+  const { data: projects } = useFetch('projects/get-project-list')
+
+  const [renderedProjects, setRenderedProjects] = useState(null)
+
+  useEffect(() => {
+    setRenderedProjects(projects)
+  }, [projects])
+
   return (
     <Page title="Home | Uniconn" page="home" loginRequired header>
       <div className="justify-center w-full h-full flex">
@@ -20,15 +29,11 @@ export default function Home() {
           style={{ flexGrow: 2 }}
         >
           <div className="w-full" style={{ maxWidth: 600 }}>
-            <div className="bg-transparent w-full h-14 rounded-md shadow-lg mb-4 p-2 flex items-center">
-              <input
-                type="text"
-                placeholder="Pesquisar projeto..."
-                className="bg-transparent p-2"
-              />
-              <FilterListIcon className="ml-auto cursor-pointer" />
-            </div>
-            <Projects />
+            <ProjectsFilter
+              projects={projects}
+              setRenderedProjects={setRenderedProjects}
+            />
+            <Projects renderedProjects={renderedProjects} />
           </div>
         </div>
       </div>

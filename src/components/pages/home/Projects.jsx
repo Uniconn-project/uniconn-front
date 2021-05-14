@@ -1,17 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { CircularProgress } from '@material-ui/core'
-import useFetch from '../../../hooks/useFetch'
 import ProjectListItem from './ProjectListItem'
 
-function Projects() {
-  const { data: projects } = useFetch('projects/get-project-list')
-
-  const [renderedProjects, setRenderedProjects] = useState(null)
-
-  useEffect(() => {
-    setRenderedProjects(projects)
-  }, [projects])
-
+function Projects({ renderedProjects }) {
   if (!renderedProjects) {
     return <CircularProgress />
   }
