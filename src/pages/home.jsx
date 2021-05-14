@@ -1,4 +1,5 @@
 import React from 'react'
+import FilterListIcon from '@material-ui/icons/FilterList'
 import Page from '../components/Page'
 import Projects from '../components/pages/home/Projects'
 import ProfileMetrics from '../components/pages/home/ProfileMetrics'
@@ -19,6 +20,14 @@ export default function Home() {
           style={{ flexGrow: 2 }}
         >
           <div className="w-full" style={{ maxWidth: 600 }}>
+            <div className="bg-transparent w-full h-14 rounded-md shadow-lg mb-4 p-2 flex items-center">
+              <input
+                type="text"
+                placeholder="Pesquisar projeto..."
+                className="bg-transparent p-2"
+              />
+              <FilterListIcon className="ml-auto cursor-pointer" />
+            </div>
             <Projects />
           </div>
         </div>
