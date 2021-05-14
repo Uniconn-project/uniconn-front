@@ -1,8 +1,9 @@
 import React, { useContext, useEffect } from 'react'
 import Link from 'next/link'
 import Head from 'next/head'
-import CircularProgress from '@material-ui/core/CircularProgress'
 import Router from 'next/router'
+import CircularProgress from '@material-ui/core/CircularProgress'
+import PersonOutlineIcon from '@material-ui/icons/PersonOutline'
 import { AuthContext } from '../contexts/Auth'
 
 export default function Index() {
@@ -45,7 +46,7 @@ export default function Index() {
           <div>
             <h1>Uniconn</h1>
           </div>
-          <div className="ml-auto flex h-2/3">
+          <div className="hidden ml-auto h-2/3 sm:flex">
             <Link href="/login">
               <button className="btn-secondary m-2">Entrar</button>
             </Link>
@@ -53,9 +54,14 @@ export default function Index() {
               <button className="btn-primary m-2">Criar conta</button>
             </Link>
           </div>
+          <div className="flex ml-auto sm:hidden">
+            <Link href="/login">
+              <PersonOutlineIcon />
+            </Link>
+          </div>
         </div>
-        <div className="bg-linear flex px-32 pt-32 pb-20">
-          <div className="w-1/2">
+        <div className="bg-linear flex px-8 pt-8 pb-4 md:px-32 md:pt-32 md:pb-20">
+          <div className="md:w-1/2">
             <h1>
               Lorem ipsum dolor sit amet{' '}
               <span style={{ color: 'var(--secondary-color)' }}>
@@ -74,8 +80,8 @@ export default function Index() {
             </Link>
           </div>
         </div>
-        <div className="bg-light flex px-32 pt-32 pb-20">
-          <div className="w-1/2">
+        <div className="bg-light flex justify-end px-8 pt-12 pb-4 md:px-32 md:pt-32 md:pb-20">
+          <div className="md:w-1/2">
             <h2>
               <span style={{ color: 'var(--secondary-color)' }}>1.</span> Lorem
               ipsum dolor sit amet consectetur adipisicing elit. Minus iste
@@ -104,8 +110,8 @@ export default function Index() {
             </svg>
           </div>
         </div>
-        <div className="bg-dark flex px-32 pt-32 pb-20">
-          <div className="w-1/2">
+        <div className="bg-dark flex px-8 pt-20 pb-4 md:px-32 md:pt-32 md:pb-20">
+          <div className="md:w-1/2">
             <h2>
               <span style={{ color: 'var(--secondary-color)' }}>2.</span> Lorem
               ipsum dolor sit amet consectetur adipisicing elit. Minus iste
@@ -134,8 +140,8 @@ export default function Index() {
             </svg>
           </div>
         </div>
-        <div className="bg-light flex px-32 pt-32 pb-20">
-          <div className="w-1/2">
+        <div className="bg-light flex justify-end px-8 pt-20 pb-4 md:px-32 md:pt-32 md:pb-20">
+          <div className="md:w-1/2">
             <h2>
               <span style={{ color: 'var(--secondary-color)' }}>3.</span> Lorem
               ipsum dolor sit amet consectetur adipisicing elit. Minus iste
