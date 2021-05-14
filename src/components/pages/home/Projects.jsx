@@ -3,7 +3,7 @@ import Project from './Project'
 
 function Projects() {
   return (
-    <div className="w-full h-full">
+    <div className="w-full h-full px-2">
       <Project />
       <Project />
       <Project />
