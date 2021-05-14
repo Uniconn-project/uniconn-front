@@ -5,6 +5,8 @@ export default function ProjectsFilter({ projects, setRenderedProjects }) {
   const [search, setSearch] = useState('')
 
   useEffect(() => {
+    if (!projects || !setRenderedProjects) return
+
     setRenderedProjects(
       projects.filter(project => project.name.toLowerCase().includes(search))
     )
@@ -19,7 +21,7 @@ export default function ProjectsFilter({ projects, setRenderedProjects }) {
         value={search}
         onChange={e => setSearch(e.target.value)}
       />
-      <FilterListIcon className="ml-auto cursor-pointer color-primary" />
+      <FilterListIcon className="ml-auto cursor-pointer color-primary color-hover" />
     </div>
   )
 }

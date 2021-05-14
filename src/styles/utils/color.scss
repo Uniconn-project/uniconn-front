@@ -1,7 +1,19 @@
 .color-primary {
   color: var(--primary-color);
 
-  &:hover {
-    color: var(--primary-color-hover);
+  &.color-hover {
+    &:hover {
+      color: var(--primary-color-hover);
+    }
+  }
+}
+
+.color-secondary {
+  color: var(--secondary-color);
+
+  &.color-hover {
+    &:hover {
+      color: var(--secondary-color-hover);
+    }
   }
 }
