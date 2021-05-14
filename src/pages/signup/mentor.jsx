@@ -41,7 +41,7 @@ export default function Mentor(props) {
   if (!markets) {
     return (
       <Page title="Signup | Uniconn">
-        <CircularProgress color="primary" />
+        <CircularProgress />
       </Page>
     )
   }

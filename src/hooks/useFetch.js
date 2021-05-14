@@ -11,7 +11,7 @@ export const fetcher = async (url, headers = {}) => {
   return data
 }
 
-export default function useFetch(url, config) {
+export default function useFetch(url, config = {}) {
   const { data, err, mutate } = useSWR(url, fetcher, config)
 
   return { data, err, mutate }

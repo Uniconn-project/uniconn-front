@@ -14,7 +14,10 @@ export default function Home() {
             </div>
           </div>
         </div>
-        <div className="justify-center lg:flex-grow lg:flex lg:justify-start lg:box-border">
+        <div
+          className="flex justify-center lg:justify-start lg:box-border"
+          style={{ flexGrow: 2 }}
+        >
           <div className="w-full" style={{ maxWidth: 600 }}>
             <Projects />
           </div>
