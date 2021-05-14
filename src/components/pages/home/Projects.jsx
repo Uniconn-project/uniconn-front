@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { CircularProgress } from '@material-ui/core'
 import useFetch from '../../../hooks/useFetch'
-import Project from './Project'
+import ProjectListItem from './ProjectListItem'
 
 function Projects() {
   const { data: projects } = useFetch('projects/get-project-list')
@@ -19,7 +19,7 @@ function Projects() {
   return (
     <div className="w-full h-full px-2">
       {renderedProjects.map(project => (
-        <Project key={project.id} project={project} />
+        <ProjectListItem key={project.id} project={project} />
       ))}
     </div>
   )
