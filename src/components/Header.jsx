@@ -17,7 +17,9 @@ export default function Header({ page }) {
         <MobileMenu />
       </div>
       <div>
-        <h1>Uniconn</h1>
+        <Link href="/home">
+          <h1 className="cursor-pointer">Uniconn</h1>
+        </Link>
       </div>
       <div className="hidden sm:flex sm:ml-32">
         <Link href="/home">
