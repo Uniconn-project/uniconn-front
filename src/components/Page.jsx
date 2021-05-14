@@ -25,19 +25,23 @@ export default function Page({
     }
   }, [loginRequired, isAuthenticated, loading])
 
-  if (loading) {
+  if (
+    !loading &&
+    ((loginRequired && isAuthenticated) || (!loginRequired && !isAuthenticated))
+  ) {
     return (
       <div>
         <Head>
-          <title>Uniconn</title>
+          <title>{title}</title>
         </Head>
         <div className="w-screen h-screen">
           <div
             className={
-              'w-full h-full flex flex-col justify-center items-center'
+              'w-full h-full flex flex-col justify-start items-center pt-28 sm:pt-32'
             }
           >
-            <CircularProgress color="primary" />
+            {header && <Header page={page} />}
+            {children}
           </div>
         </div>
       </div>
@@ -47,16 +51,13 @@ export default function Page({
   return (
     <div>
       <Head>
-        <title>{title}</title>
+        <title>Uniconn</title>
       </Head>
       <div className="w-screen h-screen">
         <div
-          className={
-            'w-full h-full flex flex-col justify-start items-center pt-28 sm:pt-32'
-          }
+          className={'w-full h-full flex flex-col justify-center items-center'}
         >
-          {header && <Header page={page} />}
-          {children}
+          <CircularProgress color="primary" />
         </div>
       </div>
     </div>
