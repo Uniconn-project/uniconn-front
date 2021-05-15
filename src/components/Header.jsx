@@ -1,10 +1,12 @@
 import React, { useState } from 'react'
 import Link from 'next/link'
 import Drawer from '@material-ui/core/Drawer'
+import Badge from '@material-ui/core/Badge'
 import Button from '@material-ui/core/Button'
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
+import NotificationsIcon from '@material-ui/icons/Notifications'
 import ListItemText from '@material-ui/core/ListItemText'
 import MoreVertIcon from '@material-ui/icons/MoreVert'
 import HomeIcon from '@material-ui/icons/Home'
@@ -38,6 +40,11 @@ export default function Header({ page }) {
             Perfil
           </div>
         </Link>
+      </div>
+      <div className="ml-auto">
+        <Badge badgeContent={5}>
+          <NotificationsIcon />
+        </Badge>
       </div>
     </header>
   )

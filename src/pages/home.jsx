@@ -24,7 +24,7 @@ export default function Home() {
             </div>
           </div>
         </div>
-        <div className="w-full flex justify-center p-2 lg:w-2/3 lg:justify-start lg:box-border">
+        <div className="w-full flex justify-center p-2 lg:p-0 lg:w-2/3 lg:justify-start lg:box-border">
           <div className="w-full" style={{ maxWidth: 600 }}>
             <ProjectsFilter
               projects={projects}
