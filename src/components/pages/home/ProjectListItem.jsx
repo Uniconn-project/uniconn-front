@@ -22,9 +22,13 @@ export default function ProjectListItem({ project }) {
           ))}
         </div>
       </div>
-      <p className="max-h-20 whitespace-nowrap overflow-ellipsis overflow-hidden">
+      <p className="max-h-20 whitespace-nowrap overflow-ellipsis overflow-hidden mb-4">
         {project.slogan}
       </p>
+      <img
+        src={process.env.NEXT_PUBLIC_API_HOST + project.image}
+        className="w-80 h-52 rounded-md object-cover"
+      />
     </div>
   )
 }
