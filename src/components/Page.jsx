@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from 'react'
 import Router from 'next/router'
 import Head from 'next/head'
 import CircularProgress from '@material-ui/core/CircularProgress'
-import Header from './Header'
+import Header from './header/Header'
 import { AuthContext } from '../contexts/Auth'
 
 export default function Page({

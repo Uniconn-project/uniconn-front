@@ -17,3 +17,13 @@
     }
   }
 }
+
+.color-paragraph {
+  color: var(--paragraph);
+
+  &.color-hover {
+    &:hover {
+      filter: brightness(1.2);
+    }
+  }
+}
