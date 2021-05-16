@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
-import PersonIcon from '@material-ui/icons/Person'
+import AssignmentIcon from '@material-ui/icons/Assignment'
 import SchoolIcon from '@material-ui/icons/School'
 import Page from '../components/Page'
 import PrimaryLink from '../components/helpers/PrimaryLink'
@@ -22,7 +22,7 @@ export default function Signup() {
         <div className="flex">
           <Link href="/signup/mentor">
             <button className="btn-primary w-40 m-2">
-              <PersonIcon className="mr-1" />
+              <AssignmentIcon className="mr-1" />
               Sou mentor
             </button>
           </Link>

@@ -3,7 +3,7 @@ import Router from 'next/router'
 import { AuthContext } from '../../contexts/Auth'
 import { MyProfileContext } from '../../contexts/MyProfile'
 
-export default function Logout({ className }) {
+export default function Logout({ children, className }) {
   const { logout } = useContext(AuthContext)
   const { setMyProfile } = useContext(MyProfileContext)
 
@@ -21,7 +21,7 @@ export default function Logout({ className }) {
 
   return (
     <div className={className} onClick={handleLogout}>
-      Sair
+      {children !== undefined ? children : 'Sair'}
     </div>
   )
 }

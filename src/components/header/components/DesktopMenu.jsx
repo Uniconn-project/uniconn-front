@@ -8,6 +8,7 @@ import MenuItem from '@material-ui/core/MenuItem'
 import MenuList from '@material-ui/core/MenuList'
 import Badge from '@material-ui/core/Badge'
 import NotificationsIcon from '@material-ui/icons/Notifications'
+import CircularProgress from '@material-ui/core/CircularProgress'
 import { MyProfileContext } from '../../../contexts/MyProfile'
 import Logout from '../../helpers/Logout'
 
@@ -20,12 +21,16 @@ export default function DesktopMenu() {
 
   return (
     <div className="flex">
-      <img
-        ref={anchorRef}
-        src={process.env.NEXT_PUBLIC_API_HOST + myProfile.photo}
-        className="profile-img-sm mr-2 cursor-pointer"
-        onClick={() => setIsOpen(!isOpen)}
-      />
+      {myProfile !== null ? (
+        <img
+          ref={anchorRef}
+          src={process.env.NEXT_PUBLIC_API_HOST + myProfile.photo}
+          className="profile-img-sm mr-2 cursor-pointer"
+          onClick={() => setIsOpen(!isOpen)}
+        />
+      ) : (
+        <CircularProgress size={30} />
+      )}
       <Badge
         badgeContent={5}
         className="cursor-pointer color-paragraph color-hover"
@@ -35,6 +40,7 @@ export default function DesktopMenu() {
       <Popper
         open={isOpen}
         anchorEl={anchorRef.current}
+        className="z-20"
         transition
         disablePortal
       >
