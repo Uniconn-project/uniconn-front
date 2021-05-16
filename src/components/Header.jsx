@@ -14,7 +14,7 @@ import ProfileIcon from '@material-ui/icons/Person'
 
 export default function Header({ page }) {
   return (
-    <header className="px-0 fixed top-0 w-full h-20 flex items-center py-2 header sm:px-8">
+    <header className="px-0 fixed top-0 w-full h-20 flex items-center py-2 header bg-dark sm:px-8">
       <div className="sm:hidden">
         <MobileMenu />
       </div>
