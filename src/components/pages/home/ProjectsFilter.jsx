@@ -13,7 +13,7 @@ export default function ProjectsFilter({ projects, setRenderedProjects }) {
   }, [search, projects, setRenderedProjects])
 
   return (
-    <div className="bg-transparent w-full h-14 rounded-md shadow-lg mb-4 p-2 flex items-center">
+    <div className="sticky top-32 bg-light w-full h-14 rounded-md shadow-lg p-2 mb-4 flex items-center">
       <input
         type="text"
         placeholder="Pesquisar projeto..."
