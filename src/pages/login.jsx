@@ -57,7 +57,7 @@ export default function Login() {
   if (!loading && isAuthenticated) router.push('/')
 
   return (
-    <Page title="Login | Uniconn">
+    <Page title="Login | Uniconn" className="h-screen">
       <div className="h-full flex flex-col justify-start items-center">
         <h1 className="m-6">Entrar na Uniconn</h1>
         {errorMsg !== null && (

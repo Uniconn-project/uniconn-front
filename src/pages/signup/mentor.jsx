@@ -47,7 +47,7 @@ export default function Mentor(props) {
   }
 
   return (
-    <Page title="Signup | Uniconn">
+    <Page title="Signup | Uniconn" className="h-screen">
       <div className="h-full flex flex-col justify-start items-center">
         <h1>Mentor</h1>
         <BaseForm parentPostData={postData} type="mentor">

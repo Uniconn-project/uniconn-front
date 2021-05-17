@@ -14,6 +14,7 @@ function ProfileMetrics() {
       className="bg-transparent h-4/5 rounded-md shadow-lg pt-4"
       style={{ width: 225 }}
     >
+      {console.log(myProfile)}
       <div className="b-bottom-light pb-6">
         <div className="w-full flex justify-center">
           <img
@@ -30,6 +31,7 @@ function ProfileMetrics() {
           </p>
         </div>
       </div>
+      <div></div>
     </div>
   )
 }

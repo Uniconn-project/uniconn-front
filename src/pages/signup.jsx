@@ -14,7 +14,7 @@ export default function Signup() {
   if (!loading && isAuthenticated) router.push('/')
 
   return (
-    <Page title="Signup | Uniconn">
+    <Page title="Signup | Uniconn" className="h-screen">
       <div className="h-full flex flex-col justify-start items-center">
         <div className="m-10">
           <h1>Uniconn</h1>

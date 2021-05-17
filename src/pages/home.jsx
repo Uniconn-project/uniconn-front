@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Page from '../components/Page'
 import Projects from '../components/pages/home/Projects'
-import ProfileMetrics from '../components/pages/home/ProfileMetrics'
+import ProfileMetrics from '../components/pages/home/ProfileInfo'
 import ProjectsFilter from '../components/pages/home/ProjectsFilter'
 import useFetch from '../hooks/useFetch'
 

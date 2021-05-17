@@ -1,9 +1,23 @@
 .profile-img-sm {
   width: 2rem;
   border-radius: 50%;
+
+  &.img-student {
+    border: 2px solid var(--primary-color);
+  }
+  &.img-mentor {
+    border: 2px solid var(--secondary-color);
+  }
 }
 
 .profile-img-lg {
   width: 8rem;
   border-radius: 50%;
+
+  &.img-student {
+    border: 2px solid var(--primary-color);
+  }
+  &.img-mentor {
+    border: 2px solid var(--secondary-color);
+  }
 }

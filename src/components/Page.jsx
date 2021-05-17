@@ -9,6 +9,7 @@ export default function Page({
   children,
   title,
   page,
+  className,
   loginRequired = false,
   header = false
 }) {
@@ -34,7 +35,7 @@ export default function Page({
         <Head>
           <title>{title}</title>
         </Head>
-        <div className="w-screen">
+        <div className={`w-screen h-full ${className}`}>
           <div
             className={
               'w-full h-full flex flex-col justify-start items-center pt-24 sm:pt-32'
