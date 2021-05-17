@@ -8,7 +8,9 @@ export default function ProjectsFilter({ projects, setRenderedProjects }) {
     if (!projects || !setRenderedProjects) return
 
     setRenderedProjects(
-      projects.filter(project => project.name.toLowerCase().includes(search))
+      projects.filter(project =>
+        project.name.toLowerCase().includes(search.toLowerCase())
+      )
     )
   }, [search, projects, setRenderedProjects])
 
