@@ -13,7 +13,7 @@ export default function MyProfileProvider({ children }) {
 
     const fetchMyProfile = async () => {
       if (!myProfile) {
-        const data = await fetcher('profiles/student/get-my-profile', {
+        const data = await fetcher('profiles/get-my-profile', {
           Authorization: 'JWT ' + (await getToken())
         })
         setMyProfile(data)

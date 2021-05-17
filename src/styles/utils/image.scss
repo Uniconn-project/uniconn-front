@@ -1,13 +1,6 @@
 .profile-img-sm {
   width: 2rem;
   border-radius: 50%;
-
-  &.img-student {
-    border: 2px solid var(--primary-color);
-  }
-  &.img-mentor {
-    border: 2px solid var(--secondary-color);
-  }
 }
 
 .profile-img-lg {
@@ -15,9 +8,25 @@
   border-radius: 50%;
 
   &.img-student {
-    border: 2px solid var(--primary-color);
+    border: 3px solid var(--primary-color);
+
+    ~ .icon {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      font-size: 2rem !important;
+      color: var(--primary-color);
+    }
   }
   &.img-mentor {
-    border: 2px solid var(--secondary-color);
+    border: 3px solid var(--secondary-color);
+
+    ~ .icon {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      font-size: 2rem !important;
+      color: var(--secondary-color);
+    }
   }
 }

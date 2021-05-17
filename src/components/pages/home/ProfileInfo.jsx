@@ -1,5 +1,7 @@
 import React, { useContext } from 'react'
 import CircularProgress from '@material-ui/core/CircularProgress'
+import SchoolIcon from '@material-ui/icons/School'
+import AssignmentIcon from '@material-ui/icons/Assignment'
 import { MyProfileContext } from '../../../contexts/MyProfile'
 
 function ProfileMetrics() {
@@ -17,10 +19,17 @@ function ProfileMetrics() {
       {console.log(myProfile)}
       <div className="b-bottom-light pb-6">
         <div className="w-full flex justify-center">
-          <img
-            src={process.env.NEXT_PUBLIC_API_HOST + myProfile.photo}
-            className="profile-img-lg"
-          />
+          <div className="relative">
+            <img
+              src={process.env.NEXT_PUBLIC_API_HOST + myProfile.photo}
+              className={`profile-img-lg img-${myProfile.type}`}
+            />
+            {myProfile.type === 'student' ? (
+              <SchoolIcon className="icon" />
+            ) : (
+              <AssignmentIcon className="icon" />
+            )}
+          </div>
         </div>
         <div className="w-full pl-10">
           <h4 className="mt-2">
