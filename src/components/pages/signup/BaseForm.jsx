@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import Router from 'next/router'
 import Button from '@material-ui/core/Button'
 import IconButton from '@material-ui/core/IconButton'
@@ -10,8 +10,11 @@ import TextField from '@material-ui/core/TextField'
 import InputAdornment from '@material-ui/core/InputAdornment'
 import Visibility from '@material-ui/icons/Visibility'
 import VisibilityOff from '@material-ui/icons/VisibilityOff'
+import { AuthContext } from '../../../contexts/Auth'
 
 export default function BaseForm({ children, parentPostData, type }) {
+  const { login } = useContext(AuthContext)
+
   const [errorMsg, setErrorMsg] = useState(null)
   const [showPassword, setShowPassword] = useState(false)
   const [profilePostData, setProfilePostData] = useState({
@@ -59,10 +62,11 @@ export default function BaseForm({ children, parentPostData, type }) {
       }
     )
       .then(response => response.json())
-      .then(data => {
+      .then(async data => {
         if (data === 'success') {
           process.env.NODE_ENV === 'development' && console.log(data)
-          Router.push('/home')
+          await login(profilePostData.username, profilePostData.password)
+          await Router.push('/home')
         } else {
           setErrorMsg(data)
         }
