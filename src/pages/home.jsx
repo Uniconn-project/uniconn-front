@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import Page from '../components/Page'
 import Projects from '../components/pages/home/Projects'
-import ProfileMetrics from '../components/global/ProfileInfo'
+import ProfileInfo from '../components/global/ProfileInfo'
 import ProjectsFilter from '../components/pages/home/ProjectsFilter'
 import useFetch from '../hooks/useFetch'
 import { MyProfileContext } from '../contexts/MyProfile'
@@ -23,7 +23,7 @@ export default function Home() {
         <div className="hidden lg:w-1/3 lg:flex lg:justify-end lg:mr-10 lg:box-border">
           <div style={{ width: 225 }}>
             <div className="h-full fixed top-32">
-              <ProfileMetrics profile={myProfile} />
+              <ProfileInfo profile={myProfile} />
             </div>
           </div>
         </div>
