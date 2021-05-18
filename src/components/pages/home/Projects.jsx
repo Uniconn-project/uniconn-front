@@ -1,6 +1,6 @@
 import React from 'react'
 import { CircularProgress } from '@material-ui/core'
-import ProjectListItem from './ProjectListItem'
+import ProjectListItem from '../../global/ProjectListItem'
 
 function Projects({ renderedProjects }) {
   if (!renderedProjects) {
