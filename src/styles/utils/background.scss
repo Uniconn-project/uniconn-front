@@ -24,4 +24,20 @@
 
 .bg-primary {
   background-color: var(--primary-color);
+
+  &.bg-hover {
+    &:hover {
+      background-color: var(--primary-color-hover);
+    }
+  }
+}
+
+.bg-secondary {
+  background-color: var(--secondary-color);
+
+  &.bg-hover {
+    &:hover {
+      background-color: var(--secondary-color-hover);
+    }
+  }
 }

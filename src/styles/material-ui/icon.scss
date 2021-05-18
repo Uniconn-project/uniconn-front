@@ -1,5 +1,9 @@
 .MuiSvgIcon-root {
   font-size: 2rem !important;
+
+  &.icon-sm {
+    font-size: 1.5rem !important;
+  }
 }
 
 .MuiListItemIcon-root {
