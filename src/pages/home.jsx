@@ -21,7 +21,7 @@ export default function Home() {
     <Page title="Home | Uniconn" page="home" loginRequired header>
       <div className="justify-center w-full h-full flex">
         <div className="hidden lg:w-1/3 lg:flex lg:justify-end lg:mr-10 lg:box-border">
-          <div style={{ width: 225 }}>
+          <div className="w-60">
             <div className="h-full fixed top-32">
               <ProfileInfo profile={myProfile} />
             </div>

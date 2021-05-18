@@ -17,12 +17,9 @@ export default function ProfileInfo({ profile }) {
   const major = profile.type === 'student' && profile.student.major.name
 
   return (
-    <div
-      className="relative bg-transparent h-4/5 rounded-md shadow-lg pt-4"
-      style={{ width: 225 }}
-    >
+    <div className="relative bg-transparent h-4/5 rounded-md shadow-lg pt-4 w-full lg:w-60">
       <div className="b-bottom-light pb-6">
-        <div className="w-full flex justify-center">
+        <div className="w-full flex justify-start pl-10 lg:justify-center lg:pl-0">
           <div className="relative">
             <img
               src={process.env.NEXT_PUBLIC_API_HOST + profile.photo}
