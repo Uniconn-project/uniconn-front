@@ -124,12 +124,7 @@ export default function AuthProvider({ children }) {
       .then(response => response.json())
       .then(() => {
         setLoading(false)
-        Router.push({
-          pathname: '/login',
-          query: {
-            success: 'Deslogado com sucesso'
-          }
-        })
+        Router.push('/')
       })
   }
 

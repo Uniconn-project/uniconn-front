@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { useRouter } from 'next/router'
 import Alert from '@material-ui/lab/Alert'
 import IconButton from '@material-ui/core/IconButton'
@@ -14,16 +14,9 @@ export default function Login() {
   const router = useRouter()
 
   const [errorMsg, setErrorMsg] = useState(null)
-  const [successMsg, setSuccessMsg] = useState(router.query.success || null)
   const [showPassword, setShowPassword] = useState(false)
   const [postData, setPostData] = useState({ username: '', password: '' })
   const { loading, isAuthenticated, login } = useContext(AuthContext)
-
-  useEffect(() => {
-    if (errorMsg !== null) {
-      setSuccessMsg(null)
-    }
-  }, [errorMsg])
 
   const handleChange = key => e => {
     setPostData({ ...postData, [key]: e.target.value })
@@ -63,11 +56,6 @@ export default function Login() {
         {errorMsg !== null && (
           <div>
             <Alert severity="error">{errorMsg}</Alert>
-          </div>
-        )}
-        {successMsg !== null && (
-          <div>
-            <Alert severity="success">{successMsg}</Alert>
           </div>
         )}
         <div className="flex flex-col my-4">
