@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import Tooltip from '@material-ui/core/Tooltip'
 import FilterListIcon from '@material-ui/icons/FilterList'
 
 export default function ProjectsFilter({ projects, setRenderedProjects }) {
@@ -23,7 +24,9 @@ export default function ProjectsFilter({ projects, setRenderedProjects }) {
         value={search}
         onChange={e => setSearch(e.target.value)}
       />
-      <FilterListIcon className="ml-auto cursor-pointer color-primary color-hover" />
+      <Tooltip title="Filtrar projetos" placement="top" arrow>
+        <FilterListIcon className="ml-auto cursor-pointer color-primary color-hover" />
+      </Tooltip>
     </div>
   )
 }
