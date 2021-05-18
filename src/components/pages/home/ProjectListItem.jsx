@@ -1,5 +1,6 @@
 import React from 'react'
 import Tooltip from '@material-ui/core/Tooltip'
+import Link from 'next/link'
 
 export default function ProjectListItem({ project }) {
   return (
@@ -8,17 +9,14 @@ export default function ProjectListItem({ project }) {
         <h4>{project.name}</h4>
         <div className="flex">
           {project.students.slice(0, 3).map(student => (
-            <Tooltip
-              key={student.id}
-              title={student.user.username}
-              className="bg-light"
-              arrow
-            >
-              <img
-                src={process.env.NEXT_PUBLIC_API_HOST + student.photo}
-                className="profile-img-sm mx-0.5 cursor-pointer"
-              />
-            </Tooltip>
+            <Link href={`/user/${student.user.username}`} key={student.id}>
+              <Tooltip title={student.user.username} className="bg-light" arrow>
+                <img
+                  src={process.env.NEXT_PUBLIC_API_HOST + student.photo}
+                  className="profile-img-sm mx-0.5 cursor-pointer"
+                />
+              </Tooltip>
+            </Link>
           ))}
         </div>
       </div>
