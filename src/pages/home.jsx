@@ -9,7 +9,7 @@ import { MyProfileContext } from '../contexts/MyProfile'
 export default function Home() {
   const { myProfile } = useContext(MyProfileContext)
 
-  const { data: projects } = useFetch('projects/get-project-list')
+  const { data: projects } = useFetch('projects/get-projects-list')
 
   const [renderedProjects, setRenderedProjects] = useState(null)
 

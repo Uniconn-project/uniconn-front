@@ -8,7 +8,7 @@ function Projects({ renderedProjects }) {
   }
 
   return (
-    <div className="w-full px-2">
+    <div className="w-full flex flex-col items-center px-2">
       {renderedProjects.map(project => (
         <ProjectListItem key={project.id} project={project} />
       ))}
