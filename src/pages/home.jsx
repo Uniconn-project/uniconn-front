@@ -14,8 +14,10 @@ export default function Home() {
   const [renderedProjects, setRenderedProjects] = useState(null)
 
   useEffect(() => {
+    if (renderedProjects !== null) return
+
     setRenderedProjects(projects)
-  }, [projects])
+  }, [projects]) // eslint-disable-line
 
   return (
     <Page title="Home | Uniconn" page="home" loginRequired header>
