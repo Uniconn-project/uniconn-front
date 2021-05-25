@@ -4,7 +4,7 @@ import Link from 'next/link'
 
 export default function ProjectListItem({ project }) {
   return (
-    <div className="w-full mb-4 p-4 rounded-md shadow-lg cursor-pointer bg-transparent project-list-item">
+    <div className="w-full mb-4 p-4 rounded-md shadow-lg cursor-pointer bg-transparent bg-hover">
       <div className="flex justify-between">
         <h4>{project.name}</h4>
         <div className="flex">

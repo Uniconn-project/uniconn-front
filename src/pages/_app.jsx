@@ -1,7 +1,6 @@
 import '../styles/global.scss'
 import '../styles/landing_page.scss'
 import '../styles/header.scss'
-import '../styles/project.scss'
 import '../styles/utils/background.scss'
 import '../styles/utils/border.scss'
 import '../styles/utils/color.scss'

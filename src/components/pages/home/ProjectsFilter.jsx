@@ -80,13 +80,15 @@ export default function ProjectsFilter({ projects, setRenderedProjects }) {
             {categories ? (
               <ul>
                 {categories.map(category => (
-                  <li key={category}>
+                  <li key={category.value}>
                     <input
                       type="checkbox"
                       className="category"
-                      name={category}
+                      name={category.value}
+                      checked
                     />{' '}
-                    {category[0].toUpperCase() + category.slice(1)}
+                    {category.readable[0].toUpperCase() +
+                      category.readable.slice(1)}
                   </li>
                 ))}
               </ul>
@@ -110,6 +112,7 @@ export default function ProjectsFilter({ projects, setRenderedProjects }) {
                       type="checkbox"
                       className="market"
                       name={market.name}
+                      checked
                     />{' '}
                     {market.name[0].toUpperCase() + market.name.slice(1)}
                   </li>

@@ -4,6 +4,12 @@
 
 .bg-transparent {
   background-color: var(--transparent);
+
+  &.bg-hover {
+    &:hover {
+      background-color: var(--background-light);
+    }
+  }
 }
 
 .bg-dark {

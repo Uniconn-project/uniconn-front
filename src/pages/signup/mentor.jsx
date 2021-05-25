@@ -9,18 +9,7 @@ import MenuItem from '@material-ui/core/MenuItem'
 import Page from '../../components/Page'
 import BaseForm from '../../components/pages/signup/BaseForm'
 import { AuthContext } from '../../contexts/Auth'
-import useFetch, { fetcher } from '../../hooks/useFetch'
-
-export const getStaticProps = async () => {
-  const markets = await fetcher('projects/get-markets-name-list')
-
-  return {
-    props: {
-      markets
-    },
-    revalidate: 60 * 60 * 8 // 8 hours
-  }
-}
+import useFetch from '../../hooks/useFetch'
 
 export default function Mentor(props) {
   const [postData, setPostData] = useState({ markets: [] })
@@ -30,9 +19,7 @@ export default function Mentor(props) {
   const { loading, isAuthenticated } = useContext(AuthContext)
   if (!loading && isAuthenticated) router.push('/')
 
-  const { data: markets } = useFetch('projects/get-markets-name-list', {
-    initialData: props.markets
-  })
+  const { data: markets } = useFetch('projects/get-markets-name-list')
 
   const handleChange = key => e => {
     setPostData({ ...postData, [key]: e.target.value })
