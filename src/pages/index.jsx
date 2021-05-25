@@ -4,6 +4,7 @@ import Head from 'next/head'
 import Router from 'next/router'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import PersonOutlineIcon from '@material-ui/icons/PersonOutline'
+import Illustration01 from '../components/pages/landing-page/illustration01'
 import { AuthContext } from '../contexts/Auth'
 
 export default function Index() {
@@ -23,7 +24,7 @@ export default function Index() {
         <Head>
           <title>Uniconn</title>
         </Head>
-        <div className="w-screen h-screen pt-20">
+        <div className="w-screen pt-20">
           <div className="fixed top-0 z-10 w-full h-20 flex items-center px-4 bg-dark b-bottom-light">
             <div>
               <h1>Uniconn</h1>
@@ -60,6 +61,9 @@ export default function Index() {
               <Link href="/signup">
                 <button className="btn-primary text-xl">Criar conta</button>
               </Link>
+            </div>
+            <div className="flex justify-center md:w-1/2">
+              <Illustration01 />
             </div>
           </div>
           <div className="bg-light flex justify-end px-8 pt-12 pb-4 md:px-32 md:pt-32 md:pb-20">
@@ -137,7 +141,7 @@ export default function Index() {
               </p>
             </div>
           </div>
-          <div className="flex flex-col items-center w-full pt-10 pb-20">
+          <div className="bg-linear flex flex-col items-center w-full pt-10 pb-20">
             <h2>Uniconn</h2>
             <div className="flex">
               <Link href="/login">
