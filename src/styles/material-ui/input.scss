@@ -3,6 +3,13 @@
   color: var(--btn-text) !important;
 }
 
+.MuiTextField-root {
+  .MuiFormHelperText-root {
+    color: var(--paragraph);
+    filter: brightness(0.8);
+  }
+}
+
 .MuiFilledInput-root {
   background-color: rgba(0, 0, 0, 0.2) !important;
 
@@ -11,9 +18,19 @@
   }
 }
 
-.MuiInput-underline:after,
-.MuiFilledInput-underline:after {
-  border-bottom: 2px solid var(--primary-color) !important;
+.MuiInput-underline,
+.MuiFilledInput-underline {
+  &::before {
+    border-bottom: 2px solid var(--background-light) !important;
+  }
+
+  &::after {
+    border-bottom: 2px solid var(--primary-color) !important;
+  }
+
+  .MuiSelect-icon {
+    color: var(--paragraph);
+  }
 }
 
 .MuiFormLabel-root {
