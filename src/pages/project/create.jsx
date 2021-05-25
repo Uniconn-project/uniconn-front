@@ -18,6 +18,8 @@ export default function CreateProject() {
   const [postData, setPostData] = useState({
     name: '',
     category: '',
+    students: [],
+    mentors: [],
     markets: []
   })
 
@@ -95,6 +97,7 @@ export default function CreateProject() {
                             <Chip
                               key={value}
                               label={value}
+                              className="mr-1"
                               onMouseDown={e => e.stopPropagation()}
                               onDelete={() => handleDeleteMarket(value)}
                             />
@@ -119,7 +122,7 @@ export default function CreateProject() {
                   />
                 </div>
                 <div className="w-full mb-2">
-                  <FilterUsersToInvite />
+                  <FilterUsersToInvite setPostData={setPostData} />
                 </div>
               </div>
               <div className="w-full p-4">

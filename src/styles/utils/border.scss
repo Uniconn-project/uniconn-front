@@ -9,3 +9,11 @@
 .b-bottom-transparent {
   border-bottom: 2px solid var(--transparent);
 }
+
+.b-primary {
+  border: 3px solid var(--primary-color) !important;
+}
+
+.b-secondary {
+  border: 3px solid var(--secondary-color) !important;
+}

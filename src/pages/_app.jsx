@@ -9,6 +9,7 @@ import '../styles/material-ui/alert.scss'
 import '../styles/material-ui/badge.scss'
 import '../styles/material-ui/icon.scss'
 import '../styles/material-ui/input.scss'
+import '../styles/material-ui/list_item.scss'
 import '../styles/material-ui/loader.scss'
 import '../styles/material-ui/mobile_menu.scss'
 
