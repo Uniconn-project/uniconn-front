@@ -46,17 +46,17 @@ export default function Index() {
           <div className="bg-linear flex px-8 pt-8 pb-4 md:px-32 md:pt-32 md:pb-20">
             <div className="md:w-1/2">
               <h1>
-                Lorem ipsum dolor sit amet{' '}
+                Crie e participe de{' '}
                 <span style={{ color: 'var(--secondary-color)' }}>
-                  consectetur adipisicing elit
-                </span>
-                . Minus iste blanditiis quae cum minima
+                  projetos que vão fazer diferença
+                </span>{' '}
+                para sua carreira.
               </h1>
               <p className="mt-4 mb-8">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus
-                iste blanditiis quae cum minima, quam eos eius est repellendus
-                dolores voluptatum fuga asperiores, nihil, amet in reprehenderit
-                laboriosam architecto nesciunt.
+                Quer tirar o seu projeto do papel? Nós te conectamos com pessoas
+                que queiram participar e te ajudamos a desenvolvê-lo. Quer
+                participar de projetos para seu desenvolvimento pessoal e
+                profissional? Te conectamos a um.
               </p>
               <Link href="/signup">
                 <button className="btn-primary text-xl">Criar conta</button>
@@ -70,14 +70,12 @@ export default function Index() {
             <div className="md:w-1/2">
               <h2>
                 <span style={{ color: 'var(--secondary-color)' }}>1.</span>{' '}
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus
-                iste blanditiis quae cum minima
+                Cadastre-se e crie o seu perfil
               </h2>
               <p className="my-4">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus
-                iste blanditiis quae cum minima, quam eos eius est repellendus
-                dolores voluptatum fuga asperiores, nihil, amet in reprehenderit
-                laboriosam architecto nesciunt.
+                Em nosso menu de cadastro, coloque toda a sua experiência seja
+                profissional ou pessoal. Alguma coisa que você faz, pode ajudar
+                outras pessoas.
               </p>
             </div>
           </div>
@@ -100,14 +98,11 @@ export default function Index() {
             <div className="md:w-1/2">
               <h2>
                 <span style={{ color: 'var(--secondary-color)' }}>2.</span>{' '}
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus
-                iste blanditiis quae cum minima
+                Selecione um tema ou tipo de projeto
               </h2>
               <p className="my-4">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus
-                iste blanditiis quae cum minima, quam eos eius est repellendus
-                dolores voluptatum fuga asperiores, nihil, amet in reprehenderit
-                laboriosam architecto nesciunt.
+                Escolha um tema ou tipo de projeto para você participar, veja as
+                descrições e converse com a pessoa que divulgou o projeto
               </p>
             </div>
           </div>
@@ -129,15 +124,27 @@ export default function Index() {
           <div className="bg-light flex justify-end px-8 pt-20 pb-4 md:px-32 md:pt-32 md:pb-20">
             <div className="md:w-1/2">
               <h2>
-                <span style={{ color: 'var(--secondary-color)' }}>3.</span>{' '}
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus
-                iste blanditiis quae cum minima
+                <span style={{ color: 'var(--secondary-color)' }}>3.</span> Crie
+                o seu projeto e divulgue-o
               </h2>
               <p className="my-4">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus
-                iste blanditiis quae cum minima, quam eos eius est repellendus
-                dolores voluptatum fuga asperiores, nihil, amet in reprehenderit
-                laboriosam architecto nesciunt.
+                Em nosso feed você vai conseguir divulgar o seu projeto, colocar
+                toda a descrição dele e os tipos de pessoas que você precisa.
+                Você pode montar um Business Canvas Model ou um Kanban para te
+                ajudar a pensar melhor sobre suas necessidades do projeto.
+              </p>
+            </div>
+          </div>
+          <div className="bg-dark flex px-8 pt-20 pb-4 md:px-32 md:pt-32 md:pb-20">
+            <div className="md:w-1/2">
+              <h2>
+                <span style={{ color: 'var(--secondary-color)' }}>4.</span> Faça
+                Conexões
+              </h2>
+              <p className="my-4">
+                Com as nossas conexões você consegue conhecer pessoas novas e
+                formar os times multidisciplinares para os projetos. Desenvolva
+                as soft skills mais desejadas do mercado.
               </p>
             </div>
           </div>
