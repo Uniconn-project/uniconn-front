@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import Link from 'next/link'
+import CircularProgress from '@material-ui/core'
 import AddIcon from '@material-ui/icons/Add'
 import Page from '../components/Page'
 import Projects from '../components/pages/home/Projects'
@@ -20,6 +21,16 @@ export default function Home() {
 
     setRenderedProjects(projects)
   }, [projects]) // eslint-disable-line
+
+  if (!myProfile) {
+    return (
+      <Page title="Home | Uniconn" page="home" loginRequired header>
+        <div>
+          <CircularProgress />
+        </div>
+      </Page>
+    )
+  }
 
   return (
     <Page title="Home | Uniconn" page="home" loginRequired header>
