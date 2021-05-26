@@ -37,13 +37,20 @@ export default function CreateProject() {
     })
   }
 
+  const handleSubmit = () => {
+    console.log(postData)
+  }
+
   if (!categories || !markets) {
-    return <CircularProgress />
+    return (
+      <div className="flex justify-content">
+        <CircularProgress />
+      </div>
+    )
   }
 
   return (
     <Page title="Criar projeto | Uniconn" page="project" loginRequired header>
-      {console.log(postData)}
       <div className="justify-center w-full h-full flex">
         <div className="hidden lg:w-1/3 lg:flex lg:justify-end lg:mr-10 lg:box-border">
           <div className="w-60">
@@ -126,7 +133,9 @@ export default function CreateProject() {
                 </div>
               </div>
               <div className="w-full p-4">
-                <button className="btn-primary ml-auto">Criar projeto</button>
+                <button className="btn-primary ml-auto" onClick={handleSubmit}>
+                  Criar projeto
+                </button>
               </div>
             </div>
           </div>
