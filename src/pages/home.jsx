@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import Link from 'next/link'
-import CircularProgress from '@material-ui/core'
+import CircularProgress from '@material-ui/core/CircularProgress'
 import AddIcon from '@material-ui/icons/Add'
 import Page from '../components/Page'
 import Projects from '../components/pages/home/Projects'
