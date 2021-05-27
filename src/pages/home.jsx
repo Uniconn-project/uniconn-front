@@ -3,7 +3,7 @@ import Link from 'next/link'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import AddIcon from '@material-ui/icons/Add'
 import Page from '../components/Page'
-import Projects from '../components/pages/home/Projects'
+import Projects from '../components/global/Projects'
 import ProfileInfo from '../components/global/ProfileInfo'
 import ProjectsFilter from '../components/pages/home/ProjectsFilter'
 import useFetch from '../hooks/useFetch'
@@ -56,7 +56,9 @@ export default function Home() {
                 </div>
               </Link>
             )}
-            <Projects renderedProjects={renderedProjects} />
+            <div className="w-full flex flex-col items-center px-2">
+              <Projects projects={renderedProjects} />
+            </div>
           </div>
         </div>
       </div>

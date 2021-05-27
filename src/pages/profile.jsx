@@ -4,7 +4,7 @@ import Page from '../components/Page'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import { MyProfileContext } from '../contexts/MyProfile'
 import { fetcher } from '../hooks/useFetch'
-import ProjectListItem from '../components/global/ProjectListItem'
+import Projects from '../components/global/Projects'
 
 export default function MyProfile() {
   const { myProfile } = useContext(MyProfileContext)
@@ -40,15 +40,7 @@ export default function MyProfile() {
               )}
             </div>
             <div className="w-full px-2">
-              {projects !== null ? (
-                <>
-                  {projects.map(project => (
-                    <ProjectListItem key={project.id} project={project} />
-                  ))}
-                </>
-              ) : (
-                <CircularProgress />
-              )}
+              <Projects projects={projects} />
             </div>
           </div>
         </div>

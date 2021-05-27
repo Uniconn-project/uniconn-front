@@ -1,18 +1,18 @@
 import React from 'react'
 import CircularProgress from '@material-ui/core/CircularProgress'
-import ProjectListItem from '../../global/ProjectListItem'
+import ProjectListItem from './ProjectListItem'
 
-function Projects({ renderedProjects }) {
-  if (!renderedProjects) {
+function Projects({ projects }) {
+  if (!projects) {
     return <CircularProgress />
   }
 
   return (
-    <div className="w-full flex flex-col items-center px-2">
-      {renderedProjects.map(project => (
+    <>
+      {projects.map(project => (
         <ProjectListItem key={project.id} project={project} />
       ))}
-    </div>
+    </>
   )
 }
 

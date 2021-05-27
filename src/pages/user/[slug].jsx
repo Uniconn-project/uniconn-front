@@ -5,7 +5,7 @@ import ProfileInfo from '../../components/global/ProfileInfo'
 import { fetcher } from '../../hooks/useFetch'
 import { MyProfileContext } from '../../contexts/MyProfile'
 import Router from 'next/router'
-import ProjectListItem from '../../components/global/ProjectListItem'
+import Projects from '../../components/global/Projects'
 
 export const getStaticProps = async context => {
   const profile = await fetcher(`profiles/get-profile/${context.params.slug}`)
@@ -78,15 +78,7 @@ export default function Profile({ profile }) {
               )}
             </div>
             <div className="w-full px-2">
-              {projects !== null ? (
-                <>
-                  {projects.map(project => (
-                    <ProjectListItem key={project.id} project={project} />
-                  ))}
-                </>
-              ) : (
-                <CircularProgress />
-              )}
+              <Projects projects={projects} />
             </div>
           </div>
         </div>

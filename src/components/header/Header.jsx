@@ -31,6 +31,15 @@ export default function Header({ page }) {
             Perfil
           </div>
         </Link>
+        <Link href="/search-users">
+          <div
+            className={`p-3 ml-2 nav-link ${
+              page === 'search-users' ? 'active' : ''
+            }`}
+          >
+            Encontrar usuários
+          </div>
+        </Link>
       </div>
       <div className="hidden sm:block sm:ml-auto">
         <DesktopMenu />
