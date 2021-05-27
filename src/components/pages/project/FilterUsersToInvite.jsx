@@ -10,6 +10,8 @@ import Avatar from '@material-ui/core/Avatar'
 import { fetcher } from '../../../hooks/useFetch'
 import { MyProfileContext } from '../../../contexts/MyProfile'
 
+// UNUSED COMPONENT!
+
 export default function FilterUsersToInvite({ setPostData }) {
   const { myProfile } = useContext(MyProfileContext)
 

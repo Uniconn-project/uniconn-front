@@ -8,20 +8,24 @@ import InputLabel from '@material-ui/core/InputLabel'
 import Chip from '@material-ui/core/Chip'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import FormControl from '@material-ui/core/FormControl'
-import { MyProfileContext } from '../../contexts/MyProfile'
+import Snackbar from '@material-ui/core/Snackbar'
+import Alert from '@material-ui/lab/Alert'
 import useFetch from '../../hooks/useFetch'
-import FilterUsersToInvite from '../../components/pages/project/FilterUsersToInvite'
+import { MyProfileContext } from '../../contexts/MyProfile'
+import { AuthContext } from '../../contexts/Auth'
 
 export default function CreateProject() {
   const { myProfile } = useContext(MyProfileContext)
+  const { getToken } = useContext(AuthContext)
 
   const [postData, setPostData] = useState({
     name: '',
     category: '',
-    students: [],
-    mentors: [],
+    slogan: '',
     markets: []
   })
+  const [successIsOpen, setSuccessIsOpen] = useState(false)
+  const [errorIsOpen, setErrorIsOpen] = useState(false)
 
   const { data: categories } = useFetch('projects/get-projects-categories-list')
   const { data: markets } = useFetch('projects/get-markets-name-list')
@@ -37,8 +41,20 @@ export default function CreateProject() {
     })
   }
 
-  const handleSubmit = () => {
-    console.log(postData)
+  const handleSubmit = async () => {
+    fetch(`${process.env.NEXT_PUBLIC_API_HOST}/api/projects/create-project`, {
+      method: 'POST',
+      headers: {
+        Authorization: 'JWT ' + (await getToken())
+      },
+      body: JSON.stringify(postData)
+    })
+      .then(response => response.json())
+      .then(data => {
+        if (data === 'Project created with success') {
+          setSuccessIsOpen(true)
+        }
+      })
   }
 
   if (!categories || !markets) {
@@ -128,15 +144,19 @@ export default function CreateProject() {
                     helperText="Frase descrevendo seu projeto"
                   />
                 </div>
-                <div className="w-full mb-2">
-                  <FilterUsersToInvite setPostData={setPostData} />
-                </div>
               </div>
               <div className="w-full p-4">
                 <button className="btn-primary ml-auto" onClick={handleSubmit}>
                   Criar projeto
                 </button>
               </div>
+              <Snackbar
+                open={successIsOpen}
+                autoHideDuration={6000}
+                onClose={() => setSuccessIsOpen(false)}
+              >
+                <Alert severity="success">Projeto criado com sucesso!</Alert>
+              </Snackbar>
             </div>
           </div>
         </div>

@@ -86,8 +86,6 @@ export default function AuthProvider({ children }) {
       handleNewToken(tokenData)
     } else {
       setIsAuthenticated(false)
-      setLoading(true)
-      // Let the page handle the error
     }
     return resp
   }

@@ -51,7 +51,11 @@ export default function Mentor(props) {
               renderValue={selected => (
                 <div>
                   {selected.map(value => (
-                    <Chip key={value} label={value} />
+                    <Chip
+                      key={value}
+                      label={value}
+                      className="b-primary mr-1"
+                    />
                   ))}
                 </div>
               )}

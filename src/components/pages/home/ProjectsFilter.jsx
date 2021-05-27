@@ -85,7 +85,6 @@ export default function ProjectsFilter({ projects, setRenderedProjects }) {
                       type="checkbox"
                       className="category"
                       name={category.value}
-                      checked
                     />{' '}
                     {category.readable[0].toUpperCase() +
                       category.readable.slice(1)}
@@ -112,7 +111,6 @@ export default function ProjectsFilter({ projects, setRenderedProjects }) {
                       type="checkbox"
                       className="market"
                       name={market.name}
-                      checked
                     />{' '}
                     {market.name[0].toUpperCase() + market.name.slice(1)}
                   </li>
