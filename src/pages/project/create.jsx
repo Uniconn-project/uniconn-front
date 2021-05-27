@@ -26,6 +26,7 @@ export default function CreateProject() {
   })
   const [successIsOpen, setSuccessIsOpen] = useState(false)
   const [errorIsOpen, setErrorIsOpen] = useState(false)
+  const [errorMessage, setErrorMessage] = useState('')
 
   const { data: categories } = useFetch('projects/get-projects-categories-list')
   const { data: markets } = useFetch('projects/get-markets-name-list')
@@ -42,9 +43,21 @@ export default function CreateProject() {
   }
 
   const handleSubmit = async () => {
+    if (
+      !postData.name.length ||
+      !postData.slogan.length ||
+      !postData.category.length ||
+      !postData.markets.length
+    ) {
+      setErrorIsOpen(true)
+      setErrorMessage('Todos os campos devem ser preenchidos!')
+      return
+    }
+
     fetch(`${process.env.NEXT_PUBLIC_API_HOST}/api/projects/create-project`, {
       method: 'POST',
       headers: {
+        'Content-type': 'application/json',
         Authorization: 'JWT ' + (await getToken())
       },
       body: JSON.stringify(postData)
@@ -53,6 +66,9 @@ export default function CreateProject() {
       .then(data => {
         if (data === 'Project created with success') {
           setSuccessIsOpen(true)
+        } else {
+          setErrorIsOpen(true)
+          setErrorMessage(data)
         }
       })
   }
@@ -120,7 +136,7 @@ export default function CreateProject() {
                             <Chip
                               key={value}
                               label={value}
-                              className="mr-1"
+                              className="b-primary mr-1"
                               onMouseDown={e => e.stopPropagation()}
                               onDelete={() => handleDeleteMarket(value)}
                             />
@@ -142,6 +158,7 @@ export default function CreateProject() {
                     className="w-full"
                     label="Slogan"
                     helperText="Frase descrevendo seu projeto"
+                    onChange={handleChange('slogan')}
                   />
                 </div>
               </div>
@@ -156,6 +173,13 @@ export default function CreateProject() {
                 onClose={() => setSuccessIsOpen(false)}
               >
                 <Alert severity="success">Projeto criado com sucesso!</Alert>
+              </Snackbar>
+              <Snackbar
+                open={errorIsOpen}
+                autoHideDuration={6000}
+                onClose={() => setErrorIsOpen(false)}
+              >
+                <Alert severity="error">{errorMessage}</Alert>
               </Snackbar>
             </div>
           </div>
