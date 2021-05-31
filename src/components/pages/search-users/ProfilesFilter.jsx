@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from 'react'
 import { fetcher } from '../../../hooks/useFetch'
 
-export default function ProfilesFilter({ profiles, setProfiles }) {
+export default function ProfilesFilter({
+  initialProfiles,
+  profiles,
+  setProfiles
+}) {
   const [search, setSearch] = useState('')
 
   useEffect(() => {
     if (!profiles) return
     if (!search.trim().length) {
-      setProfiles([])
+      setProfiles(initialProfiles)
       return
     }
 
@@ -18,7 +22,7 @@ export default function ProfilesFilter({ profiles, setProfiles }) {
   }, [search]) // eslint-disable-line
 
   return (
-    <div className="sticky top-24 w-full mb-4 sm:top-32">
+    <div className="sticky top-24 z-10 w-full mb-4 sm:top-32">
       <div className="w-full bg-light h-14 rounded-md shadow-lg p-2 flex items-center">
         <input
           type="text"
