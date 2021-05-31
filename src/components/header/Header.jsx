@@ -31,13 +31,11 @@ export default function Header({ page }) {
             Perfil
           </div>
         </Link>
-        <Link href="/search-users">
+        <Link href="/users">
           <div
-            className={`p-3 ml-2 nav-link ${
-              page === 'search-users' ? 'active' : ''
-            }`}
+            className={`p-3 ml-2 nav-link ${page === 'users' ? 'active' : ''}`}
           >
-            Encontrar usuários
+            Usuários
           </div>
         </Link>
       </div>
