@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react'
-import ProfileInfo from '../../components/global/ProfileInfo'
-import Page from '../../components/Page'
+import ProfileInfo from '../components/global/ProfileInfo'
+import Page from '../components/Page'
 import TextField from '@material-ui/core/TextField'
 import Select from '@material-ui/core/Select'
 import MenuItem from '@material-ui/core/MenuItem'
@@ -10,9 +10,9 @@ import CircularProgress from '@material-ui/core/CircularProgress'
 import FormControl from '@material-ui/core/FormControl'
 import Snackbar from '@material-ui/core/Snackbar'
 import Alert from '@material-ui/lab/Alert'
-import useFetch from '../../hooks/useFetch'
-import { MyProfileContext } from '../../contexts/MyProfile'
-import { AuthContext } from '../../contexts/Auth'
+import useFetch from '../hooks/useFetch'
+import { MyProfileContext } from '../contexts/MyProfile'
+import { AuthContext } from '../contexts/Auth'
 
 export default function CreateProject() {
   const { myProfile } = useContext(MyProfileContext)

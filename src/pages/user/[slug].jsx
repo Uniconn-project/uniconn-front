@@ -10,9 +10,15 @@ import Projects from '../../components/global/Projects'
 export const getStaticProps = async context => {
   const profile = await fetcher(`profiles/get-profile/${context.params.slug}`)
 
+  if (!profile || !profile.id) {
+    return {
+      notFound: true
+    }
+  }
+
   return {
     props: {
-      profile: profile
+      profile
     }
   }
 }
@@ -49,7 +55,9 @@ export default function Profile({ profile }) {
   if (!profile) {
     return (
       <Page loginRequired header>
-        <CircularProgress />
+        <div className="w-full flex justify-center mt-10">
+          <CircularProgress />
+        </div>
       </Page>
     )
   }
