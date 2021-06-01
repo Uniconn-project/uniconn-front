@@ -71,14 +71,19 @@ export default function ProjectsFilter({ projects, setRenderedProjects }) {
         <div className="w-full bg-light shadow-lg rounded-md rounded-t-none">
           <div className="b-bottom-transparent p-2">
             <div className="flex items-center">
-              <input
-                type="checkbox"
-                onChange={e => toggleAllFields(e.target.checked, '.category')}
-              />{' '}
               <h4 className="ml-1">Categorias</h4>
             </div>
             {categories ? (
               <ul>
+                <li>
+                  <input
+                    type="checkbox"
+                    onChange={e =>
+                      toggleAllFields(e.target.checked, '.category')
+                    }
+                  />{' '}
+                  Todos
+                </li>
                 {categories.map(category => (
                   <li key={category.value}>
                     <input
@@ -97,14 +102,17 @@ export default function ProjectsFilter({ projects, setRenderedProjects }) {
           </div>
           <div className="b-bottom-transparent p-2">
             <div className="flex items-center">
-              <input
-                type="checkbox"
-                onChange={e => toggleAllFields(e.target.checked, '.market')}
-              />{' '}
               <h4 className="ml-1">Mercados</h4>
             </div>
             {markets ? (
               <ul>
+                <li>
+                  <input
+                    type="checkbox"
+                    onChange={e => toggleAllFields(e.target.checked, '.market')}
+                  />{' '}
+                  Todos
+                </li>
                 {markets.map(market => (
                   <li key={market.id}>
                     <input
