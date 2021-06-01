@@ -10,6 +10,10 @@
   border-bottom: 2px solid var(--transparent);
 }
 
+.b-bottom-primary {
+  border-bottom: 3px solid var(--primary-color) !important;
+}
+
 .b-primary {
   border: 3px solid var(--primary-color) !important;
 }
