@@ -27,6 +27,24 @@ export default function ProjectsFilter({ projects, setRenderedProjects }) {
   }
 
   const handleFilterSubmit = async () => {
+    const categoryCheckboxes = document.querySelectorAll('.category')
+    for (let i in categoryCheckboxes) {
+      if (categoryCheckboxes[i].checked) break
+      else if (i == categoryCheckboxes.length - 1 && !categoryCheckboxes[i].checked) {
+        window.alert('Selecione pelo menos uma categoria!')
+        return
+      }
+    }
+
+    const marketCheckboxes = document.querySelectorAll('.market')
+    for (let i in marketCheckboxes) {
+      if (marketCheckboxes[i].checked) break
+      else if (i == marketCheckboxes.length - 1 && !marketCheckboxes[i].checked) {
+        window.alert('Selecione pelo menos uma mercado!')
+        return
+      }
+    }
+
     const selectedCategories = []
     document
       .querySelectorAll('.category')
@@ -46,6 +64,7 @@ export default function ProjectsFilter({ projects, setRenderedProjects }) {
     )
     await setRenderedProjects(projects)
     setFilterHeight(0)
+
   }
 
   return (
