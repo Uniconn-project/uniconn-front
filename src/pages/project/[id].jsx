@@ -7,6 +7,7 @@ import Description from '../../components/pages/project/subpages/Description'
 import Discussions from '../../components/pages/project/subpages/Discussions'
 import Links from '../../components/pages/project/subpages/Links'
 import { fetcher } from '../../hooks/useFetch'
+import Members from '../../components/pages/project/subpages/Members'
 
 export const getStaticProps = async context => {
   const project = await fetcher(`projects/get-project/${context.params.id}`)
@@ -37,6 +38,7 @@ export default function Project({ project }) {
   const linksPage = <Links project={project} />
 
   const [projectSubPage, setProjectSubPage] = useState(descriptionPage)
+  const [page, setPage] = useState('description')
 
   if (!project) {
     return (
@@ -47,6 +49,9 @@ export default function Project({ project }) {
       </Page>
     )
   }
+
+  const studentsPage = <Members profiles={project.students} />
+  const mentorsPage = <Members profiles={project.mentors} />
 
   return (
     <Page
@@ -59,13 +64,21 @@ export default function Project({ project }) {
         <div className="mb-4 lg:mb-0 lg:w-1/3 lg:flex lg:justify-end lg:mr-10 lg:box-border">
           <div className="w-full lg:w-60">
             <div className="h-full px-2 sm:px-12 lg:px-0 lg:fixed lg:top-32">
-              <ProjectInfo project={project} />
+              <ProjectInfo
+                project={project}
+                studentsPage={studentsPage}
+                mentorsPage={mentorsPage}
+                setPage={setPage}
+                setProjectSubPage={setProjectSubPage}
+              />
             </div>
           </div>
         </div>
         <div className="w-full flex justify-center p-2 pt-0 lg:p-0 lg:w-2/3 lg:justify-start lg:box-border">
           <div className="w-full" style={{ maxWidth: 600 }}>
             <ProjectHeader
+              page={page}
+              setPage={setPage}
               descriptionPage={descriptionPage}
               discussionsPage={discussionsPage}
               linksPage={linksPage}

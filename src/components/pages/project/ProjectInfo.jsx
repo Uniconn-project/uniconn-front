@@ -2,7 +2,13 @@ import React from 'react'
 import SchoolIcon from '@material-ui/icons/School'
 import AssignmentIcon from '@material-ui/icons/Assignment'
 
-export default function ProjectInfo({ project }) {
+export default function ProjectInfo({
+  project,
+  studentsPage,
+  mentorsPage,
+  setPage,
+  setProjectSubPage
+}) {
   return (
     <div className="relative bg-transparent h-4/5 rounded-md shadow-lg w-full lg:w-60">
       <div className="b-bottom-light pb-6">
@@ -23,7 +29,13 @@ export default function ProjectInfo({ project }) {
         <ul>
           <li className="mb-2">
             <SchoolIcon className="color-primary" />{' '}
-            <span className="cursor-pointer hover:underline">
+            <span
+              className="cursor-pointer hover:underline"
+              onClick={() => {
+                setProjectSubPage(studentsPage)
+                setPage('students')
+              }}
+            >
               <strong>{project.students.length}</strong>{' '}
               {project.students.length === 1
                 ? 'universitário'
@@ -32,7 +44,13 @@ export default function ProjectInfo({ project }) {
           </li>
           <li className="mb-2">
             <AssignmentIcon className="color-secondary" />{' '}
-            <span className="cursor-pointer hover:underline">
+            <span
+              className="cursor-pointer hover:underline"
+              onClick={() => {
+                setProjectSubPage(mentorsPage)
+                setPage('mentors')
+              }}
+            >
               <strong>{project.mentors.length}</strong>{' '}
               {project.mentors.length === 1 ? 'mentor' : 'mentores'}
             </span>
