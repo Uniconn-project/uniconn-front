@@ -1,6 +1,9 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import SchoolIcon from '@material-ui/icons/School'
 import AssignmentIcon from '@material-ui/icons/Assignment'
+import Tooltip from '@material-ui/core/Tooltip'
+import EditIcon from '@material-ui/icons/Edit'
+import { MyProfileContext } from '../../../contexts/MyProfile'
 
 export default function ProjectInfo({
   project,
@@ -9,6 +12,8 @@ export default function ProjectInfo({
   setPage,
   setProjectSubPage
 }) {
+  const { myProfile } = useContext(MyProfileContext)
+
   return (
     <div className="relative bg-transparent h-4/5 rounded-md shadow-lg w-full lg:w-60">
       <div className="b-bottom-light pb-6">
@@ -57,6 +62,16 @@ export default function ProjectInfo({
           </li>
         </ul>
       </div>
+      {project.students
+        .concat(project.mentors)
+        .map(profile => profile.id)
+        .includes(myProfile.id) && (
+        <div className="absolute bottom-2 right-2 p-2 rounded-3xl cursor-pointer bg-secondary bg-hover color-bg-light">
+          <Tooltip title="Editar projeto" placement="top" arrow>
+            <EditIcon className="icon-sm" />
+          </Tooltip>
+        </div>
+      )}
     </div>
   )
 }
