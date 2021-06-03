@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import Page from '../../components/Page'
 import ProjectInfo from '../../components/pages/project/ProjectInfo'
@@ -33,14 +33,16 @@ export const getStaticPaths = () => {
 }
 
 export default function Project({ project }) {
-  const descriptionPage = <Description project={project} />
-  const discussionsPage = <Discussions project={project} />
-  const linksPage = <Links project={project} />
-
-  const [projectSubPage, setProjectSubPage] = useState(descriptionPage)
+  const [projectSubPage, setProjectSubPage] = useState(null)
   const [page, setPage] = useState('description')
 
-  if (!project) {
+  useEffect(() => {
+    if (project && !projectSubPage) {
+      setProjectSubPage(<Description project={project} />)
+    }
+  }, [project]) //eslint-disable-line
+
+  if (!project || !projectSubPage) {
     return (
       <Page loginRequired header>
         <div className="w-full flex justify-center mt-10">
@@ -49,7 +51,9 @@ export default function Project({ project }) {
       </Page>
     )
   }
-
+  const descriptionPage = <Description project={project} />
+  const discussionsPage = <Discussions project={project} />
+  const linksPage = <Links project={project} />
   const studentsPage = <Members profiles={project.students} />
   const mentorsPage = <Members profiles={project.mentors} />
 
