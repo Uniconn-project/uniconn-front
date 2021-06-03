@@ -1,7 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import Page from '../../components/Page'
 import ProjectInfo from '../../components/pages/project/ProjectInfo'
+import ProjectHeader from '../../components/pages/project/ProjectHeader'
+import Description from '../../components/pages/project/subpages/Description'
+import Discussions from '../../components/pages/project/subpages/Discussions'
+import Links from '../../components/pages/project/subpages/Links'
 import { fetcher } from '../../hooks/useFetch'
 
 export const getStaticProps = async context => {
@@ -28,6 +32,12 @@ export const getStaticPaths = () => {
 }
 
 export default function Project({ project }) {
+  const descriptionPage = <Description project={project} />
+  const discussionsPage = <Discussions project={project} />
+  const linksPage = <Links project={project} />
+
+  const [projectSubPage, setProjectSubPage] = useState(descriptionPage)
+
   if (!project) {
     return (
       <Page loginRequired header>
@@ -55,17 +65,13 @@ export default function Project({ project }) {
         </div>
         <div className="w-full flex justify-center p-2 pt-0 lg:p-0 lg:w-2/3 lg:justify-start lg:box-border">
           <div className="w-full" style={{ maxWidth: 600 }}>
-            <div className="sticky top-24 w-full mb-4 sm:top-32">
-              <div className="w-full bg-light h-14 rounded-md shadow-lg p-2 flex items-center">
-                <div className="flex px-4">
-                  <div className="p-3 mr-2 nav-link b-bottom-primary">
-                    Descrição
-                  </div>
-                  <div className="p-3 ml-2 nav-link">Issues</div>
-                  <div className="p-3 ml-2 nav-link">Links</div>
-                </div>
-              </div>
-            </div>
+            <ProjectHeader
+              descriptionPage={descriptionPage}
+              discussionsPage={discussionsPage}
+              linksPage={linksPage}
+              setProjectSubPage={setProjectSubPage}
+            />
+            {projectSubPage}
           </div>
         </div>
       </div>

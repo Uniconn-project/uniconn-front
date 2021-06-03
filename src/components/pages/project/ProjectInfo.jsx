@@ -22,13 +22,20 @@ export default function ProjectInfo({ project }) {
       <div className="w-full pl-4 pr-1 pt-6 ">
         <ul>
           <li className="mb-2">
-            <SchoolIcon className="color-primary" /> {project.students.length}{' '}
-            {project.students.length === 1 ? 'universitário' : 'universitários'}
+            <SchoolIcon className="color-primary" />{' '}
+            <span className="cursor-pointer hover:underline">
+              <strong>{project.students.length}</strong>{' '}
+              {project.students.length === 1
+                ? 'universitário'
+                : 'universitários'}
+            </span>
           </li>
           <li className="mb-2">
-            <AssignmentIcon className="color-secondary" />
-            {project.mentors.length}{' '}
-            {project.mentors.length === 1 ? 'mentor' : 'mentores'}
+            <AssignmentIcon className="color-secondary" />{' '}
+            <span className="cursor-pointer hover:underline">
+              <strong>{project.mentors.length}</strong>{' '}
+              {project.mentors.length === 1 ? 'mentor' : 'mentores'}
+            </span>
           </li>
         </ul>
       </div>
