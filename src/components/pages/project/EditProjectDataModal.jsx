@@ -1,13 +1,21 @@
-import React, { useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Tooltip from '@material-ui/core/Tooltip'
 import EditIcon from '@material-ui/icons/Edit'
 import Modal from '@material-ui/core/Modal'
 import Backdrop from '@material-ui/core/Backdrop'
 import Fade from '@material-ui/core/Fade'
 import CircularProgress from '@material-ui/core/CircularProgress'
+import Chip from '@material-ui/core/Chip'
+import TextField from '@material-ui/core/TextField'
+import List from '@material-ui/core/List'
+import ListItem from '@material-ui/core/ListItem'
+import ListItemText from '@material-ui/core/ListItemText'
+import ListItemAvatar from '@material-ui/core/ListItemAvatar'
+import Avatar from '@material-ui/core/Avatar'
 import AddAPhotoOutlinedIcon from '@material-ui/icons/AddAPhotoOutlined'
-import useFetch from '../../../hooks/useFetch'
 import ProjectBaseForm from '../../global/ProjectBaseForm'
+import useFetch, { fetcher } from '../../../hooks/useFetch'
+import { MyProfileContext } from '../../../contexts/MyProfile'
 
 export default function EditProjectDataModal({ project }) {
   const postDataInitialState = {
@@ -18,11 +26,47 @@ export default function EditProjectDataModal({ project }) {
     markets: project.markets.map(market => market.name)
   }
 
+  const { myProfile } = useContext(MyProfileContext)
+
   const [isOpen, setIsOpen] = useState(false)
   const [postData, setPostData] = useState(postDataInitialState)
+  const [studentsSearch, setStudentsSearch] = useState('')
+  const [mentorsSearch, setMentorsSearch] = useState('')
+  const [filteredStudents, setFilteredStudents] = useState([])
+  const [filteredMentors, setFilteredMentors] = useState([])
+  const [selectedStudents, setSelectedStudents] = useState([])
+  const [selectedMentors, setSelectedMentors] = useState([])
 
   const { data: categories } = useFetch('projects/get-projects-categories-list')
   const { data: markets } = useFetch('projects/get-markets-name-list')
+
+  useEffect(() => {
+    if (!studentsSearch.length) {
+      setFilteredStudents([])
+      return
+    }
+
+    ;(async () => {
+      const data = await fetcher(
+        `profiles/get-filtered-profiles/${studentsSearch}`
+      )
+      setFilteredStudents(data)
+    })()
+  }, [studentsSearch])
+
+  useEffect(() => {
+    if (!mentorsSearch.length) {
+      setFilteredMentors([])
+      return
+    }
+
+    ;(async () => {
+      const data = await fetcher(
+        `profiles/get-filtered-profiles/${mentorsSearch}`
+      )
+      setFilteredMentors(data)
+    })()
+  }, [mentorsSearch])
 
   const handleClose = () => {
     setIsOpen(false)
@@ -31,11 +75,8 @@ export default function EditProjectDataModal({ project }) {
 
   const handleProfileImageChange = e => {
     const reader = new FileReader()
-    console.log(1)
     reader.onload = () => {
-      console.log(2)
       if (reader.readyState === 2) {
-        console.log(3)
         setPostData({ ...postData, image: reader.result })
       }
     }
@@ -46,7 +87,7 @@ export default function EditProjectDataModal({ project }) {
     }
   }
 
-  if (!categories || !markets) {
+  if (!myProfile || !categories || !markets) {
     return <CircularProgress size={30} />
   }
 
@@ -71,7 +112,7 @@ export default function EditProjectDataModal({ project }) {
         }}
       >
         <Fade in={isOpen}>
-          <div className="bg-dark rounded-md shadow-lg w-full max-w-screen-md">
+          <div className="bg-dark py-2 rounded-md shadow-lg w-full max-w-screen-md">
             <div className="w-full b-bottom p-4">
               <h2>Editar projeto</h2>
             </div>
@@ -97,17 +138,154 @@ export default function EditProjectDataModal({ project }) {
                 onChange={handleProfileImageChange}
               />
             </div>
-            <div className="w-full">
-              <div className="w-full p-4 b-bottom-transparent">
+            <div className="w-full max-h-72 overflow-y-auto pb-10 b-bottom-transparent">
+              <div className="w-full p-4">
                 <ProjectBaseForm
                   usePostData={() => [postData, setPostData]}
                   markets={markets}
                   categories={categories}
                 />
               </div>
-              <div className="w-full p-4">
-                <button className="btn-primary ml-auto">Confirmar</button>
+              <div className="w-full">
+                <div className="w-full px-4 mb-2">
+                  <TextField
+                    label="Convidar universitários"
+                    className="w-full"
+                    value={studentsSearch}
+                    onChange={e => setStudentsSearch(e.target.value)}
+                  />
+                  <List dense className="w-full">
+                    {filteredStudents
+                      .filter(
+                        profile =>
+                          profile.user.username !== myProfile.user.username &&
+                          profile.type === 'student' &&
+                          !selectedStudents
+                            .map(s => s.user.username)
+                            .includes(profile.user.username)
+                      )
+                      .map(student => {
+                        return (
+                          <ListItem
+                            key={student.id}
+                            button
+                            onClick={() => {
+                              setSelectedStudents([
+                                ...selectedStudents,
+                                student
+                              ])
+                              setFilteredStudents([])
+                              setStudentsSearch('')
+                            }}
+                          >
+                            <ListItemAvatar>
+                              <Avatar
+                                alt={student.user.username}
+                                src={
+                                  process.env.NEXT_PUBLIC_API_HOST +
+                                  student.photo
+                                }
+                              />
+                            </ListItemAvatar>
+                            <ListItemText
+                              primary={`${student.first_name} ${student.last_name}`}
+                              secondary={`@${student.user.username}`}
+                            />
+                          </ListItem>
+                        )
+                      })}
+                  </List>
+                  <div className="flex">
+                    {selectedStudents.map(student => (
+                      <Chip
+                        key={student.id}
+                        label={student.user.username}
+                        className="b-primary mr-1"
+                        avatar={
+                          <Avatar
+                            alt={student.user.username}
+                            src={
+                              process.env.NEXT_PUBLIC_API_HOST + student.photo
+                            }
+                          />
+                        }
+                        onDelete={() =>
+                          setSelectedStudents(
+                            selectedStudents.filter(s => s.id !== student.id)
+                          )
+                        }
+                      />
+                    ))}
+                  </div>
+                </div>
+                <div className="w-full px-4">
+                  <TextField
+                    label="Convidar mentores"
+                    className="w-full"
+                    value={mentorsSearch}
+                    onChange={e => setMentorsSearch(e.target.value)}
+                  />
+                  <List dense className="w-full">
+                    {filteredMentors
+                      .filter(
+                        profile =>
+                          profile.user.username !== myProfile.user.username &&
+                          profile.type === 'mentor' &&
+                          !selectedMentors
+                            .map(m => m.user.username)
+                            .includes(profile.user.username)
+                      )
+                      .map(mentor => {
+                        return (
+                          <ListItem
+                            key={mentor.id}
+                            button
+                            onClick={() => {
+                              setSelectedMentors([...selectedMentors, mentor])
+                              setFilteredMentors([])
+                              setMentorsSearch('')
+                            }}
+                          >
+                            <ListItemAvatar>
+                              <Avatar
+                                alt={mentor.user.username}
+                                src={
+                                  process.env.NEXT_PUBLIC_API_HOST +
+                                  mentor.photo
+                                }
+                              />
+                            </ListItemAvatar>
+                            <ListItemText
+                              primary={`${mentor.first_name} ${mentor.last_name}`}
+                              secondary={`@${mentor.user.username}`}
+                            />
+                          </ListItem>
+                        )
+                      })}
+                  </List>
+                  {selectedMentors.map(mentor => (
+                    <Chip
+                      key={mentor.id}
+                      label={mentor.user.username}
+                      className="b-secondary mr-1"
+                      avatar={
+                        <Avatar
+                          alt={mentor.user.username}
+                          src={process.env.NEXT_PUBLIC_API_HOST + mentor.photo}
+                        />
+                      }
+                      onDelete={() =>
+                        setSelectedMentors(
+                          selectedMentors.filter(m => m.id !== mentor.id)
+                        )
+                      }
+                    />
+                  ))}
+                </div>
               </div>
+            </div>
+            <div className="w-full p-4">
+              <button className="btn-primary ml-auto">Confirmar</button>
             </div>
           </div>
         </Fade>
