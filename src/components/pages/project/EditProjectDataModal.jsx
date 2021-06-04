@@ -23,7 +23,9 @@ export default function EditProjectDataModal({ project }) {
     name: project.name,
     category: project.category,
     slogan: project.slogan,
-    markets: project.markets.map(market => market.name)
+    markets: project.markets.map(market => market.name),
+    students: [],
+    mentors: []
   }
 
   const { myProfile } = useContext(MyProfileContext)
@@ -34,8 +36,6 @@ export default function EditProjectDataModal({ project }) {
   const [mentorsSearch, setMentorsSearch] = useState('')
   const [filteredStudents, setFilteredStudents] = useState([])
   const [filteredMentors, setFilteredMentors] = useState([])
-  const [selectedStudents, setSelectedStudents] = useState([])
-  const [selectedMentors, setSelectedMentors] = useState([])
 
   const { data: categories } = useFetch('projects/get-projects-categories-list')
   const { data: markets } = useFetch('projects/get-markets-name-list')
@@ -160,7 +160,7 @@ export default function EditProjectDataModal({ project }) {
                         profile =>
                           profile.user.username !== myProfile.user.username &&
                           profile.type === 'student' &&
-                          !selectedStudents
+                          !postData.students
                             .map(s => s.user.username)
                             .includes(profile.user.username)
                       )
@@ -170,10 +170,10 @@ export default function EditProjectDataModal({ project }) {
                             key={student.id}
                             button
                             onClick={() => {
-                              setSelectedStudents([
-                                ...selectedStudents,
-                                student
-                              ])
+                              setPostData({
+                                ...postData,
+                                students: [...postData.students, student]
+                              })
                               setFilteredStudents([])
                               setStudentsSearch('')
                             }}
@@ -196,7 +196,7 @@ export default function EditProjectDataModal({ project }) {
                       })}
                   </List>
                   <div className="flex">
-                    {selectedStudents.map(student => (
+                    {postData.students.map(student => (
                       <Chip
                         key={student.id}
                         label={student.user.username}
@@ -210,9 +210,12 @@ export default function EditProjectDataModal({ project }) {
                           />
                         }
                         onDelete={() =>
-                          setSelectedStudents(
-                            selectedStudents.filter(s => s.id !== student.id)
-                          )
+                          setPostData({
+                            ...postData,
+                            students: postData.students.filter(
+                              s => s.id !== student.id
+                            )
+                          })
                         }
                       />
                     ))}
@@ -231,7 +234,7 @@ export default function EditProjectDataModal({ project }) {
                         profile =>
                           profile.user.username !== myProfile.user.username &&
                           profile.type === 'mentor' &&
-                          !selectedMentors
+                          !postData.mentors
                             .map(m => m.user.username)
                             .includes(profile.user.username)
                       )
@@ -241,7 +244,10 @@ export default function EditProjectDataModal({ project }) {
                             key={mentor.id}
                             button
                             onClick={() => {
-                              setSelectedMentors([...selectedMentors, mentor])
+                              setPostData({
+                                ...postData,
+                                mentors: [...postData.mentors, mentor]
+                              })
                               setFilteredMentors([])
                               setMentorsSearch('')
                             }}
@@ -263,7 +269,7 @@ export default function EditProjectDataModal({ project }) {
                         )
                       })}
                   </List>
-                  {selectedMentors.map(mentor => (
+                  {postData.mentors.map(mentor => (
                     <Chip
                       key={mentor.id}
                       label={mentor.user.username}
@@ -275,9 +281,12 @@ export default function EditProjectDataModal({ project }) {
                         />
                       }
                       onDelete={() =>
-                        setSelectedMentors(
-                          selectedMentors.filter(m => m.id !== mentor.id)
-                        )
+                        setPostData({
+                          ...postData,
+                          mentors: postData.mentors.filter(
+                            s => s.id !== mentor.id
+                          )
+                        })
                       }
                     />
                   ))}
