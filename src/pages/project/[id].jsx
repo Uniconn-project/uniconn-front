@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import CircularProgress from '@material-ui/core/CircularProgress'
+import Snackbar from '@material-ui/core/Snackbar'
+import Alert from '@material-ui/lab/Alert'
 import Page from '../../components/Page'
 import ProjectInfo from '../../components/pages/project/ProjectInfo'
 import ProjectHeader from '../../components/pages/project/ProjectHeader'
@@ -20,7 +22,7 @@ export const getStaticProps = async context => {
 
   return {
     props: {
-      project
+      initialProject: project
     }
   }
 }
@@ -32,15 +34,19 @@ export const getStaticPaths = () => {
   }
 }
 
-export default function Project({ project }) {
+export default function Project({ initialProject }) {
+  const [project, setProject] = useState(null)
   const [projectSubPage, setProjectSubPage] = useState(null)
   const [page, setPage] = useState('description')
+  const [successMsgIsOpen, setSuccessMsgIsOpen] = useState(false)
 
   useEffect(() => {
-    if (project && !projectSubPage) {
-      setProjectSubPage(<Description project={project} />)
+    if (initialProject && !projectSubPage) {
+      setProjectSubPage(<Description project={initialProject} />)
     }
-  }, [project]) //eslint-disable-line
+
+    setProject(initialProject)
+  }, [initialProject]) //eslint-disable-line
 
   if (!project || !projectSubPage) {
     return (
@@ -56,6 +62,14 @@ export default function Project({ project }) {
   const linksPage = <Links project={project} />
   const studentsPage = <Members profiles={project.students} />
   const mentorsPage = <Members profiles={project.mentors} />
+
+  const refetchProject = async () => {
+    setProject(null)
+    const updatedProject = await fetcher(`projects/get-project/${project.id}`)
+    setProject(updatedProject)
+
+    setSuccessMsgIsOpen(true)
+  }
 
   return (
     <Page
@@ -74,7 +88,15 @@ export default function Project({ project }) {
                 mentorsPage={mentorsPage}
                 setPage={setPage}
                 setProjectSubPage={setProjectSubPage}
+                refetchProject={refetchProject}
               />
+              <Snackbar
+                open={successMsgIsOpen}
+                autoHideDuration={6000}
+                onClose={() => setSuccessMsgIsOpen(false)}
+              >
+                <Alert severity="success">Projeto editado com sucesso!</Alert>
+              </Snackbar>
             </div>
           </div>
         </div>

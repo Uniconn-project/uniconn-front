@@ -10,7 +10,8 @@ export default function ProjectInfo({
   studentsPage,
   mentorsPage,
   setPage,
-  setProjectSubPage
+  setProjectSubPage,
+  refetchProject
 }) {
   const { myProfile } = useContext(MyProfileContext)
 
@@ -66,10 +67,12 @@ export default function ProjectInfo({
           </li>
         </ul>
       </div>
-      {project.students
-        .concat(project.mentors)
-        .map(profile => profile.id)
-        .includes(myProfile.id) && <EditProjectDataModal project={project} />}
+      {project.students.map(profile => profile.id).includes(myProfile.id) && (
+        <EditProjectDataModal
+          project={project}
+          refetchProject={refetchProject}
+        />
+      )}
     </div>
   )
 }

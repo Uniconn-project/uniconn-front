@@ -16,8 +16,9 @@ import AddAPhotoOutlinedIcon from '@material-ui/icons/AddAPhotoOutlined'
 import ProjectBaseForm from '../../global/ProjectBaseForm'
 import useFetch, { fetcher } from '../../../hooks/useFetch'
 import { MyProfileContext } from '../../../contexts/MyProfile'
+import { AuthContext } from '../../../contexts/Auth'
 
-export default function EditProjectDataModal({ project }) {
+export default function EditProjectDataModal({ project, refetchProject }) {
   const postDataInitialState = {
     image: null,
     name: project.name,
@@ -29,9 +30,11 @@ export default function EditProjectDataModal({ project }) {
   }
 
   const { myProfile } = useContext(MyProfileContext)
+  const { getToken } = useContext(AuthContext)
 
   const [isOpen, setIsOpen] = useState(false)
   const [postData, setPostData] = useState(postDataInitialState)
+
   const [studentsSearch, setStudentsSearch] = useState('')
   const [mentorsSearch, setMentorsSearch] = useState('')
   const [filteredStudents, setFilteredStudents] = useState([])
@@ -85,6 +88,30 @@ export default function EditProjectDataModal({ project }) {
     } catch {
       window.alert('Ocorreu um erro')
     }
+  }
+
+  const handleSubmit = async () => {
+    fetch(
+      `${process.env.NEXT_PUBLIC_API_HOST}/api/projects/edit-project/${project.id}`,
+      {
+        method: 'PUT',
+        headers: {
+          Authorization: 'JWT ' + (await getToken()),
+          'Content-type': 'application/json'
+        },
+        body: JSON.stringify({
+          ...postData,
+          students: postData.students.map(student => student.user.username),
+          mentors: postData.mentors.map(mentor => mentor.user.username)
+        })
+      }
+    )
+      .then(response => response.json())
+      .then(data => {
+        if (data === 'Project edited with success') {
+          refetchProject()
+        }
+      })
   }
 
   if (!myProfile || !categories || !markets) {
@@ -294,7 +321,9 @@ export default function EditProjectDataModal({ project }) {
               </div>
             </div>
             <div className="w-full p-4">
-              <button className="btn-primary ml-auto">Confirmar</button>
+              <button className="btn-primary ml-auto" onClick={handleSubmit}>
+                Confirmar
+              </button>
             </div>
           </div>
         </Fade>
