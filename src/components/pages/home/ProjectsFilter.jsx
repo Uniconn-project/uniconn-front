@@ -27,11 +27,14 @@ export default function ProjectsFilter({ projects, setRenderedProjects }) {
   }
 
   const handleFilterSubmit = async () => {
-    const categoryCheckboxes = document.querySelectorAll('.category')
-    for (const i in categoryCheckboxes) {
+    const categoryCheckboxes = Array.from(
+      document.querySelectorAll('.category')
+    )
+    for (let i in categoryCheckboxes) {
+      i = Number(i)
       if (categoryCheckboxes[i].checked) break
       else if (
-        i == categoryCheckboxes.length - 1 &&
+        i === categoryCheckboxes.length - 1 &&
         !categoryCheckboxes[i].checked
       ) {
         window.alert('Selecione pelo menos uma categoria!')
@@ -39,11 +42,12 @@ export default function ProjectsFilter({ projects, setRenderedProjects }) {
       }
     }
 
-    const marketCheckboxes = document.querySelectorAll('.market')
-    for (const i in marketCheckboxes) {
+    const marketCheckboxes = Array.from(document.querySelectorAll('.market'))
+    for (let i in marketCheckboxes) {
+      i = Number(i)
       if (marketCheckboxes[i].checked) break
       else if (
-        i == marketCheckboxes.length - 1 &&
+        i === marketCheckboxes.length - 1 &&
         !marketCheckboxes[i].checked
       ) {
         window.alert('Selecione pelo menos uma mercado!')
@@ -98,7 +102,7 @@ export default function ProjectsFilter({ projects, setRenderedProjects }) {
               <h4 className="ml-1">Categorias</h4>
             </div>
             {categories ? (
-              <ul>
+              <ul className="max-h-36 overflow-y-auto">
                 <li>
                   <input
                     type="checkbox"
@@ -129,7 +133,7 @@ export default function ProjectsFilter({ projects, setRenderedProjects }) {
               <h4 className="ml-1">Mercados</h4>
             </div>
             {markets ? (
-              <ul>
+              <ul className="max-h-36 overflow-y-auto">
                 <li>
                   <input
                     type="checkbox"
