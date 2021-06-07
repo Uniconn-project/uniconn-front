@@ -4,11 +4,8 @@ import EditIcon from '@material-ui/icons/Edit'
 import Modal from '@material-ui/core/Modal'
 import Backdrop from '@material-ui/core/Backdrop'
 import Fade from '@material-ui/core/Fade'
-import CircularProgress from '@material-ui/core/CircularProgress'
 import AddAPhotoOutlinedIcon from '@material-ui/icons/AddAPhotoOutlined'
 import ProjectBaseForm from '../../global/ProjectBaseForm'
-import useFetch from '../../../hooks/useFetch'
-import { MyProfileContext } from '../../../contexts/MyProfile'
 import { AuthContext } from '../../../contexts/Auth'
 
 export default function EditProjectDataModal({ project, refetchProject }) {
@@ -20,16 +17,10 @@ export default function EditProjectDataModal({ project, refetchProject }) {
     markets: project.markets.map(market => market.name)
   }
 
-  console.log(project)
-
-  const { myProfile } = useContext(MyProfileContext)
   const { getToken } = useContext(AuthContext)
 
   const [isOpen, setIsOpen] = useState(false)
   const [postData, setPostData] = useState(postDataInitialState)
-
-  const { data: categories } = useFetch('projects/get-projects-categories-list')
-  const { data: markets } = useFetch('projects/get-markets-name-list')
 
   const handleClose = () => {
     setIsOpen(false)
@@ -68,10 +59,6 @@ export default function EditProjectDataModal({ project, refetchProject }) {
           refetchProject()
         }
       })
-  }
-
-  if (!myProfile || !categories || !markets) {
-    return <CircularProgress size={30} />
   }
 
   return (
@@ -123,11 +110,7 @@ export default function EditProjectDataModal({ project, refetchProject }) {
             </div>
             <div className="w-full max-h-72 overflow-y-auto pb-10 b-bottom-transparent">
               <div className="w-full p-4">
-                <ProjectBaseForm
-                  usePostData={() => [postData, setPostData]}
-                  markets={markets}
-                  categories={categories}
-                />
+                <ProjectBaseForm usePostData={() => [postData, setPostData]} />
               </div>
             </div>
             <div className="w-full p-4">

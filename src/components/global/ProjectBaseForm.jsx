@@ -1,13 +1,18 @@
 import React from 'react'
+import CircularProgress from '@material-ui/core/CircularProgress'
 import TextField from '@material-ui/core/TextField'
 import Select from '@material-ui/core/Select'
 import MenuItem from '@material-ui/core/MenuItem'
 import InputLabel from '@material-ui/core/InputLabel'
 import Chip from '@material-ui/core/Chip'
 import FormControl from '@material-ui/core/FormControl'
+import useFetch from '../../hooks/useFetch'
 
-export default function ProjectBaseForm({ usePostData, markets, categories }) {
+export default function ProjectBaseForm({ usePostData }) {
   const [postData, setPostData] = usePostData()
+
+  const { data: categories } = useFetch('projects/get-projects-categories-list')
+  const { data: markets } = useFetch('projects/get-markets-name-list')
 
   const handleChange = key => e => {
     setPostData({ ...postData, [key]: e.target.value })
@@ -18,6 +23,14 @@ export default function ProjectBaseForm({ usePostData, markets, categories }) {
       ...postData,
       markets: postData.markets.filter(market => market !== marketName)
     })
+  }
+
+  if (!categories || !markets) {
+    return (
+      <div className="flex justify-content">
+        <CircularProgress />
+      </div>
+    )
   }
 
   return (

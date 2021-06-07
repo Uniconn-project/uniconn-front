@@ -1,10 +1,8 @@
 import React, { useContext, useState } from 'react'
 import ProfileInfo from '../components/global/ProfileInfo'
 import Page from '../components/Page'
-import CircularProgress from '@material-ui/core/CircularProgress'
 import Snackbar from '@material-ui/core/Snackbar'
 import Alert from '@material-ui/lab/Alert'
-import useFetch from '../hooks/useFetch'
 import { MyProfileContext } from '../contexts/MyProfile'
 import { AuthContext } from '../contexts/Auth'
 import ProjectBaseForm from '../components/global/ProjectBaseForm'
@@ -22,9 +20,6 @@ export default function CreateProject() {
   const [successIsOpen, setSuccessIsOpen] = useState(false)
   const [errorIsOpen, setErrorIsOpen] = useState(false)
   const [errorMessage, setErrorMessage] = useState('')
-
-  const { data: categories } = useFetch('projects/get-projects-categories-list')
-  const { data: markets } = useFetch('projects/get-markets-name-list')
 
   const handleSubmit = async () => {
     if (
@@ -57,14 +52,6 @@ export default function CreateProject() {
       })
   }
 
-  if (!categories || !markets) {
-    return (
-      <div className="flex justify-content">
-        <CircularProgress />
-      </div>
-    )
-  }
-
   return (
     <Page title="Criar projeto | Uniconn" page="project" loginRequired header>
       <div className="justify-center w-full h-full flex">
@@ -82,11 +69,7 @@ export default function CreateProject() {
             </div>
             <div className="w-full flex flex-col bg-transparent rounded-md shadow-lg">
               <div className="w-full p-2 b-bottom-transparent">
-                <ProjectBaseForm
-                  usePostData={() => [postData, setPostData]}
-                  markets={markets}
-                  categories={categories}
-                />
+                <ProjectBaseForm usePostData={() => [postData, setPostData]} />
               </div>
               <div className="w-full p-4">
                 <button className="btn-primary ml-auto" onClick={handleSubmit}>
