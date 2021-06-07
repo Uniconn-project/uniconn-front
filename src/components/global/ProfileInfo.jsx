@@ -44,7 +44,7 @@ export default function ProfileInfo({ profile }) {
       <div className="w-full pl-4 pr-2 py-6 b-bottom-light">
         <p className="break-words">{profile.bio}</p>
       </div>
-      <div className="w-full pl-4 pr-1 pt-6 ">
+      <div className="w-full pl-4 pr-1 pt-6 pb-2">
         <ul>
           {profile.type === 'student' && (
             <li className="pb-2">

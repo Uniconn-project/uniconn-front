@@ -23,7 +23,8 @@ export const getStaticProps = async context => {
   return {
     props: {
       initialProject: project
-    }
+    },
+    revalidate: 1000 // 1 second
   }
 }
 
