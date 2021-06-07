@@ -34,6 +34,9 @@ export default function ProjectInfo({
       </div>
       <div className="w-full pl-4 pr-2 py-6 b-bottom-light">
         <p className="break-words">{project.slogan}</p>
+        <p className={`mt-2 font-bold color-${project.category.value}`}>
+          {project.category.readable}
+        </p>
       </div>
       <div className="w-full pl-4 pr-1 pt-6 pb-2">
         <ul>

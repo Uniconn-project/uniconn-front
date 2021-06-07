@@ -15,10 +15,12 @@ export default function EditProjectDataModal({ project, refetchProject }) {
   const postDataInitialState = {
     image: null,
     name: project.name,
-    category: project.category,
+    category: project.category.value,
     slogan: project.slogan,
     markets: project.markets.map(market => market.name)
   }
+
+  console.log(project)
 
   const { myProfile } = useContext(MyProfileContext)
   const { getToken } = useContext(AuthContext)

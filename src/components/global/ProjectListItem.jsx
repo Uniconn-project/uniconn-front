@@ -25,8 +25,11 @@ export default function ProjectListItem({ project }) {
             ))}
           </div>
         </div>
-        <p className="max-h-20 whitespace-nowrap overflow-ellipsis overflow-hidden mb-4">
+        <p className="max-h-20 whitespace-nowrap overflow-ellipsis overflow-hidden mb-2">
           {project.slogan}
+        </p>
+        <p className={`mb-4 font-bold color-${project.category.value}`}>
+          {project.category.readable}
         </p>
         <img
           src={process.env.NEXT_PUBLIC_API_HOST + project.image}
