@@ -7,6 +7,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemText from '@material-ui/core/ListItemText'
 import HomeIcon from '@material-ui/icons/Home'
 import ProfileIcon from '@material-ui/icons/Person'
+import GroupIcon from '@material-ui/icons/Group'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import ExitToAppIcon from '@material-ui/icons/ExitToApp'
 import { MyProfileContext } from '../../../contexts/MyProfile'
@@ -52,6 +53,14 @@ export default function MobileMenu() {
                   <ProfileIcon />
                 </ListItemIcon>
                 <ListItemText primary={'Perfil'} />
+              </ListItem>
+            </Link>
+            <Link href="/users">
+              <ListItem button>
+                <ListItemIcon>
+                  <GroupIcon />
+                </ListItemIcon>
+                <ListItemText primary={'Usuários'} />
               </ListItem>
             </Link>
             <ListItem button>
