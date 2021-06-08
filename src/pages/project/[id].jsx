@@ -61,8 +61,12 @@ export default function Project({ initialProject }) {
   const descriptionPage = <Description project={project} />
   const discussionsPage = <Discussions project={project} />
   const linksPage = <Links project={project} />
-  const studentsPage = <Members profiles={project.students} />
-  const mentorsPage = <Members profiles={project.mentors} />
+  const studentsPage = (
+    <Members type="students" project={project} profiles={project.students} />
+  )
+  const mentorsPage = (
+    <Members type="mentors" project={project} profiles={project.mentors} />
+  )
 
   const refetchProject = async () => {
     setProject(null)

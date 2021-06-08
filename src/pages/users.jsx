@@ -28,9 +28,7 @@ export default function SearchUser() {
         loginRequired
         header
       >
-        <div>
-          <CircularProgress />
-        </div>
+        <CircularProgress />
       </Page>
     )
   }
