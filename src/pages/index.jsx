@@ -31,7 +31,7 @@ export default function Index() {
             </div>
             <div className="hidden ml-auto h-2/3 sm:flex">
               <Link href="/login">
-                <button className="btn-secondary m-2">Entrar</button>
+                <button className="btn-primary-transparent m-2">Entrar</button>
               </Link>
               <Link href="/signup">
                 <button className="btn-primary m-2">Criar conta</button>
@@ -152,7 +152,9 @@ export default function Index() {
             <h2>Uniconn</h2>
             <div className="flex">
               <Link href="/login">
-                <button className="btn-secondary m-2 text-xl">Entrar</button>
+                <button className="btn-primary-transparent m-2 text-xl">
+                  Entrar
+                </button>
               </Link>
               <Link href="/signup">
                 <button className="btn-primary m-2 text-xl">Criar conta</button>

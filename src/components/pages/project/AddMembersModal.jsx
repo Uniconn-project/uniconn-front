@@ -71,7 +71,11 @@ export default function AddMembersModal({ type, project }) {
           <div className="bg-dark rounded-md shadow-lg">
             <div className="w-full px-4 py-2">
               <TextField
-                label="Pesquisar universitários..."
+                label={
+                  type === 'students'
+                    ? 'Pesquisar universitários...'
+                    : 'Pesquisar mentores...'
+                }
                 className="w-full"
                 value={studentsSearch}
                 onChange={e => setStudentsSearch(e.target.value)}
@@ -134,7 +138,13 @@ export default function AddMembersModal({ type, project }) {
               ))}
             </div>
             <div className="w-full p-4 flex items-center">
-              <button className="btn-primary ml-auto">Convidar</button>
+              <button
+                className={`btn-${
+                  type === 'students' ? 'primary' : 'secondary'
+                } ml-auto`}
+              >
+                Convidar
+              </button>
             </div>
           </div>
         </Fade>
