@@ -5,14 +5,7 @@ import EditProjectDataModal from './EditProjectDataModal'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import { MyProfileContext } from '../../../contexts/MyProfile'
 
-export default function ProjectInfo({
-  project,
-  studentsPage,
-  mentorsPage,
-  setPage,
-  setProjectSubPage,
-  refetchProject
-}) {
+export default function ProjectInfo({ project, setPage, refetchProject }) {
   const { myProfile } = useContext(MyProfileContext)
 
   if (!myProfile) {
@@ -44,10 +37,7 @@ export default function ProjectInfo({
             <SchoolIcon className="color-primary" />{' '}
             <span
               className="cursor-pointer hover:underline"
-              onClick={() => {
-                setProjectSubPage(studentsPage)
-                setPage('students')
-              }}
+              onClick={() => setPage('students')}
             >
               <strong>{project.students.length}</strong>{' '}
               {project.students.length === 1
@@ -59,10 +49,7 @@ export default function ProjectInfo({
             <AssignmentIcon className="color-secondary" />{' '}
             <span
               className="cursor-pointer hover:underline"
-              onClick={() => {
-                setProjectSubPage(mentorsPage)
-                setPage('mentors')
-              }}
+              onClick={() => setPage('mentors')}
             >
               <strong>{project.mentors.length}</strong>{' '}
               {project.mentors.length === 1 ? 'mentor' : 'mentores'}

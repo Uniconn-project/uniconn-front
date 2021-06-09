@@ -3,10 +3,12 @@ import Link from 'next/link'
 import SchoolIcon from '@material-ui/icons/School'
 import AssignmentIcon from '@material-ui/icons/Assignment'
 
-export default function ProfileListItem({ profile }) {
+export default function ProfileListItem({ profile, className = '' }) {
   return (
     <Link href={`/user/${profile.user.username}`}>
-      <div className="w-full flex flex-col items-start bg-transparent rounded-md shadow-lg p-2 my-3 cursor-pointer bg-hover sm:flex-row">
+      <div
+        className={`w-full flex flex-col items-start bg-transparent rounded-md shadow-lg p-2 my-3 cursor-pointer bg-hover sm:flex-row ${className}`}
+      >
         <div className="flex">
           <div className="relative mr-2">
             <img

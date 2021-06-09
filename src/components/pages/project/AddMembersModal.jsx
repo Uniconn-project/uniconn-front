@@ -12,31 +12,56 @@ import ListItemAvatar from '@material-ui/core/ListItemAvatar'
 import Avatar from '@material-ui/core/Avatar'
 import { fetcher } from '../../../hooks/useFetch'
 import { MyProfileContext } from '../../../contexts/MyProfile'
+import { AuthContext } from '../../../contexts/Auth'
 
-export default function AddMembersModal({ type, project }) {
+export default function AddMembersModal({ type, project, refetchProject }) {
   const { myProfile } = useContext(MyProfileContext)
+  const { getToken } = useContext(AuthContext)
 
   const [isOpen, setIsOpen] = useState(false)
-  const [studentsSearch, setStudentsSearch] = useState('')
-  const [filteredStudents, setFilteredStudents] = useState([])
-  const [selectedStudents, setSelectedStudents] = useState([])
+  const [profilesSearch, setProfilesSearch] = useState('')
+  const [filteredProfiles, setFilteredProfiles] = useState([])
+  const [selectedProfiles, setSelectedProfiles] = useState([])
 
   useEffect(() => {
-    if (!studentsSearch.length) {
-      setFilteredStudents([])
+    if (!profilesSearch.length) {
+      setFilteredProfiles([])
       return
     }
 
     ;(async () => {
       const data = await fetcher(
-        `profiles/get-filtered-profiles/${studentsSearch}`
+        `profiles/get-filtered-profiles/${profilesSearch}`
       )
-      setFilteredStudents(data)
+      setFilteredProfiles(data)
     })()
-  }, [studentsSearch])
+  }, [profilesSearch])
 
   const handleClose = () => {
+    setSelectedProfiles([])
     setIsOpen(false)
+  }
+
+  const handleSubmit = async () => {
+    fetch(
+      `${process.env.NEXT_PUBLIC_API_HOST}/api/projects/invite-${type}s-to-project/${project.id}`,
+      {
+        method: 'PUT',
+        headers: {
+          Authorization: 'JWT ' + (await getToken()),
+          'Content-type': 'application/json'
+        },
+        body: JSON.stringify({
+          [`${type}s`]: selectedProfiles.map(profile => profile.user.username)
+        })
+      }
+    )
+      .then(response => response.json())
+      .then(data => {
+        if (data === 'Users invited to project with success!') {
+          refetchProject('invite')
+        }
+      })
   }
 
   return (
@@ -45,7 +70,7 @@ export default function AddMembersModal({ type, project }) {
         className="w-full flex items-center p-2 pl-4 cursor-pointer bg-transparent bg-hover rounded-md shadow-lg"
         onClick={() => setIsOpen(true)}
       >
-        {type === 'students' ? (
+        {type === 'student' ? (
           <>
             <PersonAddIcon className="color-primary mr-2" />
             <strong className="color-primary">Convidar universitário</strong>
@@ -72,45 +97,50 @@ export default function AddMembersModal({ type, project }) {
             <div className="w-full px-4 py-2">
               <TextField
                 label={
-                  type === 'students'
+                  type === 'student'
                     ? 'Pesquisar universitários...'
                     : 'Pesquisar mentores...'
                 }
                 className="w-full"
-                value={studentsSearch}
-                onChange={e => setStudentsSearch(e.target.value)}
+                value={profilesSearch}
+                onChange={e => setProfilesSearch(e.target.value)}
               />
               <List dense className="w-full">
-                {filteredStudents
+                {filteredProfiles
                   .filter(
                     profile =>
                       profile.user.username !== myProfile.user.username &&
-                      profile.type === 'student' &&
-                      !selectedStudents.map(s => s.id).includes(profile.id) &&
-                      !project.students.map(s => s.id).includes(profile.id)
+                      profile.type === type &&
+                      !selectedProfiles.map(s => s.id).includes(profile.id) &&
+                      !project[`${type}s`]
+                        .map(s => s.id)
+                        .includes(profile.id) &&
+                      !project[`pending_invited_${type}s`]
+                        .map(s => s.id)
+                        .includes(profile.id)
                   )
-                  .map(student => {
+                  .map(profile => {
                     return (
                       <ListItem
-                        key={student.id}
+                        key={profile.id}
                         button
                         onClick={() => {
-                          setSelectedStudents([...selectedStudents, student])
-                          setFilteredStudents([])
-                          setStudentsSearch('')
+                          setSelectedProfiles([...selectedProfiles, profile])
+                          setFilteredProfiles([])
+                          setProfilesSearch('')
                         }}
                       >
                         <ListItemAvatar>
                           <Avatar
-                            alt={student.user.username}
+                            alt={profile.user.username}
                             src={
-                              process.env.NEXT_PUBLIC_API_HOST + student.photo
+                              process.env.NEXT_PUBLIC_API_HOST + profile.photo
                             }
                           />
                         </ListItemAvatar>
                         <ListItemText
-                          primary={`${student.first_name} ${student.last_name}`}
-                          secondary={`@${student.user.username}`}
+                          primary={`${profile.first_name} ${profile.last_name}`}
+                          secondary={`@${profile.user.username}`}
                         />
                       </ListItem>
                     )
@@ -118,20 +148,22 @@ export default function AddMembersModal({ type, project }) {
               </List>
             </div>
             <div className="flex px-4 py-2 b-bottom-light">
-              {selectedStudents.map(student => (
+              {selectedProfiles.map(profile => (
                 <Chip
-                  key={student.id}
-                  label={student.user.username}
-                  className="b-primary mr-1"
+                  key={profile.id}
+                  label={profile.user.username}
+                  className={`b-${
+                    type === 'student' ? 'primary' : 'secondary'
+                  } mr-1`}
                   avatar={
                     <Avatar
-                      alt={student.user.username}
-                      src={process.env.NEXT_PUBLIC_API_HOST + student.photo}
+                      alt={profile.user.username}
+                      src={process.env.NEXT_PUBLIC_API_HOST + profile.photo}
                     />
                   }
                   onDelete={() =>
-                    setSelectedStudents(
-                      selectedStudents.filter(s => s.id !== student.id)
+                    setSelectedProfiles(
+                      selectedProfiles.filter(s => s.id !== profile.id)
                     )
                   }
                 />
@@ -140,8 +172,9 @@ export default function AddMembersModal({ type, project }) {
             <div className="w-full p-4 flex items-center">
               <button
                 className={`btn-${
-                  type === 'students' ? 'primary' : 'secondary'
+                  type === 'student' ? 'primary' : 'secondary'
                 } ml-auto`}
+                onClick={handleSubmit}
               >
                 Convidar
               </button>

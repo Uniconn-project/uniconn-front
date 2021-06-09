@@ -4,7 +4,7 @@ import ProfileListItem from '../../../global/ProfileListItem'
 import { MyProfileContext } from '../../../../contexts/MyProfile'
 import AddMembersModal from '../AddMembersModal'
 
-export default function Members({ type, project, profiles }) {
+export default function Members({ type, project, refetchProject }) {
   const { myProfile } = useContext(MyProfileContext)
 
   if (!myProfile || !project) {
@@ -16,14 +16,32 @@ export default function Members({ type, project, profiles }) {
   }
 
   return (
-    <div className="w-full p-4 pt-0">
+    <div className="w-full py-4 pt-0">
       <div>
-        {profiles.map(profile => (
+        {project[`${type}s`].map(profile => (
           <ProfileListItem key={profile.id} profile={profile} />
         ))}
+        {project.students
+          .concat(project.mentors)
+          .map(profile => profile.id)
+          .includes(myProfile.id) && (
+          <>
+            {project[`pending_invited_${type}s`].map(profile => (
+              <ProfileListItem
+                key={profile.id}
+                profile={profile}
+                className="filter brightness-50"
+              />
+            ))}
+          </>
+        )}
       </div>
       {project.students.map(profile => profile.id).includes(myProfile.id) && (
-        <AddMembersModal type={type} project={project} />
+        <AddMembersModal
+          type={type}
+          project={project}
+          refetchProject={refetchProject}
+        />
       )}
     </div>
   )

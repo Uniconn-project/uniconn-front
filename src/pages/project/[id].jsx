@@ -37,19 +37,17 @@ export const getStaticPaths = () => {
 
 export default function Project({ initialProject }) {
   const [project, setProject] = useState(null)
-  const [projectSubPage, setProjectSubPage] = useState(null)
   const [page, setPage] = useState('description')
-  const [successMsgIsOpen, setSuccessMsgIsOpen] = useState(false)
+  const [successMsg, setSuccessMsg] = useState({
+    isOpen: false,
+    value: ''
+  })
 
   useEffect(() => {
-    if (initialProject && !projectSubPage) {
-      setProjectSubPage(<Description project={initialProject} />)
-    }
-
     setProject(initialProject)
-  }, [initialProject]) //eslint-disable-line
+  }, [initialProject])
 
-  if (!project || !projectSubPage) {
+  if (!project) {
     return (
       <Page loginRequired header>
         <div className="w-full flex justify-center mt-10">
@@ -58,22 +56,23 @@ export default function Project({ initialProject }) {
       </Page>
     )
   }
-  const descriptionPage = <Description project={project} />
-  const discussionsPage = <Discussions project={project} />
-  const linksPage = <Links project={project} />
-  const studentsPage = (
-    <Members type="students" project={project} profiles={project.students} />
-  )
-  const mentorsPage = (
-    <Members type="mentors" project={project} profiles={project.mentors} />
-  )
 
-  const refetchProject = async () => {
+  async function refetchProject(action) {
     setProject(null)
     const updatedProject = await fetcher(`projects/get-project/${project.id}`)
     setProject(updatedProject)
 
-    setSuccessMsgIsOpen(true)
+    if (action === 'edit') {
+      setSuccessMsg({
+        isOpen: true,
+        value: 'Projeto editado com sucesso!'
+      })
+    } else if (action === 'invite') {
+      setSuccessMsg({
+        isOpen: true,
+        value: 'Convites enviados!'
+      })
+    }
   }
 
   return (
@@ -89,33 +88,39 @@ export default function Project({ initialProject }) {
             <div className="h-full px-2 sm:px-12 lg:px-0 lg:fixed lg:top-32">
               <ProjectInfo
                 project={project}
-                studentsPage={studentsPage}
-                mentorsPage={mentorsPage}
                 setPage={setPage}
-                setProjectSubPage={setProjectSubPage}
                 refetchProject={refetchProject}
               />
               <Snackbar
-                open={successMsgIsOpen}
+                open={successMsg.isOpen}
                 autoHideDuration={6000}
-                onClose={() => setSuccessMsgIsOpen(false)}
+                onClose={() => setSuccessMsg({ isOpen: false, value: '' })}
               >
-                <Alert severity="success">Projeto editado com sucesso!</Alert>
+                <Alert severity="success">{successMsg.value}</Alert>
               </Snackbar>
             </div>
           </div>
         </div>
         <div className="w-full flex justify-center p-2 pt-0 lg:p-0 lg:w-2/3 lg:justify-start lg:box-border">
           <div className="w-full" style={{ maxWidth: 600 }}>
-            <ProjectHeader
-              page={page}
-              setPage={setPage}
-              descriptionPage={descriptionPage}
-              discussionsPage={discussionsPage}
-              linksPage={linksPage}
-              setProjectSubPage={setProjectSubPage}
-            />
-            {projectSubPage}
+            <ProjectHeader page={page} setPage={setPage} />
+            {page === 'description' && <Description project={project} />}
+            {page === 'discussions' && <Discussions project={project} />}
+            {page === 'links' && <Links project={project} />}
+            {page === 'students' && (
+              <Members
+                type="student"
+                project={project}
+                refetchProject={refetchProject}
+              />
+            )}
+            {page === 'mentors' && (
+              <Members
+                type="mentor"
+                project={project}
+                refetchProject={refetchProject}
+              />
+            )}
           </div>
         </div>
       </div>

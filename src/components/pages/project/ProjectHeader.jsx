@@ -1,18 +1,6 @@
 import React from 'react'
 
-export default function ProjectHeader({
-  page,
-  setPage,
-  descriptionPage,
-  discussionsPage,
-  linksPage,
-  setProjectSubPage
-}) {
-  const switchPage = (newPage, newPageComponent) => {
-    setPage(newPage)
-    setProjectSubPage(newPageComponent)
-  }
-
+export default function ProjectHeader({ page, setPage }) {
   return (
     <div className="sticky top-24 w-full mb-4 sm:top-32">
       <div className="w-full bg-light h-14 rounded-md shadow-lg p-2 flex items-center">
@@ -21,7 +9,7 @@ export default function ProjectHeader({
             className={`project-menu-item p-3 mr-2 nav-link cursor-pointer color-headline-hover ${
               page === 'description' ? 'b-bottom-primary' : ''
             }`}
-            onClick={() => switchPage('description', descriptionPage)}
+            onClick={() => setPage('description')}
           >
             Descrição
           </div>
@@ -29,7 +17,7 @@ export default function ProjectHeader({
             className={`project-menu-item p-3 ml-2 nav-link cursor-pointer color-headline-hover ${
               page === 'discussions' ? 'b-bottom-primary' : ''
             }`}
-            onClick={() => switchPage('discussions', discussionsPage)}
+            onClick={() => setPage('discussions')}
           >
             Discussões
           </div>
@@ -37,7 +25,7 @@ export default function ProjectHeader({
             className={`project-menu-item p-3 ml-2 nav-link cursor-pointer color-headline-hover ${
               page === 'links' ? 'b-bottom-primary' : ''
             }`}
-            onClick={() => switchPage('links', linksPage)}
+            onClick={() => setPage('links')}
           >
             Links
           </div>

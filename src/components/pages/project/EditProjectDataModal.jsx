@@ -56,7 +56,7 @@ export default function EditProjectDataModal({ project, refetchProject }) {
       .then(response => response.json())
       .then(data => {
         if (data === 'Project edited with success') {
-          refetchProject()
+          refetchProject('edit')
         }
       })
   }
