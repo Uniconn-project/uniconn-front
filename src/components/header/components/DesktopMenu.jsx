@@ -31,12 +31,14 @@ export default function DesktopMenu() {
       ) : (
         <CircularProgress size={30} />
       )}
-      <Badge
-        badgeContent={5}
-        className="cursor-pointer color-paragraph color-hover"
-      >
-        <NotificationsIcon />
-      </Badge>
+      <Link href="/notifications">
+        <Badge
+          badgeContent={5}
+          className="cursor-pointer color-paragraph color-hover"
+        >
+          <NotificationsIcon />
+        </Badge>
+      </Link>
       <Popper
         open={isOpen}
         anchorEl={anchorRef.current}

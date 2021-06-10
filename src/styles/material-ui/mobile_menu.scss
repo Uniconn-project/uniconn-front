@@ -3,6 +3,10 @@
 }
 
 .MuiDrawer-paperAnchorLeft {
-  width: 45% !important;
+  width: 50% !important;
   background-color: var(--background-light) !important;
+}
+
+.MuiListItemIcon-root {
+  min-width: 0 !important;
 }

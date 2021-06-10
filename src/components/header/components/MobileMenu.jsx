@@ -10,6 +10,7 @@ import ProfileIcon from '@material-ui/icons/Person'
 import GroupIcon from '@material-ui/icons/Group'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import ExitToAppIcon from '@material-ui/icons/ExitToApp'
+import NotificationsIcon from '@material-ui/icons/Notifications'
 import { MyProfileContext } from '../../../contexts/MyProfile'
 import Logout from '../../helpers/Logout'
 
@@ -41,7 +42,7 @@ export default function MobileMenu() {
           <List>
             <Link href="/home">
               <ListItem button>
-                <ListItemIcon>
+                <ListItemIcon className="mr-2">
                   <HomeIcon />
                 </ListItemIcon>
                 <ListItemText primary={'Home'} />
@@ -49,22 +50,30 @@ export default function MobileMenu() {
             </Link>
             <Link href="/profile">
               <ListItem button>
-                <ListItemIcon>
+                <ListItemIcon className="mr-2">
                   <ProfileIcon />
                 </ListItemIcon>
                 <ListItemText primary={'Perfil'} />
               </ListItem>
             </Link>
+            <Link href="/notifications">
+              <ListItem button>
+                <ListItemIcon className="mr-2">
+                  <NotificationsIcon />
+                </ListItemIcon>
+                <ListItemText primary={'Notificações'} />
+              </ListItem>
+            </Link>
             <Link href="/users">
               <ListItem button>
-                <ListItemIcon>
+                <ListItemIcon className="mr-2">
                   <GroupIcon />
                 </ListItemIcon>
                 <ListItemText primary={'Usuários'} />
               </ListItem>
             </Link>
             <ListItem button>
-              <ListItemIcon>
+              <ListItemIcon className="mr-2">
                 <ExitToAppIcon />
               </ListItemIcon>
               <Logout>
