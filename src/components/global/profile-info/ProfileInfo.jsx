@@ -5,7 +5,9 @@ import AssignmentIcon from '@material-ui/icons/Assignment'
 import LinkedInIcon from '@material-ui/icons/LinkedIn'
 import Tooltip from '@material-ui/core/Tooltip'
 import EditIcon from '@material-ui/icons/Edit'
-import { MyProfileContext } from '../../contexts/MyProfile'
+import StudentInfo from './components/StudentInfo'
+import MentorInfo from './components/MentorInfo'
+import { MyProfileContext } from '../../../contexts/MyProfile'
 
 export default function ProfileInfo({ profile }) {
   const { myProfile } = useContext(MyProfileContext)
@@ -13,8 +15,6 @@ export default function ProfileInfo({ profile }) {
   if (!myProfile) {
     return <CircularProgress />
   }
-
-  const major = profile.type === 'student' && profile.student.major.name
 
   return (
     <div className="relative bg-transparent h-4/5 rounded-md shadow-lg pt-4 w-full lg:w-60">
@@ -46,17 +46,13 @@ export default function ProfileInfo({ profile }) {
       </div>
       <div className="w-full pl-4 pr-1 pt-6 pb-2">
         <ul>
-          {profile.type === 'student' && (
-            <li className="pb-2">
-              <SchoolIcon className="icon-sm" />{' '}
-              {major[0].toUpperCase() + major.slice(1)}
-            </li>
-          )}
+          {profile.type === 'student' && <StudentInfo profile={profile} />}
           {profile.linkedIn && (
             <li className="pb-2 break-all">
               <LinkedInIcon className="icon-sm" /> {profile.linkedIn}
             </li>
           )}
+          {profile.type === 'mentor' && <MentorInfo profile={profile} />}
         </ul>
       </div>
       {profile.id === myProfile.id && (

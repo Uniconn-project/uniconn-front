@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react'
-import ProfileInfo from '../components/global/ProfileInfo'
+import ProfileInfo from '../components/global/profile-info/ProfileInfo'
 import Page from '../components/Page'
 import Snackbar from '@material-ui/core/Snackbar'
 import Alert from '@material-ui/lab/Alert'

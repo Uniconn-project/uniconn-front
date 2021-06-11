@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import Page from '../components/Page'
-import ProfileInfo from '../components/global/ProfileInfo'
+import ProfileInfo from '../components/global/profile-info/ProfileInfo'
 import ProfilesFilter from '../components/pages/users/ProfilesFilter'
 import { MyProfileContext } from '../contexts/MyProfile'
 import { fetcher } from '../hooks/useFetch'
