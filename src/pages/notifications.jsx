@@ -1,6 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react'
 import Link from 'next/link'
 import CircularProgress from '@material-ui/core/CircularProgress'
+import Snackbar from '@material-ui/core/Snackbar'
+import Alert from '@material-ui/lab/Alert'
 import ProfileInfo from '../components/global/ProfileInfo'
 import Page from '../components/Page'
 import { AuthContext } from '../contexts/Auth'
@@ -12,6 +14,7 @@ export default function Notifications() {
   const { getToken } = useContext(AuthContext)
 
   const [projects, setProjects] = useState(null)
+  const [successMsg, setSuccessMsg] = useState({ isOpen: false, value: '' })
 
   useEffect(() => {
     fetchNotifications()
@@ -27,6 +30,33 @@ export default function Notifications() {
     })
 
     setProjects(notifications.projects)
+  }
+
+  const handleSubmit = async (reply, project) => {
+    fetch(
+      `${process.env.NEXT_PUBLIC_API_HOST}/api/profiles/reply-project-invitation`,
+      {
+        method: 'PUT',
+        headers: {
+          'Content-type': 'application/json',
+          Authorization: 'JWT ' + (await getToken())
+        },
+        body: JSON.stringify({
+          reply,
+          project_id: project.id
+        })
+      }
+    )
+      .then(response => response.json())
+      .then(data => {
+        fetchNotifications()
+        if (data === 'Replied to project with success' && reply === 'accept') {
+          setSuccessMsg({
+            isOpen: true,
+            value: `Você entrou no projeto ${project.name}!`
+          })
+        }
+      })
   }
 
   return (
@@ -45,13 +75,18 @@ export default function Notifications() {
           </div>
         </div>
         <div className="w-full flex justify-center p-2 pt-0 lg:p-0 lg:w-2/3 lg:justify-start lg:box-border">
-          <div className="w-full flex justify-center" style={{ maxWidth: 600 }}>
+          <div className="w-full" style={{ maxWidth: 600 }}>
+            <div className="sticky top-24 w-full mb-4 sm:top-32">
+              <div className="w-full bg-light h-14 rounded-md shadow-lg p-2 flex items-center">
+                Notificações
+              </div>
+            </div>
             {projects !== null ? (
-              <>
+              <div className="w-full">
                 {projects.map(project => (
                   <div
                     key={project.id}
-                    className="w-full flex bg-transparent rounded-md shadow-lg p-2"
+                    className="w-full flex bg-transparent rounded-md shadow-lg p-2 mb-2"
                   >
                     <Link href={`/project/${project.id}`}>
                       <img
@@ -69,22 +104,35 @@ export default function Notifications() {
                         convidou você
                       </span>
                       <div className="flex">
-                        <button className="rounded-lg bg-green bg-hover color-bg-light p-1 mr-1">
+                        <button
+                          className="rounded-lg bg-green bg-hover color-bg-light p-1 mr-1"
+                          onClick={() => handleSubmit('accept', project)}
+                        >
                           Aceitar
                         </button>
-                        <button className="rounded-lg bg-secondary bg-hover color-bg-light p-1 ml-1">
+                        <button
+                          className="rounded-lg bg-secondary bg-hover color-bg-light p-1 ml-1"
+                          onClick={() => handleSubmit('decline', project)}
+                        >
                           Recusar
                         </button>
                       </div>
                     </div>
                   </div>
                 ))}
-              </>
+              </div>
             ) : (
               <CircularProgress />
             )}
           </div>
         </div>
+        <Snackbar
+          open={successMsg.isOpen}
+          autoHideDuration={6000}
+          onClose={() => setSuccessMsg({ isOpen: false, value: '' })}
+        >
+          <Alert severity="success">{successMsg.value}</Alert>
+        </Snackbar>
       </div>
     </Page>
   )
