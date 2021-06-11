@@ -11,10 +11,11 @@ import GroupIcon from '@material-ui/icons/Group'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import ExitToAppIcon from '@material-ui/icons/ExitToApp'
 import NotificationsIcon from '@material-ui/icons/Notifications'
+import Badge from '@material-ui/core/Badge'
 import { MyProfileContext } from '../../../contexts/MyProfile'
 import Logout from '../../helpers/Logout'
 
-export default function MobileMenu() {
+export default function MobileMenu({ notificationsNumber }) {
   const { myProfile } = useContext(MyProfileContext)
 
   const [mobileMenuIsOpen, setMobileMenuIsOpen] = useState(false)
@@ -56,14 +57,23 @@ export default function MobileMenu() {
                 <ListItemText primary={'Perfil'} />
               </ListItem>
             </Link>
-            <Link href="/notifications">
-              <ListItem button>
-                <ListItemIcon className="mr-2">
-                  <NotificationsIcon />
-                </ListItemIcon>
-                <ListItemText primary={'Notificações'} />
-              </ListItem>
-            </Link>
+            {notificationsNumber !== null ? (
+              <Link href="/notifications">
+                <ListItem button>
+                  <ListItemIcon className="mr-2">
+                    <Badge
+                      badgeContent={notificationsNumber}
+                      className="cursor-pointer"
+                    >
+                      <NotificationsIcon />
+                    </Badge>
+                  </ListItemIcon>
+                  <ListItemText primary={'Notificações'} />
+                </ListItem>
+              </Link>
+            ) : (
+              <CircularProgress size={30} />
+            )}
             <Link href="/users">
               <ListItem button>
                 <ListItemIcon className="mr-2">

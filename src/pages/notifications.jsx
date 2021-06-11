@@ -1,8 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import Link from 'next/link'
 import CircularProgress from '@material-ui/core/CircularProgress'
-import ClearIcon from '@material-ui/icons/Clear'
-import CheckIcon from '@material-ui/icons/Check'
 import ProfileInfo from '../components/global/ProfileInfo'
 import Page from '../components/Page'
 import { AuthContext } from '../contexts/Auth'
@@ -16,16 +14,20 @@ export default function Notifications() {
   const [projects, setProjects] = useState(null)
 
   useEffect(() => {
-    const interval = setInterval(async () => {
-      const notifications = await fetcher('profiles/get-notifications', {
-        Authorization: 'JWT ' + (await getToken())
-      })
+    fetchNotifications()
 
-      setProjects(notifications.projects)
-    }, 5000)
+    const interval = setInterval(fetchNotifications, 10000)
 
     return () => clearInterval(interval)
   }, []) // eslint-disable-line
+
+  const fetchNotifications = async () => {
+    const notifications = await fetcher('profiles/get-notifications', {
+      Authorization: 'JWT ' + (await getToken())
+    })
+
+    setProjects(notifications.projects)
+  }
 
   return (
     <Page

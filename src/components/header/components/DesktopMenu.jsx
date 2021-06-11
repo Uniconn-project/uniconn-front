@@ -12,7 +12,7 @@ import CircularProgress from '@material-ui/core/CircularProgress'
 import { MyProfileContext } from '../../../contexts/MyProfile'
 import Logout from '../../helpers/Logout'
 
-export default function DesktopMenu() {
+export default function DesktopMenu({ notificationsNumber }) {
   const { myProfile } = useContext(MyProfileContext)
 
   const [isOpen, setIsOpen] = useState(false)
@@ -31,14 +31,18 @@ export default function DesktopMenu() {
       ) : (
         <CircularProgress size={30} />
       )}
-      <Link href="/notifications">
-        <Badge
-          badgeContent={5}
-          className="cursor-pointer color-paragraph color-hover"
-        >
-          <NotificationsIcon />
-        </Badge>
-      </Link>
+      {notificationsNumber !== null ? (
+        <Link href="/notifications">
+          <Badge
+            badgeContent={notificationsNumber}
+            className="cursor-pointer color-paragraph color-hover"
+          >
+            <NotificationsIcon />
+          </Badge>
+        </Link>
+      ) : (
+        <CircularProgress size={30} />
+      )}
       <Popper
         open={isOpen}
         anchorEl={anchorRef.current}
