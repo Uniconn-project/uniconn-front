@@ -96,6 +96,7 @@ export default function Notifications() {
                     </Link>
                     <div className="flex flex-col justify-between">
                       <span className="color-headline">
+                        o projeto{' '}
                         <Link href={`/project/${project.id}`}>
                           <strong className="cursor-pointer hover:underline">
                             {project.name}
