@@ -92,6 +92,11 @@ button.btn-primary {
   padding: 6px 16px;
   border-radius: 15px;
 
+  &.btn-sm {
+    padding: 5.4px 14.4px;
+    font-size: 0.9rem;
+  }
+
   &:hover {
     background-color: var(--primary-color-hover);
   }
