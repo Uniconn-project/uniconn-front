@@ -7,7 +7,7 @@ import FormControl from '@material-ui/core/FormControl'
 import Select from '@material-ui/core/Select'
 import MenuItem from '@material-ui/core/MenuItem'
 import Page from '../../components/Page'
-import BaseForm from '../../components/pages/signup/BaseForm'
+import BaseForm from '../../components/pages/signup/SignupBaseForm'
 import { AuthContext } from '../../contexts/Auth'
 import useFetch from '../../hooks/useFetch'
 

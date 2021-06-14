@@ -3,10 +3,9 @@ import CircularProgress from '@material-ui/core/CircularProgress'
 import SchoolIcon from '@material-ui/icons/School'
 import AssignmentIcon from '@material-ui/icons/Assignment'
 import LinkedInIcon from '@material-ui/icons/LinkedIn'
-import Tooltip from '@material-ui/core/Tooltip'
-import EditIcon from '@material-ui/icons/Edit'
 import StudentInfo from './components/StudentInfo'
 import MentorInfo from './components/MentorInfo'
+import EditProfileModal from './components/EditProfileModal'
 import { MyProfileContext } from '../../../contexts/MyProfile'
 
 export default function ProfileInfo({ profile }) {
@@ -55,13 +54,7 @@ export default function ProfileInfo({ profile }) {
           {profile.type === 'mentor' && <MentorInfo profile={profile} />}
         </ul>
       </div>
-      {profile.id === myProfile.id && (
-        <div className="absolute bottom-2 right-2 p-2 rounded-3xl cursor-pointer bg-secondary bg-hover color-bg-light">
-          <Tooltip title="Editar perfil" placement="top" arrow>
-            <EditIcon className="icon-sm" />
-          </Tooltip>
-        </div>
-      )}
+      {profile.id === myProfile.id && <EditProfileModal profile={profile} />}
     </div>
   )
 }

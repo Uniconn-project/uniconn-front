@@ -27,7 +27,7 @@ export default function EditProjectDataModal({ project, refetchProject }) {
     setPostData(postDataInitialState)
   }
 
-  const handleProfileImageChange = e => {
+  const handleProjectImageChange = e => {
     const reader = new FileReader()
     reader.onload = () => {
       if (reader.readyState === 2) {
@@ -105,7 +105,7 @@ export default function EditProjectDataModal({ project, refetchProject }) {
                 accept="image/png, image/jpg, image/jpeg, image/webp"
                 className="hidden"
                 id="project-image"
-                onChange={handleProfileImageChange}
+                onChange={handleProjectImageChange}
               />
             </div>
             <div className="w-full max-h-72 overflow-y-auto pb-10 b-bottom-transparent">
