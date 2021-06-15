@@ -2,7 +2,7 @@ import React from 'react'
 
 export default function ProjectHeader({ page, setPage }) {
   return (
-    <div className="sticky top-24 w-full mb-4 sm:top-32">
+    <div className="sticky top-24 w-full mb-4 z-10 sm:top-32">
       <div className="w-full bg-light h-14 rounded-md shadow-lg p-2 flex items-center">
         <div className="flex px-4">
           <div

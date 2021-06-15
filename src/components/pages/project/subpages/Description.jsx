@@ -20,6 +20,8 @@ export default function Description({ project }) {
   )
   const [successIsOpen, setSuccessIsOpen] = useState(false)
 
+  console.log(project.description.replace(/'/g, '"'))
+
   const handleSubmit = async () => {
     setIsEditing(false)
 
