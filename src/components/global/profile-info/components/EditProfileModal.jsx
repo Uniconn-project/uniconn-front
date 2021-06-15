@@ -120,6 +120,7 @@ export default function EditProfileModal({ profile }) {
                     className="w-full"
                     label="Bio"
                     value={postData.bio}
+                    multiline
                     onChange={handleChange('bio')}
                   />
                 </div>

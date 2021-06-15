@@ -74,7 +74,7 @@ export default function Description({ project }) {
           )}
         </div>
       )}
-      <div className="w-full p-4">
+      <div className={`w-full p-4 ${isEditing ? 'color-headline' : ''}`}>
         <Editor
           editorState={editorState}
           readOnly={!isEditing}
