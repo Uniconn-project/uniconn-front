@@ -7,3 +7,8 @@
     color: var(--background-dark) !important;
   }
 }
+
+.MuiAlert-message {
+  display: flex;
+  align-items: center;
+}
