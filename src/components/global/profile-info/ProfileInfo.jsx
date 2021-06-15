@@ -48,7 +48,15 @@ export default function ProfileInfo({ profile }) {
           {profile.type === 'student' && <StudentInfo profile={profile} />}
           {profile.linkedIn && (
             <li className="pb-2 break-all">
-              <LinkedInIcon className="icon-sm" /> {profile.linkedIn}
+              <a
+                href={`https://www.linkedin.com/in/${profile.linkedIn}`}
+                target="_blank"
+                rel="noreferrer"
+              >
+                <div className="color-paragraph hover:underline">
+                  <LinkedInIcon className="icon-sm" /> {profile.linkedIn}
+                </div>
+              </a>
             </li>
           )}
           {profile.type === 'mentor' && <MentorInfo profile={profile} />}
