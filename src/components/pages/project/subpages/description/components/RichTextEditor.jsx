@@ -1,5 +1,6 @@
 import React from 'react'
-import { Editor } from 'draft-js'
+import { EditorState } from 'draft-js'
+import Editor, { createEditorStateWithText } from '@draft-js-plugins/editor'
 import createToolbarPlugin from '@draft-js-plugins/static-toolbar'
 import {
   ItalicButton,
@@ -12,6 +13,7 @@ import {
   OrderedListButton,
   BlockquoteButton
 } from '@draft-js-plugins/buttons'
+import '@draft-js-plugins/static-toolbar/lib/plugin.css'
 
 export default class RichTextEditor extends React.Component {
   constructor(props) {
@@ -29,20 +31,6 @@ export default class RichTextEditor extends React.Component {
 
     return (
       <>
-        <div
-          className={`w-full p-4 ${
-            this.props.isEditing ? 'color-headline' : ''
-          }`}
-          onClick={this.focus}
-        >
-          <Editor
-            ref={element => (this.editor = element)}
-            plugins={this.plugins}
-            editorState={this.props.editorState}
-            readOnly={!this.props.isEditing}
-            onChange={this.props.setEditorState}
-          />
-        </div>
         {this.props.canEdit && (
           <div className="w-full flex justify-end b-bottom-light p-4 mb-2">
             {this.props.isEditing ? (
@@ -50,6 +38,7 @@ export default class RichTextEditor extends React.Component {
                 <Toolbar>
                   {externalProps => (
                     <div className="flex">
+                      {console.log(externalProps)}
                       <BoldButton {...externalProps} />
                       <ItalicButton {...externalProps} />
                       <UnderlineButton {...externalProps} />
@@ -79,6 +68,20 @@ export default class RichTextEditor extends React.Component {
             )}
           </div>
         )}
+        <div
+          className={`w-full p-4 ${
+            this.props.isEditing ? 'color-headline' : ''
+          }`}
+          onClick={this.focus}
+        >
+          <Editor
+            ref={element => (this.editor = element)}
+            plugins={this.plugins}
+            editorState={this.props.editorState}
+            readOnly={!this.props.isEditing}
+            onChange={this.props.setEditorState}
+          />
+        </div>
       </>
     )
   }
