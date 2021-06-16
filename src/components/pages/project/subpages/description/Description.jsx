@@ -1,11 +1,11 @@
 import React, { useContext, useState } from 'react'
-import { Editor, EditorState, convertToRaw, convertFromRaw } from 'draft-js'
-import 'draft-js/dist/Draft.css'
+import { EditorState, convertToRaw, convertFromRaw } from 'draft-js'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import Snackbar from '@material-ui/core/Snackbar'
 import Alert from '@material-ui/lab/Alert'
-import { MyProfileContext } from '../../../../contexts/MyProfile'
-import { AuthContext } from '../../../../contexts/Auth'
+import RichTextEditor from './components/RichTextEditor'
+import { MyProfileContext } from '../../../../../contexts/MyProfile'
+import { AuthContext } from '../../../../../contexts/Auth'
 
 export default function Description({ project }) {
   const { myProfile } = useContext(MyProfileContext)
@@ -19,8 +19,6 @@ export default function Description({ project }) {
     )
   )
   const [successIsOpen, setSuccessIsOpen] = useState(false)
-
-  console.log(project.description.replace(/'/g, '"'))
 
   const handleSubmit = async () => {
     setIsEditing(false)
@@ -58,29 +56,16 @@ export default function Description({ project }) {
 
   return (
     <div className="w-full bg-transparent rounded-md shadow-lg">
-      {project.students.map(profile => profile.id).includes(myProfile.id) && (
-        <div className="w-full flex justify-end b-bottom-light p-4 mb-2">
-          {isEditing ? (
-            <button className="btn-primary btn-sm" onClick={handleSubmit}>
-              Confirmar
-            </button>
-          ) : (
-            <button
-              className="btn-primary btn-sm"
-              onClick={() => setIsEditing(true)}
-            >
-              Editar
-            </button>
-          )}
-        </div>
-      )}
-      <div className={`w-full p-4 ${isEditing ? 'color-headline' : ''}`}>
-        <Editor
-          editorState={editorState}
-          readOnly={!isEditing}
-          onChange={setEditorState}
-        />
-      </div>
+      <RichTextEditor
+        canEdit={project.students
+          .map(profile => profile.id)
+          .includes(myProfile.id)}
+        editorState={editorState}
+        setEditorState={setEditorState}
+        isEditing={isEditing}
+        setIsEditing={setIsEditing}
+        handleSubmit={handleSubmit}
+      />
       <Snackbar
         open={successIsOpen}
         autoHideDuration={6000}
