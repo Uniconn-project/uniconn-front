@@ -1,6 +1,6 @@
 import React from 'react'
 import { EditorState } from 'draft-js'
-import Editor, { createEditorStateWithText } from '@draft-js-plugins/editor'
+import Editor from '@draft-js-plugins/editor'
 import createToolbarPlugin from '@draft-js-plugins/static-toolbar'
 import {
   ItalicButton,
@@ -8,12 +8,8 @@ import {
   UnderlineButton,
   HeadlineOneButton,
   HeadlineTwoButton,
-  HeadlineThreeButton,
-  UnorderedListButton,
-  OrderedListButton,
-  BlockquoteButton
+  HeadlineThreeButton
 } from '@draft-js-plugins/buttons'
-import '@draft-js-plugins/static-toolbar/lib/plugin.css'
 
 export default class RichTextEditor extends React.Component {
   constructor(props) {
@@ -37,7 +33,7 @@ export default class RichTextEditor extends React.Component {
               <div className="w-full flex justify-between">
                 <Toolbar>
                   {externalProps => (
-                    <div className="flex">
+                    <>
                       {console.log(externalProps)}
                       <BoldButton {...externalProps} />
                       <ItalicButton {...externalProps} />
@@ -45,10 +41,7 @@ export default class RichTextEditor extends React.Component {
                       <HeadlineOneButton {...externalProps} />
                       <HeadlineTwoButton {...externalProps} />
                       <HeadlineThreeButton {...externalProps} />
-                      <UnorderedListButton {...externalProps} />
-                      <OrderedListButton {...externalProps} />
-                      <BlockquoteButton {...externalProps} />
-                    </div>
+                    </>
                   )}
                 </Toolbar>
                 <button
