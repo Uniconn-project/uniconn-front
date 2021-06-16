@@ -10,11 +10,15 @@ import {
   HeadlineTwoButton,
   HeadlineThreeButton
 } from '@draft-js-plugins/buttons'
+import buttonStyles from '../../../../../../styles/draft-js/buttonStyles.module.scss'
+import toolbarStyles from '../../../../../../styles/draft-js/toolbarStyles.module.scss'
 
 export default class RichTextEditor extends React.Component {
   constructor(props) {
     super(props)
-    this.toolbarPlugin = createToolbarPlugin()
+    this.toolbarPlugin = createToolbarPlugin({
+      theme: { buttonStyles, toolbarStyles }
+    })
     this.plugins = [this.toolbarPlugin]
   }
 
@@ -30,14 +34,14 @@ export default class RichTextEditor extends React.Component {
         {this.props.canEdit && (
           <div className="w-full flex justify-end b-bottom-light p-4 mb-2">
             {this.props.isEditing ? (
-              <div className="w-full flex justify-between">
+              <div className="w-full flex justify-between items-center">
                 <Toolbar>
                   {externalProps => (
                     <>
                       {console.log(externalProps)}
                       <BoldButton {...externalProps} />
-                      <ItalicButton {...externalProps} />
                       <UnderlineButton {...externalProps} />
+                      <ItalicButton {...externalProps} />
                       <HeadlineOneButton {...externalProps} />
                       <HeadlineTwoButton {...externalProps} />
                       <HeadlineThreeButton {...externalProps} />
