@@ -53,7 +53,17 @@ export default function Notifications() {
         if (data === 'Replied to project with success' && reply === 'accept') {
           setSuccessMsg({
             isOpen: true,
-            value: `Você entrou no projeto ${project.name}!`
+            value: (
+              <span>
+                Você entrou no projeto{' '}
+                <Link href={`/project/${project.id}`}>
+                  <strong className="cursor-pointer hover:underline">
+                    {project.name}
+                  </strong>
+                </Link>
+                !
+              </span>
+            )
           })
         }
       })
