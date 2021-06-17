@@ -1,13 +1,11 @@
 import React, { useContext, useState } from 'react'
 import { EditorState, convertToRaw, convertFromRaw } from 'draft-js'
 import CircularProgress from '@material-ui/core/CircularProgress'
-import Snackbar from '@material-ui/core/Snackbar'
-import Alert from '@material-ui/lab/Alert'
 import RichTextEditor from './components/RichTextEditor'
 import { MyProfileContext } from '../../../../../contexts/MyProfile'
 import { AuthContext } from '../../../../../contexts/Auth'
 
-export default function Description({ project }) {
+export default function Description({ project, refetchProject }) {
   const { myProfile } = useContext(MyProfileContext)
   const { getToken } = useContext(AuthContext)
 
@@ -18,7 +16,6 @@ export default function Description({ project }) {
       convertFromRaw(JSON.parse(project.description.replace(/'/g, '"')))
     )
   )
-  const [successIsOpen, setSuccessIsOpen] = useState(false)
 
   const handleSubmit = async () => {
     setIsEditing(false)
@@ -39,7 +36,7 @@ export default function Description({ project }) {
       .then(response => response.json())
       .then(data => {
         if (data === 'Project description edited with success!') {
-          setSuccessIsOpen(true)
+          refetchProject('edit-description')
         } else {
           alert(`Ocorreu um erro: ${data}`)
         }
@@ -66,13 +63,6 @@ export default function Description({ project }) {
         setIsEditing={setIsEditing}
         handleSubmit={handleSubmit}
       />
-      <Snackbar
-        open={successIsOpen}
-        autoHideDuration={6000}
-        onClose={() => setSuccessIsOpen(false)}
-      >
-        <Alert severity="success">Descrição editada com sucesso!</Alert>
-      </Snackbar>
     </div>
   )
 }

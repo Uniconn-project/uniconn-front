@@ -1,5 +1,4 @@
 import React from 'react'
-import { EditorState } from 'draft-js'
 import Editor from '@draft-js-plugins/editor'
 import createToolbarPlugin from '@draft-js-plugins/static-toolbar'
 import {
@@ -22,10 +21,6 @@ export default class RichTextEditor extends React.Component {
     this.plugins = [this.toolbarPlugin]
   }
 
-  focus = () => {
-    this.editor.focus()
-  }
-
   render() {
     const { Toolbar } = this.toolbarPlugin
 
@@ -38,7 +33,6 @@ export default class RichTextEditor extends React.Component {
                 <Toolbar>
                   {externalProps => (
                     <>
-                      {console.log(externalProps)}
                       <BoldButton {...externalProps} />
                       <UnderlineButton {...externalProps} />
                       <ItalicButton {...externalProps} />
@@ -69,7 +63,6 @@ export default class RichTextEditor extends React.Component {
           className={`w-full p-4 ${
             this.props.isEditing ? 'color-headline' : ''
           }`}
-          onClick={this.focus}
         >
           <Editor
             ref={element => (this.editor = element)}

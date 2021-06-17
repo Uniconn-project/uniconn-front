@@ -72,6 +72,11 @@ export default function Project({ initialProject }) {
         isOpen: true,
         value: 'Convites enviados!'
       })
+    } else if (action === 'edit-description') {
+      setSuccessMsg({
+        isOpen: true,
+        value: 'Descrição editada com sucesso!'
+      })
     }
   }
 
@@ -104,7 +109,9 @@ export default function Project({ initialProject }) {
         <div className="w-full flex justify-center p-2 pt-0 lg:p-0 lg:w-2/3 lg:justify-start lg:box-border">
           <div className="w-full" style={{ maxWidth: 600 }}>
             <ProjectHeader page={page} setPage={setPage} />
-            {page === 'description' && <Description project={project} />}
+            {page === 'description' && (
+              <Description project={project} refetchProject={refetchProject} />
+            )}
             {page === 'discussions' && <Discussions project={project} />}
             {page === 'links' && <Links project={project} />}
             {page === 'students' && (
