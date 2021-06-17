@@ -1,0 +1,15 @@
+.MuiCheckbox-root {
+  svg {
+    font-size: 1.5rem !important;
+  }
+}
+
+.MuiTouchRipple-root {
+  display: none;
+}
+
+.MuiIconButton-colorSecondary {
+  &:hover {
+    background-color: transparent !important;
+  }
+}

@@ -3,10 +3,10 @@ import CircularProgress from '@material-ui/core/CircularProgress'
 import InfoIcon from '@material-ui/icons/Info'
 import PublicIcon from '@material-ui/icons/Public'
 import LockIcon from '@material-ui/icons/Lock'
-import LinkIcon from '@material-ui/icons/Link'
-import { MyProfileContext } from '../../../../contexts/MyProfile'
+import { MyProfileContext } from '../../../../../contexts/MyProfile'
+import AddLinkModal from './components/AddLinkModal'
 
-export default function Links({ project }) {
+export default function Links({ project, refetchProject }) {
   const { myProfile } = useContext(MyProfileContext)
 
   if (!project) {
@@ -67,10 +67,7 @@ export default function Links({ project }) {
               </a>
             ))}
           </div>
-          <div className="w-full flex items-center p-2 pl-4 cursor-pointer bg-transparent bg-hover rounded-md shadow-lg">
-            <LinkIcon className="color-primary mr-2" />
-            <strong className="color-primary">Adicionar link</strong>
-          </div>
+          <AddLinkModal project={project} refetchProject={refetchProject} />
         </>
       )}
     </div>

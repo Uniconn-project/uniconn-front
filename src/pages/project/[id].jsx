@@ -7,7 +7,7 @@ import ProjectInfo from '../../components/pages/project/ProjectInfo'
 import ProjectHeader from '../../components/pages/project/ProjectHeader'
 import Description from '../../components/pages/project/subpages/description/Description'
 import Discussions from '../../components/pages/project/subpages/Discussions'
-import Links from '../../components/pages/project/subpages/Links'
+import Links from '../../components/pages/project/subpages/links/Links'
 import { fetcher } from '../../hooks/useFetch'
 import Members from '../../components/pages/project/subpages/Members'
 
@@ -77,6 +77,11 @@ export default function Project({ initialProject }) {
         isOpen: true,
         value: 'Descrição editada com sucesso!'
       })
+    } else if (action === 'add-link') {
+      setSuccessMsg({
+        isOpen: true,
+        value: 'Link adicionado!'
+      })
     }
   }
 
@@ -113,7 +118,9 @@ export default function Project({ initialProject }) {
               <Description project={project} refetchProject={refetchProject} />
             )}
             {page === 'discussions' && <Discussions project={project} />}
-            {page === 'links' && <Links project={project} />}
+            {page === 'links' && (
+              <Links project={project} refetchProject={refetchProject} />
+            )}
             {page === 'students' && (
               <Members
                 type="student"
