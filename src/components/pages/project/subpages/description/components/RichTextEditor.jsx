@@ -29,7 +29,7 @@ export default class RichTextEditor extends React.Component {
         {this.props.canEdit && (
           <div className="w-full flex justify-end b-bottom-light p-4 mb-2">
             {this.props.isEditing ? (
-              <div className="w-full flex justify-between items-center">
+              <div className="w-full flex flex-col justify-center items-center sm:flex-row sm:justify-between">
                 <Toolbar>
                   {externalProps => (
                     <>
@@ -43,7 +43,7 @@ export default class RichTextEditor extends React.Component {
                   )}
                 </Toolbar>
                 <button
-                  className="btn-primary btn-sm"
+                  className="btn-primary btn-sm self-end mt-4 sm:self-center sm:mt-0"
                   onClick={this.props.handleSubmit}
                 >
                   Confirmar

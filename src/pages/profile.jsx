@@ -25,7 +25,7 @@ export default function MyProfile() {
       <div className="w-full h-full flex flex-col justify-center lg:flex-row">
         <div className="mb-4 lg:mb-0 lg:w-1/3 lg:flex lg:justify-end lg:mr-10 lg:box-border">
           <div className="w-full lg:w-60">
-            <div className="h-full px-2 sm:px-12 lg:px-0 lg:fixed lg:top-32">
+            <div className="h-full flex flex-col items-center px-2 sm:px-12 lg:px-0 lg:fixed lg:top-32">
               <ProfileInfo profile={myProfile} />
             </div>
           </div>
