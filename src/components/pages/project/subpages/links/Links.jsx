@@ -1,9 +1,9 @@
 import React, { useContext } from 'react'
 import CircularProgress from '@material-ui/core/CircularProgress'
-import InfoIcon from '@material-ui/icons/Info'
 import PublicIcon from '@material-ui/icons/Public'
 import LockIcon from '@material-ui/icons/Lock'
 import DeleteIcon from '@material-ui/icons/Delete'
+import InfoModal from './components/InfoModal'
 import AddLinkModal from './components/AddLinkModal'
 import { MyProfileContext } from '../../../../../contexts/MyProfile'
 import { AuthContext } from '../../../../../contexts/Auth'
@@ -55,7 +55,7 @@ export default function Links({ project, refetchProject }) {
       <div className="sticky top-24 w-full mb-4 sm:top-32">
         <div className="w-full flex justify-between items-center bg-light h-14 rounded-md shadow-lg p-2">
           <span>Links do projeto</span>
-          <InfoIcon className="self-start icon-sm cursor-pointer color-paragraph color-hover" />
+          <InfoModal />
         </div>
       </div>
       <div>
