@@ -3,11 +3,14 @@ import CircularProgress from '@material-ui/core/CircularProgress'
 import InfoIcon from '@material-ui/icons/Info'
 import PublicIcon from '@material-ui/icons/Public'
 import LockIcon from '@material-ui/icons/Lock'
-import { MyProfileContext } from '../../../../../contexts/MyProfile'
+import DeleteIcon from '@material-ui/icons/Delete'
 import AddLinkModal from './components/AddLinkModal'
+import { MyProfileContext } from '../../../../../contexts/MyProfile'
+import { AuthContext } from '../../../../../contexts/Auth'
 
 export default function Links({ project, refetchProject }) {
   const { myProfile } = useContext(MyProfileContext)
+  const { getToken } = useContext(AuthContext)
 
   if (!project) {
     return (
@@ -25,6 +28,28 @@ export default function Links({ project, refetchProject }) {
     .map(profile => profile.id)
     .includes(myProfile.id)
 
+  const handleDelete = async linkId => {
+    if (window.confirm('Remover link?')) {
+      fetch(`${process.env.NEXT_PUBLIC_API_HOST}/api/projects/delete-link`, {
+        method: 'DELETE',
+        headers: {
+          Authorization: 'JWT ' + (await getToken()),
+          'Content-type': 'application/json'
+        },
+        body: JSON.stringify({
+          link_id: linkId,
+          project_id: project.id
+        })
+      })
+        .then(response => response.json())
+        .then(data => {
+          if (data === 'Link deleted with success!') {
+            refetchProject('delete-link')
+          }
+        })
+    }
+  }
+
   return (
     <div className="p-2">
       <div className="sticky top-24 w-full mb-4 sm:top-32">
@@ -35,36 +60,56 @@ export default function Links({ project, refetchProject }) {
       </div>
       <div>
         {publicLinks.map(link => (
-          <a
-            href={link.href}
-            target="_blank"
-            rel="noreferrer"
+          <div
             key={link.id}
-            className="no-underline"
+            className="flex bg-transparent rounded-md shadow-lg mb-4 bg-hover"
           >
-            <div className="flex p-4 bg-transparent rounded-md shadow-lg mb-4 color-paragraph bg-hover">
-              <PublicIcon className="icon-sm mr-2" />
-              <div>{link.name}</div>
+            <a
+              href={link.href}
+              target="_blank"
+              rel="noreferrer"
+              className="no-underline flex-grow"
+            >
+              <div className="flex items-center p-4 color-paragraph">
+                <PublicIcon className="icon-sm mr-2" />
+                <div className="break-all">{link.name}</div>
+              </div>
+            </a>
+            <div
+              className="cursor-pointer p-2"
+              onClick={() => handleDelete(link.id)}
+            >
+              <DeleteIcon className="icon-sm color-secondary-hover" />
             </div>
-          </a>
+          </div>
         ))}
       </div>
       {isProjectMember && (
         <>
           <div>
             {privateLinks.map(link => (
-              <a
-                href={link.href}
-                target="_blank"
-                rel="noreferrer"
+              <div
                 key={link.id}
-                className="no-underline"
+                className="flex bg-transparent rounded-md shadow-lg mb-4 bg-hover"
               >
-                <div className="flex p-4 bg-transparent rounded-md shadow-lg mb-4 color-paragraph bg-hover">
-                  <LockIcon className="icon-sm mr-2" />
-                  <div>{link.name}</div>
+                <a
+                  href={link.href}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="no-underline flex-grow"
+                >
+                  <div className="flex items-center p-4 color-paragraph">
+                    <LockIcon className="icon-sm mr-2" />
+                    <div>{link.name}</div>
+                  </div>
+                </a>
+                <div
+                  className="cursor-pointer p-2"
+                  onClick={() => handleDelete(link.id)}
+                >
+                  <DeleteIcon className="icon-sm color-secondary-hover" />
                 </div>
-              </a>
+              </div>
             ))}
           </div>
           <AddLinkModal project={project} refetchProject={refetchProject} />

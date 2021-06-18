@@ -3,3 +3,9 @@
     color: var(--headline);
   }
 }
+
+.color-secondary-hover {
+  &:hover {
+    color: var(--secondary-color);
+  }
+}

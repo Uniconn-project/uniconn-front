@@ -94,6 +94,7 @@ export default function ProjectBaseForm({ usePostData }) {
           className="w-full"
           label="Slogan"
           helperText="Frase descrevendo seu projeto"
+          multiline
           value={postData.slogan}
           onChange={handleChange('slogan')}
         />

@@ -21,7 +21,7 @@ export default function ProjectInfo({ project, setPage, refetchProject }) {
             className="w-full h-52 rounded-md object-cover"
           />
         </div>
-        <div className="w-full pl-4">
+        <div className="w-full pl-4 break-words">
           <h3 className="mt-2">{project.name}</h3>
         </div>
       </div>

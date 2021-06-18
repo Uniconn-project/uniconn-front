@@ -62,26 +62,40 @@ export default function Project({ initialProject }) {
     const updatedProject = await fetcher(`projects/get-project/${project.id}`)
     setProject(updatedProject)
 
-    if (action === 'edit') {
-      setSuccessMsg({
-        isOpen: true,
-        value: 'Projeto editado com sucesso!'
-      })
-    } else if (action === 'invite') {
-      setSuccessMsg({
-        isOpen: true,
-        value: 'Convites enviados!'
-      })
-    } else if (action === 'edit-description') {
-      setSuccessMsg({
-        isOpen: true,
-        value: 'Descrição editada com sucesso!'
-      })
-    } else if (action === 'add-link') {
-      setSuccessMsg({
-        isOpen: true,
-        value: 'Link adicionado!'
-      })
+    switch (action) {
+      case 'edit':
+        setSuccessMsg({
+          isOpen: true,
+          value: 'Projeto editado com sucesso!'
+        })
+        break
+
+      case 'invite':
+        setSuccessMsg({
+          isOpen: true,
+          value: 'Convites enviados!'
+        })
+        break
+
+      case 'edit-description':
+        setSuccessMsg({
+          isOpen: true,
+          value: 'Descrição editada com sucesso!'
+        })
+        break
+
+      case 'add-link':
+        setSuccessMsg({
+          isOpen: true,
+          value: 'Link adicionado!'
+        })
+        break
+
+      case 'delete-link':
+        setSuccessMsg({
+          isOpen: true,
+          value: 'Link removido!'
+        })
     }
   }
 
