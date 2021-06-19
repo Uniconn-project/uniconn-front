@@ -1,17 +1,19 @@
-.color-headline-hover {
-  &:hover {
-    color: var(--headline);
+@media (min-width: 1024px) {
+  .color-headline-hover {
+    &:hover {
+      color: var(--headline);
+    }
   }
-}
 
-.color-primary-hover {
-  &:hover {
-    color: var(--primary-color);
+  .color-primary-hover {
+    &:hover {
+      color: var(--primary-color);
+    }
   }
-}
 
-.color-secondary-hover {
-  &:hover {
-    color: var(--secondary-color);
+  .color-secondary-hover {
+    &:hover {
+      color: var(--secondary-color);
+    }
   }
 }
