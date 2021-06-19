@@ -11,7 +11,7 @@ import Links from '../../components/pages/project/subpages/links/Links'
 import Members from '../../components/pages/project/subpages/members/Members'
 import { fetcher } from '../../hooks/useFetch'
 
-export const getStaticProps = async context => {
+export const getServerSideProps = async context => {
   const project = await fetcher(`projects/get-project/${context.params.id}`)
 
   if (!project || !project.id) {
@@ -23,15 +23,7 @@ export const getStaticProps = async context => {
   return {
     props: {
       initialProject: project
-    },
-    revalidate: 1 // 1 second
-  }
-}
-
-export const getStaticPaths = () => {
-  return {
-    paths: [],
-    fallback: true
+    }
   }
 }
 
