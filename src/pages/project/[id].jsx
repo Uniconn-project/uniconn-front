@@ -102,6 +102,13 @@ export default function Project({ initialProject }) {
           isOpen: true,
           value: 'Usuário removido!'
         })
+        break
+
+      case 'ask-to-join-project':
+        setSuccessMsg({
+          isOpen: true,
+          value: 'Solicitação enviada!'
+        })
     }
   }
 
