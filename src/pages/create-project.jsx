@@ -18,8 +18,10 @@ export default function CreateProject() {
     markets: []
   })
   const [successIsOpen, setSuccessIsOpen] = useState(false)
-  const [errorIsOpen, setErrorIsOpen] = useState(false)
-  const [errorMessage, setErrorMessage] = useState('')
+  const [errorMsg, setErrorMsg] = useState({
+    isOpen: false,
+    message: ''
+  })
 
   const handleSubmit = async () => {
     if (
@@ -28,8 +30,10 @@ export default function CreateProject() {
       !postData.category.length ||
       !postData.markets.length
     ) {
-      setErrorIsOpen(true)
-      setErrorMessage('Todos os campos devem ser preenchidos!')
+      setErrorMsg({
+        isOpen: true,
+        message: 'Todos os campos devem ser preenchidos!'
+      })
       return
     }
 
@@ -46,8 +50,10 @@ export default function CreateProject() {
         if (data === 'Project created with success') {
           setSuccessIsOpen(true)
         } else {
-          setErrorIsOpen(true)
-          setErrorMessage(data)
+          setErrorMsg({
+            isOpen: true,
+            message: data
+          })
         }
       })
   }
@@ -84,11 +90,16 @@ export default function CreateProject() {
                 <Alert severity="success">Projeto criado com sucesso!</Alert>
               </Snackbar>
               <Snackbar
-                open={errorIsOpen}
+                open={errorMsg.isOpen}
                 autoHideDuration={6000}
-                onClose={() => setErrorIsOpen(false)}
+                onClose={() =>
+                  setErrorMsg({
+                    isOpen: false,
+                    message: ''
+                  })
+                }
               >
-                <Alert severity="error">{errorMessage}</Alert>
+                <Alert severity="error">{errorMsg.message}</Alert>
               </Snackbar>
             </div>
           </div>

@@ -62,6 +62,13 @@ export default function Project({ initialProject }) {
         })
         break
 
+      case 'edit-description':
+        setSuccessMsg({
+          isOpen: true,
+          value: 'Descrição editada com sucesso!'
+        })
+        break
+
       case 'invite-user':
         setSuccessMsg({
           isOpen: true,
@@ -69,10 +76,10 @@ export default function Project({ initialProject }) {
         })
         break
 
-      case 'edit-description':
+      case 'uninvite-user':
         setSuccessMsg({
           isOpen: true,
-          value: 'Descrição editada com sucesso!'
+          value: 'Convite removido!'
         })
         break
 
@@ -87,13 +94,6 @@ export default function Project({ initialProject }) {
         setSuccessMsg({
           isOpen: true,
           value: 'Link removido!'
-        })
-        break
-
-      case 'uninvite-user':
-        setSuccessMsg({
-          isOpen: true,
-          value: 'Convite removido!'
         })
         break
 
