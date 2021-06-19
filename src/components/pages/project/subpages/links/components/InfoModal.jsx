@@ -16,7 +16,7 @@ export default function InfoModal() {
         onClick={() => setIsOpen(true)}
       />
       <Modal
-        className="flex justify-center items-center"
+        className="flex justify-center items-center .mui-fixed"
         open={isOpen}
         onClose={() => setIsOpen(false)}
         closeAfterTransition
