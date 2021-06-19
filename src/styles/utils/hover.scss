@@ -4,6 +4,12 @@
   }
 }
 
+.color-primary-hover {
+  &:hover {
+    color: var(--primary-color);
+  }
+}
+
 .color-secondary-hover {
   &:hover {
     color: var(--secondary-color);

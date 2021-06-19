@@ -96,6 +96,13 @@ export default function Project({ initialProject }) {
           isOpen: true,
           value: 'Link removido!'
         })
+        break
+
+      case 'uninvite-user':
+        setSuccessMsg({
+          isOpen: true,
+          value: 'Convite removido!'
+        })
     }
   }
 
