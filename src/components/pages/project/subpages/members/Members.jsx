@@ -56,17 +56,29 @@ export default function Members({ type, project, refetchProject }) {
   return (
     <div className="w-full py-4 pt-0">
       <div>
-        {project[`${type}s`].map(profile => (
+        {projectStudentsId.includes(myProfile.id) ? (
           <>
-            {projectStudentsId.includes(myProfile.id) ? (
-              <ProfileListItemWithIcon key={profile.id} profile={profile}>
-                <SettingsPopover />
-              </ProfileListItemWithIcon>
-            ) : (
-              <ProfileListItem key={profile.id} profile={profile} />
-            )}
+            {project[`${type}s`].map(profile => (
+              <>
+                <ProfileListItemWithIcon key={profile.id} profile={profile}>
+                  {profile.id !== myProfile.id && (
+                    <SettingsPopover
+                      profile={profile}
+                      project={project}
+                      refetchProject={refetchProject}
+                    />
+                  )}
+                </ProfileListItemWithIcon>
+              </>
+            ))}
           </>
-        ))}
+        ) : (
+          <>
+            {project[`${type}s`].map(profile => (
+              <ProfileListItem key={profile.id} profile={profile} />
+            ))}
+          </>
+        )}
         {projectMembersId.includes(myProfile.id) && (
           <>
             {project[`pending_invited_${type}s`].map(profile => (

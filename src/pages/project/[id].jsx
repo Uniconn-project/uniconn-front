@@ -62,7 +62,7 @@ export default function Project({ initialProject }) {
         })
         break
 
-      case 'invite':
+      case 'invite-user':
         setSuccessMsg({
           isOpen: true,
           value: 'Convites enviados!'
@@ -94,6 +94,13 @@ export default function Project({ initialProject }) {
         setSuccessMsg({
           isOpen: true,
           value: 'Convite removido!'
+        })
+        break
+
+      case 'remove-user':
+        setSuccessMsg({
+          isOpen: true,
+          value: 'Usuário removido!'
         })
     }
   }

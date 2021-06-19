@@ -59,7 +59,7 @@ export default function AddMembersModal({ type, project, refetchProject }) {
       .then(response => response.json())
       .then(data => {
         if (data === 'Users invited to project with success!') {
-          refetchProject('invite')
+          refetchProject('invite-user')
         }
       })
   }
