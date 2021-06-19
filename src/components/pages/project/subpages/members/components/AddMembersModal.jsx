@@ -10,9 +10,9 @@ import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
 import ListItemAvatar from '@material-ui/core/ListItemAvatar'
 import Avatar from '@material-ui/core/Avatar'
-import { fetcher } from '../../../hooks/useFetch'
-import { MyProfileContext } from '../../../contexts/MyProfile'
-import { AuthContext } from '../../../contexts/Auth'
+import { fetcher } from '../../../../../../hooks/useFetch'
+import { MyProfileContext } from '../../../../../../contexts/MyProfile'
+import { AuthContext } from '../../../../../../contexts/Auth'
 
 export default function AddMembersModal({ type, project, refetchProject }) {
   const { myProfile } = useContext(MyProfileContext)

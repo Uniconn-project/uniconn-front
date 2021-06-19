@@ -3,7 +3,8 @@ import CircularProgress from '@material-ui/core/CircularProgress'
 import CloseIcon from '@material-ui/icons/Close'
 import ProfileListItem from '../../../../global/ProfileListItem'
 import ProfileListItemWithIcon from '../../../../global/ProfileListItemWithIcon'
-import AddMembersModal from '../../AddMembersModal'
+import AddMembersModal from './components/AddMembersModal'
+import AskToJoinProjectModal from './components/AskToJoinProjectModal'
 import SettingsPopover from './components/SettingsPopover'
 import { MyProfileContext } from '../../../../../contexts/MyProfile'
 import { AuthContext } from '../../../../../contexts/Auth'
@@ -12,9 +13,11 @@ export default function Members({ type, project, refetchProject }) {
   const { myProfile } = useContext(MyProfileContext)
   const { getToken } = useContext(AuthContext)
 
-  const canRemoveMembers = project.students
-    .map(profile => profile.id)
-    .includes(myProfile.id)
+  const projectStudentsId = project.students.map(profile => profile.id)
+
+  const projectMembersId = projectStudentsId.concat(
+    project.mentors.map(profile => profile.id)
+  )
 
   const handleCancelProjectInvitation = async (e, username) => {
     e.stopPropagation()
@@ -55,7 +58,7 @@ export default function Members({ type, project, refetchProject }) {
       <div>
         {project[`${type}s`].map(profile => (
           <>
-            {canRemoveMembers ? (
+            {projectStudentsId.includes(myProfile.id) ? (
               <ProfileListItemWithIcon key={profile.id} profile={profile}>
                 <SettingsPopover />
               </ProfileListItemWithIcon>
@@ -64,14 +67,11 @@ export default function Members({ type, project, refetchProject }) {
             )}
           </>
         ))}
-        {project.students
-          .concat(project.mentors)
-          .map(profile => profile.id)
-          .includes(myProfile.id) && (
+        {projectMembersId.includes(myProfile.id) && (
           <>
             {project[`pending_invited_${type}s`].map(profile => (
               <>
-                {canRemoveMembers ? (
+                {projectStudentsId.includes(myProfile.id) ? (
                   <ProfileListItemWithIcon
                     key={profile.id}
                     profile={profile}
@@ -96,8 +96,15 @@ export default function Members({ type, project, refetchProject }) {
           </>
         )}
       </div>
-      {canRemoveMembers && (
+      {projectStudentsId.includes(myProfile.id) && (
         <AddMembersModal
+          type={type}
+          project={project}
+          refetchProject={refetchProject}
+        />
+      )}
+      {!projectMembersId.includes(myProfile.id) && myProfile.type === type && (
+        <AskToJoinProjectModal
           type={type}
           project={project}
           refetchProject={refetchProject}
