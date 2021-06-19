@@ -1,12 +1,12 @@
 import React, { useContext } from 'react'
 import CircularProgress from '@material-ui/core/CircularProgress'
-import SettingsIcon from '@material-ui/icons/Settings'
 import CloseIcon from '@material-ui/icons/Close'
-import ProfileListItem from '../../../global/ProfileListItem'
-import ProfileListItemWithIcon from '../../../global/ProfileListItemWithIcon'
-import AddMembersModal from '../AddMembersModal'
-import { MyProfileContext } from '../../../../contexts/MyProfile'
-import { AuthContext } from '../../../../contexts/Auth'
+import ProfileListItem from '../../../../global/ProfileListItem'
+import ProfileListItemWithIcon from '../../../../global/ProfileListItemWithIcon'
+import AddMembersModal from '../../AddMembersModal'
+import SettingsPopover from './components/SettingsPopover'
+import { MyProfileContext } from '../../../../../contexts/MyProfile'
+import { AuthContext } from '../../../../../contexts/Auth'
 
 export default function Members({ type, project, refetchProject }) {
   const { myProfile } = useContext(MyProfileContext)
@@ -57,7 +57,7 @@ export default function Members({ type, project, refetchProject }) {
           <>
             {canRemoveMembers ? (
               <ProfileListItemWithIcon key={profile.id} profile={profile}>
-                <SettingsIcon className="icon-sm color-primary-hover" />
+                <SettingsPopover />
               </ProfileListItemWithIcon>
             ) : (
               <ProfileListItem key={profile.id} profile={profile} />

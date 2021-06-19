@@ -8,8 +8,8 @@ import ProjectHeader from '../../components/pages/project/ProjectHeader'
 import Description from '../../components/pages/project/subpages/description/Description'
 import Discussions from '../../components/pages/project/subpages/Discussions'
 import Links from '../../components/pages/project/subpages/links/Links'
+import Members from '../../components/pages/project/subpages/members/Members'
 import { fetcher } from '../../hooks/useFetch'
-import Members from '../../components/pages/project/subpages/Members'
 
 export const getStaticProps = async context => {
   const project = await fetcher(`projects/get-project/${context.params.id}`)
