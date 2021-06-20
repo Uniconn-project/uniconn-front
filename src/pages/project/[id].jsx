@@ -9,7 +9,7 @@ import Description from '../../components/pages/project/subpages/description/Des
 import Discussions from '../../components/pages/project/subpages/Discussions'
 import Links from '../../components/pages/project/subpages/links/Links'
 import Members from '../../components/pages/project/subpages/members/Members'
-import { fetcher } from '../../hooks/useFetch'
+import useFetch, { fetcher } from '../../hooks/useFetch'
 
 export const getServerSideProps = async context => {
   const project = await fetcher(`projects/get-project/${context.params.id}`)
@@ -22,12 +22,12 @@ export const getServerSideProps = async context => {
 
   return {
     props: {
-      initialProject: project
+      project: project
     }
   }
 }
 
-export default function Project({ initialProject }) {
+export default function Project(props) {
   const [project, setProject] = useState(null)
   const [page, setPage] = useState('description')
   const [successMsg, setSuccessMsg] = useState({
@@ -35,9 +35,16 @@ export default function Project({ initialProject }) {
     value: ''
   })
 
+  const { data: fetchedProject } = useFetch(
+    `projects/get-project/${props.project.id}`,
+    {
+      initialData: props.project
+    }
+  )
+
   useEffect(() => {
-    setProject(initialProject)
-  }, [initialProject])
+    setProject(fetchedProject)
+  }, [fetchedProject])
 
   if (!project) {
     return (
