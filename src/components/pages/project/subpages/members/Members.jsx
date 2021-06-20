@@ -78,6 +78,7 @@ export default function Members({ type, project, refetchProject }) {
                       profile={profile}
                       project={project}
                       refetchProject={refetchProject}
+                      setErrorMsg={setErrorMsg}
                     />
                   )}
                 </ProfileListItemWithIcon>

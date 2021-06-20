@@ -4,7 +4,12 @@ import HighlightOffIcon from '@material-ui/icons/HighlightOff'
 import Popover from '@material-ui/core/Popover'
 import { AuthContext } from '../../../../../../contexts/Auth'
 
-export default function SettingsPopover({ profile, project, refetchProject }) {
+export default function SettingsPopover({
+  profile,
+  project,
+  refetchProject,
+  setErrorMsg
+}) {
   const { getToken } = useContext(AuthContext)
 
   const [isOpen, setIsOpen] = useState(false)
@@ -40,8 +45,14 @@ export default function SettingsPopover({ profile, project, refetchProject }) {
       )
         .then(response => response.json())
         .then(data => {
-          if (data === 'Removed user from project with success!') {
+          if (data === 'success') {
             refetchProject('remove-user')
+          } else {
+            setIsOpen(false)
+            setErrorMsg({
+              isOpen: true,
+              message: data
+            })
           }
         })
     }
