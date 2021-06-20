@@ -4,6 +4,8 @@ import EditIcon from '@material-ui/icons/Edit'
 import Modal from '@material-ui/core/Modal'
 import Backdrop from '@material-ui/core/Backdrop'
 import Fade from '@material-ui/core/Fade'
+import Snackbar from '@material-ui/core/Snackbar'
+import Alert from '@material-ui/lab/Alert'
 import AddAPhotoOutlinedIcon from '@material-ui/icons/AddAPhotoOutlined'
 import ProjectBaseForm from '../../global/ProjectBaseForm'
 import { AuthContext } from '../../../contexts/Auth'
@@ -21,6 +23,10 @@ export default function EditProjectDataModal({ project, refetchProject }) {
 
   const [isOpen, setIsOpen] = useState(false)
   const [postData, setPostData] = useState(postDataInitialState)
+  const [errorMsg, setErrorMsg] = useState({
+    isOpen: false,
+    message: ''
+  })
 
   const handleClose = () => {
     setIsOpen(false)
@@ -55,8 +61,14 @@ export default function EditProjectDataModal({ project, refetchProject }) {
     )
       .then(response => response.json())
       .then(data => {
-        if (data === 'Project edited with success') {
+        if (data === 'success') {
           refetchProject('edit')
+        } else {
+          setIsOpen(false)
+          setErrorMsg({
+            isOpen: true,
+            message: data
+          })
         }
       })
   }
@@ -121,6 +133,18 @@ export default function EditProjectDataModal({ project, refetchProject }) {
           </div>
         </Fade>
       </Modal>
+      <Snackbar
+        open={errorMsg.isOpen}
+        autoHideDuration={6000}
+        onClose={() =>
+          setErrorMsg({
+            isOpen: false,
+            message: ''
+          })
+        }
+      >
+        <Alert severity="error">{errorMsg.message}</Alert>
+      </Snackbar>
     </div>
   )
 }

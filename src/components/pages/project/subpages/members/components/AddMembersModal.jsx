@@ -10,6 +10,8 @@ import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
 import ListItemAvatar from '@material-ui/core/ListItemAvatar'
 import Avatar from '@material-ui/core/Avatar'
+import Snackbar from '@material-ui/core/Snackbar'
+import Alert from '@material-ui/lab/Alert'
 import { fetcher } from '../../../../../../hooks/useFetch'
 import { MyProfileContext } from '../../../../../../contexts/MyProfile'
 import { AuthContext } from '../../../../../../contexts/Auth'
@@ -22,6 +24,10 @@ export default function AddMembersModal({ type, project, refetchProject }) {
   const [profilesSearch, setProfilesSearch] = useState('')
   const [filteredProfiles, setFilteredProfiles] = useState([])
   const [selectedProfiles, setSelectedProfiles] = useState([])
+  const [errorMsg, setErrorMsg] = useState({
+    isOpen: false,
+    message: ''
+  })
 
   useEffect(() => {
     if (!profilesSearch.length) {
@@ -58,8 +64,13 @@ export default function AddMembersModal({ type, project, refetchProject }) {
     )
       .then(response => response.json())
       .then(data => {
-        if (data === 'Users invited to project with success!') {
+        if (data === 'success') {
           refetchProject('invite-user')
+        } else {
+          setErrorMsg({
+            isOpen: true,
+            message: data
+          })
         }
       })
   }
@@ -182,6 +193,18 @@ export default function AddMembersModal({ type, project, refetchProject }) {
           </div>
         </Fade>
       </Modal>
+      <Snackbar
+        open={errorMsg.isOpen}
+        autoHideDuration={6000}
+        onClose={() =>
+          setErrorMsg({
+            isOpen: false,
+            message: ''
+          })
+        }
+      >
+        <Alert severity="error">{errorMsg.message}</Alert>
+      </Snackbar>
     </>
   )
 }

@@ -47,7 +47,7 @@ export default function CreateProject() {
     })
       .then(response => response.json())
       .then(data => {
-        if (data === 'Project created with success') {
+        if (data === 'success') {
           setSuccessIsOpen(true)
         } else {
           setErrorMsg({

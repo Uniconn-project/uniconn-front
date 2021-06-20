@@ -1,6 +1,8 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import CloseIcon from '@material-ui/icons/Close'
+import Snackbar from '@material-ui/core/Snackbar'
+import Alert from '@material-ui/lab/Alert'
 import ProfileListItem from '../../../../global/ProfileListItem'
 import ProfileListItemWithIcon from '../../../../global/ProfileListItemWithIcon'
 import AddMembersModal from './components/AddMembersModal'
@@ -12,6 +14,11 @@ import { AuthContext } from '../../../../../contexts/Auth'
 export default function Members({ type, project, refetchProject }) {
   const { myProfile } = useContext(MyProfileContext)
   const { getToken } = useContext(AuthContext)
+
+  const [errorMsg, setErrorMsg] = useState({
+    isOpen: false,
+    message: ''
+  })
 
   const projectStudentsId = project.students.map(profile => profile.id)
 
@@ -38,8 +45,13 @@ export default function Members({ type, project, refetchProject }) {
       )
         .then(response => response.json())
         .then(data => {
-          if (data === 'Uninvited user from project with success!') {
+          if (data === 'success') {
             refetchProject('uninvite-user')
+          } else {
+            setErrorMsg({
+              isOpen: true,
+              message: data
+            })
           }
         })
     }
@@ -122,6 +134,18 @@ export default function Members({ type, project, refetchProject }) {
           refetchProject={refetchProject}
         />
       )}
+      <Snackbar
+        open={errorMsg.isOpen}
+        autoHideDuration={6000}
+        onClose={() =>
+          setErrorMsg({
+            isOpen: false,
+            message: ''
+          })
+        }
+      >
+        <Alert severity="error">{errorMsg.message}</Alert>
+      </Snackbar>
     </div>
   )
 }
