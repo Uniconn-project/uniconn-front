@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from 'react'
-import Link from 'next/link'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import Snackbar from '@material-ui/core/Snackbar'
 import Alert from '@material-ui/lab/Alert'
@@ -8,6 +7,8 @@ import Page from '../components/Page'
 import { AuthContext } from '../contexts/Auth'
 import { MyProfileContext } from '../contexts/MyProfile'
 import { fetcher } from '../hooks/useFetch'
+import ProjectsInvitations from '../components/pages/notifications/projectsInvitations'
+import ProjectsEnteringRequests from '../components/pages/notifications/ProjectsEnteringRequests'
 
 export default function Notifications() {
   const { myProfile } = useContext(MyProfileContext)
@@ -15,7 +16,8 @@ export default function Notifications() {
 
   const [projectsInvitations, setProjectsInvitations] = useState(null)
   const [projectsEnteringRequests, setProjectsEnteringRequests] = useState(null)
-  const [successMsg, setSuccessMsg] = useState({ isOpen: false, value: '' })
+  const [successMsg, setSuccessMsg] = useState({ isOpen: false, message: '' })
+  const [errorMsg, setErrorMsg] = useState({ isOpen: false, message: '' })
 
   useEffect(() => {
     fetchNotifications()
@@ -32,43 +34,6 @@ export default function Notifications() {
 
     setProjectsInvitations(notifications.projects_invitations)
     setProjectsEnteringRequests(notifications.projects_entering_requests)
-  }
-
-  const handleSubmit = async (reply, project) => {
-    fetch(
-      `${process.env.NEXT_PUBLIC_API_HOST}/api/profiles/reply-project-invitation`,
-      {
-        method: 'PUT',
-        headers: {
-          'Content-type': 'application/json',
-          Authorization: 'JWT ' + (await getToken())
-        },
-        body: JSON.stringify({
-          reply,
-          project_id: project.id
-        })
-      }
-    )
-      .then(response => response.json())
-      .then(data => {
-        fetchNotifications()
-        if (data === 'Replied to project with success' && reply === 'accept') {
-          setSuccessMsg({
-            isOpen: true,
-            value: (
-              <span>
-                Você entrou no projeto{' '}
-                <Link href={`/project/${project.id}`}>
-                  <strong className="cursor-pointer hover:underline">
-                    {project.name}
-                  </strong>
-                </Link>
-                !
-              </span>
-            )
-          })
-        }
-      })
   }
 
   return (
@@ -94,102 +59,22 @@ export default function Notifications() {
               </div>
             </div>
             {projectsInvitations !== null ? (
-              <div className="w-full">
-                {projectsInvitations.map(project => (
-                  <div
-                    key={project.id}
-                    className="w-full flex bg-transparent rounded-md shadow-lg p-2 mb-2"
-                  >
-                    <Link href={`/project/${project.id}`}>
-                      <img
-                        src={process.env.NEXT_PUBLIC_API_HOST + project.image}
-                        className="w-16 h-16 mr-2 rounded-md object-cover cursor-pointer"
-                      />
-                    </Link>
-                    <div className="flex flex-col justify-between">
-                      <span className="color-headline">
-                        o projeto{' '}
-                        <Link href={`/project/${project.id}`}>
-                          <strong className="cursor-pointer hover:underline">
-                            {project.name}
-                          </strong>
-                        </Link>{' '}
-                        convidou você
-                      </span>
-                      <div className="flex">
-                        <button
-                          className="rounded-lg bg-green bg-hover color-bg-light p-1 mr-1"
-                          onClick={() => handleSubmit('accept', project)}
-                        >
-                          Aceitar
-                        </button>
-                        <button
-                          className="rounded-lg bg-secondary bg-hover color-bg-light p-1 ml-1"
-                          onClick={() => handleSubmit('decline', project)}
-                        >
-                          Recusar
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
+              <ProjectsInvitations
+                projectsInvitations={projectsInvitations}
+                fetchNotifications={fetchNotifications}
+                setSuccessMsg={setSuccessMsg}
+                setErrorMsg={setErrorMsg}
+              />
             ) : (
               <CircularProgress />
             )}
             {projectsEnteringRequests !== null ? (
-              <div className="w-full">
-                {projectsEnteringRequests.map(enteringRequest => (
-                  <div
-                    key={enteringRequest.id}
-                    className="w-full flex color-headline bg-transparent rounded-md shadow-lg p-2 mb-2"
-                  >
-                    <Link href={`/project/${enteringRequest.project.id}`}>
-                      <img
-                        src={
-                          process.env.NEXT_PUBLIC_API_HOST +
-                          enteringRequest.project.image
-                        }
-                        className="w-16 h-16 mr-2 rounded-md object-cover cursor-pointer"
-                      />
-                    </Link>
-                    <div className="flex flex-col justify-between">
-                      <div className="flex mb-2">
-                        <Link
-                          href={`/user/${enteringRequest.profile.user.username}`}
-                        >
-                          <div className="flex">
-                            <img
-                              src={
-                                process.env.NEXT_PUBLIC_API_HOST +
-                                enteringRequest.profile.photo
-                              }
-                              className="profile-img-sm cursor-pointer"
-                            />
-                            <strong className="color-secondary cursor-pointer mx-1 hover:underline">
-                              @{enteringRequest.profile.user.username}
-                            </strong>
-                          </div>
-                        </Link>
-                        pediu para entrar no projeto
-                        <Link href={`/project/${enteringRequest.project.id}`}>
-                          <strong className="cursor-pointer mx-1 hover:underline">
-                            {enteringRequest.project.name}
-                          </strong>
-                        </Link>
-                      </div>
-                      <div className="flex">
-                        <button className="rounded-lg bg-green bg-hover color-bg-light p-1 mr-1">
-                          Aceitar
-                        </button>
-                        <button className="rounded-lg bg-secondary bg-hover color-bg-light p-1 ml-1">
-                          Recusar
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
+              <ProjectsEnteringRequests
+                projectsEnteringRequests={projectsEnteringRequests}
+                fetchNotifications={fetchNotifications}
+                setSuccessMsg={setSuccessMsg}
+                setErrorMsg={setErrorMsg}
+              />
             ) : (
               <CircularProgress />
             )}
@@ -198,9 +83,16 @@ export default function Notifications() {
         <Snackbar
           open={successMsg.isOpen}
           autoHideDuration={6000}
-          onClose={() => setSuccessMsg({ isOpen: false, value: '' })}
+          onClose={() => setSuccessMsg({ isOpen: false, message: '' })}
         >
-          <Alert severity="success">{successMsg.value}</Alert>
+          <Alert severity="success">{successMsg.message}</Alert>
+        </Snackbar>
+        <Snackbar
+          open={errorMsg.isOpen}
+          autoHideDuration={6000}
+          onClose={() => setErrorMsg({ isOpen: false, message: '' })}
+        >
+          <Alert severity="error">{errorMsg.message}</Alert>
         </Snackbar>
       </div>
     </Page>
