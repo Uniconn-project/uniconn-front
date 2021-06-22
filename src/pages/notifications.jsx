@@ -58,25 +58,26 @@ export default function Notifications() {
                 Notificações
               </div>
             </div>
-            {projectsInvitations !== null ? (
+            {projectsInvitations === null && projectsEnteringRequests === null && (
+              <div className="w-full flex justify-center">
+                <CircularProgress />
+              </div>
+            )}
+            {projectsInvitations !== null && (
               <ProjectsInvitations
                 projectsInvitations={projectsInvitations}
                 fetchNotifications={fetchNotifications}
                 setSuccessMsg={setSuccessMsg}
                 setErrorMsg={setErrorMsg}
               />
-            ) : (
-              <CircularProgress />
             )}
-            {projectsEnteringRequests !== null ? (
+            {projectsEnteringRequests !== null && (
               <ProjectsEnteringRequests
                 projectsEnteringRequests={projectsEnteringRequests}
                 fetchNotifications={fetchNotifications}
                 setSuccessMsg={setSuccessMsg}
                 setErrorMsg={setErrorMsg}
               />
-            ) : (
-              <CircularProgress />
             )}
           </div>
         </div>
