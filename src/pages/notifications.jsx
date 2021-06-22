@@ -13,7 +13,8 @@ export default function Notifications() {
   const { myProfile } = useContext(MyProfileContext)
   const { getToken } = useContext(AuthContext)
 
-  const [projects, setProjects] = useState(null)
+  const [projectsInvitations, setProjectsInvitations] = useState(null)
+  const [projectsEnteringRequests, setProjectsEnteringRequests] = useState(null)
   const [successMsg, setSuccessMsg] = useState({ isOpen: false, value: '' })
 
   useEffect(() => {
@@ -29,7 +30,8 @@ export default function Notifications() {
       Authorization: 'JWT ' + (await getToken())
     })
 
-    setProjects(notifications.projects)
+    setProjectsInvitations(notifications.projects_invitations)
+    setProjectsEnteringRequests(notifications.projects_entering_requests)
   }
 
   const handleSubmit = async (reply, project) => {
@@ -91,9 +93,9 @@ export default function Notifications() {
                 Notificações
               </div>
             </div>
-            {projects !== null ? (
+            {projectsInvitations !== null ? (
               <div className="w-full">
-                {projects.map(project => (
+                {projectsInvitations.map(project => (
                   <div
                     key={project.id}
                     className="w-full flex bg-transparent rounded-md shadow-lg p-2 mb-2"
@@ -125,6 +127,62 @@ export default function Notifications() {
                           className="rounded-lg bg-secondary bg-hover color-bg-light p-1 ml-1"
                           onClick={() => handleSubmit('decline', project)}
                         >
+                          Recusar
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <CircularProgress />
+            )}
+            {projectsEnteringRequests !== null ? (
+              <div className="w-full">
+                {projectsEnteringRequests.map(enteringRequest => (
+                  <div
+                    key={enteringRequest.id}
+                    className="w-full flex color-headline bg-transparent rounded-md shadow-lg p-2 mb-2"
+                  >
+                    <Link href={`/project/${enteringRequest.project.id}`}>
+                      <img
+                        src={
+                          process.env.NEXT_PUBLIC_API_HOST +
+                          enteringRequest.project.image
+                        }
+                        className="w-16 h-16 mr-2 rounded-md object-cover cursor-pointer"
+                      />
+                    </Link>
+                    <div className="flex flex-col justify-between">
+                      <div className="flex mb-2">
+                        <Link
+                          href={`/user/${enteringRequest.profile.user.username}`}
+                        >
+                          <div className="flex">
+                            <img
+                              src={
+                                process.env.NEXT_PUBLIC_API_HOST +
+                                enteringRequest.profile.photo
+                              }
+                              className="profile-img-sm cursor-pointer"
+                            />
+                            <strong className="color-secondary cursor-pointer mx-1 hover:underline">
+                              @{enteringRequest.profile.user.username}
+                            </strong>
+                          </div>
+                        </Link>
+                        pediu para entrar no projeto
+                        <Link href={`/project/${enteringRequest.project.id}`}>
+                          <strong className="cursor-pointer mx-1 hover:underline">
+                            {enteringRequest.project.name}
+                          </strong>
+                        </Link>
+                      </div>
+                      <div className="flex">
+                        <button className="rounded-lg bg-green bg-hover color-bg-light p-1 mr-1">
+                          Aceitar
+                        </button>
+                        <button className="rounded-lg bg-secondary bg-hover color-bg-light p-1 ml-1">
                           Recusar
                         </button>
                       </div>
