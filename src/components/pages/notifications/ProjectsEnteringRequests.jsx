@@ -12,7 +12,7 @@ export default function ProjectsEnteringRequests({
 
   const handleSubmit = async (reply, enteringRequest) => {
     fetch(
-      `${process.env.NEXT_PUBLIC_API_HOST}/api/profiles/reply-project-entering-request`,
+      `${process.env.NEXT_PUBLIC_API_HOST}/api/projects/reply-project-entering-request`,
       {
         method: 'PUT',
         headers: {
@@ -77,7 +77,7 @@ export default function ProjectsEnteringRequests({
             />
           </Link>
           <div className="flex flex-col justify-between">
-            <div className="flex mb-2">
+            <div className="flex flex-col mb-2 sm:flex-row">
               <Link href={`/user/${enteringRequest.profile.user.username}`}>
                 <div className="flex">
                   <img
@@ -92,15 +92,19 @@ export default function ProjectsEnteringRequests({
                   </strong>
                 </div>
               </Link>
-              pediu para entrar no projeto
-              <Link href={`/project/${enteringRequest.project.id}`}>
-                <strong className="cursor-pointer mx-1 hover:underline">
-                  {enteringRequest.project.name}
-                </strong>
-              </Link>
+              <div>
+                pediu para entrar no projeto
+                <Link href={`/project/${enteringRequest.project.id}`}>
+                  <strong className="cursor-pointer mx-1 hover:underline">
+                    {enteringRequest.project.name}
+                  </strong>
+                </Link>
+              </div>
             </div>
-            <div className="w-full mb-2">
-              <span className="color-paragraph">{enteringRequest.message}</span>
+            <div className="w-full p-1 mb-2">
+              <p className="color-paragraph break-all">
+                {enteringRequest.message}
+              </p>
             </div>
             <div className="flex">
               <button
