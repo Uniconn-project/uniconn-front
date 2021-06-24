@@ -31,21 +31,21 @@ export default function Page({
     ((loginRequired && isAuthenticated) || (!loginRequired && !isAuthenticated))
   ) {
     return (
-      <div>
+      <>
         <Head>
           <title>{title}</title>
         </Head>
-        <div className={`w-screen h-full ${className || ''}`}>
+        <div className={`w-screen min-h-screen ${className || ''}`}>
+          {header && <Header page={page} />}
           <div
             className={
-              'w-full h-full flex flex-col justify-start items-center pt-24 md:pt-32'
+              'w-full h-full flex flex-col justify-start items-center pt-24 sm:pt-32'
             }
           >
-            {header && <Header page={page} />}
             {children}
           </div>
         </div>
-      </div>
+      </>
     )
   }
 

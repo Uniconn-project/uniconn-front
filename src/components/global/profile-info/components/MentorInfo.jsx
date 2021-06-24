@@ -25,7 +25,7 @@ export default function MentorInfo({ profile }) {
           <AssignmentIcon className="icon-sm" /> Mercados:
         </span>
       </div>
-      <ul className="max-h-28 overflow-y-auto">
+      <ul className="max-h-24 overflow-y-auto">
         {markets.map(market => (
           <li key={market.id}>
             <ArrowRightAltIcon className="color-primary icon-sm" />{' '}

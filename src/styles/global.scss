@@ -2,15 +2,19 @@
 @import '~tailwindcss/components';
 @import '~tailwindcss/utilities';
 
+html {
+  font-size: 13px;
+}
+
 @media (max-width: 1024px) {
   html {
-    font-size: 93.75%; // 15px
+    font-size: 92.3%; // 12px
   }
 }
 
 @media (max-width: 768px) {
   html {
-    font-size: 87.5%; // 14px
+    font-size: 84.6%; // 14px
   }
 }
 
