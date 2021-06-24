@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import Tooltip from '@material-ui/core/Tooltip'
 import EditIcon from '@material-ui/icons/Edit'
 import Modal from '@material-ui/core/Modal'
@@ -8,6 +8,10 @@ import SchoolIcon from '@material-ui/icons/School'
 import AssignmentIcon from '@material-ui/icons/Assignment'
 import TextField from '@material-ui/core/TextField'
 import AddAPhotoOutlinedIcon from '@material-ui/icons/AddAPhotoOutlined'
+import Snackbar from '@material-ui/core/Snackbar'
+import Alert from '@material-ui/lab/Alert'
+import { AuthContext } from '../../../../contexts/Auth'
+import { MyProfileContext } from '../../../../contexts/MyProfile'
 
 export default function EditProfileModal({ profile }) {
   const postDataInitialState = {
@@ -19,8 +23,13 @@ export default function EditProfileModal({ profile }) {
     linkedIn: profile.linkedIn
   }
 
+  const { getToken } = useContext(AuthContext)
+  const { refetchMyProfile } = useContext(MyProfileContext)
+
   const [isOpen, setIsOpen] = useState(false)
   const [postData, setPostData] = useState(postDataInitialState)
+  const [errorMsg, setErrorMsg] = useState({ isOpen: false, message: '' })
+  const [successMsg, setSuccessMsg] = useState({ isOpen: false, message: '' })
 
   const handleClose = () => {
     setIsOpen(false)
@@ -43,6 +52,34 @@ export default function EditProfileModal({ profile }) {
     } catch {
       window.alert('Ocorreu um erro')
     }
+  }
+
+  const handleSubmit = async () => {
+    fetch(`${process.env.NEXT_PUBLIC_API_HOST}/api/profiles/edit-my-profile`, {
+      method: 'PUT',
+      headers: {
+        Authorization: 'JWT ' + (await getToken()),
+        'Content-type': 'application/json'
+      },
+      body: JSON.stringify(postData)
+    })
+      .then(response => response.json())
+      .then(data => {
+        if (data === 'success') {
+          refetchMyProfile()
+          setIsOpen(false)
+          setSuccessMsg({
+            isOpen: true,
+            message: 'Perfil editado com sucesso!'
+          })
+        } else {
+          setIsOpen(false)
+          setErrorMsg({
+            isOpen: true,
+            message: data
+          })
+        }
+      })
   }
 
   return (
@@ -124,14 +161,46 @@ export default function EditProfileModal({ profile }) {
                     onChange={handleChange('bio')}
                   />
                 </div>
+                <div className="w-full flex justify-between items-center mb-2">
+                  <TextField
+                    className="w-5/12"
+                    label="nome de usuário"
+                    value={postData.username}
+                    multiline
+                    onChange={handleChange('username')}
+                  />
+                  <TextField
+                    className="w-5/12"
+                    label="LinkedIn"
+                    value={postData.linkedIn}
+                    multiline
+                    onChange={handleChange('linkedIn')}
+                  />
+                </div>
               </div>
             </div>
             <div className="w-full p-4">
-              <button className="btn-primary ml-auto">Confirmar</button>
+              <button className="btn-primary ml-auto" onClick={handleSubmit}>
+                Confirmar
+              </button>
             </div>
           </div>
         </Fade>
       </Modal>
+      <Snackbar
+        open={successMsg.isOpen}
+        autoHideDuration={6000}
+        onClose={() => setSuccessMsg({ isOpen: false, message: '' })}
+      >
+        <Alert severity="success">{successMsg.message}</Alert>
+      </Snackbar>
+      <Snackbar
+        open={errorMsg.isOpen}
+        autoHideDuration={6000}
+        onClose={() => setErrorMsg({ isOpen: false, message: '' })}
+      >
+        <Alert severity="error">{errorMsg.message}</Alert>
+      </Snackbar>
     </div>
   )
 }
