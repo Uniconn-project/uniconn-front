@@ -13,7 +13,10 @@ export default function ProjectInfo({ project, setPage, refetchProject }) {
   }
 
   return (
-    <div className="relative bg-transparent h-4/5 rounded-md shadow-lg w-full md:max-w-2xl lg:w-60">
+    <div
+      className="relative bg-transparent h-4/5 rounded-md shadow-lg w-full md:max-w-2xl lg:w-60"
+      style={{ maxHeight: '50rem' }}
+    >
       <div className="b-bottom-light pb-6">
         <div className="w-full flex justify-center p-2">
           <img

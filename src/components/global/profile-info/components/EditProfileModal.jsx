@@ -108,19 +108,22 @@ export default function EditProfileModal({ profile }) {
               <h2>Editar perfil</h2>
             </div>
             <div className="relative w-full flex justify-center items-center p-4 b-bottom-transparent">
-              <div className="relative">
-                <img
-                  src={
-                    postData.photo ||
-                    process.env.NEXT_PUBLIC_API_HOST + profile.photo
-                  }
-                  className={`profile-img-lg img-${profile.type}`}
-                />
-                {profile.type === 'student' ? (
-                  <SchoolIcon className="icon" />
-                ) : (
-                  <AssignmentIcon className="icon" />
-                )}
+              <div className="flex flex-col items-center">
+                <div className="relative">
+                  <img
+                    src={
+                      postData.photo ||
+                      process.env.NEXT_PUBLIC_API_HOST + profile.photo
+                    }
+                    className={`profile-img-lg img-${profile.type}`}
+                  />
+                  {profile.type === 'student' ? (
+                    <SchoolIcon className="icon" />
+                  ) : (
+                    <AssignmentIcon className="icon" />
+                  )}
+                </div>
+                <span className="mt-2">{profile.user.email}</span>
               </div>
               <label
                 htmlFor="profile-image"
@@ -166,14 +169,12 @@ export default function EditProfileModal({ profile }) {
                     className="w-5/12"
                     label="nome de usuário"
                     value={postData.username}
-                    multiline
                     onChange={handleChange('username')}
                   />
                   <TextField
                     className="w-5/12"
                     label="LinkedIn"
                     value={postData.linkedIn}
-                    multiline
                     onChange={handleChange('linkedIn')}
                   />
                 </div>

@@ -16,7 +16,10 @@ export default function ProfileInfo({ profile }) {
   }
 
   return (
-    <div className="relative bg-transparent h-4/5 rounded-md shadow-lg pt-4 w-full md:max-w-2xl lg:w-60">
+    <div
+      className="relative bg-transparent h-4/5 rounded-md shadow-lg pt-4 w-full md:max-w-2xl lg:w-60"
+      style={{ maxHeight: '50rem' }}
+    >
       <div className="b-bottom-light pb-6">
         <div className="w-full flex justify-start pl-10 lg:justify-center lg:pl-0">
           <div className="relative">
