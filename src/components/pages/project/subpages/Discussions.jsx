@@ -9,10 +9,21 @@ export default function Discussions({ project }) {
     `projects/get-project-comments/${project.id}`
   )
 
+  const renderTimestamp = timestamp => {
+    const ts = new Date(timestamp)
+    const day = ts.getDate() >= 10 ? ts.getDate() : `0${ts.getDate()}`
+    const month =
+      ts.getMonth() + 1 >= 10 ? ts.getMonth() + 1 : `0${ts.getMonth() + 1}`
+    const hour = ts.getHours() >= 10 ? ts.getHours() : `0${ts.getHours()}`
+    const minute =
+      ts.getMinutes() >= 10 ? ts.getMinutes() : `0${ts.getMinutes()}`
+    return `${day}/${month}/${ts.getFullYear()} - ${hour}:${minute}`
+  }
+
   if (!comments) {
     return (
       <div className="w-full flex justify-center mt-10">
-        <CircularProgress />
+        <CircularProgress size={30} />
       </div>
     )
   }
@@ -23,9 +34,9 @@ export default function Discussions({ project }) {
         {comments.map(comment => (
           <li
             key={comment.id}
-            className="flex bg-transparent rounded-md shadow-lg p-2 mb-4 bg-hover cursor-pointer"
+            className="bg-transparent rounded-md shadow-lg p-2 mb-4 bg-hover cursor-pointer"
           >
-            <div className="flex">
+            <div className="flex justify-between">
               <div>
                 <Link href={`/user/${comment.profile.user.username}`}>
                   <Tooltip
@@ -42,8 +53,14 @@ export default function Discussions({ project }) {
                   </Tooltip>
                 </Link>
               </div>
-              <div></div>
-              <div></div>
+              <div className="flex items-center">
+                <div className={`text-sm px-1 color-${comment.category.value}`}>
+                  {comment.category.readable}
+                </div>
+                <div className="ml-2">
+                  {renderTimestamp(comment.created_at)}
+                </div>
+              </div>
             </div>
             <div>
               <h5>{comment.title}</h5>
