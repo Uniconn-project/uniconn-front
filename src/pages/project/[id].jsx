@@ -6,7 +6,7 @@ import Page from '../../components/Page'
 import ProjectInfo from '../../components/pages/project/ProjectInfo'
 import ProjectHeader from '../../components/pages/project/ProjectHeader'
 import Description from '../../components/pages/project/subpages/description/Description'
-import Discussions from '../../components/pages/project/subpages/Discussions'
+import Discussions from '../../components/pages/project/subpages/discussions/Discussions'
 import Links from '../../components/pages/project/subpages/links/Links'
 import Members from '../../components/pages/project/subpages/members/Members'
 import useFetch, { fetcher } from '../../hooks/useFetch'
@@ -116,6 +116,21 @@ export default function Project(props) {
           isOpen: true,
           value: 'Solicitação enviada!'
         })
+        break
+
+      case 'add-discussion':
+        setSuccessMsg({
+          isOpen: true,
+          value: 'Discussão criada!'
+        })
+        break
+
+      case 'delete-discussion':
+        setSuccessMsg({
+          isOpen: true,
+          value: 'Discussão removida!'
+        })
+        break
     }
   }
 
@@ -151,7 +166,9 @@ export default function Project(props) {
             {page === 'description' && (
               <Description project={project} refetchProject={refetchProject} />
             )}
-            {page === 'discussions' && <Discussions project={project} />}
+            {page === 'discussions' && (
+              <Discussions project={project} refetchProject={refetchProject} />
+            )}
             {page === 'links' && (
               <Links project={project} refetchProject={refetchProject} />
             )}
