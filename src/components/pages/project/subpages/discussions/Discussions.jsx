@@ -2,10 +2,11 @@ import React from 'react'
 import Link from 'next/link'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import Tooltip from '@material-ui/core/Tooltip'
-import useFetch from '../../../../hooks/useFetch'
+import useFetch from '../../../../../hooks/useFetch'
+import CreateDiscussionForm from './components/CreateDiscussionForm'
 
 export default function Discussions({ project }) {
-  const { data: comments } = useFetch(
+  const { data: discussions } = useFetch(
     `projects/get-project-comments/${project.id}`
   )
 
@@ -20,7 +21,7 @@ export default function Discussions({ project }) {
     return `${day}/${month}/${ts.getFullYear()} - ${hour}:${minute}`
   }
 
-  if (!comments) {
+  if (!discussions) {
     return (
       <div className="w-full flex justify-center mt-10">
         <CircularProgress size={30} />
@@ -30,23 +31,25 @@ export default function Discussions({ project }) {
 
   return (
     <div className="p-2">
+      <CreateDiscussionForm />
       <ul>
-        {comments.map(comment => (
+        {discussions.map(discussion => (
           <li
-            key={comment.id}
+            key={discussion.id}
             className="bg-transparent rounded-md shadow-lg p-2 mb-4 bg-hover cursor-pointer"
           >
             <div className="flex justify-between">
               <div>
-                <Link href={`/user/${comment.profile.user.username}`}>
+                <Link href={`/user/${discussion.profile.user.username}`}>
                   <Tooltip
-                    title={comment.profile.user.username}
+                    title={discussion.profile.user.username}
                     className="bg-light"
                     arrow
                   >
                     <img
                       src={
-                        process.env.NEXT_PUBLIC_API_HOST + comment.profile.photo
+                        process.env.NEXT_PUBLIC_API_HOST +
+                        discussion.profile.photo
                       }
                       className="profile-img-sm mx-0.5 cursor-pointer"
                     />
@@ -54,16 +57,18 @@ export default function Discussions({ project }) {
                 </Link>
               </div>
               <div className="flex items-center">
-                <div className={`text-sm px-1 color-${comment.category.value}`}>
-                  {comment.category.readable}
+                <div
+                  className={`text-sm px-1 color-${discussion.category.value}`}
+                >
+                  {discussion.category.readable}
                 </div>
                 <div className="ml-2">
-                  {renderTimestamp(comment.created_at)}
+                  {renderTimestamp(discussion.created_at)}
                 </div>
               </div>
             </div>
             <div>
-              <h5>{comment.title}</h5>
+              <h5>{discussion.title}</h5>
             </div>
           </li>
         ))}
