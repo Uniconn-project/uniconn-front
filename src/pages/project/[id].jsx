@@ -124,6 +124,13 @@ export default function Project(props) {
           value: 'Discussão criada!'
         })
         break
+
+      case 'delete-discussion':
+        setSuccessMsg({
+          isOpen: true,
+          value: 'Discussão removida!'
+        })
+        break
     }
   }
 

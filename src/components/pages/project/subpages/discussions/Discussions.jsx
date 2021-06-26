@@ -1,14 +1,32 @@
-import React from 'react'
+import React, { useContext, useState } from 'react'
 import Link from 'next/link'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import Tooltip from '@material-ui/core/Tooltip'
+import DeleteIcon from '@material-ui/icons/Delete'
+import Snackbar from '@material-ui/core/Snackbar'
+import Alert from '@material-ui/lab/Alert'
 import useFetch from '../../../../../hooks/useFetch'
 import CreateDiscussionForm from './components/CreateDiscussionForm'
+import { AuthContext } from '../../../../../contexts/Auth'
+import { MyProfileContext } from '../../../../../contexts/MyProfile'
 
 export default function Discussions({ project, refetchProject }) {
+  const { myProfile } = useContext(MyProfileContext)
+  const { getToken } = useContext(AuthContext)
+
+  const [errorMsg, setErrorMsg] = useState({
+    isOpen: false,
+    message: ''
+  })
+
   const { data: discussions } = useFetch(
     `projects/get-project-comments/${project.id}`
   )
+
+  const isProjectMember = project.students
+    .concat(project.mentors)
+    .map(profile => profile.id)
+    .includes(myProfile.id)
 
   const renderTimestamp = timestamp => {
     const ts = new Date(timestamp)
@@ -21,6 +39,35 @@ export default function Discussions({ project, refetchProject }) {
     return `${day}/${month}/${ts.getFullYear()} - ${hour}:${minute}`
   }
 
+  const handleDelete = async discussionId => {
+    if (window.confirm('Deletar discussão?')) {
+      fetch(
+        `${process.env.NEXT_PUBLIC_API_HOST}/api/projects/delete-project-comment`,
+        {
+          method: 'DELETE',
+          headers: {
+            Authorization: 'JWT ' + (await getToken()),
+            'Content-type': 'application/json'
+          },
+          body: JSON.stringify({
+            comment_id: discussionId
+          })
+        }
+      )
+        .then(response => response.json())
+        .then(data => {
+          if (data === 'success') {
+            refetchProject('delete-discussion')
+          } else {
+            setErrorMsg({
+              isOpen: true,
+              message: data
+            })
+          }
+        })
+    }
+  }
+
   if (!discussions) {
     return (
       <div className="w-full flex justify-center mt-10">
@@ -31,10 +78,13 @@ export default function Discussions({ project, refetchProject }) {
 
   return (
     <div className="p-2">
-      <CreateDiscussionForm
-        projectId={project.id}
-        refetchProject={refetchProject}
-      />
+      {!isProjectMember && (
+        <CreateDiscussionForm
+          projectId={project.id}
+          refetchProject={refetchProject}
+          setErrorMsg={setErrorMsg}
+        />
+      )}
       <ul>
         {discussions.map(discussion => (
           <li
@@ -68,6 +118,15 @@ export default function Discussions({ project, refetchProject }) {
                 <div className="ml-2">
                   {renderTimestamp(discussion.created_at)}
                 </div>
+                {(isProjectMember ||
+                  myProfile.id === discussion.profile.id) && (
+                  <div
+                    className="cursor-pointer p-2"
+                    onClick={() => handleDelete(discussion.id)}
+                  >
+                    <DeleteIcon className="icon-sm color-secondary-hover" />
+                  </div>
+                )}
               </div>
             </div>
             <div>
@@ -76,6 +135,18 @@ export default function Discussions({ project, refetchProject }) {
           </li>
         ))}
       </ul>
+      <Snackbar
+        open={errorMsg.isOpen}
+        autoHideDuration={6000}
+        onClose={() =>
+          setErrorMsg({
+            isOpen: false,
+            message: ''
+          })
+        }
+      >
+        <Alert severity="error">{errorMsg.message}</Alert>
+      </Snackbar>
     </div>
   )
 }

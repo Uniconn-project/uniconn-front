@@ -8,11 +8,13 @@ import Select from '@material-ui/core/Select'
 import MenuItem from '@material-ui/core/MenuItem'
 import InputLabel from '@material-ui/core/InputLabel'
 import FormControl from '@material-ui/core/FormControl'
-import Snackbar from '@material-ui/core/Snackbar'
-import Alert from '@material-ui/lab/Alert'
 import { AuthContext } from '../../../../../../contexts/Auth'
 
-export default function CreateDiscussionForm({ projectId, refetchProject }) {
+export default function CreateDiscussionForm({
+  projectId,
+  refetchProject,
+  setErrorMsg
+}) {
   const { getToken } = useContext(AuthContext)
 
   const [isOpen, setIsOpen] = useState(false)
@@ -20,10 +22,6 @@ export default function CreateDiscussionForm({ projectId, refetchProject }) {
     title: '',
     body: '',
     category: ''
-  })
-  const [errorMsg, setErrorMsg] = useState({
-    isOpen: false,
-    message: ''
   })
 
   const handleChange = key => e => {
@@ -147,18 +145,6 @@ export default function CreateDiscussionForm({ projectId, refetchProject }) {
           </div>
         </Fade>
       </Modal>
-      <Snackbar
-        open={errorMsg.isOpen}
-        autoHideDuration={6000}
-        onClose={() =>
-          setErrorMsg({
-            isOpen: false,
-            message: ''
-          })
-        }
-      >
-        <Alert severity="error">{errorMsg.message}</Alert>
-      </Snackbar>
     </>
   )
 }
