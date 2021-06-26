@@ -1,8 +1,10 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import PublicIcon from '@material-ui/icons/Public'
 import LockIcon from '@material-ui/icons/Lock'
 import DeleteIcon from '@material-ui/icons/Delete'
+import Snackbar from '@material-ui/core/Snackbar'
+import Alert from '@material-ui/lab/Alert'
 import InfoModal from './components/InfoModal'
 import AddLinkModal from './components/AddLinkModal'
 import { MyProfileContext } from '../../../../../contexts/MyProfile'
@@ -11,6 +13,11 @@ import { AuthContext } from '../../../../../contexts/Auth'
 export default function Links({ project, refetchProject }) {
   const { myProfile } = useContext(MyProfileContext)
   const { getToken } = useContext(AuthContext)
+
+  const [errorMsg, setErrorMsg] = useState({
+    isOpen: false,
+    message: ''
+  })
 
   if (!project) {
     return (
@@ -43,8 +50,13 @@ export default function Links({ project, refetchProject }) {
       })
         .then(response => response.json())
         .then(data => {
-          if (data === 'Link deleted with success!') {
+          if (data === 'success') {
             refetchProject('delete-link')
+          } else {
+            setErrorMsg({
+              isOpen: true,
+              message: data
+            })
           }
         })
     }
@@ -75,12 +87,14 @@ export default function Links({ project, refetchProject }) {
                 <div className="break-all">{link.name}</div>
               </div>
             </a>
-            <div
-              className="cursor-pointer p-2"
-              onClick={() => handleDelete(link.id)}
-            >
-              <DeleteIcon className="icon-sm color-secondary-hover" />
-            </div>
+            {isProjectMember && (
+              <div
+                className="cursor-pointer p-2"
+                onClick={() => handleDelete(link.id)}
+              >
+                <DeleteIcon className="icon-sm color-secondary-hover" />
+              </div>
+            )}
           </div>
         ))}
       </div>
@@ -115,6 +129,18 @@ export default function Links({ project, refetchProject }) {
           <AddLinkModal project={project} refetchProject={refetchProject} />
         </>
       )}
+      <Snackbar
+        open={errorMsg.isOpen}
+        autoHideDuration={6000}
+        onClose={() =>
+          setErrorMsg({
+            isOpen: false,
+            message: ''
+          })
+        }
+      >
+        <Alert severity="error">{errorMsg.message}</Alert>
+      </Snackbar>
     </div>
   )
 }

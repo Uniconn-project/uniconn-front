@@ -5,7 +5,7 @@ import Tooltip from '@material-ui/core/Tooltip'
 import useFetch from '../../../../../hooks/useFetch'
 import CreateDiscussionForm from './components/CreateDiscussionForm'
 
-export default function Discussions({ project }) {
+export default function Discussions({ project, refetchProject }) {
   const { data: discussions } = useFetch(
     `projects/get-project-comments/${project.id}`
   )
@@ -31,7 +31,10 @@ export default function Discussions({ project }) {
 
   return (
     <div className="p-2">
-      <CreateDiscussionForm />
+      <CreateDiscussionForm
+        projectId={project.id}
+        refetchProject={refetchProject}
+      />
       <ul>
         {discussions.map(discussion => (
           <li

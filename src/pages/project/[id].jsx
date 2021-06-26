@@ -116,6 +116,14 @@ export default function Project(props) {
           isOpen: true,
           value: 'Solicitação enviada!'
         })
+        break
+
+      case 'add-discussion':
+        setSuccessMsg({
+          isOpen: true,
+          value: 'Discussão criada!'
+        })
+        break
     }
   }
 
@@ -151,7 +159,9 @@ export default function Project(props) {
             {page === 'description' && (
               <Description project={project} refetchProject={refetchProject} />
             )}
-            {page === 'discussions' && <Discussions project={project} />}
+            {page === 'discussions' && (
+              <Discussions project={project} refetchProject={refetchProject} />
+            )}
             {page === 'links' && (
               <Links project={project} refetchProject={refetchProject} />
             )}

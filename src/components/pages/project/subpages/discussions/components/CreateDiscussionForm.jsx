@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import AddIcon from '@material-ui/icons/Add'
 import Modal from '@material-ui/core/Modal'
 import Backdrop from '@material-ui/core/Backdrop'
@@ -8,15 +8,22 @@ import Select from '@material-ui/core/Select'
 import MenuItem from '@material-ui/core/MenuItem'
 import InputLabel from '@material-ui/core/InputLabel'
 import FormControl from '@material-ui/core/FormControl'
+import Snackbar from '@material-ui/core/Snackbar'
+import Alert from '@material-ui/lab/Alert'
+import { AuthContext } from '../../../../../../contexts/Auth'
 
-export default function CreateDiscussionForm() {
+export default function CreateDiscussionForm({ projectId, refetchProject }) {
+  const { getToken } = useContext(AuthContext)
+
   const [isOpen, setIsOpen] = useState(false)
   const [postData, setPostData] = useState({
     title: '',
     body: '',
-    category: '',
-    profileId: null,
-    projectId: null
+    category: ''
+  })
+  const [errorMsg, setErrorMsg] = useState({
+    isOpen: false,
+    message: ''
   })
 
   const handleChange = key => e => {
@@ -25,6 +32,45 @@ export default function CreateDiscussionForm() {
 
   const handleClose = () => {
     setIsOpen(false)
+  }
+
+  const handleSubmit = async () => {
+    if (
+      !postData.title.length ||
+      !postData.body.length ||
+      !postData.category.length
+    ) {
+      setErrorMsg({
+        isOpen: true,
+        message: 'Todos os campos devem ser preenchidos!'
+      })
+      return
+    }
+
+    fetch(
+      `${process.env.NEXT_PUBLIC_API_HOST}/api/projects/create-project-comment/${projectId}`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-type': 'application/json',
+          Authorization: 'JWT ' + (await getToken())
+        },
+        body: JSON.stringify(postData)
+      }
+    )
+      .then(response => response.json())
+      .then(data => {
+        if (data === 'success') {
+          setIsOpen(false)
+          refetchProject('add-discussion')
+        } else {
+          setIsOpen(false)
+          setErrorMsg({
+            isOpen: true,
+            message: data
+          })
+        }
+      })
   }
 
   return (
@@ -94,11 +140,25 @@ export default function CreateDiscussionForm() {
               </div>
             </div>
             <div className="w-full p-4">
-              <button className="btn-primary ml-auto">Confirmar</button>
+              <button className="btn-primary ml-auto" onClick={handleSubmit}>
+                Confirmar
+              </button>
             </div>
           </div>
         </Fade>
       </Modal>
+      <Snackbar
+        open={errorMsg.isOpen}
+        autoHideDuration={6000}
+        onClose={() =>
+          setErrorMsg({
+            isOpen: false,
+            message: ''
+          })
+        }
+      >
+        <Alert severity="error">{errorMsg.message}</Alert>
+      </Snackbar>
     </>
   )
 }
