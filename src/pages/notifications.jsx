@@ -7,7 +7,7 @@ import Page from '../components/Page'
 import { AuthContext } from '../contexts/Auth'
 import { MyProfileContext } from '../contexts/MyProfile'
 import { fetcher } from '../hooks/useFetch'
-import ProjectsInvitations from '../components/pages/notifications/projectsInvitations'
+import ProjectsInvitations from '../components/pages/notifications/ProjectsInvitations'
 import ProjectsEnteringRequests from '../components/pages/notifications/ProjectsEnteringRequests'
 
 export default function Notifications() {
