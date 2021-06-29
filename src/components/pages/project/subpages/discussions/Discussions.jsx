@@ -20,7 +20,7 @@ export default function Discussions({ project, refetchProject }) {
   })
 
   const { data: discussions } = useFetch(
-    `projects/get-project-comments/${project.id}`
+    `projects/get-project-discussions/${project.id}`
   )
 
   const isProjectMember = project.students
@@ -42,7 +42,7 @@ export default function Discussions({ project, refetchProject }) {
   const handleDelete = async discussionId => {
     if (window.confirm('Deletar discussão?')) {
       fetch(
-        `${process.env.NEXT_PUBLIC_API_HOST}/api/projects/delete-project-comment`,
+        `${process.env.NEXT_PUBLIC_API_HOST}/api/projects/delete-project-discussion`,
         {
           method: 'DELETE',
           headers: {
@@ -50,7 +50,7 @@ export default function Discussions({ project, refetchProject }) {
             'Content-type': 'application/json'
           },
           body: JSON.stringify({
-            comment_id: discussionId
+            discussion_id: discussionId
           })
         }
       )

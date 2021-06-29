@@ -22,6 +22,7 @@ import Head from 'next/head'
 import PropTypes from 'prop-types'
 import AuthProvider from '../contexts/Auth'
 import MyProfileProvider from '../contexts/MyProfile'
+import NotificationsProvider from '../contexts/Notifications'
 
 export default function MyApp(props) {
   const { Component, pageProps } = props
@@ -44,7 +45,9 @@ export default function MyApp(props) {
       </Head>
       <AuthProvider>
         <MyProfileProvider>
-          <Component {...pageProps} />
+          <NotificationsProvider>
+            <Component {...pageProps} />
+          </NotificationsProvider>
         </MyProfileProvider>
       </AuthProvider>
     </>

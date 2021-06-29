@@ -13,10 +13,12 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp'
 import NotificationsIcon from '@material-ui/icons/Notifications'
 import Badge from '@material-ui/core/Badge'
 import { MyProfileContext } from '../../../contexts/MyProfile'
+import { NotificationsContext } from '../../../contexts/Notifications'
 import Logout from '../../helpers/Logout'
 
-export default function MobileMenu({ notificationsNumber }) {
+export default function MobileMenu() {
   const { myProfile } = useContext(MyProfileContext)
+  const { notificationsNumber } = useContext(NotificationsContext)
 
   const [mobileMenuIsOpen, setMobileMenuIsOpen] = useState(false)
 

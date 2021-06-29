@@ -1,6 +1,7 @@
 import React, { useContext } from 'react'
 import Link from 'next/link'
 import { AuthContext } from '../../../contexts/Auth'
+import { NotificationsContext } from '../../../contexts/Notifications'
 
 export default function ProjectsInvitations({
   projectsInvitations,
@@ -9,6 +10,7 @@ export default function ProjectsInvitations({
   setErrorMsg
 }) {
   const { getToken } = useContext(AuthContext)
+  const { fetchNotificationsNumber } = useContext(NotificationsContext)
 
   const handleSubmit = async (reply, project) => {
     fetch(
@@ -28,6 +30,8 @@ export default function ProjectsInvitations({
       .then(response => response.json())
       .then(data => {
         fetchNotifications()
+        fetchNotificationsNumber()
+
         if (data !== 'success') {
           setErrorMsg({
             isOpen: true,
