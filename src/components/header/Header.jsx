@@ -11,7 +11,9 @@ export default function Header({ page }) {
       </div>
       <div>
         <Link href="/home">
-          <h1 className="cursor-pointer">Uniconn</h1>
+          <h1 className="cursor-pointer">
+            <span className="color-primary">U</span>niconn
+          </h1>
         </Link>
       </div>
       <div className="hidden sm:flex sm:ml-32">
