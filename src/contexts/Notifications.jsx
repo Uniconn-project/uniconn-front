@@ -32,7 +32,12 @@ export default function NotificationsProvider({ children }) {
   }, [isAuthenticated, fetchNotificationsNumber])
 
   return (
-    <NotificationsContext.Provider value={{ notificationsNumber }}>
+    <NotificationsContext.Provider
+      value={{
+        notificationsNumber,
+        fetchNotificationsNumber
+      }}
+    >
       {children}
     </NotificationsContext.Provider>
   )
