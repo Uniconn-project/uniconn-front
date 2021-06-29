@@ -9,10 +9,13 @@ export default class MyDocument extends Document {
         <Head>
           <meta charSet="utf-8" />
           <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
-          <meta name="description" content="Description" />
+          <meta
+            name="description"
+            content="Conectando universitários que buscam algo a mais"
+          />
           <meta name="keywords" content="Keywords" />
           <link rel="manifest" href="/manifest.json" />
-          <link href="logo.svg" rel="icon" type="svg" sizes="32x32" />
+          <link href="favicon.png" rel="icon" type="png" sizes="32x32" />
           <link rel="apple-touch-icon" href="/apple-icon.png"></link>
           <link rel="preconnect" href="https://fonts.gstatic.com" />
           <link
