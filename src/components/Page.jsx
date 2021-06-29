@@ -15,6 +15,8 @@ export default function Page({
 }) {
   const { isAuthenticated, loading } = useContext(AuthContext)
 
+  useEffect(() => console.log('rendered'), [])
+
   useEffect(() => {
     if (loading) return
 

@@ -10,10 +10,12 @@ import Badge from '@material-ui/core/Badge'
 import NotificationsIcon from '@material-ui/icons/Notifications'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import { MyProfileContext } from '../../../contexts/MyProfile'
+import { NotificationsContext } from '../../../contexts/Notifications'
 import Logout from '../../helpers/Logout'
 
-export default function DesktopMenu({ notificationsNumber }) {
+export default function DesktopMenu() {
   const { myProfile } = useContext(MyProfileContext)
+  const { notificationsNumber } = useContext(NotificationsContext)
 
   const [isOpen, setIsOpen] = useState(false)
 
@@ -21,15 +23,13 @@ export default function DesktopMenu({ notificationsNumber }) {
 
   return (
     <div className="flex">
-      {myProfile !== null ? (
+      {myProfile !== null && (
         <img
           ref={anchorRef}
           src={process.env.NEXT_PUBLIC_API_HOST + myProfile.photo}
           className="profile-img-sm mr-2 cursor-pointer"
           onClick={() => setIsOpen(!isOpen)}
         />
-      ) : (
-        <CircularProgress size={30} />
       )}
       {notificationsNumber !== null ? (
         <Link href="/notifications">
@@ -41,7 +41,7 @@ export default function DesktopMenu({ notificationsNumber }) {
           </Badge>
         </Link>
       ) : (
-        <CircularProgress size={30} />
+        <CircularProgress size={25} />
       )}
       <Popper
         open={isOpen}
