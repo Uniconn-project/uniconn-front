@@ -7,7 +7,7 @@ import { MyProfileContext } from '../../contexts/MyProfile'
 import Router from 'next/router'
 import Projects from '../../components/global/Projects'
 
-export const getStaticProps = async context => {
+export const getServerSideProps = async context => {
   const profile = await fetcher(`profiles/get-profile/${context.params.slug}`)
 
   if (!profile || !profile.id) {
@@ -20,13 +20,6 @@ export const getStaticProps = async context => {
     props: {
       profile
     }
-  }
-}
-
-export const getStaticPaths = async () => {
-  return {
-    paths: [],
-    fallback: true
   }
 }
 
