@@ -14,9 +14,9 @@ export default class MyDocument extends Document {
             content="Conectando universitários que buscam algo a mais"
           />
           <meta name="keywords" content="Keywords" />
-          <link rel="manifest" href="/manifest.json" />
-          <link href="favicon.png" rel="icon" type="png" sizes="32x32" />
-          <link rel="apple-touch-icon" href="/apple-icon.png"></link>
+          <link rel="manifest" href="manifest.json" />
+          <link href="favicon.ico" rel="icon" type="png" sizes="32x32" />
+          <link rel="apple-touch-icon" href="apple-icon.png"></link>
           <link rel="preconnect" href="https://fonts.gstatic.com" />
           <link
             href="https://fonts.googleapis.com/css2?family=Lexend&display=swap"
