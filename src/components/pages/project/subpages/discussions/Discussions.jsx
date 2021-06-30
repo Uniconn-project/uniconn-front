@@ -130,7 +130,7 @@ export default function Discussions({ project, refetchProject }) {
               </div>
             </div>
             <div>
-              <h5>{discussion.title}</h5>
+              <strong>{discussion.title}</strong>
             </div>
           </li>
         ))}
