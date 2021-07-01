@@ -4,7 +4,6 @@ import Head from 'next/head'
 import Router from 'next/router'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import PersonOutlineIcon from '@material-ui/icons/PersonOutline'
-import Illustration01 from '../components/pages/landing-page/illustration01'
 import { AuthContext } from '../contexts/Auth'
 
 export default function Index() {

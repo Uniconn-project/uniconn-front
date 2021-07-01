@@ -5,7 +5,7 @@ import AssignmentIcon from '@material-ui/icons/Assignment'
 import LinkedInIcon from '@material-ui/icons/LinkedIn'
 import StudentInfo from './components/StudentInfo'
 import MentorInfo from './components/MentorInfo'
-import EditProfileModal from './components/EditProfileModal'
+import EditProfile from './components/edit-profile/EditProfile'
 import { MyProfileContext } from '../../../contexts/MyProfile'
 
 export default function ProfileInfo({ profile }) {
@@ -65,7 +65,7 @@ export default function ProfileInfo({ profile }) {
           {profile.type === 'mentor' && <MentorInfo profile={profile} />}
         </ul>
       </div>
-      {profile.id === myProfile.id && <EditProfileModal profile={profile} />}
+      {profile.id === myProfile.id && <EditProfile profile={profile} />}
     </div>
   )
 }
