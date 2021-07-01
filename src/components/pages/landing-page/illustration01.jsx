@@ -5,7 +5,7 @@ export default function Illustration01() {
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 1047.92 1248.68"
-      style={{ width: 300 }}
+      style={{ width: 200 }}
     >
       <defs>
         <style></style>
