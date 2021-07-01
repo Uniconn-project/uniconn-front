@@ -6,6 +6,7 @@ import Alert from '@material-ui/lab/Alert'
 import EditProfileModal from './components/EditProfileModal'
 import { AuthContext } from '../../../../../contexts/Auth'
 import { MyProfileContext } from '../../../../../contexts/MyProfile'
+import CropPhotoModal from './components/CropPhotoModal'
 
 export default function EditProfile({ profile }) {
   const postDataInitialState = {
@@ -22,6 +23,7 @@ export default function EditProfile({ profile }) {
 
   const [postData, setPostData] = useState(postDataInitialState)
   const [editModalIsOpen, setEditModalIsOpen] = useState(false)
+  const [cropModalIsOpen, setCropModalIsOpen] = useState(false)
   const [successMsg, setSuccessMsg] = useState({ isOpen: false, message: '' })
   const [errorMsg, setErrorMsg] = useState({ isOpen: false, message: '' })
 
@@ -30,6 +32,7 @@ export default function EditProfile({ profile }) {
     reader.onload = () => {
       if (reader.readyState === 2) {
         setPostData({ ...postData, photo: reader.result })
+        setCropModalIsOpen(true)
       }
     }
     try {
@@ -84,6 +87,11 @@ export default function EditProfile({ profile }) {
         postDataInitialState={postDataInitialState}
         handleProfilePhotoChange={handleProfilePhotoChange}
         handleSubmit={handleSubmit}
+      />
+      <CropPhotoModal
+        useIsOpen={() => [cropModalIsOpen, setCropModalIsOpen]}
+        usePostData={() => [postData, setPostData]}
+        postDataInitialState={postDataInitialState}
       />
       <Snackbar
         open={successMsg.isOpen}
