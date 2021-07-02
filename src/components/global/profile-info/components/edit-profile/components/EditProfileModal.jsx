@@ -6,6 +6,7 @@ import SchoolIcon from '@material-ui/icons/School'
 import AssignmentIcon from '@material-ui/icons/Assignment'
 import TextField from '@material-ui/core/TextField'
 import AddAPhotoOutlinedIcon from '@material-ui/icons/AddAPhotoOutlined'
+import StudentBaseForm from '../../../../StudentBaseForm'
 
 export default function EditProfileModal({
   profile,
@@ -79,13 +80,13 @@ export default function EditProfileModal({
             <div className="w-full p-4">
               <div className="w-full flex justify-between mb-2">
                 <TextField
-                  className="w-5/12"
+                  className="w-2/5"
                   label="Nome"
                   value={postData.first_name}
                   onChange={handleChange('first_name')}
                 />
                 <TextField
-                  className="w-5/12"
+                  className="w-2/5"
                   label="Sobrenome"
                   value={postData.last_name}
                   onChange={handleChange('last_name')}
@@ -102,18 +103,22 @@ export default function EditProfileModal({
               </div>
               <div className="w-full flex justify-between items-center mb-2">
                 <TextField
-                  className="w-5/12"
+                  className="w-2/5"
                   label="nome de usuário"
                   value={postData.username}
                   onChange={handleChange('username')}
                 />
                 <TextField
-                  className="w-5/12"
+                  className="w-2/5"
                   label="LinkedIn"
                   value={postData.linkedIn}
                   onChange={handleChange('linkedIn')}
                 />
               </div>
+              <StudentBaseForm
+                className="justify-between"
+                usePostData={usePostData}
+              />
             </div>
           </div>
           <div className="w-full p-4">

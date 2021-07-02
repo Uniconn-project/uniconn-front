@@ -15,7 +15,12 @@ export default function EditProfile({ profile }) {
     first_name: profile.first_name,
     last_name: profile.last_name,
     bio: profile.bio,
-    linkedIn: profile.linkedIn
+    linkedIn: profile.linkedIn,
+    university: profile.type === 'student' && profile.student.university.name,
+    major: profile.type === 'student' && profile.student.major.name,
+    markets:
+      profile.type === 'mentor' &&
+      profile.mentor.markets.map(market => market.name)
   }
 
   const { getToken } = useContext(AuthContext)
