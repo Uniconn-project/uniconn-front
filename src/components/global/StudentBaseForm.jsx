@@ -39,11 +39,7 @@ export default function StudentBaseForm(props) {
   }
 
   if (!universities || !majors) {
-    return (
-      <Page title="Signup | Uniconn">
-        <CircularProgress color="primary" />
-      </Page>
-    )
+    return <CircularProgress />
   }
 
   return (

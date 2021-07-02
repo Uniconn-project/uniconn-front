@@ -7,6 +7,7 @@ import AssignmentIcon from '@material-ui/icons/Assignment'
 import TextField from '@material-ui/core/TextField'
 import AddAPhotoOutlinedIcon from '@material-ui/icons/AddAPhotoOutlined'
 import StudentBaseForm from '../../../../StudentBaseForm'
+import MentorBaseForm from '../../../../MentorBaseForm'
 
 export default function EditProfileModal({
   profile,
@@ -27,6 +28,8 @@ export default function EditProfileModal({
   const handleChange = key => e => {
     setPostData({ ...postData, [key]: e.target.value })
   }
+
+  console.log(postData)
 
   return (
     <Modal
@@ -115,10 +118,15 @@ export default function EditProfileModal({
                   onChange={handleChange('linkedIn')}
                 />
               </div>
-              <StudentBaseForm
-                className="justify-between"
-                usePostData={usePostData}
-              />
+              {profile.type === 'student' && (
+                <StudentBaseForm
+                  className="justify-between"
+                  usePostData={usePostData}
+                />
+              )}
+              {profile.type === 'mentor' && (
+                <MentorBaseForm usePostData={usePostData} />
+              )}
             </div>
           </div>
           <div className="w-full p-4">
