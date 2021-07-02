@@ -35,7 +35,7 @@ export default function ProfileInfo({ profile }) {
           </div>
         </div>
         <div className="w-full pl-10">
-          <h4 className="mt-2">
+          <h4 className="mt-2 break-words">
             {profile.first_name} {profile.last_name}
           </h4>
           <p className="self-start break-all color-secondary">
