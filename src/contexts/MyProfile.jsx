@@ -15,10 +15,20 @@ export default function MyProfileProvider({ children }) {
   const [myProfile, setMyProfile] = useState(null)
 
   const fetchMyProfile = useCallback(async () => {
-    const data = await fetcher('profiles/get-my-profile', {
+    const fetchedProfile = await fetcher('profiles/get-my-profile', {
       Authorization: 'JWT ' + (await getToken())
     })
-    setMyProfile(data)
+    if (fetchedProfile.type === 'mentor') {
+      const markets = await fetcher(
+        `profiles/get-mentor-markets/${fetchedProfile.user.username}`
+      )
+      setMyProfile({
+        ...fetchedProfile,
+        mentor: { ...fetchedProfile.mentor, markets: markets }
+      })
+      return
+    }
+    setMyProfile(fetchedProfile)
   }, [getToken])
 
   useEffect(() => {
