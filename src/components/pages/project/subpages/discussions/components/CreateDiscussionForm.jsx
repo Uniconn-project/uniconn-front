@@ -102,6 +102,7 @@ export default function CreateDiscussionForm({
                     className="w-5/12"
                     label="Título"
                     value={postData.title}
+                    inputProps={{ maxLength: 125 }}
                     onChange={handleChange('title')}
                   />
                   <FormControl className="w-5/12">
@@ -131,6 +132,7 @@ export default function CreateDiscussionForm({
                     className="w-full"
                     label="Descrição"
                     value={postData.body}
+                    inputProps={{ maxLength: 1000 }}
                     multiline
                     onChange={handleChange('body')}
                   />

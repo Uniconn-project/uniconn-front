@@ -3,6 +3,8 @@ import LinkIcon from '@material-ui/icons/Link'
 import Modal from '@material-ui/core/Modal'
 import Backdrop from '@material-ui/core/Backdrop'
 import Fade from '@material-ui/core/Fade'
+import Snackbar from '@material-ui/core/Snackbar'
+import Alert from '@material-ui/lab/Alert'
 import TextField from '@material-ui/core/TextField'
 import Checkbox from '@material-ui/core/Checkbox'
 import { AuthContext } from '../../../../../../contexts/Auth'
@@ -18,6 +20,10 @@ export default function AddLinkModal({ project, refetchProject }) {
 
   const [isOpen, setIsOpen] = useState(false)
   const [postData, setPostData] = useState(postDataInitialState)
+  const [errorMsg, setErrorMsg] = useState({
+    isOpen: false,
+    message: ''
+  })
 
   const handleChange = key => e => {
     setPostData({ ...postData, [key]: e.target.value })
@@ -42,8 +48,13 @@ export default function AddLinkModal({ project, refetchProject }) {
     )
       .then(response => response.json())
       .then(data => {
-        if (data === 'Link created with success!') {
+        if (data === 'success') {
           refetchProject('add-link')
+        } else {
+          setErrorMsg({
+            isOpen: true,
+            message: data
+          })
         }
       })
   }
@@ -77,6 +88,7 @@ export default function AddLinkModal({ project, refetchProject }) {
                 label="Nome"
                 className="w-full"
                 value={postData.name}
+                inputProps={{ maxLength: 100 }}
                 onChange={handleChange('name')}
               />
               <TextField
@@ -104,6 +116,18 @@ export default function AddLinkModal({ project, refetchProject }) {
           </div>
         </Fade>
       </Modal>
+      <Snackbar
+        open={errorMsg.isOpen}
+        autoHideDuration={6000}
+        onClose={() =>
+          setErrorMsg({
+            isOpen: false,
+            message: ''
+          })
+        }
+      >
+        <Alert severity="error">{errorMsg.message}</Alert>
+      </Snackbar>
     </>
   )
 }
