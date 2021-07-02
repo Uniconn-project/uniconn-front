@@ -40,6 +40,7 @@ export default function ProjectBaseForm({ usePostData }) {
           className="w-5/12"
           label="Nome"
           value={postData.name}
+          inputProps={{ maxLength: 50 }}
           onChange={handleChange('name')}
         />
         <FormControl className="w-5/12">
@@ -94,8 +95,9 @@ export default function ProjectBaseForm({ usePostData }) {
           className="w-full"
           label="Slogan"
           helperText="Frase descrevendo seu projeto"
-          multiline
           value={postData.slogan}
+          inputProps={{ maxLength: 125 }}
+          multiline
           onChange={handleChange('slogan')}
         />
       </div>

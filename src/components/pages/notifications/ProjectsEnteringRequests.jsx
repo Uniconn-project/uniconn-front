@@ -79,8 +79,8 @@ export default function ProjectsEnteringRequests({
               className="w-16 h-16 mr-2 rounded-md object-cover cursor-pointer"
             />
           </Link>
-          <div className="flex flex-col justify-between">
-            <div className="flex flex-col mb-2 sm:flex-row">
+          <div className="flex flex-col justify-between flex-grow">
+            <div className="flex flex-col mb-2 sm:flex-row sm:items-start">
               <Link href={`/user/${enteringRequest.profile.user.username}`}>
                 <div className="flex">
                   <img
@@ -95,7 +95,7 @@ export default function ProjectsEnteringRequests({
                   </strong>
                 </div>
               </Link>
-              <div>
+              <div style={{ maxWidth: '70%' }}>
                 pediu para entrar no projeto
                 <Link href={`/project/${enteringRequest.project.id}`}>
                   <strong className="cursor-pointer mx-1 hover:underline">

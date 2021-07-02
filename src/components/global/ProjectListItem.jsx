@@ -7,8 +7,10 @@ export default function ProjectListItem({ project }) {
     <Link href={`/project/${project.id}`}>
       <div className="w-full mb-4 p-4 rounded-md shadow-lg cursor-pointer bg-transparent bg-hover">
         <div className="flex justify-between">
-          <h4>{project.name}</h4>
-          <div className="flex">
+          <div style={{ maxWidth: '60%' }}>
+            <h4 className="break-words">{project.name}</h4>
+          </div>
+          <div className="flex items-center">
             {project.students.slice(0, 3).map(student => (
               <Link href={`/user/${student.user.username}`} key={student.id}>
                 <Tooltip
