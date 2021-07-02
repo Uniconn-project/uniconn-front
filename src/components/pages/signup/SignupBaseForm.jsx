@@ -63,9 +63,13 @@ export default function BaseForm({ children, parentPostData, type }) {
       .then(response => response.json())
       .then(async data => {
         if (data === 'success') {
-          process.env.NODE_ENV === 'development' && console.log(data)
-          await login(profilePostData.username, profilePostData.password)
-          await Router.push('/home')
+          login(
+            profilePostData.username.toLowerCase().replace(' ', ''),
+            profilePostData.password
+          ).then(() => {
+            console.log('logged in')
+            Router.push('/home')
+          })
         } else {
           setErrorMsg(data)
         }
@@ -85,12 +89,14 @@ export default function BaseForm({ children, parentPostData, type }) {
             type="text"
             className="w-2/5 mr-2"
             placeholder="Nome"
+            inputProps={{ maxLength: 30 }}
             onChange={handleChange('first_name')}
           />
           <FilledInput
             type="text"
             className="w-2/5 ml-2"
             placeholder="Sobrenome"
+            inputProps={{ maxLength: 30 }}
             onChange={handleChange('last_name')}
           />
         </FormGroup>
@@ -99,12 +105,14 @@ export default function BaseForm({ children, parentPostData, type }) {
             type="text"
             className="w-2/5 mr-2"
             placeholder="Nome de usuário"
+            inputProps={{ maxLength: 25 }}
             onChange={handleChange('username')}
           />
           <FilledInput
             type="email"
             className="w-2/5 ml-2"
             placeholder="E-mail"
+            inputProps={{ maxLength: 50 }}
             onChange={handleChange('email')}
           />
         </FormGroup>
@@ -125,6 +133,7 @@ export default function BaseForm({ children, parentPostData, type }) {
             type={showPassword ? 'text' : 'password'}
             className="w-2/5 mr-2"
             placeholder="Senha"
+            inputProps={{ maxLength: 50 }}
             onChange={handleChange('password')}
             endAdornment={
               <InputAdornment position="end">
@@ -142,6 +151,7 @@ export default function BaseForm({ children, parentPostData, type }) {
             type={showPassword ? 'text' : 'password'}
             className="w-2/5 ml-2"
             placeholder="Confirmar senha"
+            inputProps={{ maxLength: 50 }}
             onChange={handleChange('passwordc')}
             endAdornment={
               <InputAdornment position="end">

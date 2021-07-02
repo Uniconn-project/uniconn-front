@@ -29,8 +29,6 @@ export default function EditProfileModal({
     setPostData({ ...postData, [key]: e.target.value })
   }
 
-  console.log(postData)
-
   return (
     <Modal
       className="flex justify-center items-center"
@@ -86,12 +84,14 @@ export default function EditProfileModal({
                   className="w-2/5"
                   label="Nome"
                   value={postData.first_name}
+                  inputProps={{ maxLength: 30 }}
                   onChange={handleChange('first_name')}
                 />
                 <TextField
                   className="w-2/5"
                   label="Sobrenome"
                   value={postData.last_name}
+                  inputProps={{ maxLength: 30 }}
                   onChange={handleChange('last_name')}
                 />
               </div>
@@ -100,6 +100,7 @@ export default function EditProfileModal({
                   className="w-full"
                   label="Bio"
                   value={postData.bio}
+                  inputProps={{ maxLength: 150 }}
                   multiline
                   onChange={handleChange('bio')}
                 />
@@ -109,12 +110,14 @@ export default function EditProfileModal({
                   className="w-2/5"
                   label="nome de usuário"
                   value={postData.username}
+                  inputProps={{ maxLength: 25 }}
                   onChange={handleChange('username')}
                 />
                 <TextField
                   className="w-2/5"
                   label="LinkedIn"
                   value={postData.linkedIn}
+                  inputProps={{ maxLength: 50 }}
                   onChange={handleChange('linkedIn')}
                 />
               </div>
