@@ -73,9 +73,7 @@ export default function ProjectsEnteringRequests({
         >
           <Link href={`/project/${enteringRequest.project.id}`}>
             <img
-              src={
-                process.env.NEXT_PUBLIC_API_HOST + enteringRequest.project.image
-              }
+              src={enteringRequest.project.image}
               className="w-16 h-16 mr-2 rounded-md object-cover cursor-pointer"
             />
           </Link>
@@ -84,10 +82,7 @@ export default function ProjectsEnteringRequests({
               <Link href={`/user/${enteringRequest.profile.user.username}`}>
                 <div className="flex">
                   <img
-                    src={
-                      process.env.NEXT_PUBLIC_API_HOST +
-                      enteringRequest.profile.photo
-                    }
+                    src={enteringRequest.profile.photo}
                     className="profile-img-sm cursor-pointer"
                   />
                   <strong className="color-secondary cursor-pointer mx-1 hover:underline">
