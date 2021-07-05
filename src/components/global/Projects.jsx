@@ -4,11 +4,7 @@ import ProjectListItem from './ProjectListItem'
 
 function Projects({ projects }) {
   if (!projects) {
-    return (
-      <div className="w-full flex justify-center">
-        <CircularProgress />
-      </div>
-    )
+    return <CircularProgress />
   }
 
   return (
