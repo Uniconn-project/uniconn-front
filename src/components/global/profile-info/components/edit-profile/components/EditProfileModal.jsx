@@ -49,10 +49,7 @@ export default function EditProfileModal({
             <div className="flex flex-col items-center">
               <div className="relative">
                 <img
-                  src={
-                    postData.photo ||
-                    process.env.NEXT_PUBLIC_API_HOST + profile.photo
-                  }
+                  src={postData.photo || profile.photo}
                   className={`profile-img-lg img-${profile.type}`}
                 />
                 {profile.type === 'student' ? (
