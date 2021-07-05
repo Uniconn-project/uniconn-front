@@ -67,7 +67,7 @@ export default function ProjectsInvitations({
         >
           <Link href={`/project/${project.id}`}>
             <img
-              src={process.env.NEXT_PUBLIC_API_HOST + project.image}
+              src={project.image}
               className="w-16 h-16 mr-2 rounded-md object-cover cursor-pointer"
             />
           </Link>

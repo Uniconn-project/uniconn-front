@@ -95,6 +95,7 @@ export default function AddLinkModal({ project, refetchProject }) {
                 label="Href"
                 className="w-full"
                 value={postData.href}
+                inputProps={{ maxLength: 1000 }}
                 onChange={handleChange('href')}
               />
               <div className="flex items-center mt-2">

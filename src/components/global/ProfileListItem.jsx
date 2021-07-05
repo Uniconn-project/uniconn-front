@@ -12,7 +12,7 @@ export default function ProfileListItem({ profile, className = '' }) {
         <div className="flex">
           <div className="relative mr-2">
             <img
-              src={process.env.NEXT_PUBLIC_API_HOST + profile.photo}
+              src={profile.photo}
               className={`profile-img-md img-${profile.type}`}
             />
             {profile.type === 'student' ? (
