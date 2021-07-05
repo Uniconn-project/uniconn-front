@@ -144,9 +144,7 @@ export default function AddMembersModal({ type, project, refetchProject }) {
                         <ListItemAvatar>
                           <Avatar
                             alt={profile.user.username}
-                            src={
-                              process.env.NEXT_PUBLIC_API_HOST + profile.photo
-                            }
+                            src={profile.photo}
                           />
                         </ListItemAvatar>
                         <ListItemText
@@ -167,10 +165,7 @@ export default function AddMembersModal({ type, project, refetchProject }) {
                     type === 'student' ? 'primary' : 'secondary'
                   } mr-1`}
                   avatar={
-                    <Avatar
-                      alt={profile.user.username}
-                      src={process.env.NEXT_PUBLIC_API_HOST + profile.photo}
-                    />
+                    <Avatar alt={profile.user.username} src={profile.photo} />
                   }
                   onDelete={() =>
                     setSelectedProfiles(

@@ -26,7 +26,7 @@ export default function DesktopMenu() {
       {myProfile !== null && (
         <img
           ref={anchorRef}
-          src={process.env.NEXT_PUBLIC_API_HOST + myProfile.photo}
+          src={myProfile.photo}
           className="profile-img-sm mr-2 cursor-pointer"
           onClick={() => setIsOpen(!isOpen)}
         />

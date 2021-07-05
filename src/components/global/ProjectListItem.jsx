@@ -19,7 +19,7 @@ export default function ProjectListItem({ project }) {
                   arrow
                 >
                   <img
-                    src={process.env.NEXT_PUBLIC_API_HOST + student.photo}
+                    src={student.photo}
                     className="profile-img-sm mx-0.5 cursor-pointer"
                   />
                 </Tooltip>
@@ -34,7 +34,7 @@ export default function ProjectListItem({ project }) {
           {project.category.readable}
         </p>
         <img
-          src={process.env.NEXT_PUBLIC_API_HOST + project.image}
+          src={project.image}
           className="w-80 h-52 rounded-md object-cover"
         />
       </div>

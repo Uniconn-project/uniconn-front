@@ -24,7 +24,7 @@ export default function ProfileInfo({ profile }) {
         <div className="w-full flex justify-start pl-10 lg:justify-center lg:pl-0">
           <div className="relative">
             <img
-              src={process.env.NEXT_PUBLIC_API_HOST + profile.photo}
+              src={profile.photo}
               className={`profile-img-lg img-${profile.type}`}
             />
             {profile.type === 'student' ? (

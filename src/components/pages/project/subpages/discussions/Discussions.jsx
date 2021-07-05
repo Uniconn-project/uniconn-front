@@ -100,10 +100,7 @@ export default function Discussions({ project, refetchProject }) {
                     arrow
                   >
                     <img
-                      src={
-                        process.env.NEXT_PUBLIC_API_HOST +
-                        discussion.profile.photo
-                      }
+                      src={discussion.profile.photo}
                       className="profile-img-sm mx-0.5 cursor-pointer"
                     />
                   </Tooltip>

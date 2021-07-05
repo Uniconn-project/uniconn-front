@@ -20,7 +20,7 @@ export default function ProjectInfo({ project, setPage, refetchProject }) {
       <div className="b-bottom-light pb-6">
         <div className="w-full flex justify-center p-2">
           <img
-            src={process.env.NEXT_PUBLIC_API_HOST + project.image}
+            src={project.image}
             className="w-full h-52 rounded-md object-cover"
           />
         </div>

@@ -100,10 +100,7 @@ export default function EditProjectDataModal({ project, refetchProject }) {
             </div>
             <div className="relative w-full flex justify-center items-center p-4 b-bottom-transparent">
               <img
-                src={
-                  postData.image ||
-                  process.env.NEXT_PUBLIC_API_HOST + project.image
-                }
+                src={postData.image || project.image}
                 className="w-60 h-52 rounded-md object-cover filter brightness-75"
               />
               <label
