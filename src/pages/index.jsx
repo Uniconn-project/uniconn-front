@@ -26,7 +26,7 @@ export default function Index() {
         <div className="w-screen pt-20">
           <div className="fixed top-0 z-30 w-full h-20 flex items-center px-4 bg-dark b-bottom-light">
             <div>
-              <h1>Uniconn</h1>
+              <h2 className="text-3xl">Uniconn</h2>
             </div>
             <div className="hidden ml-auto h-2/3 sm:flex">
               <Link href="/login">

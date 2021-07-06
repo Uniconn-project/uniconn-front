@@ -15,7 +15,9 @@ export default function ProjectHeader({ page, setPage }) {
           </div>
           <div
             className={`project-menu-item p-3 ml-2 nav-link cursor-pointer color-headline-hover ${
-              page === 'discussions' ? 'b-bottom-primary' : ''
+              page === 'discussions' || page === 'discussion'
+                ? 'b-bottom-primary'
+                : ''
             }`}
             onClick={() => setPage('discussions')}
           >

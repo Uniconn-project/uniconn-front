@@ -7,10 +7,15 @@ import Snackbar from '@material-ui/core/Snackbar'
 import Alert from '@material-ui/lab/Alert'
 import useFetch from '../../../../../hooks/useFetch'
 import CreateDiscussionForm from './components/CreateDiscussionForm'
+import { renderTimestamp } from '../../../../../utils/utils'
 import { AuthContext } from '../../../../../contexts/Auth'
 import { MyProfileContext } from '../../../../../contexts/MyProfile'
 
-export default function Discussions({ project, refetchProject }) {
+export default function Discussions({
+  project,
+  refetchProject,
+  openDiscussion
+}) {
   const { myProfile } = useContext(MyProfileContext)
   const { getToken } = useContext(AuthContext)
 
@@ -28,18 +33,8 @@ export default function Discussions({ project, refetchProject }) {
     .map(profile => profile.id)
     .includes(myProfile.id)
 
-  const renderTimestamp = timestamp => {
-    const ts = new Date(timestamp)
-    const day = ts.getDate() >= 10 ? ts.getDate() : `0${ts.getDate()}`
-    const month =
-      ts.getMonth() + 1 >= 10 ? ts.getMonth() + 1 : `0${ts.getMonth() + 1}`
-    const hour = ts.getHours() >= 10 ? ts.getHours() : `0${ts.getHours()}`
-    const minute =
-      ts.getMinutes() >= 10 ? ts.getMinutes() : `0${ts.getMinutes()}`
-    return `${day}/${month}/${ts.getFullYear()} - ${hour}:${minute}`
-  }
-
-  const handleDelete = async discussionId => {
+  const handleDelete = async (e, discussionId) => {
+    e.stopPropagation()
     if (window.confirm('Deletar discussão?')) {
       fetch(
         `${process.env.NEXT_PUBLIC_API_HOST}/api/projects/delete-project-discussion`,
@@ -77,7 +72,7 @@ export default function Discussions({ project, refetchProject }) {
   }
 
   return (
-    <div className="p-2">
+    <div className="w-full p-2">
       {!isProjectMember && (
         <CreateDiscussionForm
           projectId={project.id}
@@ -90,6 +85,7 @@ export default function Discussions({ project, refetchProject }) {
           <li
             key={discussion.id}
             className="bg-transparent rounded-md shadow-lg p-2 mb-4 bg-hover cursor-pointer"
+            onClick={() => openDiscussion(discussion)}
           >
             <div className="flex justify-between">
               <div>
@@ -119,7 +115,7 @@ export default function Discussions({ project, refetchProject }) {
                   myProfile.id === discussion.profile.id) && (
                   <div
                     className="cursor-pointer p-2"
-                    onClick={() => handleDelete(discussion.id)}
+                    onClick={e => handleDelete(e, discussion.id)}
                   >
                     <DeleteIcon className="icon-sm color-secondary-hover" />
                   </div>

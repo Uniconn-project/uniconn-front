@@ -11,7 +11,7 @@ export default function Header({ page }) {
       </div>
       <div>
         <Link href="/home">
-          <h1 className="cursor-pointer">Uniconn</h1>
+          <h2 className="text-3xl cursor-pointer">Uniconn</h2>
         </Link>
       </div>
       <div className="hidden sm:flex sm:ml-32">
