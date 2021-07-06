@@ -6,6 +6,7 @@ import ProfileListItem from '../../../../../global/ProfileListItem'
 
 export default function StarsProfilesModal({ useIsOpen, profiles }) {
   const [isOpen, setIsOpen] = useIsOpen()
+
   return (
     <Modal
       className="flex justify-center items-center"
@@ -18,7 +19,7 @@ export default function StarsProfilesModal({ useIsOpen, profiles }) {
       }}
     >
       <Fade in={isOpen}>
-        <div className="w-full max-w-screen-sm bg-dark rounded-md shadow-lg px-2 pt-2">
+        <div className="w-full max-w-screen-sm bg-dark rounded-md shadow-lg p-4">
           <h3 className="flex items-center">Estrelas ({profiles.length})</h3>
           {profiles.map(profile => (
             <ProfileListItem key={profile.id} profile={profile} />

@@ -1,29 +1,98 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 import Link from 'next/link'
 import Tooltip from '@material-ui/core/Tooltip'
 import StarBorderIcon from '@material-ui/icons/StarBorder'
 import StarIcon from '@material-ui/icons/Star'
+import Snackbar from '@material-ui/core/Snackbar'
+import Alert from '@material-ui/lab/Alert'
 import ReplyFrom from './components/ReplyFrom'
 import StarsProfilesModal from './components/StarsProfilesModal'
+import useFetch from '../../../../../hooks/useFetch'
+import { mutate } from 'swr'
 import { renderTimestamp } from '../../../../../utils/utils'
 import { MyProfileContext } from '../../../../../contexts/MyProfile'
+import { AuthContext } from '../../../../../contexts/Auth'
 
-export default function Discussion({ discussion }) {
+export default function Discussion(props) {
   const { myProfile } = useContext(MyProfileContext)
+  const { getToken } = useContext(AuthContext)
+
+  const { data: discussion } = useFetch(
+    `projects/get-project-discussion/${props.discussion.id}`,
+    {
+      initialData: props.discussion
+    }
+  )
   const [starred, setStarred] = useState(
     discussion.stars.map(star => star.profile.id).includes(myProfile.id)
   )
   const [starCount, setStarCount] = useState(discussion.stars.length)
   const [starsModalIsOpen, setStarsModalIsOpen] = useState(false)
+  const [errorMsg, setErrorMsg] = useState({
+    isOpen: false,
+    message: ''
+  })
 
-  const star = () => {
+  useEffect(() => {
+    setStarCount(discussion.stars.length)
+  }, [discussion])
+
+  const starDiscussion = async () => {
     setStarCount(starCount + 1)
     setStarred(true)
+
+    fetch(
+      `${process.env.NEXT_PUBLIC_API_HOST}/api/projects/star-discussion/${discussion.id}`,
+      {
+        method: 'POST',
+        headers: {
+          Authorization: 'JWT ' + (await getToken()),
+          'Content-type': 'application/json'
+        }
+      }
+    )
+      .then(response => response.json())
+      .then(data => {
+        if (data === 'success') {
+          mutate(`projects/get-project-discussion/${props.discussion.id}`)
+        } else {
+          setErrorMsg({
+            isOpen: true,
+            message: data
+          })
+          setStarCount(starCount - 1)
+          setStarred(false)
+        }
+      })
   }
 
-  const unstar = () => {
+  const unstarDiscussion = async () => {
     setStarCount(starCount - 1)
     setStarred(false)
+
+    fetch(
+      `${process.env.NEXT_PUBLIC_API_HOST}/api/projects/unstar-discussion/${discussion.id}`,
+      {
+        method: 'DELETE',
+        headers: {
+          Authorization: 'JWT ' + (await getToken()),
+          'Content-type': 'application/json'
+        }
+      }
+    )
+      .then(response => response.json())
+      .then(data => {
+        if (data === 'success') {
+          mutate(`projects/get-project-discussion/${props.discussion.id}`)
+        } else {
+          setErrorMsg({
+            isOpen: true,
+            message: data
+          })
+          setStarCount(starCount + 1)
+          setStarred(true)
+        }
+      })
   }
 
   return (
@@ -77,12 +146,12 @@ export default function Discussion({ discussion }) {
             {starred ? (
               <StarIcon
                 className="icon-sm mr-1 color-primary"
-                onClick={unstar}
+                onClick={unstarDiscussion}
               />
             ) : (
               <StarBorderIcon
                 className="icon-sm mr-1 color-primary-hover"
-                onClick={star}
+                onClick={starDiscussion}
               />
             )}{' '}
             <span
@@ -101,6 +170,18 @@ export default function Discussion({ discussion }) {
         useIsOpen={() => [starsModalIsOpen, setStarsModalIsOpen]}
         profiles={discussion.stars.map(star => star.profile)}
       />
+      <Snackbar
+        open={errorMsg.isOpen}
+        autoHideDuration={6000}
+        onClose={() =>
+          setErrorMsg({
+            isOpen: false,
+            message: ''
+          })
+        }
+      >
+        <Alert severity="error">{errorMsg.message}</Alert>
+      </Snackbar>
     </div>
   )
 }
