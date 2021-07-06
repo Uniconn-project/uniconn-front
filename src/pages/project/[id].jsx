@@ -7,6 +7,7 @@ import ProjectInfo from '../../components/pages/project/ProjectInfo'
 import ProjectHeader from '../../components/pages/project/ProjectHeader'
 import Description from '../../components/pages/project/subpages/description/Description'
 import Discussions from '../../components/pages/project/subpages/discussions/Discussions'
+import Discussion from '../../components/pages/project/subpages/discussion/Discussion'
 import Links from '../../components/pages/project/subpages/links/Links'
 import Members from '../../components/pages/project/subpages/members/Members'
 import useFetch, { fetcher } from '../../hooks/useFetch'
@@ -29,6 +30,7 @@ export const getServerSideProps = async context => {
 
 export default function Project(props) {
   const [project, setProject] = useState(null)
+  const [openedDiscussion, setOpenedDiscussion] = useState(null)
   const [page, setPage] = useState('description')
   const [successMsg, setSuccessMsg] = useState({
     isOpen: false,
@@ -56,7 +58,12 @@ export default function Project(props) {
     )
   }
 
-  async function refetchProject(action) {
+  const openDiscussion = discussion => {
+    setPage('discussion')
+    setOpenedDiscussion(discussion)
+  }
+
+  const refetchProject = async action => {
     setProject(null)
     const updatedProject = await fetcher(`projects/get-project/${project.id}`)
     setProject(updatedProject)
@@ -167,7 +174,14 @@ export default function Project(props) {
               <Description project={project} refetchProject={refetchProject} />
             )}
             {page === 'discussions' && (
-              <Discussions project={project} refetchProject={refetchProject} />
+              <Discussions
+                project={project}
+                refetchProject={refetchProject}
+                openDiscussion={openDiscussion}
+              />
+            )}
+            {page === 'discussion' && (
+              <Discussion discussion={openedDiscussion} />
             )}
             {page === 'links' && (
               <Links project={project} refetchProject={refetchProject} />
