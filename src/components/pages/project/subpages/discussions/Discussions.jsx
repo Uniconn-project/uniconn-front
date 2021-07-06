@@ -5,6 +5,7 @@ import Tooltip from '@material-ui/core/Tooltip'
 import DeleteIcon from '@material-ui/icons/Delete'
 import Snackbar from '@material-ui/core/Snackbar'
 import Alert from '@material-ui/lab/Alert'
+import StarIcon from '@material-ui/icons/Star'
 import useFetch from '../../../../../hooks/useFetch'
 import CreateDiscussionForm from './components/CreateDiscussionForm'
 import { renderTimestamp } from '../../../../../utils/utils'
@@ -84,10 +85,10 @@ export default function Discussions({
         {discussions.map(discussion => (
           <li
             key={discussion.id}
-            className="bg-transparent rounded-md shadow-lg p-2 mb-4 bg-hover cursor-pointer"
+            className="bg-transparent rounded-md shadow-lg mb-4 bg-hover cursor-pointer"
             onClick={() => openDiscussion(discussion)}
           >
-            <div className="flex justify-between">
+            <div className="px-2 pt-2 flex justify-between">
               <div>
                 <Link href={`/user/${discussion.profile.user.username}`}>
                   <Tooltip
@@ -122,8 +123,11 @@ export default function Discussions({
                 )}
               </div>
             </div>
-            <div>
+            <div className="px-2 pb-2 b-bottom-light">
               <strong>{discussion.title}</strong>
+            </div>
+            <div className="p-2 flex items-center">
+              <StarIcon className="icon-xs mr-1" /> {discussion.stars.length}
             </div>
           </li>
         ))}
