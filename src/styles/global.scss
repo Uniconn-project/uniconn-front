@@ -10,6 +10,10 @@ html {
   html {
     font-size: 92.3%; // 12px
   }
+
+  *:hover {
+    text-decoration: none !important;
+  }
 }
 
 @media (max-width: 768px) {
