@@ -66,7 +66,9 @@ export default function AddMembersModal({ type, project, refetchProject }) {
       .then(data => {
         if (data === 'success') {
           refetchProject('invite-user')
+          setIsOpen(false)
         } else {
+          setIsOpen(false)
           setErrorMsg({
             isOpen: true,
             message: data
