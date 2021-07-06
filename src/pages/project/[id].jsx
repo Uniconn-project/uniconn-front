@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import Snackbar from '@material-ui/core/Snackbar'
 import Alert from '@material-ui/lab/Alert'
@@ -11,6 +11,7 @@ import Discussion from '../../components/pages/project/subpages/discussion/Discu
 import Links from '../../components/pages/project/subpages/links/Links'
 import Members from '../../components/pages/project/subpages/members/Members'
 import useFetch, { fetcher } from '../../hooks/useFetch'
+import { mutate } from 'swr'
 
 export const getServerSideProps = async context => {
   const project = await fetcher(`projects/get-project/${context.params.id}`)
@@ -29,7 +30,6 @@ export const getServerSideProps = async context => {
 }
 
 export default function Project(props) {
-  const [project, setProject] = useState(null)
   const [openedDiscussion, setOpenedDiscussion] = useState(null)
   const [page, setPage] = useState('description')
   const [successMsg, setSuccessMsg] = useState({
@@ -37,16 +37,12 @@ export default function Project(props) {
     value: ''
   })
 
-  const { data: fetchedProject } = useFetch(
+  const { data: project } = useFetch(
     `projects/get-project/${props.project.id}`,
     {
       initialData: props.project
     }
   )
-
-  useEffect(() => {
-    setProject(fetchedProject)
-  }, [fetchedProject])
 
   if (!project) {
     return (
@@ -64,9 +60,7 @@ export default function Project(props) {
   }
 
   const refetchProject = async action => {
-    setProject(null)
-    const updatedProject = await fetcher(`projects/get-project/${project.id}`)
-    setProject(updatedProject)
+    mutate(`projects/get-project/${props.project.id}`)
 
     switch (action) {
       case 'edit':

@@ -62,6 +62,7 @@ export default function EditProjectDataModal({ project, refetchProject }) {
       .then(response => response.json())
       .then(data => {
         if (data === 'success') {
+          setIsOpen(false)
           refetchProject('edit')
         } else {
           setIsOpen(false)
