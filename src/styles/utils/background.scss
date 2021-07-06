@@ -3,7 +3,7 @@
 }
 
 .bg-transparent {
-  background-color: var(--transparent);
+  background-color: var(--transparent) !important;
 
   &.bg-hover {
     &:hover {

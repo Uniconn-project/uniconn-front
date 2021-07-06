@@ -11,6 +11,14 @@
     }
   }
 
+  .color-primary-hover-on-svg-child {
+    &:hover {
+      svg {
+        color: var(--primary-color);
+      }
+    }
+  }
+
   .color-secondary-hover {
     &:hover {
       color: var(--secondary-color);
