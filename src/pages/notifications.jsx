@@ -4,11 +4,12 @@ import Snackbar from '@material-ui/core/Snackbar'
 import Alert from '@material-ui/lab/Alert'
 import ProfileInfo from '../components/global/profile-info/ProfileInfo'
 import Page from '../components/Page'
+import ProjectsInvitations from '../components/pages/notifications/ProjectsInvitations'
+import ProjectsEnteringRequests from '../components/pages/notifications/ProjectsEnteringRequests'
+import DiscussionsStars from '../components/pages/notifications/DiscussionsStars'
 import { AuthContext } from '../contexts/Auth'
 import { MyProfileContext } from '../contexts/MyProfile'
 import { fetcher } from '../hooks/useFetch'
-import ProjectsInvitations from '../components/pages/notifications/ProjectsInvitations'
-import ProjectsEnteringRequests from '../components/pages/notifications/ProjectsEnteringRequests'
 
 export default function Notifications() {
   const { myProfile } = useContext(MyProfileContext)
@@ -16,6 +17,7 @@ export default function Notifications() {
 
   const [projectsInvitations, setProjectsInvitations] = useState(null)
   const [projectsEnteringRequests, setProjectsEnteringRequests] = useState(null)
+  const [discussionsStars, setDiscussionsStars] = useState(null)
   const [successMsg, setSuccessMsg] = useState({ isOpen: false, message: '' })
   const [errorMsg, setErrorMsg] = useState({ isOpen: false, message: '' })
 
@@ -34,6 +36,7 @@ export default function Notifications() {
 
     setProjectsInvitations(notifications.projects_invitations)
     setProjectsEnteringRequests(notifications.projects_entering_requests)
+    setDiscussionsStars(notifications.discussions_stars)
   }
 
   return (
@@ -78,6 +81,9 @@ export default function Notifications() {
                 setSuccessMsg={setSuccessMsg}
                 setErrorMsg={setErrorMsg}
               />
+            )}
+            {discussionsStars !== null && (
+              <DiscussionsStars stars={discussionsStars} />
             )}
           </div>
         </div>
