@@ -18,18 +18,25 @@ export default function MyProfileProvider({ children }) {
     const fetchedProfile = await fetcher('profiles/get-my-profile', {
       Authorization: 'JWT ' + (await getToken())
     })
+
+    const projects = await fetcher(
+      `profiles/get-profile-projects/${fetchedProfile.user.username}`
+    )
+
     if (fetchedProfile.type === 'mentor') {
       const markets = await fetcher(
         `profiles/get-mentor-markets/${fetchedProfile.user.username}`
       )
       setMyProfile({
         ...fetchedProfile,
+        projects,
         mentor: { ...fetchedProfile.mentor, markets: markets }
       })
       return
     }
-    setMyProfile(fetchedProfile)
-  }, [getToken])
+
+    setMyProfile({ ...fetchedProfile, projects })
+  }, [getToken]) // eslint-disable-line
 
   useEffect(() => {
     if (!isAuthenticated) return

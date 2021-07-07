@@ -1,25 +1,47 @@
+@media (min-width: 1024px) {
+  .bg-hover {
+    &.bg-transparent {
+      &:hover {
+        background-color: var(--background-light);
+      }
+    }
+
+    &.bg-dark {
+      &:hover {
+        background-color: var(--transparent);
+      }
+    }
+
+    &.bg-primary {
+      &:hover {
+        background-color: var(--primary-color-hover);
+      }
+    }
+
+    &.bg-secondary {
+      &:hover {
+        background-color: var(--secondary-color-hover);
+      }
+    }
+
+    &.bg-green {
+      &:hover {
+        filter: brightness(0.75);
+      }
+    }
+  }
+}
+
 .bg-none {
   background-color: transparent;
 }
 
 .bg-transparent {
   background-color: var(--transparent);
-
-  &.bg-hover {
-    &:hover {
-      background-color: var(--background-light);
-    }
-  }
 }
 
 .bg-dark {
   background-color: var(--background-dark);
-
-  &.bg-hover {
-    &:hover {
-      background-color: var(--transparent);
-    }
-  }
 }
 
 .bg-light {
@@ -36,30 +58,12 @@
 
 .bg-primary {
   background-color: var(--primary-color);
-
-  &.bg-hover {
-    &:hover {
-      background-color: var(--primary-color-hover);
-    }
-  }
 }
 
 .bg-secondary {
   background-color: var(--secondary-color);
-
-  &.bg-hover {
-    &:hover {
-      background-color: var(--secondary-color-hover);
-    }
-  }
 }
 
 .bg-green {
   background-color: var(--green);
-
-  &.bg-hover {
-    &:hover {
-      filter: brightness(0.75);
-    }
-  }
 }

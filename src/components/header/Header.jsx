@@ -5,7 +5,7 @@ import DesktopMenu from './components/DesktopMenu'
 
 export default function Header({ page }) {
   return (
-    <header className="px-4 fixed z-10 top-0 w-full h-20 flex items-center py-2 header bg-light sm:pl-8 pr-20">
+    <header className="fixed z-10 top-0 w-full h-20 flex items-center px-4 py-2 header bg-light shadow-md sm:pl-8 sm:pr-20">
       <div className="sm:hidden">
         <MobileMenu />
       </div>
