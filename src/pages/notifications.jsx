@@ -10,10 +10,12 @@ import DiscussionsStars from '../components/pages/notifications/DiscussionsStars
 import { AuthContext } from '../contexts/Auth'
 import { MyProfileContext } from '../contexts/MyProfile'
 import { fetcher } from '../hooks/useFetch'
+import { NotificationsContext } from '../contexts/Notifications'
 
 export default function Notifications() {
   const { myProfile } = useContext(MyProfileContext)
   const { getToken } = useContext(AuthContext)
+  const { fetchNotificationsNumber } = useContext(NotificationsContext)
 
   const [projectsInvitations, setProjectsInvitations] = useState(null)
   const [projectsEnteringRequests, setProjectsEnteringRequests] = useState(null)
@@ -23,6 +25,7 @@ export default function Notifications() {
 
   useEffect(() => {
     fetchNotifications()
+    visualizeNotifications()
 
     const interval = setInterval(fetchNotifications, 10000)
 
@@ -37,6 +40,30 @@ export default function Notifications() {
     setProjectsInvitations(notifications.projects_invitations)
     setProjectsEnteringRequests(notifications.projects_entering_requests)
     setDiscussionsStars(notifications.discussions_stars)
+  }
+
+  const visualizeNotifications = async () => {
+    fetch(
+      `${process.env.NEXT_PUBLIC_API_HOST}/api/profiles/visualize-notifications`,
+      {
+        method: 'PATCH',
+        headers: {
+          'Content-type': 'application/json',
+          Authorization: 'JWT ' + (await getToken())
+        }
+      }
+    )
+      .then(response => response.json())
+      .then(data => {
+        if (data === 'success') {
+          fetchNotificationsNumber()
+        } else {
+          setErrorMsg({
+            isOpen: true,
+            message: data
+          })
+        }
+      })
   }
 
   return (

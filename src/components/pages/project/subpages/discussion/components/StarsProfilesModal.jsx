@@ -20,7 +20,7 @@ export default function StarsProfilesModal({ useIsOpen, profiles }) {
     >
       <Fade in={isOpen}>
         <div className="w-full max-w-screen-sm bg-dark rounded-md shadow-lg p-4">
-          <h3 className="flex items-center">Estrelas ({profiles.length})</h3>
+          <h3 className="flex items-center">Curtidas ({profiles.length})</h3>
           {profiles.map(profile => (
             <ProfileListItem key={profile.id} profile={profile} />
           ))}
