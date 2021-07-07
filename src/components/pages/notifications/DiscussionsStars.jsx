@@ -23,7 +23,7 @@ export default function DiscussionsStars({ stars }) {
                 </strong>
               </div>
             </Link>
-            <div style={{ maxWidth: '70%' }}>estrelou sua discussão</div>
+            <div style={{ maxWidth: '70%' }}>curtiu sua discussão</div>
           </div>
           <div className="w-full p-1 mb-2">
             <p className="color-paragraph break-all">{star.discussion.title}</p>
