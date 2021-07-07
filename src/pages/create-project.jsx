@@ -8,7 +8,7 @@ import { AuthContext } from '../contexts/Auth'
 import ProjectBaseForm from '../components/global/ProjectBaseForm'
 
 export default function CreateProject() {
-  const { myProfile } = useContext(MyProfileContext)
+  const { myProfile, refetchMyProfile } = useContext(MyProfileContext)
   const { getToken } = useContext(AuthContext)
 
   const [postData, setPostData] = useState({
@@ -48,6 +48,7 @@ export default function CreateProject() {
       .then(response => response.json())
       .then(data => {
         if (data === 'success') {
+          refetchMyProfile()
           setSuccessIsOpen(true)
         } else {
           setErrorMsg({
