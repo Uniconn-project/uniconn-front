@@ -1,9 +1,15 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import Link from 'next/link'
 import MobileMenu from './components/MobileMenu'
 import DesktopMenu from './components/DesktopMenu'
+import CircularProgress from '@material-ui/core/CircularProgress'
+import NotificationsIcon from '@material-ui/icons/Notifications'
+import Badge from '@material-ui/core/Badge'
+import { NotificationsContext } from '../../contexts/Notifications'
 
 export default function Header({ page }) {
+  const { notificationsNumber } = useContext(NotificationsContext)
+
   return (
     <header className="fixed z-10 top-0 w-full h-20 flex items-center px-4 py-2 header bg-light shadow-md sm:pl-8 sm:pr-20">
       <div className="sm:hidden">
@@ -13,6 +19,20 @@ export default function Header({ page }) {
         <Link href="/home">
           <h2 className="text-3xl cursor-pointer">Uniconn</h2>
         </Link>
+      </div>
+      <div className="sm:hidden ml-auto mr-2">
+        {notificationsNumber !== null ? (
+          <Link href="/notifications">
+            <Badge
+              badgeContent={notificationsNumber}
+              className="cursor-pointer"
+            >
+              <NotificationsIcon />
+            </Badge>
+          </Link>
+        ) : (
+          <CircularProgress size={20} />
+        )}
       </div>
       <div className="hidden sm:flex sm:ml-32">
         <Link href="/home">
