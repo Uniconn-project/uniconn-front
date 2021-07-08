@@ -90,7 +90,7 @@ export default function Notifications() {
             </div>
             {projectsInvitations === null && projectsEnteringRequests === null && (
               <div className="w-full flex justify-center">
-                <CircularProgress />
+                <CircularProgress size={30} />
               </div>
             )}
             {projectsInvitations !== null && (
