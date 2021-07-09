@@ -1,17 +1,18 @@
 import React, { useContext, useState, useEffect } from 'react'
 import Link from 'next/link'
-import Tooltip from '@material-ui/core/Tooltip'
 import StarBorderIcon from '@material-ui/icons/StarBorder'
 import StarIcon from '@material-ui/icons/Star'
+import CommentIcon from '@material-ui/icons/Comment'
 import Snackbar from '@material-ui/core/Snackbar'
 import Alert from '@material-ui/lab/Alert'
-import ReplyFrom from './components/ReplyFrom'
+import ReplyFrom from './components/ReplyForm'
 import StarsProfilesModal from './components/StarsProfilesModal'
 import useFetch from '../../../../../hooks/useFetch'
 import { mutate } from 'swr'
 import { renderTimestamp } from '../../../../../utils/utils'
 import { MyProfileContext } from '../../../../../contexts/MyProfile'
 import { AuthContext } from '../../../../../contexts/Auth'
+import ReplyListItem from './components/ReplyListItem'
 
 export default function Discussion(props) {
   const { myProfile } = useContext(MyProfileContext)
@@ -102,16 +103,10 @@ export default function Discussion(props) {
           <div className="flex flex-col sm:flex-row">
             <div className="mr-2">
               <Link href={`/user/${discussion.profile.user.username}`}>
-                <Tooltip
-                  title={discussion.profile.user.username}
-                  className="bg-light"
-                  arrow
-                >
-                  <img
-                    src={discussion.profile.photo}
-                    className="profile-img-sm mx-0.5 cursor-pointer"
-                  />
-                </Tooltip>
+                <img
+                  src={discussion.profile.photo}
+                  className="profile-img-sm mx-0.5 cursor-pointer"
+                />
               </Link>
             </div>
             <div>
@@ -138,9 +133,9 @@ export default function Discussion(props) {
             <p>{discussion.body}</p>
           </div>
         </div>
-        <div>
+        <div className="flex items-center">
           <div
-            className="p-2 flex items-center cursor-pointer"
+            className="p-2 mr-2 flex items-center cursor-pointer"
             style={{ width: 'fit-content' }}
           >
             {starred ? (
@@ -161,10 +156,16 @@ export default function Discussion(props) {
               {starCount}
             </span>
           </div>
+          <div>
+            <CommentIcon className="icon-xs mr-1" /> {discussion.replies.length}
+          </div>
         </div>
       </div>
       <div className="pl-4">
         <ReplyFrom discussion={discussion} />
+        {discussion.replies.map(reply => (
+          <ReplyListItem key={reply.id} reply={reply} />
+        ))}
       </div>
       <StarsProfilesModal
         useIsOpen={() => [starsModalIsOpen, setStarsModalIsOpen]}

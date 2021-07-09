@@ -6,6 +6,7 @@ import DeleteIcon from '@material-ui/icons/Delete'
 import Snackbar from '@material-ui/core/Snackbar'
 import Alert from '@material-ui/lab/Alert'
 import StarIcon from '@material-ui/icons/Star'
+import CommentIcon from '@material-ui/icons/Comment'
 import useFetch from '../../../../../hooks/useFetch'
 import CreateDiscussionForm from './components/CreateDiscussionForm'
 import { renderTimestamp } from '../../../../../utils/utils'
@@ -127,7 +128,12 @@ export default function Discussions({
               <strong>{discussion.title}</strong>
             </div>
             <div className="p-2 flex items-center">
-              <StarIcon className="icon-xs mr-1" /> {discussion.stars.length}
+              <div className="mr-2">
+                <StarIcon className="icon-xs" /> {discussion.stars.length}
+              </div>
+              <div>
+                <CommentIcon className="icon-xs" /> {discussion.replies.length}
+              </div>
             </div>
           </li>
         ))}
