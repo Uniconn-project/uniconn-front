@@ -52,17 +52,19 @@ export default function Description({ project, refetchProject }) {
   }
 
   return (
-    <div className="w-full bg-transparent rounded-md shadow-lg">
-      <RichTextEditor
-        canEdit={project.students
-          .map(profile => profile.id)
-          .includes(myProfile.id)}
-        editorState={editorState}
-        setEditorState={setEditorState}
-        isEditing={isEditing}
-        setIsEditing={setIsEditing}
-        handleSubmit={handleSubmit}
-      />
+    <div className="p-2">
+      <div className="w-full bg-transparent rounded-md shadow-lg">
+        <RichTextEditor
+          canEdit={project.students
+            .map(profile => profile.id)
+            .includes(myProfile.id)}
+          editorState={editorState}
+          setEditorState={setEditorState}
+          isEditing={isEditing}
+          setIsEditing={setIsEditing}
+          handleSubmit={handleSubmit}
+        />
+      </div>
     </div>
   )
 }
