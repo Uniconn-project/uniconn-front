@@ -1,22 +1,16 @@
 import React, { useContext, useState } from 'react'
 import Link from 'next/link'
 import FilledInput from '@material-ui/core/FilledInput'
-import Snackbar from '@material-ui/core/Snackbar'
-import Alert from '@material-ui/lab/Alert'
 import { mutate } from 'swr'
 import { MyProfileContext } from '../../../../../../contexts/MyProfile'
 import { AuthContext } from '../../../../../../contexts/Auth'
 
-export default function ReplyFrom({ discussion }) {
+export default function ReplyFrom({ discussion, setErrorMsg }) {
   const { myProfile } = useContext(MyProfileContext)
   const { getToken } = useContext(AuthContext)
 
   const [postData, setPostData] = useState({
     content: ''
-  })
-  const [errorMsg, setErrorMsg] = useState({
-    isOpen: false,
-    message: ''
   })
 
   const handleChange = key => e => {
@@ -27,7 +21,7 @@ export default function ReplyFrom({ discussion }) {
     if (postData.content.length < 3) {
       setErrorMsg({
         isOpen: true,
-        message: 'O comentário não pode ter menos de 3 caracteres! [front]'
+        message: 'O comentário não pode ter menos de 3 caracteres!'
       })
       return
     }
@@ -98,18 +92,6 @@ export default function ReplyFrom({ discussion }) {
           Publicar
         </button>
       </div>
-      <Snackbar
-        open={errorMsg.isOpen}
-        autoHideDuration={6000}
-        onClose={() =>
-          setErrorMsg({
-            isOpen: false,
-            message: ''
-          })
-        }
-      >
-        <Alert severity="error">{errorMsg.message}</Alert>
-      </Snackbar>
     </div>
   )
 }
