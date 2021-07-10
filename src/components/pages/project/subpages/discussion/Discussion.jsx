@@ -29,6 +29,10 @@ export default function Discussion(props) {
   )
   const [starCount, setStarCount] = useState(discussion.stars.length)
   const [starsModalIsOpen, setStarsModalIsOpen] = useState(false)
+  const [successMsg, setSuccessMsg] = useState({
+    isOpen: false,
+    message: ''
+  })
   const [errorMsg, setErrorMsg] = useState({
     isOpen: false,
     message: ''
@@ -162,15 +166,33 @@ export default function Discussion(props) {
         </div>
       </div>
       <div className="pl-4">
-        <ReplyFrom discussion={discussion} />
+        <ReplyFrom discussion={discussion} setErrorMsg={setErrorMsg} />
         {discussion.replies.map(reply => (
-          <ReplyListItem key={reply.id} reply={reply} />
+          <ReplyListItem
+            key={reply.id}
+            discussion={discussion}
+            reply={reply}
+            setSuccessMsg={setSuccessMsg}
+            setErrorMsg={setErrorMsg}
+          />
         ))}
       </div>
       <StarsProfilesModal
         useIsOpen={() => [starsModalIsOpen, setStarsModalIsOpen]}
         profiles={discussion.stars.map(star => star.profile)}
       />
+      <Snackbar
+        open={successMsg.isOpen}
+        autoHideDuration={6000}
+        onClose={() =>
+          setSuccessMsg({
+            isOpen: false,
+            message: ''
+          })
+        }
+      >
+        <Alert severity="success">{successMsg.message}</Alert>
+      </Snackbar>
       <Snackbar
         open={errorMsg.isOpen}
         autoHideDuration={6000}
