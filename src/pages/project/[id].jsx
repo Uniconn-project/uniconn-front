@@ -118,20 +118,6 @@ export default function Project(props) {
           value: 'Solicitação enviada!'
         })
         break
-
-      case 'add-discussion':
-        setSuccessMsg({
-          isOpen: true,
-          value: 'Discussão criada!'
-        })
-        break
-
-      case 'delete-discussion':
-        setSuccessMsg({
-          isOpen: true,
-          value: 'Discussão removida!'
-        })
-        break
     }
   }
 
@@ -168,11 +154,7 @@ export default function Project(props) {
               <Description project={project} refetchProject={refetchProject} />
             )}
             {page === 'discussions' && (
-              <Discussions
-                project={project}
-                refetchProject={refetchProject}
-                openDiscussion={openDiscussion}
-              />
+              <Discussions project={project} openDiscussion={openDiscussion} />
             )}
             {page === 'discussion' && (
               <Discussion discussion={openedDiscussion} />
