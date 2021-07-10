@@ -11,6 +11,7 @@ import { AuthContext } from '../contexts/Auth'
 import { MyProfileContext } from '../contexts/MyProfile'
 import { fetcher } from '../hooks/useFetch'
 import { NotificationsContext } from '../contexts/Notifications'
+import DiscussionsReplies from '../components/pages/notifications/DiscussionsReplies'
 
 export default function Notifications() {
   const { myProfile } = useContext(MyProfileContext)
@@ -19,6 +20,7 @@ export default function Notifications() {
 
   const [projectsInvitations, setProjectsInvitations] = useState(null)
   const [projectsEnteringRequests, setProjectsEnteringRequests] = useState(null)
+  const [discussionsReplies, setDiscussionsReplies] = useState(null)
   const [discussionsStars, setDiscussionsStars] = useState(null)
   const [successMsg, setSuccessMsg] = useState({ isOpen: false, message: '' })
   const [errorMsg, setErrorMsg] = useState({ isOpen: false, message: '' })
@@ -39,6 +41,7 @@ export default function Notifications() {
 
     setProjectsInvitations(notifications.projects_invitations)
     setProjectsEnteringRequests(notifications.projects_entering_requests)
+    setDiscussionsReplies(notifications.discussions_replies)
     setDiscussionsStars(notifications.discussions_stars)
   }
 
@@ -88,7 +91,7 @@ export default function Notifications() {
                 Notificações
               </div>
             </div>
-            {projectsInvitations === null && projectsEnteringRequests === null && (
+            {projectsInvitations === null && (
               <div className="w-full flex justify-center">
                 <CircularProgress size={30} />
               </div>
@@ -108,6 +111,9 @@ export default function Notifications() {
                 setSuccessMsg={setSuccessMsg}
                 setErrorMsg={setErrorMsg}
               />
+            )}
+            {discussionsReplies !== null && (
+              <DiscussionsReplies replies={discussionsReplies} />
             )}
             {discussionsStars !== null && (
               <DiscussionsStars stars={discussionsStars} />
