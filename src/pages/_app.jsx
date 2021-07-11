@@ -16,6 +16,7 @@ import '../styles/material-ui/list_item.scss'
 import '../styles/material-ui/loader.scss'
 import '../styles/material-ui/mobile_menu.scss'
 import '../styles/material-ui/popover.scss'
+import '../styles/material-ui/switch.scss'
 
 import React, { useEffect } from 'react'
 import Head from 'next/head'
@@ -23,6 +24,7 @@ import PropTypes from 'prop-types'
 import AuthProvider from '../contexts/Auth'
 import MyProfileProvider from '../contexts/MyProfile'
 import NotificationsProvider from '../contexts/Notifications'
+import ThemeProvider from '../contexts/Theme'
 
 export default function MyApp(props) {
   const { Component, pageProps } = props
@@ -46,7 +48,9 @@ export default function MyApp(props) {
       <AuthProvider>
         <MyProfileProvider>
           <NotificationsProvider>
-            <Component {...pageProps} />
+            <ThemeProvider>
+              <Component {...pageProps} />
+            </ThemeProvider>
           </NotificationsProvider>
         </MyProfileProvider>
       </AuthProvider>

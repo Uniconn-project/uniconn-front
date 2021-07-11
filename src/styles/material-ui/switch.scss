@@ -1,0 +1,16 @@
+.MuiSwitch-root {
+  .MuiSwitch-colorSecondary.Mui-checked + .MuiSwitch-track {
+    background-color: var(--primary-color) !important;
+    opacity: 1 !important;
+  }
+
+  .MuiSwitch-switchBase {
+    &:hover {
+      background-color: transparent !important;
+    }
+
+    .MuiIconButton-label {
+      color: var(--btn-text);
+    }
+  }
+}

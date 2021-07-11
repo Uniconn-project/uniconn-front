@@ -58,6 +58,15 @@ export default function Header({ page }) {
             Usuários
           </div>
         </Link>
+        <Link href="/settings">
+          <div
+            className={`p-3 ml-2 nav-link ${
+              page === 'settings' ? 'active' : ''
+            }`}
+          >
+            Configurações
+          </div>
+        </Link>
       </div>
       <div className="hidden sm:block sm:ml-auto">
         <DesktopMenu />
