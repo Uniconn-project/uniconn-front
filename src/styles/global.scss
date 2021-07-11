@@ -115,13 +115,14 @@ button.btn-primary-transparent {
   justify-content: center;
   align-items: center;
   background-color: none;
-  color: var(--btn-text);
+  color: var(--headline);
   padding: 6px 16px;
   border-radius: 15px;
   border: 2px solid var(--primary-color);
 
   &:hover {
     background-color: var(--primary-color);
+    color: var(--btn-text);
   }
 }
 

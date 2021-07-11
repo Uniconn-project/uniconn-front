@@ -12,15 +12,16 @@ import CreateDiscussionForm from './components/CreateDiscussionForm'
 import { renderTimestamp } from '../../../../../utils/utils'
 import { AuthContext } from '../../../../../contexts/Auth'
 import { MyProfileContext } from '../../../../../contexts/MyProfile'
+import { mutate } from 'swr'
 
-export default function Discussions({
-  project,
-  refetchProject,
-  openDiscussion
-}) {
+export default function Discussions({ project, openDiscussion }) {
   const { myProfile } = useContext(MyProfileContext)
   const { getToken } = useContext(AuthContext)
 
+  const [successMsg, setSuccessMsg] = useState({
+    isOpen: false,
+    message: ''
+  })
   const [errorMsg, setErrorMsg] = useState({
     isOpen: false,
     message: ''
@@ -54,7 +55,11 @@ export default function Discussions({
         .then(response => response.json())
         .then(data => {
           if (data === 'success') {
-            refetchProject('delete-discussion')
+            mutate(`projects/get-project-discussions/${project.id}`)
+            setSuccessMsg({
+              isOpen: true,
+              message: 'Discussão removida!'
+            })
           } else {
             setErrorMsg({
               isOpen: true,
@@ -78,7 +83,7 @@ export default function Discussions({
       {!isProjectMember && (
         <CreateDiscussionForm
           projectId={project.id}
-          refetchProject={refetchProject}
+          setSuccessMsg={setSuccessMsg}
           setErrorMsg={setErrorMsg}
         />
       )}
@@ -138,6 +143,18 @@ export default function Discussions({
           </li>
         ))}
       </ul>
+      <Snackbar
+        open={successMsg.isOpen}
+        autoHideDuration={6000}
+        onClose={() =>
+          setSuccessMsg({
+            isOpen: false,
+            message: ''
+          })
+        }
+      >
+        <Alert severity="success">{successMsg.message}</Alert>
+      </Snackbar>
       <Snackbar
         open={errorMsg.isOpen}
         autoHideDuration={6000}

@@ -171,7 +171,7 @@ export default function BaseForm({ children, parentPostData, type }) {
       <button className="btn-primary w-4/5" onClick={handleSubmit}>
         Criar conta
       </button>
-      <IconButton color="primary" onClick={() => window.history.back()}>
+      <IconButton onClick={() => window.history.back()}>
         <ArrowBackIcon />
       </IconButton>
     </>

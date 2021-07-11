@@ -9,10 +9,11 @@ import MenuItem from '@material-ui/core/MenuItem'
 import InputLabel from '@material-ui/core/InputLabel'
 import FormControl from '@material-ui/core/FormControl'
 import { AuthContext } from '../../../../../../contexts/Auth'
+import { mutate } from 'swr'
 
 export default function CreateDiscussionForm({
   projectId,
-  refetchProject,
+  setSuccessMsg,
   setErrorMsg
 }) {
   const { getToken } = useContext(AuthContext)
@@ -59,8 +60,12 @@ export default function CreateDiscussionForm({
       .then(response => response.json())
       .then(data => {
         if (data === 'success') {
+          mutate(`projects/get-project-discussions/${projectId}`)
           setIsOpen(false)
-          refetchProject('add-discussion')
+          setSuccessMsg({
+            isOpen: true,
+            message: 'Discussão criada!'
+          })
         } else {
           setIsOpen(false)
           setErrorMsg({
