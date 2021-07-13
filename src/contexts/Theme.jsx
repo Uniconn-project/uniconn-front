@@ -19,6 +19,7 @@ export default function ThemeProvider({ children }) {
       cssVariables.setProperty('--background-dark', '#16161a')
       cssVariables.setProperty('--background-light', '#242629')
       cssVariables.setProperty('--headline', '#fffffe')
+      cssVariables.setProperty('--paragraph', '#94a1b2')
       cssVariables.setProperty('--transparent', 'rgba(255, 255, 255, 0.02)')
       cssVariables.setProperty('--yellow', '#ffd803')
 
@@ -27,6 +28,7 @@ export default function ThemeProvider({ children }) {
       cssVariables.setProperty('--background-dark', 'white')
       cssVariables.setProperty('--background-light', '#efefef')
       cssVariables.setProperty('--headline', 'black')
+      cssVariables.setProperty('--paragraph', '#72757e')
       cssVariables.setProperty('--transparent', '#f9f9f9')
       cssVariables.setProperty('--yellow', '#a79012')
 

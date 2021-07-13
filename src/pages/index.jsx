@@ -23,7 +23,7 @@ export default function Index() {
         <Head>
           <title>Uniconn</title>
         </Head>
-        <div className="w-screen pt-20">
+        <div className="w-screen pt-20 landing-page">
           <div className="fixed top-0 z-30 w-full h-20 flex items-center px-4 bg-dark b-bottom-light">
             <div>
               <h2 className="text-3xl">Uniconn</h2>
@@ -53,7 +53,7 @@ export default function Index() {
               <source src="lp_intro.mp4" type="video/mp4" />
             </video>
             <div className="z-20 px-8 pt-8 pb-4 md:w-1/2 lg:px-24 lg:pt-24 lg:pb-8">
-              <h1>
+              <h1 className="">
                 Crie e participe de{' '}
                 <span style={{ color: 'var(--secondary-color)' }}>
                   projetos que vão fazer diferença
