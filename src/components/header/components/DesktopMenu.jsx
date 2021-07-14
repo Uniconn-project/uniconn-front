@@ -28,6 +28,7 @@ export default function DesktopMenu() {
           ref={anchorRef}
           src={myProfile.photo}
           className="profile-img-sm mr-2 cursor-pointer"
+          data-cy="header-profile-img"
           onClick={() => setIsOpen(!isOpen)}
         />
       )}

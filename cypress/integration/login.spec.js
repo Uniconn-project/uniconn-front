@@ -7,7 +7,6 @@ context('Login Page', () => {
 
   it('Asserting content was properly loaded', () => {
     cy.title().should('equal', 'Entrar | Uniconn')
-
     cy.get('h1').should('be.visible').should('contain', 'Entrar na Uniconn')
     cy.get('input[placeholder="Nome de usuário"]').should('be.visible')
     cy.get('input[placeholder="Senha"]').should('be.visible')
@@ -38,10 +37,14 @@ context('Login Page', () => {
   })
 
   it('Asserting successful login redirects to home page', () => {
-    cy.get('input[placeholder="Nome de usuário"]').type('uniconn')
-    cy.get('input[placeholder="Senha"]').type('uniconn@21')
+    cy.get('input[placeholder="Nome de usuário"]').type('john.doe')
+    cy.get('input[placeholder="Senha"]').type('dummy_password')
 
     cy.get('button').contains('Entrar').click()
     cy.title().should('equal', 'Home | Uniconn')
+
+    cy.get('[data-cy=header-profile-img]').click()
+    cy.get('[data-cy=logout]').click()
+    cy.on('window:confirm', () => true)
   })
 })
