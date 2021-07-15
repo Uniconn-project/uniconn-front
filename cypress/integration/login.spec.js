@@ -1,15 +1,26 @@
 /// <reference types="cypress" />
 
 context('Login Page', () => {
+  before(() => {
+    // making sure user isn't logged in
+    fetch(`${Cypress.env('api_url')}/token/logout/`, {
+      method: 'POST',
+      credentials: 'include'
+    })
+  })
+
   beforeEach(() => {
     cy.visit('/login')
   })
 
   it('Asserting content was properly loaded', () => {
     cy.title().should('equal', 'Entrar | Uniconn')
+
     cy.get('h1').should('be.visible').should('contain', 'Entrar na Uniconn')
+
     cy.get('input[placeholder="Nome de usuário"]').should('be.visible')
     cy.get('input[placeholder="Senha"]').should('be.visible')
+
     cy.get('button').should('be.visible').should('contain', 'Entrar')
     cy.get('a')
       .should('be.visible')
@@ -17,6 +28,7 @@ context('Login Page', () => {
   })
 
   it('Asserting error messages are properly displayed', () => {
+    // making sure user can't submit an empty form
     cy.get('button').contains('Entrar').click()
     cy.get('.MuiAlert-standardError')
       .should('be.visible')
@@ -37,14 +49,12 @@ context('Login Page', () => {
   })
 
   it('Asserting successful login redirects to home page', () => {
-    cy.get('input[placeholder="Nome de usuário"]').type('john.doe')
-    cy.get('input[placeholder="Senha"]').type('dummy_password')
+    cy.get('input[placeholder="Nome de usuário"]').type(
+      Cypress.env('test_user_username')
+    )
+    cy.get('input[placeholder="Senha"]').type(Cypress.env('test_user_password'))
 
     cy.get('button').contains('Entrar').click()
     cy.title().should('equal', 'Home | Uniconn')
-
-    cy.get('[data-cy=header-profile-img]').click()
-    cy.get('[data-cy=logout]').click()
-    cy.on('window:confirm', () => true)
   })
 })

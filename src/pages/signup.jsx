@@ -21,13 +21,19 @@ export default function Signup() {
         </div>
         <div className="flex">
           <Link href="/signup/mentor">
-            <button className="btn-primary w-44 m-2">
+            <button
+              className="btn-primary w-44 m-2"
+              data-cy="btn-signup-mentor"
+            >
               <AssignmentIcon className="mr-1" />
               Sou mentor
             </button>
           </Link>
           <Link href="/signup/student">
-            <button className="btn-primary w-44 m-2">
+            <button
+              className="btn-primary w-44 m-2"
+              data-cy="btn-signup-student"
+            >
               <SchoolIcon className="mr-1" />
               Sou aluno
             </button>

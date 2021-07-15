@@ -1,3 +1,9 @@
 {
-    "baseUrl": "http://localhost:3000"
+    "baseUrl": "http://localhost:3000",
+    "env": {
+        "api_url": "http://127.0.0.1:8000",
+        "test_user_username": "john.doe",
+        "test_user_email": "john.doe@uniconn.io",
+        "test_user_password": "dummy_password"
+    }
 }

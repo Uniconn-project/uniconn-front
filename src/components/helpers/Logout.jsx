@@ -20,7 +20,7 @@ export default function Logout({ children, className }) {
   }
 
   return (
-    <div className={className} data-cy="logout" onClick={handleLogout}>
+    <div className={className} onClick={handleLogout}>
       {children !== undefined ? children : 'Sair'}
     </div>
   )
