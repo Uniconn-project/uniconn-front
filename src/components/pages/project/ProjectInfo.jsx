@@ -2,6 +2,7 @@ import React, { useContext } from 'react'
 import SchoolIcon from '@material-ui/icons/School'
 import AssignmentIcon from '@material-ui/icons/Assignment'
 import EditProjectDataModal from './EditProjectDataModal'
+import StarIcon from '@material-ui/icons/Star'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import { MyProfileContext } from '../../../contexts/MyProfile'
 
@@ -17,15 +18,18 @@ export default function ProjectInfo({ project, setPage, refetchProject }) {
       className="relative bg-transparent h-4/5 rounded-md shadow-lg w-full md:max-w-2xl lg:w-60"
       style={{ maxHeight: '50rem' }}
     >
-      <div className="b-bottom-light pb-6">
+      <div className="b-bottom-light">
         <div className="w-full flex justify-center p-2">
           <img
             src={project.image}
             className="w-full h-52 rounded-md object-cover"
           />
         </div>
-        <div className="w-full pl-4 break-words">
+        <div className="w-full pl-4 pb-4 break-words">
           <h3 className="mt-2">{project.name}</h3>
+        </div>
+        <div className="w-full flex items-center pl-4 pb-2">
+          <StarIcon className="icon-xs" /> {project.stars.length}
         </div>
       </div>
       <div className="w-full pl-4 pr-2 py-6 b-bottom-light">

@@ -129,7 +129,7 @@ export default function Discussions({ project, openDiscussion }) {
                 )}
               </div>
             </div>
-            <div className="px-2 pb-2 b-bottom-light">
+            <div className="px-2 pb-2 b-bottom-transparent">
               <strong>{discussion.title}</strong>
             </div>
             <div className="p-2 flex items-center">

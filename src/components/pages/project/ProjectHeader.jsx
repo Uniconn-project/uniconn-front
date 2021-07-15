@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function ProjectHeader({ page, setPage }) {
+export default function ProjectHeader({ project, page, setPage }) {
   return (
     <div className="sticky top-24 w-full mb-4 z-10 sm:top-32">
       <div className="w-full bg-light h-14 rounded-md shadow-lg p-2 flex items-center">
@@ -21,7 +21,7 @@ export default function ProjectHeader({ page, setPage }) {
             }`}
             onClick={() => setPage('discussions')}
           >
-            Discussões
+            Discussões ({project.discussions_length})
           </div>
           <div
             className={`project-menu-item p-3 ml-2 nav-link cursor-pointer color-headline-hover ${
@@ -29,7 +29,7 @@ export default function ProjectHeader({ page, setPage }) {
             }`}
             onClick={() => setPage('links')}
           >
-            Links
+            Links ({project.links.filter(link => link.is_public).length})
           </div>
         </div>
       </div>

@@ -149,7 +149,7 @@ export default function Project(props) {
         </div>
         <div className="w-full flex justify-center p-2 pt-0 lg:p-0 lg:w-2/3 lg:justify-start lg:box-border">
           <div className="w-full" style={{ maxWidth: 600 }}>
-            <ProjectHeader page={page} setPage={setPage} />
+            <ProjectHeader project={project} page={page} setPage={setPage} />
             {page === 'description' && (
               <Description project={project} refetchProject={refetchProject} />
             )}

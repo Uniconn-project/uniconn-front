@@ -1,12 +1,14 @@
 import React from 'react'
-import Tooltip from '@material-ui/core/Tooltip'
 import Link from 'next/link'
+import Tooltip from '@material-ui/core/Tooltip'
+import StarIcon from '@material-ui/icons/Star'
+import CommentIcon from '@material-ui/icons/Comment'
 
 export default function ProjectListItem({ project }) {
   return (
     <Link href={`/project/${project.id}`}>
-      <div className="w-full mb-4 p-4 rounded-md shadow-lg cursor-pointer bg-transparent bg-hover">
-        <div className="flex justify-between">
+      <div className="w-full mb-4 rounded-md shadow-lg cursor-pointer bg-transparent bg-hover">
+        <div className="flex justify-between px-4 pt-4">
           <div style={{ maxWidth: '60%' }}>
             <h4 className="break-words">{project.name}</h4>
           </div>
@@ -27,16 +29,30 @@ export default function ProjectListItem({ project }) {
             ))}
           </div>
         </div>
-        <p className="max-h-20 whitespace-nowrap overflow-ellipsis overflow-hidden mb-2">
-          {project.slogan}
-        </p>
-        <p className={`mb-4 font-bold color-${project.category.value}`}>
-          {project.category.readable}
-        </p>
-        <img
-          src={project.image}
-          className="w-80 h-52 rounded-md object-cover"
-        />
+        <div className="b-bottom-transparent px-4 pb-4">
+          <p className="max-h-20 whitespace-nowrap overflow-ellipsis overflow-hidden mb-2">
+            {project.slogan}
+          </p>
+          <p className={`mb-4 font-bold color-${project.category.value}`}>
+            {project.category.readable}
+          </p>
+          <img
+            src={project.image}
+            className="w-80 h-52 rounded-md object-cover"
+          />
+        </div>
+        <div className="p-2 flex items-center">
+          <Tooltip title="Curtidas" placement="bottom" arrow>
+            <div className="mr-2">
+              <StarIcon className="icon-xs" /> {project.stars.length}
+            </div>
+          </Tooltip>
+          <Tooltip title="Discussões" placement="bottom" arrow>
+            <div>
+              <CommentIcon className="icon-xs" /> {project.discussions_length}
+            </div>
+          </Tooltip>
+        </div>
       </div>
     </Link>
   )
