@@ -52,6 +52,7 @@ export default function StudentBaseForm(props) {
         <InputLabel id="university-input-label">Universidade</InputLabel>
         <Select
           labelId="university-input-label"
+          data-cy="student-university-select"
           value={postData.university}
           onChange={handleChange('university')}
         >
@@ -66,6 +67,7 @@ export default function StudentBaseForm(props) {
         <InputLabel id="major-input-label">Curso</InputLabel>
         <Select
           labelId="major-input-label"
+          data-cy="student-major-select"
           value={postData.major}
           onChange={handleChange('major')}
         >

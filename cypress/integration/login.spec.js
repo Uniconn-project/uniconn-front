@@ -3,10 +3,7 @@
 context('Login Page', () => {
   before(() => {
     // making sure user isn't logged in
-    fetch(`${Cypress.env('api_url')}/token/logout/`, {
-      method: 'POST',
-      credentials: 'include'
-    })
+    cy.logout()
   })
 
   beforeEach(() => {
