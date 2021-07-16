@@ -144,13 +144,8 @@ export default function Index() {
             </div>
           </div>
           <div className="bg-linear flex flex-col items-center w-full pt-10 pb-20">
-            <h2>Uniconn</h2>
+            <h2>Gostou do que viu?</h2>
             <div className="flex">
-              <Link href="/login">
-                <button className="btn-primary-transparent m-2 text-xl">
-                  Entrar
-                </button>
-              </Link>
               <Link href="/signup">
                 <button className="btn-primary m-2 text-xl">Criar conta</button>
               </Link>

@@ -133,12 +133,17 @@ export default function Discussions({ project, openDiscussion }) {
               <strong>{discussion.title}</strong>
             </div>
             <div className="p-2 flex items-center">
-              <div className="mr-2">
-                <StarIcon className="icon-xs" /> {discussion.stars.length}
-              </div>
-              <div>
-                <CommentIcon className="icon-xs" /> {discussion.replies.length}
-              </div>
+              <Tooltip title="Curtidas" placement="bottom" arrow>
+                <div className="mr-2">
+                  <StarIcon className="icon-xs" /> {discussion.stars.length}
+                </div>
+              </Tooltip>
+              <Tooltip title="Respostas" placement="bottom" arrow>
+                <div>
+                  <CommentIcon className="icon-xs" />{' '}
+                  {discussion.replies.length}
+                </div>
+              </Tooltip>
             </div>
           </li>
         ))}

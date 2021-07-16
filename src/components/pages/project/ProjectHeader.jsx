@@ -21,7 +21,10 @@ export default function ProjectHeader({ project, page, setPage }) {
             }`}
             onClick={() => setPage('discussions')}
           >
-            Discussões ({project.discussions_length})
+            Discussões{' '}
+            <span className="hidden sm:inline">
+              ({project.discussions_length})
+            </span>
           </div>
           <div
             className={`project-menu-item p-3 ml-2 nav-link cursor-pointer color-headline-hover ${
@@ -29,7 +32,10 @@ export default function ProjectHeader({ project, page, setPage }) {
             }`}
             onClick={() => setPage('links')}
           >
-            Links ({project.links.filter(link => link.is_public).length})
+            Links{' '}
+            <span className="hidden sm:inline">
+              ({project.links.filter(link => link.is_public).length})
+            </span>
           </div>
         </div>
       </div>

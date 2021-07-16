@@ -1,4 +1,6 @@
 import React, { useContext } from 'react'
+import Link from 'next/link'
+import AddIcon from '@material-ui/icons/Add'
 import ProfileInfo from '../components/global/profile-info/ProfileInfo'
 import Page from '../components/Page'
 import CircularProgress from '@material-ui/core/CircularProgress'
@@ -34,6 +36,14 @@ export default function MyProfile() {
               <span>Meus projetos ({myProfile.projects.length})</span>
             </div>
             <div className="w-full px-2">
+              {myProfile.type === 'student' && (
+                <Link href="/create-project">
+                  <div className="w-full flex items-center cursor-pointer bg-transparent bg-hover rounded-md shadow-lg p-2 mb-4">
+                    <span>CRIAR PROJETO</span>
+                    <AddIcon className="ml-auto" />
+                  </div>
+                </Link>
+              )}
               <Projects projects={myProfile.projects} />
             </div>
           </div>
