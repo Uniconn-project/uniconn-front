@@ -29,7 +29,7 @@ export default function ThemeProvider({ children }) {
       cssVariables.setProperty('--background-light', '#efefef')
       cssVariables.setProperty('--headline', 'black')
       cssVariables.setProperty('--paragraph', '#72757e')
-      cssVariables.setProperty('--transparent', '#f9f9f9')
+      cssVariables.setProperty('--transparent', '#f6f6f6')
       cssVariables.setProperty('--yellow', '#a79012')
 
       window.localStorage.setItem('theme', 'light')

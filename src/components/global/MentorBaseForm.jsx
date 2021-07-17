@@ -36,7 +36,7 @@ export default function Mentor(props) {
   return (
     <FormControl className="w-4/5" style={{ marginBottom: '1rem' }}>
       <InputLabel id="mentor-markets-select-label">
-        Em quais mercados você atua?
+        Quais são suas expertises?
       </InputLabel>
       <Select
         data-cy="mentor-markets-select"

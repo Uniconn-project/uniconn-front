@@ -130,7 +130,7 @@ export default function ProjectsFilter({ projects, setRenderedProjects }) {
           </div>
           <div className="b-bottom-transparent p-2">
             <div className="flex items-center">
-              <h4 className="ml-1">Mercados</h4>
+              <h4 className="ml-1">Áreas de atuação</h4>
             </div>
             {markets ? (
               <ul className="max-h-36 overflow-y-auto">
