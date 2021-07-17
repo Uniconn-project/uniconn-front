@@ -24,6 +24,7 @@ context('Student Signup Page', () => {
     cy.get('input[placeholder="Confirmar senha"]').should('be.visible')
     cy.get('[data-cy="student-university-select"]').should('be.visible')
     cy.get('[data-cy="student-major-select"]').should('be.visible')
+    cy.get('[data-cy="student-skills-select"]').should('be.visible')
 
     cy.get('[data-cy="btn-submit-signup"')
       .should('be.visible')
@@ -44,7 +45,7 @@ context('Student Signup Page', () => {
 
     // testing passwords match error message
     fillForm()
-    selectUniversityAndMajor()
+    selectUniversityAndMajorAndSkills()
     cy.get('input[placeholder="Confirmar senha"]').type('dummy_passwordddddd')
     cy.get('[data-cy="btn-submit-signup"').click()
     cy.get('.MuiAlert-standardError')
@@ -74,7 +75,7 @@ context('Student Signup Page', () => {
 
   it('Asserting successful signup redirects to home page', () => {
     fillForm()
-    selectUniversityAndMajor()
+    selectUniversityAndMajorAndSkills()
     cy.get('[data-cy="btn-submit-signup"').click()
     cy.title().should('equal', 'Home | Uniconn')
   })
@@ -90,10 +91,15 @@ const fillForm = () => {
   cy.get('input[placeholder="Confirmar senha"]').clear().type('dummy_password')
 }
 
-const selectUniversityAndMajor = () => {
+const selectUniversityAndMajorAndSkills = () => {
   cy.get('[data-cy="student-university-select"]').click()
   cy.get('ul.MuiMenu-list li').first().click()
 
   cy.get('[data-cy="student-major-select"]').click()
   cy.get('ul.MuiMenu-list li').first().click()
+
+  cy.get('[data-cy="student-skills-select"]').click()
+  cy.get('ul.MuiMenu-list li').first().click()
+  cy.get('ul.MuiMenu-list li').last().click()
+  cy.get('body').click()
 }
