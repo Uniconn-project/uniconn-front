@@ -118,6 +118,13 @@ export default function Project(props) {
           value: 'Solicitação enviada!'
         })
         break
+
+      case 'leave-project':
+        setSuccessMsg({
+          isOpen: true,
+          value: 'Você saiu do projeto!'
+        })
+        break
     }
   }
 

@@ -70,7 +70,7 @@ export default function ReplyListItem({
           <div>{renderTimestamp(reply.created_at)}</div>
           {myProfile.id === reply.profile.id && (
             <div className="cursor-pointer ml-2" onClick={handleDelete}>
-              <DeleteIcon className="icon-sm color-secondary-hover" />
+              <DeleteIcon className="icon-sm color-red-hover" />
             </div>
           )}
         </div>

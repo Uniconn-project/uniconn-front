@@ -1,0 +1,18 @@
+{
+  "env": {
+    "browser": true,
+    "es2021": true,
+    "node": true
+  },
+  "extends": ["plugin:cypress/recommended", "standard"],
+  "parserOptions": {
+    "ecmaFeatures": {},
+    "ecmaVersion": 12,
+    "sourceType": "module"
+  },
+  "plugins": [],
+  "rules": {
+    "space-before-function-paren": "off",
+    "multiline-ternary": "off"
+  }
+}

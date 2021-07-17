@@ -92,7 +92,7 @@ export default function Links({ project, refetchProject }) {
                 className="cursor-pointer p-2"
                 onClick={() => handleDelete(link.id)}
               >
-                <DeleteIcon className="icon-sm color-secondary-hover" />
+                <DeleteIcon className="icon-sm color-red-hover" />
               </div>
             )}
           </div>
@@ -121,7 +121,7 @@ export default function Links({ project, refetchProject }) {
                   className="cursor-pointer p-2"
                   onClick={() => handleDelete(link.id)}
                 >
-                  <DeleteIcon className="icon-sm color-secondary-hover" />
+                  <DeleteIcon className="icon-sm color-red-hover" />
                 </div>
               </div>
             ))}

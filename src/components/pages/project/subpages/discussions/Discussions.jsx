@@ -124,7 +124,7 @@ export default function Discussions({ project, openDiscussion }) {
                     className="cursor-pointer p-2"
                     onClick={e => handleDelete(e, discussion.id)}
                   >
-                    <DeleteIcon className="icon-sm color-secondary-hover" />
+                    <DeleteIcon className="icon-sm color-red-hover" />
                   </div>
                 )}
               </div>

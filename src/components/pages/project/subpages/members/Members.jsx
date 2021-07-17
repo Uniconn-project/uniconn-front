@@ -10,6 +10,7 @@ import AskToJoinProjectModal from './components/AskToJoinProjectModal'
 import SettingsPopover from './components/SettingsPopover'
 import { MyProfileContext } from '../../../../../contexts/MyProfile'
 import { AuthContext } from '../../../../../contexts/Auth'
+import LeaveProject from './components/LeaveProject'
 
 export default function Members({ type, project, refetchProject }) {
   const { myProfile } = useContext(MyProfileContext)
@@ -103,7 +104,7 @@ export default function Members({ type, project, refetchProject }) {
                     className="filter brightness-50"
                   >
                     <CloseIcon
-                      className="icon-sm color-secondary-hover"
+                      className="icon-sm color-red-hover"
                       onClick={e =>
                         handleCancelProjectInvitation(e, profile.user.username)
                       }
@@ -128,12 +129,22 @@ export default function Members({ type, project, refetchProject }) {
           refetchProject={refetchProject}
         />
       )}
-      {!projectMembersId.includes(myProfile.id) && myProfile.type === type && (
-        <AskToJoinProjectModal
-          type={type}
-          project={project}
-          refetchProject={refetchProject}
-        />
+      {myProfile.type === type && (
+        <>
+          {projectMembersId.includes(myProfile.id) ? (
+            <LeaveProject
+              project={project}
+              refetchProject={refetchProject}
+              setErrorMsg={setErrorMsg}
+            />
+          ) : (
+            <AskToJoinProjectModal
+              type={type}
+              project={project}
+              refetchProject={refetchProject}
+            />
+          )}
+        </>
       )}
       <Snackbar
         open={errorMsg.isOpen}
