@@ -12,6 +12,7 @@ import Links from '../../components/pages/project/subpages/links/Links'
 import Members from '../../components/pages/project/subpages/members/Members'
 import useFetch, { fetcher } from '../../hooks/useFetch'
 import { mutate } from 'swr'
+import { useEffect } from 'react'
 
 export const getServerSideProps = async context => {
   const project = await fetcher(`projects/get-project/${context.params.id}`)

@@ -56,6 +56,7 @@ export default function Discussions({ project, openDiscussion }) {
         .then(data => {
           if (data === 'success') {
             mutate(`projects/get-project-discussions/${project.id}`)
+            mutate(`projects/get-project/${project.id}`)
             setSuccessMsg({
               isOpen: true,
               message: 'Discussão removida!'

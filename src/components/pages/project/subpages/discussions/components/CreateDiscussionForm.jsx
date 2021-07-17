@@ -61,6 +61,7 @@ export default function CreateDiscussionForm({
       .then(data => {
         if (data === 'success') {
           mutate(`projects/get-project-discussions/${projectId}`)
+          mutate(`projects/get-project/${projectId}`)
           setIsOpen(false)
           setSuccessMsg({
             isOpen: true,
