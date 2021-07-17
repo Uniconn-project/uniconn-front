@@ -8,7 +8,8 @@ import { AuthContext } from '../../contexts/Auth'
 export default function Student() {
   const [postData, setPostData] = useState({
     university: '',
-    major: ''
+    major: '',
+    skills: []
   })
 
   const router = useRouter()

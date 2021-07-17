@@ -1,14 +1,24 @@
-import React from 'react'
+import React, { useContext, useEffect } from 'react'
 import AssignmentIcon from '@material-ui/icons/Assignment'
 import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import LinkedInIcon from '@material-ui/icons/LinkedIn'
 import useFetch from '../../../../hooks/useFetch'
+import { MyProfileContext } from '../../../../contexts/MyProfile'
+import { mutate } from 'swr'
 
 export default function MentorInfo({ profile }) {
+  const { myProfile } = useContext(MyProfileContext)
+
   const { data: markets } = useFetch(
     `profiles/get-mentor-markets/${profile.user.username}`
   )
+
+  useEffect(() => {
+    if (myProfile.id !== profile.id) return
+
+    mutate(`profiles/get-mentor-markets/${myProfile.user.username}`)
+  }, [myProfile]) // eslint-disable-line
 
   if (!markets) {
     return <CircularProgress size={20} />

@@ -63,7 +63,6 @@ export default function BaseForm({ children, parentPostData, type }) {
             profilePostData.username.toLowerCase().replace(' ', ''),
             profilePostData.password
           ).then(() => {
-            console.log('logged in')
             Router.push('/home')
           })
         } else {
