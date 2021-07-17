@@ -6,7 +6,7 @@ export default function LeaveProject({ project, refetchProject, setErrorMsg }) {
   const { getToken } = useContext(AuthContext)
 
   const handleLeaveProject = async () => {
-    if (window.confirm('Sair do projeto?')) {
+    if (window.confirm('Tem certeza que deseja sair do projeto?')) {
       fetch(
         `${process.env.NEXT_PUBLIC_API_HOST}/api/projects/leave-project/${project.id}`,
         {
