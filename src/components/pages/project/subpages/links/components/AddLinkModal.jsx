@@ -1,5 +1,4 @@
 import React, { useState, useContext } from 'react'
-import LinkIcon from '@material-ui/icons/Link'
 import Modal from '@material-ui/core/Modal'
 import Backdrop from '@material-ui/core/Backdrop'
 import Fade from '@material-ui/core/Fade'
@@ -9,7 +8,7 @@ import TextField from '@material-ui/core/TextField'
 import Checkbox from '@material-ui/core/Checkbox'
 import { AuthContext } from '../../../../../../contexts/Auth'
 
-export default function AddLinkModal({ project, refetchProject }) {
+export default function AddLinkModal({ project, refetchProject, children }) {
   const postDataInitialState = {
     name: '',
     href: '',
@@ -62,11 +61,10 @@ export default function AddLinkModal({ project, refetchProject }) {
   return (
     <>
       <div
-        className="w-full flex items-center p-2 pl-4 cursor-pointer bg-transparent bg-hover rounded-md shadow-lg"
+        className="p-2 pl-4 mb-4 cursor-pointer bg-transparent bg-hover rounded-md shadow-lg"
         onClick={() => setIsOpen(true)}
       >
-        <LinkIcon className="color-primary mr-2" />
-        <strong className="color-primary">Adicionar link</strong>
+        {children}
       </div>
       <Modal
         className="flex justify-center items-center"

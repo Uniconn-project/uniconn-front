@@ -5,6 +5,9 @@ import LockIcon from '@material-ui/icons/Lock'
 import DeleteIcon from '@material-ui/icons/Delete'
 import Snackbar from '@material-ui/core/Snackbar'
 import Alert from '@material-ui/lab/Alert'
+import ListAltIcon from '@material-ui/icons/ListAlt'
+import CreateNewFolderIcon from '@material-ui/icons/CreateNewFolder'
+import LinkIcon from '@material-ui/icons/Link'
 import InfoModal from './components/InfoModal'
 import AddLinkModal from './components/AddLinkModal'
 import { MyProfileContext } from '../../../../../contexts/MyProfile'
@@ -126,7 +129,44 @@ export default function Links({ project, refetchProject }) {
               </div>
             ))}
           </div>
-          <AddLinkModal project={project} refetchProject={refetchProject} />
+          <AddLinkModal project={project} refetchProject={refetchProject}>
+            <div>
+              <div className="flex items-center w-full">
+                <ListAltIcon className="color-primary mr-2" />
+                <strong className="color-primary">
+                  Adicionar gerenciador de tarefas
+                </strong>
+              </div>
+              <span className="text-xs">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque
+                architecto quidem totam a facere, voluptates laborum nam
+                consequatur vero et officiis repellendus amet eius recusandae
+                dignissimos pariatur nobis cum! Asperiores.
+              </span>
+            </div>
+          </AddLinkModal>
+          <AddLinkModal project={project} refetchProject={refetchProject}>
+            <div>
+              <div className="flex items-center w-full">
+                <CreateNewFolderIcon className="color-primary mr-2" />
+                <strong className="color-primary">Adicionar nuvem</strong>
+              </div>
+              <span className="text-xs">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque
+                architecto quidem totam a facere, voluptates laborum nam
+                consequatur vero et officiis repellendus amet eius recusandae
+                dignissimos pariatur nobis cum! Asperiores.
+              </span>
+            </div>
+          </AddLinkModal>
+          <AddLinkModal project={project} refetchProject={refetchProject}>
+            <div>
+              <div className="flex items-center w-full">
+                <LinkIcon className="color-primary mr-2" />
+                <strong className="color-primary">Adicionar link</strong>
+              </div>
+            </div>
+          </AddLinkModal>
         </>
       )}
       <Snackbar
