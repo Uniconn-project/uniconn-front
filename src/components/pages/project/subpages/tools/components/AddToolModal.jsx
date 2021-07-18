@@ -7,7 +7,7 @@ import Alert from '@material-ui/lab/Alert'
 import TextField from '@material-ui/core/TextField'
 import { AuthContext } from '../../../../../../contexts/Auth'
 
-export default function AddLinkModal({ project, refetchProject, children }) {
+export default function AddToolModal({ project, refetchProject, children }) {
   const postDataInitialState = {
     name: '',
     href: ''
@@ -31,31 +31,7 @@ export default function AddLinkModal({ project, refetchProject, children }) {
     setIsOpen(false)
   }
 
-  const handleSubmit = async () => {
-    fetch(
-      `${process.env.NEXT_PUBLIC_API_HOST}/api/projects/create-link/${project.id}`,
-      {
-        method: 'POST',
-        headers: {
-          Authorization: 'JWT ' + (await getToken()),
-          'Content-type': 'application/json'
-        },
-        body: JSON.stringify(postData)
-      }
-    )
-      .then(response => response.json())
-      .then(data => {
-        setIsOpen(false)
-        if (data === 'success') {
-          refetchProject('add-link')
-        } else {
-          setErrorMsg({
-            isOpen: true,
-            message: data
-          })
-        }
-      })
-  }
+  const handleSubmit = async () => {}
 
   return (
     <>
@@ -78,7 +54,7 @@ export default function AddLinkModal({ project, refetchProject, children }) {
         <Fade in={isOpen}>
           <div className="bg-dark rounded-md shadow-lg">
             <div className="flex justify-center items-center p-2 b-bottom-transparent">
-              <h5>Adicionar Link</h5>
+              <h5>Adicionar Ferramenta</h5>
             </div>
             <div className="p-4 pt-0 b-bottom-transparent">
               <TextField

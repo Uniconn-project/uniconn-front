@@ -1,11 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react'
-import Page from '../../components/Page'
+import Router from 'next/router'
 import CircularProgress from '@material-ui/core/CircularProgress'
+import Page from '../../components/Page'
 import ProfileInfo from '../../components/global/profile-info/ProfileInfo'
+import Projects from '../../components/global/Projects'
 import { fetcher } from '../../hooks/useFetch'
 import { MyProfileContext } from '../../contexts/MyProfile'
-import Router from 'next/router'
-import Projects from '../../components/global/Projects'
 
 export const getServerSideProps = async context => {
   const profile = await fetcher(`profiles/get-profile/${context.params.slug}`)

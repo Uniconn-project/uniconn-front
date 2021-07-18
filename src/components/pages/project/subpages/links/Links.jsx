@@ -122,46 +122,14 @@ export default function Links({ project, refetchProject }) {
         ))}
       </div>
       {isProjectMember && (
-        <>
-          <AddLinkModal project={project} refetchProject={refetchProject}>
-            <div>
-              <div className="flex items-center w-full">
-                <ListAltIcon className="color-primary mr-2" />
-                <strong className="color-primary">
-                  Adicionar gerenciador de tarefas
-                </strong>
-              </div>
-              <span className="text-xs">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque
-                architecto quidem totam a facere, voluptates laborum nam
-                consequatur vero et officiis repellendus amet eius recusandae
-                dignissimos pariatur nobis cum! Asperiores.
-              </span>
+        <AddLinkModal project={project} refetchProject={refetchProject}>
+          <div>
+            <div className="flex items-center w-full">
+              <LinkIcon className="color-primary mr-2" />
+              <strong className="color-primary">Adicionar link</strong>
             </div>
-          </AddLinkModal>
-          <AddLinkModal project={project} refetchProject={refetchProject}>
-            <div>
-              <div className="flex items-center w-full">
-                <CreateNewFolderIcon className="color-primary mr-2" />
-                <strong className="color-primary">Adicionar nuvem</strong>
-              </div>
-              <span className="text-xs">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque
-                architecto quidem totam a facere, voluptates laborum nam
-                consequatur vero et officiis repellendus amet eius recusandae
-                dignissimos pariatur nobis cum! Asperiores.
-              </span>
-            </div>
-          </AddLinkModal>
-          <AddLinkModal project={project} refetchProject={refetchProject}>
-            <div>
-              <div className="flex items-center w-full">
-                <LinkIcon className="color-primary mr-2" />
-                <strong className="color-primary">Adicionar link</strong>
-              </div>
-            </div>
-          </AddLinkModal>
-        </>
+          </div>
+        </AddLinkModal>
       )}
       <Snackbar
         open={errorMsg.isOpen}

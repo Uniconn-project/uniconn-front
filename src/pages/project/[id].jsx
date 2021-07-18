@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import Snackbar from '@material-ui/core/Snackbar'
 import Alert from '@material-ui/lab/Alert'
@@ -9,10 +9,11 @@ import Description from '../../components/pages/project/subpages/description/Des
 import Discussions from '../../components/pages/project/subpages/discussions/Discussions'
 import Discussion from '../../components/pages/project/subpages/discussion/Discussion'
 import Links from '../../components/pages/project/subpages/links/Links'
+import Tools from '../../components/pages/project/subpages/tools/Tools'
 import Members from '../../components/pages/project/subpages/members/Members'
 import useFetch, { fetcher } from '../../hooks/useFetch'
 import { mutate } from 'swr'
-import { useEffect } from 'react'
+import { MyProfileContext } from '../../contexts/MyProfile'
 
 export const getServerSideProps = async context => {
   const project = await fetcher(`projects/get-project/${context.params.id}`)
@@ -31,6 +32,8 @@ export const getServerSideProps = async context => {
 }
 
 export default function Project(props) {
+  const { myProfile } = useContext(MyProfileContext)
+
   const [openedDiscussion, setOpenedDiscussion] = useState(null)
   const [page, setPage] = useState('description')
   const [successMsg, setSuccessMsg] = useState({
@@ -45,7 +48,7 @@ export default function Project(props) {
     }
   )
 
-  if (!project) {
+  if (!project || !myProfile) {
     return (
       <Page loginRequired header>
         <div className="w-full flex justify-center mt-10">
@@ -54,6 +57,11 @@ export default function Project(props) {
       </Page>
     )
   }
+
+  const isProjectMember = project.students
+    .concat(project.mentors)
+    .map(profile => profile.id)
+    .includes(myProfile.id)
 
   const openDiscussion = discussion => {
     setPage('discussion')
@@ -169,6 +177,9 @@ export default function Project(props) {
             )}
             {page === 'links' && (
               <Links project={project} refetchProject={refetchProject} />
+            )}
+            {isProjectMember && page === 'tools' && (
+              <Tools project={project} refetchProject={refetchProject} />
             )}
             {page === 'students' && (
               <Members
