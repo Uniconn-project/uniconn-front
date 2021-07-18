@@ -47,6 +47,7 @@ export default function AddLinkModal({ project, refetchProject, children }) {
     )
       .then(response => response.json())
       .then(data => {
+        setIsOpen(false)
         if (data === 'success') {
           refetchProject('add-link')
         } else {
@@ -96,16 +97,6 @@ export default function AddLinkModal({ project, refetchProject, children }) {
                 inputProps={{ maxLength: 1000 }}
                 onChange={handleChange('href')}
               />
-              <div className="flex items-center mt-2">
-                Público
-                <Checkbox
-                  checked={postData.is_public}
-                  className="p-0 ml-2"
-                  onChange={() =>
-                    setPostData({ ...postData, is_public: !postData.is_public })
-                  }
-                />
-              </div>
             </div>
             <div className="flex justify-end items-center p-2">
               <button className="btn-primary" onClick={handleSubmit}>

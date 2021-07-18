@@ -33,9 +33,7 @@ export default function ProjectHeader({ project, page, setPage }) {
             onClick={() => setPage('links')}
           >
             Links{' '}
-            <span className="hidden sm:inline">
-              ({project.links.filter(link => link.is_public).length})
-            </span>
+            <span className="hidden sm:inline">({project.links.length})</span>
           </div>
         </div>
       </div>
