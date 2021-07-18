@@ -44,7 +44,7 @@ export default function StudentBaseForm(props) {
     setPostData({ ...postData, [key]: e.target.value })
   }
 
-  if (!universities || !majors) {
+  if (!universities || !majors || !skills) {
     return <CircularProgress />
   }
 
