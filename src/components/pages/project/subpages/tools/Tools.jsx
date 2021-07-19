@@ -4,13 +4,14 @@ import DeleteIcon from '@material-ui/icons/Delete'
 import Snackbar from '@material-ui/core/Snackbar'
 import Alert from '@material-ui/lab/Alert'
 import ListAltIcon from '@material-ui/icons/ListAlt'
-import CreateNewFolderIcon from '@material-ui/icons/CreateNewFolder'
+import CodeIcon from '@material-ui/icons/Code'
+import FolderIcon from '@material-ui/icons/Folder'
 import ToolsHeader from './components/ToolsHeader'
 import AddToolModal from './components/AddToolModal'
 import { MyProfileContext } from '../../../../../contexts/MyProfile'
 import { AuthContext } from '../../../../../contexts/Auth'
 
-export default function Links({ project, refetchProject }) {
+export default function Tools({ project, refetchProject }) {
   const { myProfile } = useContext(MyProfileContext)
   const { getToken } = useContext(AuthContext)
 
@@ -30,36 +31,53 @@ export default function Links({ project, refetchProject }) {
   return (
     <div className="p-2">
       <ToolsHeader />
-      <AddToolModal project={project} refetchProject={refetchProject}>
-        <div>
-          <div className="flex items-center w-full">
-            <ListAltIcon className="color-primary mr-2" />
-            <strong className="color-primary">
-              Adicionar gerenciador de tarefas
-            </strong>
-          </div>
-          <span className="text-xs">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque
-            architecto quidem totam a facere, voluptates laborum nam consequatur
-            vero et officiis repellendus amet eius recusandae dignissimos
-            pariatur nobis cum! Asperiores.
-          </span>
+      <div className="p-2 pl-4 mb-2 cursor-default bg-transparent rounded-md shadow-lg">
+        <div className="flex items-center w-full">
+          <ListAltIcon className="color-primary mr-2" />
+          <strong className="color-primary">Gerenciadores de tarefas</strong>
         </div>
-      </AddToolModal>
-      <AddToolModal project={project} refetchProject={refetchProject}>
-        <div>
-          <div className="flex items-center w-full">
-            <CreateNewFolderIcon className="color-primary mr-2" />
-            <strong className="color-primary">Adicionar nuvem</strong>
-          </div>
-          <span className="text-xs">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque
-            architecto quidem totam a facere, voluptates laborum nam consequatur
-            vero et officiis repellendus amet eius recusandae dignissimos
-            pariatur nobis cum! Asperiores.
-          </span>
+        <span className="text-xs">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque
+          architecto quidem totam a facere, voluptates laborum nam consequatur
+          vero et officiis repellendus amet eius recusandae dignissimos pariatur
+          nobis cum! Asperiores.
+        </span>
+      </div>
+      <div className="pl-4">
+        <AddToolModal project={project} refetchProject={refetchProject} />
+      </div>
+      <div className="p-2 pl-4 mb-2 cursor-default bg-transparent rounded-md shadow-lg">
+        <div className="flex items-center w-full">
+          <CodeIcon className="color-primary mr-2" />
+          <strong className="color-primary">
+            Ferramentas de desenvolvimento
+          </strong>
         </div>
-      </AddToolModal>
+        <span className="text-xs">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque
+          architecto quidem totam a facere, voluptates laborum nam consequatur
+          vero et officiis repellendus amet eius recusandae dignissimos pariatur
+          nobis cum! Asperiores.
+        </span>
+      </div>
+      <div className="pl-4">
+        <AddToolModal project={project} refetchProject={refetchProject} />
+      </div>
+      <div className="p-2 pl-4 mb-2 cursor-default bg-transparent rounded-md shadow-lg">
+        <div className="flex items-center w-full">
+          <FolderIcon className="color-primary mr-2" />
+          <strong className="color-primary">Documentos em nuvem</strong>
+        </div>
+        <span className="text-xs">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque
+          architecto quidem totam a facere, voluptates laborum nam consequatur
+          vero et officiis repellendus amet eius recusandae dignissimos pariatur
+          nobis cum! Asperiores.
+        </span>
+      </div>
+      <div className="pl-4">
+        <AddToolModal project={project} refetchProject={refetchProject} />
+      </div>
       <Snackbar
         open={errorMsg.isOpen}
         autoHideDuration={6000}
