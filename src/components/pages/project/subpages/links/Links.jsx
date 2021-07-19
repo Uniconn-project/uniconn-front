@@ -3,8 +3,6 @@ import CircularProgress from '@material-ui/core/CircularProgress'
 import DeleteIcon from '@material-ui/icons/Delete'
 import Snackbar from '@material-ui/core/Snackbar'
 import Alert from '@material-ui/lab/Alert'
-import ListAltIcon from '@material-ui/icons/ListAlt'
-import CreateNewFolderIcon from '@material-ui/icons/CreateNewFolder'
 import LinkIcon from '@material-ui/icons/Link'
 import RedditIcon from '@material-ui/icons/Reddit'
 import FacebookIcon from '@material-ui/icons/Facebook'
@@ -22,16 +20,16 @@ import { MyProfileContext } from '../../../../../contexts/MyProfile'
 import { AuthContext } from '../../../../../contexts/Auth'
 
 const linkIconsPairs = [
-  ['reddit.', <RedditIcon className="icon-sm mr-2" />],
-  ['facebook.', <FacebookIcon className="icon-sm mr-2" />],
-  ['instagram.', <InstagramIcon className="icon-sm mr-2" />],
-  ['linkedin.', <LinkedInIcon className="icon-sm mr-2" />],
-  ['whatsapp.', <WhatsAppIcon className="icon-sm mr-2" />],
-  ['telegram.', <TelegramIcon className="icon-sm mr-2" />],
-  ['youtube.', <YouTubeIcon className="icon-sm mr-2" />],
-  ['github.', <GitHubIcon className="icon-sm mr-2" />],
-  ['pinterest.', <PinterestIcon className="icon-sm mr-2" />],
-  ['drive.', <FolderIcon className="icon-sm mr-2" />]
+  ['reddit.', <RedditIcon key={0} className="icon-sm mr-2" />],
+  ['facebook.', <FacebookIcon key={1} className="icon-sm mr-2" />],
+  ['instagram.', <InstagramIcon key={2} className="icon-sm mr-2" />],
+  ['linkedin.', <LinkedInIcon key={3} className="icon-sm mr-2" />],
+  ['whatsapp.', <WhatsAppIcon key={4} className="icon-sm mr-2" />],
+  ['telegram.', <TelegramIcon key={5} className="icon-sm mr-2" />],
+  ['youtube.', <YouTubeIcon key={6} className="icon-sm mr-2" />],
+  ['github.', <GitHubIcon key={7} className="icon-sm mr-2" />],
+  ['pinterest.', <PinterestIcon key={8} className="icon-sm mr-2" />],
+  ['drive.', <FolderIcon key={9} className="icon-sm mr-2" />]
 ]
 
 export default function Links({ project, refetchProject }) {
@@ -57,7 +55,7 @@ export default function Links({ project, refetchProject }) {
     .includes(myProfile.id)
 
   const getLinkIcon = href => {
-    for (let pair of linkIconsPairs) {
+    for (const pair of linkIconsPairs) {
       if (href.includes(pair[0])) return pair[1]
     }
     return <LinkIcon className="icon-sm mr-2" />
