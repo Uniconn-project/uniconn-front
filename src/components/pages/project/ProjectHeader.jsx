@@ -56,7 +56,13 @@ export default function ProjectHeader({ project, page, setPage }) {
               onClick={() => setPage('tools')}
             >
               Ferramentas{' '}
-              <span className="hidden sm:inline">({project.tools.length})</span>
+              <span className="hidden sm:inline">
+                (
+                {project.tools_categories
+                  .map(category => category.tools.length)
+                  .reduce((prev, curr) => prev + curr, 0)}
+                )
+              </span>
             </div>
           )}
         </div>
