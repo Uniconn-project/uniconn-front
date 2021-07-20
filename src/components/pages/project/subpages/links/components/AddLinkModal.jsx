@@ -48,6 +48,7 @@ export default function AddLinkModal({ project, refetchProject, children }) {
         setIsOpen(false)
         if (data === 'success') {
           refetchProject('add-link')
+          setPostData(postDataInitialState)
         } else {
           setErrorMsg({
             isOpen: true,

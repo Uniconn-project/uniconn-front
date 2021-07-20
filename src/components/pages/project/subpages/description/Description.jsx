@@ -35,7 +35,7 @@ export default function Description({ project, refetchProject }) {
     )
       .then(response => response.json())
       .then(data => {
-        if (data === 'Project description edited with success!') {
+        if (data === 'success') {
           refetchProject('edit-description')
         } else {
           alert(`Ocorreu um erro: ${data}`)
@@ -59,8 +59,8 @@ export default function Description({ project, refetchProject }) {
             .map(profile => profile.id)
             .includes(myProfile.id)}
           editorState={editorState}
-          setEditorState={setEditorState}
           isEditing={isEditing}
+          setEditorState={setEditorState}
           setIsEditing={setIsEditing}
           handleSubmit={handleSubmit}
         />

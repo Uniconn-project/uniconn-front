@@ -5,6 +5,7 @@ import Fade from '@material-ui/core/Fade'
 import Snackbar from '@material-ui/core/Snackbar'
 import Alert from '@material-ui/lab/Alert'
 import TextField from '@material-ui/core/TextField'
+import AddIcon from '@material-ui/icons/Add'
 import { AuthContext } from '../../../../../../contexts/Auth'
 
 export default function AddToolModal({ project, refetchProject, children }) {
@@ -39,7 +40,7 @@ export default function AddToolModal({ project, refetchProject, children }) {
         className="p-2 pl-4 mb-4 cursor-pointer bg-transparent bg-hover rounded-md shadow-lg"
         onClick={() => setIsOpen(true)}
       >
-        {children}
+        <AddIcon className="icon-sm" /> Adicionar ferramenta
       </div>
       <Modal
         className="flex justify-center items-center"
