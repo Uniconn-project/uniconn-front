@@ -5,6 +5,7 @@ import Router from 'next/router'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import PersonOutlineIcon from '@material-ui/icons/PersonOutline'
 import { AuthContext } from '../contexts/Auth'
+import Wave from '../components/pages/landing-page/Wave'
 
 export default function Index() {
   const { loading, isAuthenticated } = useContext(AuthContext)
@@ -44,7 +45,7 @@ export default function Index() {
           </div>
           <div className="flex flex-col bg-linear">
             <video
-              className="w-full absolute z-10 hidden object-cover md:block"
+              className="shadow-lg w-full absolute z-10 hidden object-cover md:block"
               autoPlay
               muted
               loop
@@ -52,7 +53,7 @@ export default function Index() {
             >
               <source src="lp_intro.mp4" type="video/mp4" />
             </video>
-            <div className="z-20 px-8 pt-8 pb-4 md:w-1/2 lg:px-24 lg:pt-24 lg:pb-8">
+            <div className="z-20 px-8 pt-8 pb-4 md:w-1/2 lg:px-24 lg:pt-32 lg:pb-8">
               <h1 className="">
                 Crie e participe de{' '}
                 <span style={{ color: 'var(--secondary-color)' }}>
@@ -86,18 +87,8 @@ export default function Index() {
             </div>
           </div>
           <div className="w-full relative">
-            <div className="wave">
-              <svg
-                data-name="Layer 1"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 1200 120"
-                preserveAspectRatio="none"
-              >
-                <path
-                  d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z"
-                  fill="var(--background-light)"
-                ></path>
-              </svg>
+            <div className="wave bg-light">
+              <Wave colors={['var(--background-dark)']} />
             </div>
           </div>
           <div className="bg-dark flex px-8 pt-20 pb-4 md:px-24 md:pt-24 md:pb-20">
@@ -115,18 +106,8 @@ export default function Index() {
             </div>
           </div>
           <div className="w-full relative">
-            <div className="wave">
-              <svg
-                data-name="Layer 1"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 1200 120"
-                preserveAspectRatio="none"
-              >
-                <path
-                  d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z"
-                  fill="var(--background-dark)"
-                ></path>
-              </svg>
+            <div className="wave bg-dark">
+              <Wave colors={['var(--background-light)']} />
             </div>
           </div>
           <div className="bg-light flex justify-end px-8 pt-20 pb-4 md:px-24 md:pt-24 md:pb-20">
@@ -143,7 +124,7 @@ export default function Index() {
               </p>
             </div>
           </div>
-          <div className="bg-linear flex flex-col items-center w-full pt-10 pb-20">
+          <div className="flex flex-col items-center w-full pt-10 pb-20">
             <h2>Gostou do que viu?</h2>
             <div className="flex">
               <Link href="/signup">
