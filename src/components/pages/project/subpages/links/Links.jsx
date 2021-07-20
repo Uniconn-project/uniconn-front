@@ -70,8 +70,7 @@ export default function Links({ project, refetchProject }) {
           'Content-type': 'application/json'
         },
         body: JSON.stringify({
-          link_id: linkId,
-          project_id: project.id
+          link_id: linkId
         })
       })
         .then(response => response.json())
