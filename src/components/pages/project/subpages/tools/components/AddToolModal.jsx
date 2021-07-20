@@ -8,8 +8,13 @@ import TextField from '@material-ui/core/TextField'
 import AddIcon from '@material-ui/icons/Add'
 import { AuthContext } from '../../../../../../contexts/Auth'
 
-export default function AddToolModal({ project, refetchProject, children }) {
+export default function AddToolModal({
+  categoryName,
+  project,
+  refetchProject
+}) {
   const postDataInitialState = {
+    category: categoryName,
     name: '',
     href: ''
   }
@@ -32,7 +37,32 @@ export default function AddToolModal({ project, refetchProject, children }) {
     setIsOpen(false)
   }
 
-  const handleSubmit = async () => {}
+  const handleSubmit = async () => {
+    fetch(
+      `${process.env.NEXT_PUBLIC_API_HOST}/api/projects/create-tool/${project.id}`,
+      {
+        method: 'POST',
+        headers: {
+          Authorization: 'JWT ' + (await getToken()),
+          'Content-type': 'application/json'
+        },
+        body: JSON.stringify(postData)
+      }
+    )
+      .then(response => response.json())
+      .then(data => {
+        setIsOpen(false)
+        if (data === 'success') {
+          refetchProject('add-tool')
+          setPostData(postDataInitialState)
+        } else {
+          setErrorMsg({
+            isOpen: true,
+            message: data
+          })
+        }
+      })
+  }
 
   return (
     <>

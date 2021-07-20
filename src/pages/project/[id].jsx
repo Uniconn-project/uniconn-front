@@ -114,6 +114,20 @@ export default function Project(props) {
         })
         break
 
+      case 'add-tool':
+        setSuccessMsg({
+          isOpen: true,
+          value: 'Ferramenta adicionada!'
+        })
+        break
+
+      case 'delete-tool':
+        setSuccessMsg({
+          isOpen: true,
+          value: 'Ferramenta removida!'
+        })
+        break
+
       case 'remove-user':
         setSuccessMsg({
           isOpen: true,
