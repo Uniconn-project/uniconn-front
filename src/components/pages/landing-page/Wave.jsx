@@ -53,8 +53,9 @@ export default function Wave(props) {
   const wave = (color, id) => {
     return (
       <path
-        class="wave"
+        className="wave"
         id={`a${id}`}
+        key={id}
         d="M10,10 L50,100 L90,50"
         fill={color}
       ></path>

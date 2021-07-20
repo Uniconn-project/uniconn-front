@@ -124,7 +124,7 @@ export default function Index() {
               </p>
             </div>
           </div>
-          <div className="flex flex-col items-center w-full pt-10 pb-20">
+          <div className="flex flex-col items-center w-full pt-10 pb-20 bg-light">
             <h2>Gostou do que viu?</h2>
             <div className="flex">
               <Link href="/signup">
