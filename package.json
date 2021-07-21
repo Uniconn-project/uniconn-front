@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start -p 1234",
-    "cypress:open": "cypress open"
+    "cy:open": "cypress open",
+    "cy:run": "cypress run",
+    "test": "start-server-and-test start http://localhost:1234 cy:run"
   },
   "dependencies": {
     "@draft-js-plugins/editor": "^4.1.0",
@@ -39,6 +41,7 @@
     "eslint-plugin-react-hooks": "^4.2.0",
     "postcss": "^8.2.10",
     "prettier": "^2.2.1",
+    "start-server-and-test": "^1.12.6",
     "tailwindcss": "^2.1.1"
   }
 }
