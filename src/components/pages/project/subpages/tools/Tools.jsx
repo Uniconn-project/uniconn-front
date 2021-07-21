@@ -2,8 +2,8 @@ import React, { useState } from 'react'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import Snackbar from '@material-ui/core/Snackbar'
 import Alert from '@material-ui/lab/Alert'
-import ToolsHeader from './components/ToolsHeader'
 import ToolCategory from './components/tool-category/ToolCategory'
+import DescriptiveHeader from '../../../../global/DescriptiveHeader'
 
 export default function Tools({ project, refetchProject }) {
   const [errorMsg, setErrorMsg] = useState({
@@ -21,7 +21,12 @@ export default function Tools({ project, refetchProject }) {
 
   return (
     <div className="p-2">
-      <ToolsHeader />
+      <DescriptiveHeader
+        title="Ferramentas do projeto"
+        description="Ferramentas são uma ótima forma dos membros de um projeto
+        compartilharem informações entre si que estão guardadas em outras
+        plataformas."
+      />
       {project.tools_categories.map(category => (
         <ToolCategory
           key={category.id}

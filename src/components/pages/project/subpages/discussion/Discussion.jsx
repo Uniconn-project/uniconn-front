@@ -138,7 +138,7 @@ export default function Discussion(props) {
           <div className="p-2">
             <h3>{discussion.title}</h3>
           </div>
-          <div className="p-2">
+          <div className="p-2 break-words">
             <p>{discussion.body}</p>
           </div>
         </div>

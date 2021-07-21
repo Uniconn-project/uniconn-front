@@ -4,11 +4,11 @@ import DeleteIcon from '@material-ui/icons/Delete'
 import Snackbar from '@material-ui/core/Snackbar'
 import Alert from '@material-ui/lab/Alert'
 import LinkIcon from '@material-ui/icons/Link'
-import LinksHeader from './components/LinksHeader'
 import AddLinkModal from './components/AddLinkModal'
 import LinkIconResolver from '../../../../global/LinkIconResolver'
 import { MyProfileContext } from '../../../../../contexts/MyProfile'
 import { AuthContext } from '../../../../../contexts/Auth'
+import DescriptiveHeader from '../../../../global/DescriptiveHeader'
 
 export default function Links({ project, refetchProject }) {
   const { myProfile } = useContext(MyProfileContext)
@@ -60,7 +60,12 @@ export default function Links({ project, refetchProject }) {
 
   return (
     <div className="p-2">
-      <LinksHeader />
+      <DescriptiveHeader
+        title="Links do projeto"
+        description="Links são uma ótima forma dos membros de um projeto compartilharem
+              informações para o público que estão guardadas em outras
+              plataformas."
+      />
       <div>
         {project.links.map(link => (
           <div

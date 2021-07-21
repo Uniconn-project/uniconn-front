@@ -4,6 +4,7 @@ import CircularProgress from '@material-ui/core/CircularProgress'
 import RichTextEditor from './components/RichTextEditor'
 import { MyProfileContext } from '../../../../../contexts/MyProfile'
 import { AuthContext } from '../../../../../contexts/Auth'
+import DescriptiveHeader from '../../../../global/DescriptiveHeader'
 
 export default function Description({ project, refetchProject }) {
   const { myProfile } = useContext(MyProfileContext)
@@ -53,6 +54,15 @@ export default function Description({ project, refetchProject }) {
 
   return (
     <div className="p-2">
+      <DescriptiveHeader
+        title="Descrição do projeto"
+        description="Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+        Integer nec nisi lobortis, viverra quam eu, ultricies leo.
+        Proin a dictum ipsum. Pellentesque nec nulla in est porta maximus.
+        Aenean pellentesque tortor non lorem vestibulum luctus.
+        Sed ornare eros ac ante tempor aliquet.
+        Maecenas blandit, massa a feugiat sollicitudin, neque leo posuere odio, vel pharetra magna eros nec lectus. Quisque blandit imperdiet egestas."
+      />
       <div className="w-full bg-transparent rounded-md shadow-lg">
         <RichTextEditor
           canEdit={project.students
