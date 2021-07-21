@@ -72,7 +72,10 @@ export default function Index() {
               </Link>
             </div>
           </div>
-          <div className="bg-light flex justify-end px-8 pt-12 pb-4 md:px-24 md:pt-32 md:pb-20">
+          <div
+            className="bg-light flex justify-end px-8 pt-12 pb-4 md:px-24 md:pt-32 md:pb-20"
+            style={{ minHeight: '40vh' }}
+          >
             <div className="md:w-1/2">
               <h2>
                 <span style={{ color: 'var(--secondary-color)' }}>1.</span> Crie
@@ -86,12 +89,10 @@ export default function Index() {
               </p>
             </div>
           </div>
-          <div className="w-full relative">
-            <div className="wave bg-light">
-              <Wave colors={['var(--background-dark)']} />
-            </div>
-          </div>
-          <div className="bg-dark flex px-8 pt-20 pb-4 md:px-24 md:pt-24 md:pb-20">
+          <div
+            className="bg-dark flex px-8 pt-20 pb-4 shadow-lg md:px-24 md:pt-24 md:pb-20"
+            style={{ minHeight: '40vh' }}
+          >
             <div className="md:w-1/2">
               <h2>
                 <span style={{ color: 'var(--secondary-color)' }}>2.</span>{' '}
@@ -105,12 +106,10 @@ export default function Index() {
               </p>
             </div>
           </div>
-          <div className="w-full relative">
-            <div className="wave bg-dark">
-              <Wave colors={['var(--background-light)']} />
-            </div>
-          </div>
-          <div className="bg-light flex justify-end px-8 pt-20 pb-4 md:px-24 md:pt-24 md:pb-20">
+          <div
+            className="bg-light flex justify-end px-8 pt-20 pb-4 md:px-24 md:pt-24 md:pb-20"
+            style={{ minHeight: '20vh' }}
+          >
             <div className="md:w-1/2">
               <h2>
                 <span style={{ color: 'var(--secondary-color)' }}>3.</span>{' '}
@@ -124,7 +123,19 @@ export default function Index() {
               </p>
             </div>
           </div>
-          <div className="flex flex-col items-center w-full pt-10 pb-20 bg-light">
+          <div className="w-full relative">
+            <div className="wave bg-light">
+              <Wave
+                colors={[
+                  'rgba(255, 255, 255, 0.4)',
+                  'rgba(255, 255, 255, 0.4)',
+                  'rgba(255, 255, 255, 0.4)',
+                  'var(--background-dark)'
+                ]}
+              />
+            </div>
+          </div>
+          <div className="flex flex-col items-center w-full pt-10 pb-20 bg-dark">
             <h2>Gostou do que viu?</h2>
             <div className="flex">
               <Link href="/signup">

@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react'
 
 export default function Wave(props) {
-  const height = props.height ? props.height : 100
   const width = props.width ? props.width : '100%'
   const colors = props.colors
     ? props.colors
     : ['var(--transparent)', 'var(--transparent)']
+  const height = props.height ? props.height : 100 + 20 * colors.length
   const objs = []
   const id = []
   const length = []
