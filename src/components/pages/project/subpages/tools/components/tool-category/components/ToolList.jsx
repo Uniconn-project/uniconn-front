@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import DeleteIcon from '@material-ui/icons/Delete'
-import LinkIcon from '@material-ui/icons/Link'
+import LinkIconResolver from '../../../../../../../global/LinkIconResolver'
 import { AuthContext } from '../../../../../../../../contexts/Auth'
 
 export default function ToolList({ tools, refetchProject, setErrorMsg }) {
@@ -46,7 +46,7 @@ export default function ToolList({ tools, refetchProject, setErrorMsg }) {
             className="no-underline flex-grow"
           >
             <div className="flex items-center px-4 py-2 color-paragraph">
-              <LinkIcon className="icon-sm mr-2" />
+              <LinkIconResolver url={tool.href} />
               <div className="break-all">{tool.name}</div>
             </div>
           </a>
