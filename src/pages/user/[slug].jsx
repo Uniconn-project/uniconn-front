@@ -3,7 +3,7 @@ import Router from 'next/router'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import Page from '../../components/Page'
 import ProfileInfo from '../../components/global/profile-info/ProfileInfo'
-import Projects from '../../components/global/Projects'
+import ProjectList from '../../components/global/ProjectList'
 import { fetcher } from '../../hooks/useFetch'
 import { MyProfileContext } from '../../contexts/MyProfile'
 
@@ -79,7 +79,7 @@ export default function Profile({ profile }) {
               )}
             </div>
             <div className="w-full lg:px-2">
-              <Projects projects={projects} />
+              <ProjectList projects={projects} />
             </div>
           </div>
         </div>

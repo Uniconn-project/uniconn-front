@@ -35,20 +35,13 @@ export default function Header({ page }) {
         )}
       </div>
       <div className="hidden sm:flex sm:ml-32">
-        <Link href="/home">
+        <Link href="/projects">
           <div
-            className={`p-3 mr-2 nav-link ${page === 'home' ? 'active' : ''}`}
-          >
-            Home
-          </div>
-        </Link>
-        <Link href="/profile">
-          <div
-            className={`p-3 ml-2 nav-link ${
-              page === 'profile' ? 'active' : ''
+            className={`p-3 mr-2 nav-link ${
+              page === 'projects' ? 'active' : ''
             }`}
           >
-            Perfil
+            Projetos
           </div>
         </Link>
         <Link href="/users">
@@ -56,6 +49,15 @@ export default function Header({ page }) {
             className={`p-3 ml-2 nav-link ${page === 'users' ? 'active' : ''}`}
           >
             Usuários
+          </div>
+        </Link>
+        <Link href="/my-projects">
+          <div
+            className={`p-3 ml-2 nav-link ${
+              page === 'my-projects' ? 'active' : ''
+            }`}
+          >
+            Meus projetos
           </div>
         </Link>
         <Link href="/settings">
