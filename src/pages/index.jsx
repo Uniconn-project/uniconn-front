@@ -127,9 +127,9 @@ export default function Index() {
             <div className="wave bg-light">
               <Wave
                 colors={[
-                  'rgba(255, 255, 255, 0.4)',
-                  'rgba(255, 255, 255, 0.4)',
-                  'rgba(255, 255, 255, 0.4)',
+                  'var(--landing-page-waves)',
+                  'var(--landing-page-waves)',
+                  'var(--landing-page-waves)',
                   'var(--background-dark)'
                 ]}
               />

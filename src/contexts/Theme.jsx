@@ -22,6 +22,7 @@ export default function ThemeProvider({ children }) {
       cssVariables.setProperty('--paragraph', '#94a1b2')
       cssVariables.setProperty('--transparent', 'rgba(255, 255, 255, 0.02)')
       cssVariables.setProperty('--yellow', '#ffd803')
+      cssVariables.setProperty('--landing-page-waves', 'rgba(0, 0, 0, 0.2)')
 
       window.localStorage.setItem('theme', 'dark')
     } else if (theme === 'light') {
@@ -31,6 +32,10 @@ export default function ThemeProvider({ children }) {
       cssVariables.setProperty('--paragraph', '#72757e')
       cssVariables.setProperty('--transparent', '#f6f6f6')
       cssVariables.setProperty('--yellow', '#a79012')
+      cssVariables.setProperty(
+        '--landing-page-waves',
+        'rgba(255, 255, 255, 0.4)'
+      )
 
       window.localStorage.setItem('theme', 'light')
     }
