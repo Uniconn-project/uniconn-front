@@ -2,6 +2,7 @@ import React, { useContext } from 'react'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import SchoolIcon from '@material-ui/icons/School'
 import AssignmentIcon from '@material-ui/icons/Assignment'
+import ArrowBackIcon from '@material-ui/icons/ArrowBack'
 import StudentInfo from './components/StudentInfo'
 import MentorInfo from './components/MentorInfo'
 import EditProfile from './components/edit-profile/EditProfile'
@@ -20,6 +21,14 @@ export default function ProfileInfo({ profile }) {
       style={{ maxHeight: '50rem' }}
     >
       <div className="b-bottom-light pb-6">
+        {myProfile.id !== profile.id && window.history.length > 1 && (
+          <div
+            className="absolute top-1 left-1 p-1 rounded-3xl cursor-pointer bg-primary bg-hover color-bg-light"
+            onClick={() => window.history.back()}
+          >
+            <ArrowBackIcon className="icon-sm" />
+          </div>
+        )}
         <div className="w-full flex justify-start pl-10 lg:justify-center lg:pl-0">
           <div className="relative">
             <img

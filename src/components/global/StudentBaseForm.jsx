@@ -99,7 +99,7 @@ export default function StudentBaseForm(props) {
             value={postData.skills}
             onChange={handleChange('skills')}
             renderValue={selected => (
-              <div>
+              <div className="overflow-x-auto">
                 {selected.map(value => (
                   <Chip key={value} label={value} className="b-primary mr-1" />
                 ))}

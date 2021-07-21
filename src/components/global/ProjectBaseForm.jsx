@@ -68,7 +68,7 @@ export default function ProjectBaseForm({ usePostData }) {
             multiple
             onChange={handleChange('markets')}
             renderValue={selected => (
-              <div>
+              <div className="overflow-x-auto">
                 {selected.map(value => (
                   <Chip
                     key={value}

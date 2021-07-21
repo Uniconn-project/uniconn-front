@@ -40,20 +40,12 @@ export default function MobileMenu() {
           onClick={() => setMobileMenuIsOpen(!mobileMenuIsOpen)}
         >
           <List>
-            <Link href="/home">
+            <Link href="/projects">
               <ListItem button>
                 <ListItemIcon className="mr-2">
                   <HomeIcon />
                 </ListItemIcon>
-                <ListItemText primary={'Home'} />
-              </ListItem>
-            </Link>
-            <Link href="/profile">
-              <ListItem button>
-                <ListItemIcon className="mr-2">
-                  <ProfileIcon />
-                </ListItemIcon>
-                <ListItemText primary={'Perfil'} />
+                <ListItemText primary={'Projetos'} />
               </ListItem>
             </Link>
             <Link href="/users">
@@ -62,6 +54,14 @@ export default function MobileMenu() {
                   <GroupIcon />
                 </ListItemIcon>
                 <ListItemText primary={'Usuários'} />
+              </ListItem>
+            </Link>
+            <Link href="/my-projects">
+              <ListItem button>
+                <ListItemIcon className="mr-2">
+                  <ProfileIcon />
+                </ListItemIcon>
+                <ListItemText primary={'Meus projetos'} />
               </ListItem>
             </Link>
             <Link href="/settings">

@@ -5,6 +5,7 @@ import Fade from '@material-ui/core/Fade'
 import SchoolIcon from '@material-ui/icons/School'
 import AssignmentIcon from '@material-ui/icons/Assignment'
 import TextField from '@material-ui/core/TextField'
+import CloseIcon from '@material-ui/icons/Close'
 import AddAPhotoOutlinedIcon from '@material-ui/icons/AddAPhotoOutlined'
 import StudentBaseForm from '../../../../StudentBaseForm'
 import MentorBaseForm from '../../../../MentorBaseForm'
@@ -42,8 +43,11 @@ export default function EditProfileModal({
     >
       <Fade in={isOpen}>
         <div className="bg-dark py-2 rounded-md shadow-lg w-full max-w-screen-md">
-          <div className="w-full b-bottom p-4">
+          <div className="flex justify-between items-center w-full b-bottom p-4">
             <h2>Editar perfil</h2>
+            <div className="p-1 cursor-pointer" onClick={handleClose}>
+              <CloseIcon className="color-red" />
+            </div>
           </div>
           <div className="relative w-full flex justify-center items-center p-4 b-bottom-transparent">
             <div className="flex flex-col items-center">

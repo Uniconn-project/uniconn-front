@@ -31,7 +31,7 @@ export default function Profile({ profile }) {
     if (!profile || !myProfile) return
 
     if (profile.id === myProfile.id) {
-      Router.replace('/profile')
+      Router.replace('/my-projects')
     }
   }, [profile, myProfile])
 

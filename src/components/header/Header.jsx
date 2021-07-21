@@ -16,7 +16,7 @@ export default function Header({ page }) {
         <MobileMenu />
       </div>
       <div>
-        <Link href="/home">
+        <Link href="/projects">
           <h2 className="text-3xl cursor-pointer">Uniconn</h2>
         </Link>
       </div>

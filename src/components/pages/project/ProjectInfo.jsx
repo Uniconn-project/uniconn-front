@@ -6,6 +6,7 @@ import StarBorderIcon from '@material-ui/icons/StarBorder'
 import StarIcon from '@material-ui/icons/Star'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import StarsProfilesModal from '../../global/StarsProfilesModal'
+import ArrowBackIcon from '@material-ui/icons/ArrowBack'
 import { mutate } from 'swr'
 import { MyProfileContext } from '../../../contexts/MyProfile'
 import { AuthContext } from '../../../contexts/Auth'
@@ -93,6 +94,14 @@ export default function ProjectInfo({ project, setPage, refetchProject }) {
       style={{ maxHeight: '50rem' }}
     >
       <div className="b-bottom-light">
+        {window.history.length > 1 && (
+          <div
+            className="absolute top-1 left-1 p-1 rounded-3xl cursor-pointer bg-primary bg-hover color-bg-light"
+            onClick={() => window.history.back()}
+          >
+            <ArrowBackIcon className="icon-sm" />
+          </div>
+        )}
         <div className="w-full flex justify-center p-2">
           <img
             src={project.image}
