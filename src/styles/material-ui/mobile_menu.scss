@@ -1,10 +1,14 @@
 .MuiTypography-root {
-  color: var(--headline) !important;
+  color: var(--paragraph) !important;
 }
 
 .MuiDrawer-paperAnchorLeft {
   width: 50% !important;
-  background-color: var(--background-light) !important;
+  background-color: var(--background-dark) !important;
+
+  .MuiSvgIcon-root {
+    color: var(--primary-color);
+  }
 }
 
 .MuiListItemIcon-root {

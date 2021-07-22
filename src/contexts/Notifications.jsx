@@ -18,7 +18,6 @@ export default function NotificationsProvider({ children }) {
     const number = await fetcher('profiles/get-notifications-number', {
       Authorization: 'JWT ' + (await getToken())
     })
-
     setNotificationsNumber(number)
   }, [getToken])
 

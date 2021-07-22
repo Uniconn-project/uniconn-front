@@ -26,12 +26,7 @@ export default function Notifications() {
   const [errorMsg, setErrorMsg] = useState({ isOpen: false, message: '' })
 
   useEffect(() => {
-    fetchNotifications()
     visualizeNotifications()
-
-    const interval = setInterval(fetchNotifications, 10000)
-
-    return () => clearInterval(interval)
   }, []) // eslint-disable-line
 
   const fetchNotifications = async () => {
@@ -46,6 +41,7 @@ export default function Notifications() {
   }
 
   const visualizeNotifications = async () => {
+    console.log('def')
     fetch(
       `${process.env.NEXT_PUBLIC_API_HOST}/api/profiles/visualize-notifications`,
       {

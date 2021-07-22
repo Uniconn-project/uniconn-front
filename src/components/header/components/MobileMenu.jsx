@@ -5,12 +5,12 @@ import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemText from '@material-ui/core/ListItemText'
-import HomeIcon from '@material-ui/icons/Home'
-import ProfileIcon from '@material-ui/icons/Person'
-import GroupIcon from '@material-ui/icons/Group'
-import SettingsIcon from '@material-ui/icons/Settings'
+import CollectionsBookmarkOutlinedIcon from '@material-ui/icons/CollectionsBookmarkOutlined'
+import PersonOutlineOutlinedIcon from '@material-ui/icons/PersonOutlineOutlined'
+import GroupOutlinedIcon from '@material-ui/icons/GroupOutlined'
+import SettingsOutlinedIcon from '@material-ui/icons/SettingsOutlined'
 import CircularProgress from '@material-ui/core/CircularProgress'
-import ExitToAppIcon from '@material-ui/icons/ExitToApp'
+import ExitToAppOutlinedIcon from '@material-ui/icons/ExitToAppOutlined'
 import { MyProfileContext } from '../../../contexts/MyProfile'
 import Logout from '../../helpers/Logout'
 
@@ -43,7 +43,7 @@ export default function MobileMenu() {
             <Link href="/projects">
               <ListItem button>
                 <ListItemIcon className="mr-2">
-                  <HomeIcon />
+                  <CollectionsBookmarkOutlinedIcon />
                 </ListItemIcon>
                 <ListItemText primary={'Projetos'} />
               </ListItem>
@@ -51,7 +51,7 @@ export default function MobileMenu() {
             <Link href="/users">
               <ListItem button>
                 <ListItemIcon className="mr-2">
-                  <GroupIcon />
+                  <GroupOutlinedIcon />
                 </ListItemIcon>
                 <ListItemText primary={'Usuários'} />
               </ListItem>
@@ -59,7 +59,7 @@ export default function MobileMenu() {
             <Link href="/my-projects">
               <ListItem button>
                 <ListItemIcon className="mr-2">
-                  <ProfileIcon />
+                  <PersonOutlineOutlinedIcon />
                 </ListItemIcon>
                 <ListItemText primary={'Meus projetos'} />
               </ListItem>
@@ -67,14 +67,14 @@ export default function MobileMenu() {
             <Link href="/settings">
               <ListItem button>
                 <ListItemIcon className="mr-2">
-                  <SettingsIcon />
+                  <SettingsOutlinedIcon />
                 </ListItemIcon>
                 <ListItemText primary={'Configurações'} />
               </ListItem>
             </Link>
             <ListItem button>
               <ListItemIcon className="mr-2">
-                <ExitToAppIcon />
+                <ExitToAppOutlinedIcon />
               </ListItemIcon>
               <Logout>
                 <ListItemText primary={'Sair'} />

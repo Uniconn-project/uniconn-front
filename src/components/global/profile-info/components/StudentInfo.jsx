@@ -34,7 +34,7 @@ export default function StudentInfo({ profile }) {
             <PaletteIcon className="icon-sm" /> Habilidades:
           </span>
         </div>
-        <ul className="max-h-24 overflow-y-auto">
+        <ul className="max-h-32 overflow-y-auto">
           {profile.student.skills.map(skill => (
             <li key={skill.id}>
               <ArrowRightAltIcon className="color-primary icon-sm" />{' '}
