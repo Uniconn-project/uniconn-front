@@ -15,7 +15,7 @@ import DiscussionsReplies from '../components/pages/notifications/DiscussionsRep
 
 export default function Notifications() {
   const { myProfile } = useContext(MyProfileContext)
-  const { getToken } = useContext(AuthContext)
+  const { getToken, isAuthenticated } = useContext(AuthContext)
   const { fetchNotificationsNumber } = useContext(NotificationsContext)
 
   const [projectsInvitations, setProjectsInvitations] = useState(null)
@@ -26,8 +26,15 @@ export default function Notifications() {
   const [errorMsg, setErrorMsg] = useState({ isOpen: false, message: '' })
 
   useEffect(() => {
+    if (!isAuthenticated) return
+
+    fetchNotifications()
     visualizeNotifications()
-  }, []) // eslint-disable-line
+
+    const interval = setInterval(fetchNotifications, 10000)
+
+    return () => clearInterval(interval)
+  }, [isAuthenticated]) // eslint-disable-line
 
   const fetchNotifications = async () => {
     const notifications = await fetcher('profiles/get-notifications', {
@@ -41,7 +48,6 @@ export default function Notifications() {
   }
 
   const visualizeNotifications = async () => {
-    console.log('def')
     fetch(
       `${process.env.NEXT_PUBLIC_API_HOST}/api/profiles/visualize-notifications`,
       {
