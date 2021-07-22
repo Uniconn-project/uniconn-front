@@ -39,35 +39,28 @@
 .color-startup,
 .color-feedback {
   color: var(--primary-color);
-
-  &.color-feedback {
-    border: 1px solid var(--primary-color);
-    border-radius: 20px;
-  }
+  border: 1px solid var(--primary-color);
+  border-radius: 20px;
 }
 
 .color-social_project,
 .color-suggestion {
   color: var(--green);
-
-  &.color-suggestion {
-    border: 1px solid var(--green);
-    border-radius: 20px;
-  }
+  border: 1px solid var(--green);
+  border-radius: 20px;
 }
 
 .color-junior_enterprise,
 .color-doubt {
   color: var(--secondary-color);
-
-  &.color-doubt {
-    border: 1px solid var(--secondary-color);
-    border-radius: 20px;
-  }
+  border: 1px solid var(--secondary-color);
+  border-radius: 20px;
 }
 
 .color-academic {
   color: var(--yellow);
+  border: 1px solid var(--yellow);
+  border-radius: 20px;
 }
 
 .color-red {

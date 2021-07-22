@@ -33,13 +33,13 @@ export default function ProjectListItem({ project }) {
           <p className="max-h-20 whitespace-nowrap overflow-ellipsis overflow-hidden mb-2">
             {project.slogan}
           </p>
-          <p className={`mb-4 font-bold color-${project.category.value}`}>
-            {project.category.readable}
-          </p>
           <img
             src={project.image}
-            className="w-80 h-52 rounded-md object-cover"
+            className="w-80 h-52 rounded-md object-cover mb-2"
           />
+          <div className={`text-sm px-2 w-max color-${project.category.value}`}>
+            {project.category.readable}
+          </div>
         </div>
         <div className="p-2 flex items-center">
           <Tooltip title="Curtidas" placement="bottom" arrow>
