@@ -7,8 +7,9 @@ import Snackbar from '@material-ui/core/Snackbar'
 import Alert from '@material-ui/lab/Alert'
 import StarIcon from '@material-ui/icons/Star'
 import CommentIcon from '@material-ui/icons/Comment'
-import useFetch from '../../../../../hooks/useFetch'
+import DescriptiveHeader from '../../../../global/DescriptiveHeader'
 import CreateDiscussionForm from './components/CreateDiscussionForm'
+import useFetch from '../../../../../hooks/useFetch'
 import { renderTimestamp } from '../../../../../utils/utils'
 import { AuthContext } from '../../../../../contexts/Auth'
 import { MyProfileContext } from '../../../../../contexts/MyProfile'
@@ -56,6 +57,7 @@ export default function Discussions({ project, openDiscussion }) {
         .then(data => {
           if (data === 'success') {
             mutate(`projects/get-project-discussions/${project.id}`)
+            mutate(`projects/get-project/${project.id}`)
             setSuccessMsg({
               isOpen: true,
               message: 'Discussão removida!'
@@ -80,6 +82,15 @@ export default function Discussions({ project, openDiscussion }) {
 
   return (
     <div className="w-full p-2">
+      <DescriptiveHeader
+        title="Discussões do projeto"
+        description="Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+        Integer nec nisi lobortis, viverra quam eu, ultricies leo. Proin a dictum ipsum.
+        Pellentesque nec nulla in est porta maximus. Aenean pellentesque tortor non lorem vestibulum luctus.
+        Sed ornare eros ac ante tempor aliquet.
+        Maecenas blandit, massa a feugiat sollicitudin, neque leo posuere odio, vel pharetra magna eros nec lectus.
+        Quisque blandit imperdiet egestas."
+      />
       {!isProjectMember && (
         <CreateDiscussionForm
           projectId={project.id}
@@ -124,21 +135,26 @@ export default function Discussions({ project, openDiscussion }) {
                     className="cursor-pointer p-2"
                     onClick={e => handleDelete(e, discussion.id)}
                   >
-                    <DeleteIcon className="icon-sm color-secondary-hover" />
+                    <DeleteIcon className="icon-sm color-red-hover" />
                   </div>
                 )}
               </div>
             </div>
-            <div className="px-2 pb-2 b-bottom-light">
+            <div className="px-2 pb-2 b-bottom-transparent">
               <strong>{discussion.title}</strong>
             </div>
             <div className="p-2 flex items-center">
-              <div className="mr-2">
-                <StarIcon className="icon-xs" /> {discussion.stars.length}
-              </div>
-              <div>
-                <CommentIcon className="icon-xs" /> {discussion.replies.length}
-              </div>
+              <Tooltip title="Curtidas" placement="bottom" arrow>
+                <div className="mr-2">
+                  <StarIcon className="icon-xs" /> {discussion.stars.length}
+                </div>
+              </Tooltip>
+              <Tooltip title="Respostas" placement="bottom" arrow>
+                <div>
+                  <CommentIcon className="icon-xs" />{' '}
+                  {discussion.replies.length}
+                </div>
+              </Tooltip>
             </div>
           </li>
         ))}

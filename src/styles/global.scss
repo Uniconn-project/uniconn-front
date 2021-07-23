@@ -24,9 +24,9 @@ html {
 
 :root {
   --primary-color: #7f5af0;
-  --primary-color-hover: rgba(127, 90, 240, 0.75);
+  --primary-color-hover: #664abc;
   --secondary-color: #e45858;
-  --secondary-color-hover: rgba(228, 88, 88, 0.75);
+  --secondary-color-hover: #b14849;
   --background-dark: #16161a;
   --background-light: #242629;
   --btn-text: #fffffe;
@@ -35,6 +35,8 @@ html {
   --transparent: rgba(255, 255, 255, 0.02);
   --green: #2cb67d;
   --yellow: #ffd803;
+  --red: rgb(200, 30, 30);
+  --landing-page-waves: rgba(0, 0, 0, 0.2);
 }
 
 * {

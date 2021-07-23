@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import Snackbar from '@material-ui/core/Snackbar'
 import Alert from '@material-ui/lab/Alert'
@@ -9,9 +9,11 @@ import Description from '../../components/pages/project/subpages/description/Des
 import Discussions from '../../components/pages/project/subpages/discussions/Discussions'
 import Discussion from '../../components/pages/project/subpages/discussion/Discussion'
 import Links from '../../components/pages/project/subpages/links/Links'
+import Tools from '../../components/pages/project/subpages/tools/Tools'
 import Members from '../../components/pages/project/subpages/members/Members'
 import useFetch, { fetcher } from '../../hooks/useFetch'
 import { mutate } from 'swr'
+import { MyProfileContext } from '../../contexts/MyProfile'
 
 export const getServerSideProps = async context => {
   const project = await fetcher(`projects/get-project/${context.params.id}`)
@@ -30,6 +32,8 @@ export const getServerSideProps = async context => {
 }
 
 export default function Project(props) {
+  const { myProfile } = useContext(MyProfileContext)
+
   const [openedDiscussion, setOpenedDiscussion] = useState(null)
   const [page, setPage] = useState('description')
   const [successMsg, setSuccessMsg] = useState({
@@ -44,7 +48,7 @@ export default function Project(props) {
     }
   )
 
-  if (!project) {
+  if (!project || !myProfile) {
     return (
       <Page loginRequired header>
         <div className="w-full flex justify-center mt-10">
@@ -53,6 +57,11 @@ export default function Project(props) {
       </Page>
     )
   }
+
+  const isProjectMember = project.students
+    .concat(project.mentors)
+    .map(profile => profile.id)
+    .includes(myProfile.id)
 
   const openDiscussion = discussion => {
     setPage('discussion')
@@ -105,6 +114,20 @@ export default function Project(props) {
         })
         break
 
+      case 'add-tool':
+        setSuccessMsg({
+          isOpen: true,
+          value: 'Ferramenta adicionada!'
+        })
+        break
+
+      case 'delete-tool':
+        setSuccessMsg({
+          isOpen: true,
+          value: 'Ferramenta removida!'
+        })
+        break
+
       case 'remove-user':
         setSuccessMsg({
           isOpen: true,
@@ -116,6 +139,13 @@ export default function Project(props) {
         setSuccessMsg({
           isOpen: true,
           value: 'Solicitação enviada!'
+        })
+        break
+
+      case 'leave-project':
+        setSuccessMsg({
+          isOpen: true,
+          value: 'Você saiu do projeto!'
         })
         break
     }
@@ -149,7 +179,7 @@ export default function Project(props) {
         </div>
         <div className="w-full flex justify-center p-2 pt-0 lg:p-0 lg:w-2/3 lg:justify-start lg:box-border">
           <div className="w-full" style={{ maxWidth: 600 }}>
-            <ProjectHeader page={page} setPage={setPage} />
+            <ProjectHeader project={project} page={page} setPage={setPage} />
             {page === 'description' && (
               <Description project={project} refetchProject={refetchProject} />
             )}
@@ -161,6 +191,9 @@ export default function Project(props) {
             )}
             {page === 'links' && (
               <Links project={project} refetchProject={refetchProject} />
+            )}
+            {isProjectMember && page === 'tools' && (
+              <Tools project={project} refetchProject={refetchProject} />
             )}
             {page === 'students' && (
               <Members

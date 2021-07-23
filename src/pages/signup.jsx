@@ -14,20 +14,26 @@ export default function Signup() {
   if (!loading && isAuthenticated) router.push('/')
 
   return (
-    <Page title="Signup | Uniconn" className="h-screen">
+    <Page title="Criar conta | Uniconn" className="h-screen">
       <div className="h-full flex flex-col justify-start items-center">
         <div className="m-10">
           <h1>Uniconn</h1>
         </div>
         <div className="flex">
           <Link href="/signup/mentor">
-            <button className="btn-primary w-44 m-2">
+            <button
+              className="btn-primary w-44 m-2"
+              data-cy="btn-signup-mentor"
+            >
               <AssignmentIcon className="mr-1" />
               Sou mentor
             </button>
           </Link>
           <Link href="/signup/student">
-            <button className="btn-primary w-44 m-2">
+            <button
+              className="btn-primary w-44 m-2"
+              data-cy="btn-signup-student"
+            >
               <SchoolIcon className="mr-1" />
               Sou aluno
             </button>

@@ -1,11 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react'
-import Page from '../../components/Page'
+import Router from 'next/router'
 import CircularProgress from '@material-ui/core/CircularProgress'
+import Page from '../../components/Page'
 import ProfileInfo from '../../components/global/profile-info/ProfileInfo'
+import ProjectList from '../../components/global/ProjectList'
 import { fetcher } from '../../hooks/useFetch'
 import { MyProfileContext } from '../../contexts/MyProfile'
-import Router from 'next/router'
-import Projects from '../../components/global/Projects'
 
 export const getServerSideProps = async context => {
   const profile = await fetcher(`profiles/get-profile/${context.params.slug}`)
@@ -31,7 +31,7 @@ export default function Profile({ profile }) {
     if (!profile || !myProfile) return
 
     if (profile.id === myProfile.id) {
-      Router.replace('/profile')
+      Router.replace('/my-projects')
     }
   }, [profile, myProfile])
 
@@ -79,7 +79,7 @@ export default function Profile({ profile }) {
               )}
             </div>
             <div className="w-full lg:px-2">
-              <Projects projects={projects} />
+              <ProjectList projects={projects} />
             </div>
           </div>
         </div>

@@ -61,9 +61,6 @@ export default function DesktopMenu() {
             <Paper>
               <ClickAwayListener onClickAway={() => setIsOpen(false)}>
                 <MenuList>
-                  <Link href="/profile">
-                    <MenuItem onClick={() => setIsOpen(false)}>Perfil</MenuItem>
-                  </Link>
                   <MenuItem onClick={() => setIsOpen(false)}>
                     <Logout />
                   </MenuItem>

@@ -61,14 +61,14 @@ export default function ProjectBaseForm({ usePostData }) {
       </div>
       <div className="w-full mb-2">
         <FormControl className="w-full">
-          <InputLabel id="markets-select-label">Mercados</InputLabel>
+          <InputLabel id="markets-select-label">Áreas de atuação</InputLabel>
           <Select
             labelId="markets-select-label"
             value={postData.markets}
             multiple
             onChange={handleChange('markets')}
             renderValue={selected => (
-              <div>
+              <div className="overflow-x-auto">
                 {selected.map(value => (
                   <Chip
                     key={value}

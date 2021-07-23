@@ -80,7 +80,7 @@ export default function AddMembersModal({ type, project, refetchProject }) {
   return (
     <>
       <div
-        className="w-full flex items-center p-2 pl-4 cursor-pointer bg-transparent bg-hover rounded-md shadow-lg"
+        className="w-full flex items-center p-2 pl-4 mb-2 cursor-pointer bg-transparent bg-hover rounded-md shadow-lg"
         onClick={() => setIsOpen(true)}
       >
         {type === 'student' ? (

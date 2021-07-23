@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import SchoolIcon from '@material-ui/icons/School'
 import AssignmentIcon from '@material-ui/icons/Assignment'
-import LinkedInIcon from '@material-ui/icons/LinkedIn'
+import ArrowBackIcon from '@material-ui/icons/ArrowBack'
 import StudentInfo from './components/StudentInfo'
 import MentorInfo from './components/MentorInfo'
 import EditProfile from './components/edit-profile/EditProfile'
@@ -21,6 +21,14 @@ export default function ProfileInfo({ profile }) {
       style={{ maxHeight: '50rem' }}
     >
       <div className="b-bottom-light pb-6">
+        {myProfile.id !== profile.id && window.history.length > 1 && (
+          <div
+            className="absolute top-1 left-1 p-1 rounded-3xl cursor-pointer bg-primary bg-hover color-bg-light"
+            onClick={() => window.history.back()}
+          >
+            <ArrowBackIcon className="icon-sm" />
+          </div>
+        )}
         <div className="w-full flex justify-start pl-10 lg:justify-center lg:pl-0">
           <div className="relative">
             <img
@@ -49,19 +57,6 @@ export default function ProfileInfo({ profile }) {
       <div className="w-full pl-4 pr-1 pt-6 pb-2">
         <ul>
           {profile.type === 'student' && <StudentInfo profile={profile} />}
-          {profile.linkedIn && (
-            <li className="pb-2 break-all">
-              <a
-                href={`https://www.linkedin.com/in/${profile.linkedIn}`}
-                target="_blank"
-                rel="noreferrer"
-              >
-                <div className="color-paragraph hover:underline">
-                  <LinkedInIcon className="icon-sm" /> {profile.linkedIn}
-                </div>
-              </a>
-            </li>
-          )}
           {profile.type === 'mentor' && <MentorInfo profile={profile} />}
         </ul>
       </div>

@@ -1,4 +1,5 @@
 import React, { useContext, useState } from 'react'
+import Link from 'next/link'
 import Router from 'next/router'
 import IconButton from '@material-ui/core/IconButton'
 import ArrowBackIcon from '@material-ui/icons/ArrowBack'
@@ -31,24 +32,19 @@ export default function BaseForm({ children, parentPostData, type }) {
   }
 
   const handleSubmit = () => {
-    let error = false
-
     const valuesInput = Object.values({ ...parentPostData, ...profilePostData })
 
     for (const value of valuesInput) {
       if (!value) {
-        error = true
         setErrorMsg('Todos os campos devem ser preenchidos!')
-        break
+        return
       }
     }
 
     if (profilePostData.password !== profilePostData.passwordc) {
-      error = true
       setErrorMsg('As senhas devem ser iguais!')
+      return
     }
-
-    if (error) return
 
     fetch(
       `${process.env.NEXT_PUBLIC_API_HOST}/api/profiles/${type}/post-signup`,
@@ -67,7 +63,6 @@ export default function BaseForm({ children, parentPostData, type }) {
             profilePostData.username.toLowerCase().replace(' ', ''),
             profilePostData.password
           ).then(() => {
-            console.log('logged in')
             Router.push('/home')
           })
         } else {
@@ -168,12 +163,18 @@ export default function BaseForm({ children, parentPostData, type }) {
         </FormGroup>
         {children}
       </div>
-      <button className="btn-primary w-4/5" onClick={handleSubmit}>
+      <button
+        className="btn-primary w-4/5"
+        data-cy="btn-submit-signup"
+        onClick={handleSubmit}
+      >
         Criar conta
       </button>
-      <IconButton onClick={() => window.history.back()}>
-        <ArrowBackIcon />
-      </IconButton>
+      <Link href="/signup">
+        <IconButton data-cy="signup-form-back-arrow">
+          <ArrowBackIcon />
+        </IconButton>
+      </Link>
     </>
   )
 }

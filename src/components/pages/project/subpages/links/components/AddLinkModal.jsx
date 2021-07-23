@@ -1,19 +1,16 @@
 import React, { useState, useContext } from 'react'
-import LinkIcon from '@material-ui/icons/Link'
 import Modal from '@material-ui/core/Modal'
 import Backdrop from '@material-ui/core/Backdrop'
 import Fade from '@material-ui/core/Fade'
 import Snackbar from '@material-ui/core/Snackbar'
 import Alert from '@material-ui/lab/Alert'
 import TextField from '@material-ui/core/TextField'
-import Checkbox from '@material-ui/core/Checkbox'
 import { AuthContext } from '../../../../../../contexts/Auth'
 
-export default function AddLinkModal({ project, refetchProject }) {
+export default function AddLinkModal({ project, refetchProject, children }) {
   const postDataInitialState = {
     name: '',
-    href: '',
-    is_public: false
+    href: ''
   }
 
   const { getToken } = useContext(AuthContext)
@@ -48,8 +45,10 @@ export default function AddLinkModal({ project, refetchProject }) {
     )
       .then(response => response.json())
       .then(data => {
+        setIsOpen(false)
         if (data === 'success') {
           refetchProject('add-link')
+          setPostData(postDataInitialState)
         } else {
           setErrorMsg({
             isOpen: true,
@@ -62,11 +61,10 @@ export default function AddLinkModal({ project, refetchProject }) {
   return (
     <>
       <div
-        className="w-full flex items-center p-2 pl-4 cursor-pointer bg-transparent bg-hover rounded-md shadow-lg"
+        className="p-2 pl-4 mb-4 cursor-pointer bg-transparent bg-hover rounded-md shadow-lg"
         onClick={() => setIsOpen(true)}
       >
-        <LinkIcon className="color-primary mr-2" />
-        <strong className="color-primary">Adicionar link</strong>
+        {children}
       </div>
       <Modal
         className="flex justify-center items-center"
@@ -98,16 +96,6 @@ export default function AddLinkModal({ project, refetchProject }) {
                 inputProps={{ maxLength: 1000 }}
                 onChange={handleChange('href')}
               />
-              <div className="flex items-center mt-2">
-                Público
-                <Checkbox
-                  checked={postData.is_public}
-                  className="p-0 ml-2"
-                  onChange={() =>
-                    setPostData({ ...postData, is_public: !postData.is_public })
-                  }
-                />
-              </div>
             </div>
             <div className="flex justify-end items-center p-2">
               <button className="btn-primary" onClick={handleSubmit}>

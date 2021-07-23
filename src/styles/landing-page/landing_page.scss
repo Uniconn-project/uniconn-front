@@ -1,15 +1,34 @@
-.wave {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  overflow: hidden;
-  line-height: 0;
+@media (min-width: 768px) {
+  .landing-page {
+    h1 {
+      color: #fffffe !important;
 
-  svg {
-    position: relative;
-    display: block;
-    width: calc(103% + 1.3px);
-    height: 62px;
+      ~ p {
+        color: #94a1b2 !important;
+      }
+    }
+  }
+}
+
+.landing-page {
+  h1 {
+    color: var(--headline);
+
+    ~ p {
+      color: var(--paragraph);
+    }
+  }
+
+  .wave {
+    width: 100%;
+    overflow: hidden;
+    line-height: 0;
+
+    svg {
+      position: relative;
+      display: block;
+      width: calc(103% + 1.3px);
+      height: 62px;
+    }
   }
 }

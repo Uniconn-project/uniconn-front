@@ -5,6 +5,7 @@ import Router from 'next/router'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import PersonOutlineIcon from '@material-ui/icons/PersonOutline'
 import { AuthContext } from '../contexts/Auth'
+import Wave from '../components/pages/landing-page/Wave'
 
 export default function Index() {
   const { loading, isAuthenticated } = useContext(AuthContext)
@@ -13,7 +14,7 @@ export default function Index() {
     if (loading) return
 
     if (isAuthenticated) {
-      Router.replace('/home')
+      Router.replace('/projects')
     }
   }, [loading, isAuthenticated])
 
@@ -23,7 +24,7 @@ export default function Index() {
         <Head>
           <title>Uniconn</title>
         </Head>
-        <div className="w-screen pt-20">
+        <div className="w-screen pt-20 landing-page">
           <div className="fixed top-0 z-30 w-full h-20 flex items-center px-4 bg-dark b-bottom-light">
             <div>
               <h2 className="text-3xl">Uniconn</h2>
@@ -44,7 +45,7 @@ export default function Index() {
           </div>
           <div className="flex flex-col bg-linear">
             <video
-              className="w-full absolute z-10 hidden object-cover md:block"
+              className="shadow-lg w-full absolute z-10 hidden object-cover md:block"
               autoPlay
               muted
               loop
@@ -52,8 +53,8 @@ export default function Index() {
             >
               <source src="lp_intro.mp4" type="video/mp4" />
             </video>
-            <div className="z-20 px-8 pt-8 pb-4 md:w-1/2 lg:px-24 lg:pt-24 lg:pb-8">
-              <h1>
+            <div className="z-20 px-8 pt-8 pb-4 md:w-1/2 lg:px-24 lg:pt-32 lg:pb-8">
+              <h1 className="">
                 Crie e participe de{' '}
                 <span style={{ color: 'var(--secondary-color)' }}>
                   projetos que vão fazer diferença
@@ -71,7 +72,10 @@ export default function Index() {
               </Link>
             </div>
           </div>
-          <div className="bg-light flex justify-end px-8 pt-12 pb-4 md:px-24 md:pt-32 md:pb-20">
+          <div
+            className="bg-light flex justify-end px-8 pt-12 pb-4 md:px-24 md:pt-32 md:pb-20"
+            style={{ minHeight: '40vh' }}
+          >
             <div className="md:w-1/2">
               <h2>
                 <span style={{ color: 'var(--secondary-color)' }}>1.</span> Crie
@@ -85,22 +89,10 @@ export default function Index() {
               </p>
             </div>
           </div>
-          <div className="w-full relative">
-            <div className="wave">
-              <svg
-                data-name="Layer 1"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 1200 120"
-                preserveAspectRatio="none"
-              >
-                <path
-                  d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z"
-                  fill="var(--background-light)"
-                ></path>
-              </svg>
-            </div>
-          </div>
-          <div className="bg-dark flex px-8 pt-20 pb-4 md:px-24 md:pt-24 md:pb-20">
+          <div
+            className="bg-dark flex px-8 pt-20 pb-4 shadow-lg md:px-24 md:pt-24 md:pb-20"
+            style={{ minHeight: '40vh' }}
+          >
             <div className="md:w-1/2">
               <h2>
                 <span style={{ color: 'var(--secondary-color)' }}>2.</span>{' '}
@@ -114,22 +106,10 @@ export default function Index() {
               </p>
             </div>
           </div>
-          <div className="w-full relative">
-            <div className="wave">
-              <svg
-                data-name="Layer 1"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 1200 120"
-                preserveAspectRatio="none"
-              >
-                <path
-                  d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z"
-                  fill="var(--background-dark)"
-                ></path>
-              </svg>
-            </div>
-          </div>
-          <div className="bg-light flex justify-end px-8 pt-20 pb-4 md:px-24 md:pt-24 md:pb-20">
+          <div
+            className="bg-light flex justify-end px-8 pt-20 pb-4 md:px-24 md:pt-24 md:pb-20"
+            style={{ minHeight: '20vh' }}
+          >
             <div className="md:w-1/2">
               <h2>
                 <span style={{ color: 'var(--secondary-color)' }}>3.</span>{' '}
@@ -143,14 +123,21 @@ export default function Index() {
               </p>
             </div>
           </div>
-          <div className="bg-linear flex flex-col items-center w-full pt-10 pb-20">
-            <h2>Uniconn</h2>
+          <div className="w-full relative">
+            <div className="wave bg-light">
+              <Wave
+                colors={[
+                  'var(--landing-page-waves)',
+                  'var(--landing-page-waves)',
+                  'var(--landing-page-waves)',
+                  'var(--background-dark)'
+                ]}
+              />
+            </div>
+          </div>
+          <div className="flex flex-col items-center w-full pt-10 pb-20 bg-dark">
+            <h2>Gostou do que viu?</h2>
             <div className="flex">
-              <Link href="/login">
-                <button className="btn-primary-transparent m-2 text-xl">
-                  Entrar
-                </button>
-              </Link>
               <Link href="/signup">
                 <button className="btn-primary m-2 text-xl">Criar conta</button>
               </Link>

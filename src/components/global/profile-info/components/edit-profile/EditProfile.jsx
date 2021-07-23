@@ -18,6 +18,9 @@ export default function EditProfile({ profile }) {
     linkedIn: profile.linkedIn || '',
     university: profile.type === 'student' && profile.student.university.name,
     major: profile.type === 'student' && profile.student.major.name,
+    skills:
+      profile.type === 'student' &&
+      profile.student.skills.map(skill => skill.name),
     markets:
       profile.type === 'mentor' &&
       profile.mentor.markets.map(market => market.name)
@@ -48,6 +51,22 @@ export default function EditProfile({ profile }) {
   }
 
   const handleSubmit = async () => {
+    if (profile.type === 'student' && !postData.skills.length) {
+      setErrorMsg({
+        isOpen: true,
+        message: 'Selecione pelo menos uma habilidade!'
+      })
+      return
+    }
+
+    if (profile.type === 'mentor' && !postData.markets.length) {
+      setErrorMsg({
+        isOpen: true,
+        message: 'Selecione pelo menos uma expertise!'
+      })
+      return
+    }
+
     fetch(`${process.env.NEXT_PUBLIC_API_HOST}/api/profiles/edit-my-profile`, {
       method: 'PUT',
       headers: {

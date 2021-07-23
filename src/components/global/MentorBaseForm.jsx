@@ -35,12 +35,12 @@ export default function Mentor(props) {
 
   return (
     <FormControl className="w-4/5" style={{ marginBottom: '1rem' }}>
-      <InputLabel id="demo-mutiple-chip-label">
-        Em quais mercados você atua?
+      <InputLabel id="mentor-markets-select-label">
+        Quais são suas expertises?
       </InputLabel>
       <Select
-        labelId="demo-mutiple-chip-label"
-        id="demo-mutiple-chip"
+        data-cy="mentor-markets-select"
+        labelId="mentor-markets-select-label"
         multiple
         value={postData.markets}
         onChange={handleChange('markets')}

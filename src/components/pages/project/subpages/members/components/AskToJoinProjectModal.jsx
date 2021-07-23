@@ -38,6 +38,7 @@ export default function AskToJoinProjectModal({
     )
       .then(response => response.json())
       .then(data => {
+        setIsOpen(false)
         if (data === 'success') {
           refetchProject('ask-to-join-project')
         } else {

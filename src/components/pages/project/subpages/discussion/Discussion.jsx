@@ -6,7 +6,7 @@ import CommentIcon from '@material-ui/icons/Comment'
 import Snackbar from '@material-ui/core/Snackbar'
 import Alert from '@material-ui/lab/Alert'
 import ReplyFrom from './components/ReplyForm'
-import StarsProfilesModal from './components/StarsProfilesModal'
+import StarsProfilesModal from '../../../../global/StarsProfilesModal'
 import useFetch from '../../../../../hooks/useFetch'
 import { mutate } from 'swr'
 import { renderTimestamp } from '../../../../../utils/utils'
@@ -24,9 +24,7 @@ export default function Discussion(props) {
       initialData: props.discussion
     }
   )
-  const [starred, setStarred] = useState(
-    discussion.stars.map(star => star.profile.id).includes(myProfile.id)
-  )
+  const [starred, setStarred] = useState(false)
   const [starCount, setStarCount] = useState(discussion.stars.length)
   const [starsModalIsOpen, setStarsModalIsOpen] = useState(false)
   const [successMsg, setSuccessMsg] = useState({
@@ -37,6 +35,13 @@ export default function Discussion(props) {
     isOpen: false,
     message: ''
   })
+
+  useEffect(() => {
+    if (!myProfile) return
+    setStarred(
+      discussion.stars.map(star => star.profile.id).includes(myProfile.id)
+    )
+  }, [myProfile])
 
   useEffect(() => {
     setStarCount(discussion.stars.length)
@@ -133,7 +138,7 @@ export default function Discussion(props) {
           <div className="p-2">
             <h3>{discussion.title}</h3>
           </div>
-          <div className="p-2">
+          <div className="p-2 break-words">
             <p>{discussion.body}</p>
           </div>
         </div>

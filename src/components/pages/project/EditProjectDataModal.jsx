@@ -6,6 +6,7 @@ import Backdrop from '@material-ui/core/Backdrop'
 import Fade from '@material-ui/core/Fade'
 import Snackbar from '@material-ui/core/Snackbar'
 import Alert from '@material-ui/lab/Alert'
+import CloseIcon from '@material-ui/icons/Close'
 import AddAPhotoOutlinedIcon from '@material-ui/icons/AddAPhotoOutlined'
 import ProjectBaseForm from '../../global/ProjectBaseForm'
 import { AuthContext } from '../../../contexts/Auth'
@@ -96,8 +97,14 @@ export default function EditProjectDataModal({ project, refetchProject }) {
       >
         <Fade in={isOpen}>
           <div className="bg-dark py-2 rounded-md shadow-lg w-full max-w-screen-md">
-            <div className="w-full b-bottom p-4">
+            <div className="flex justify-between items-center w-full b-bottom p-4">
               <h2>Editar projeto</h2>
+              <div
+                className="p-1 cursor-pointer"
+                onClick={() => setIsOpen(false)}
+              >
+                <CloseIcon className="color-red" />
+              </div>
             </div>
             <div className="relative w-full flex justify-center items-center p-4 b-bottom-transparent">
               <img

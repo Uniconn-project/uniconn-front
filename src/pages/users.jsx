@@ -7,7 +7,7 @@ import { MyProfileContext } from '../contexts/MyProfile'
 import { fetcher } from '../hooks/useFetch'
 import ProfileListItem from '../components/global/ProfileListItem'
 
-export default function SearchUser() {
+export default function Users() {
   const { myProfile } = useContext(MyProfileContext)
   const [initialProfiles, setInitialProfiles] = useState([])
   const [renderedProfiles, setRenderedProfiles] = useState([])

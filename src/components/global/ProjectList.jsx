@@ -2,7 +2,7 @@ import React from 'react'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import ProjectListItem from './ProjectListItem'
 
-function Projects({ projects }) {
+export default function ProjectList({ projects }) {
   if (!projects) {
     return <CircularProgress />
   }
@@ -15,5 +15,3 @@ function Projects({ projects }) {
     </>
   )
 }
-
-export default Projects
