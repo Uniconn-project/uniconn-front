@@ -195,19 +195,8 @@ export default function Project(props) {
             {isProjectMember && page === 'tools' && (
               <Tools project={project} refetchProject={refetchProject} />
             )}
-            {page === 'students' && (
-              <Members
-                type="student"
-                project={project}
-                refetchProject={refetchProject}
-              />
-            )}
-            {page === 'mentors' && (
-              <Members
-                type="mentor"
-                project={project}
-                refetchProject={refetchProject}
-              />
+            {page === 'members' && (
+              <Members project={project} refetchProject={refetchProject} />
             )}
           </div>
         </div>
