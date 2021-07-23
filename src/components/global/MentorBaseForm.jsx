@@ -45,7 +45,7 @@ export default function Mentor(props) {
         value={postData.markets}
         onChange={handleChange('markets')}
         renderValue={selected => (
-          <div>
+          <div className="overflow-x-auto">
             {selected.map(value => (
               <Chip key={value} label={value} className="b-primary mr-1" />
             ))}
