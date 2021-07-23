@@ -5,6 +5,8 @@ import EditProjectDataModal from './EditProjectDataModal'
 import StarBorderIcon from '@material-ui/icons/StarBorder'
 import StarIcon from '@material-ui/icons/Star'
 import CircularProgress from '@material-ui/core/CircularProgress'
+import Snackbar from '@material-ui/core/Snackbar'
+import Alert from '@material-ui/lab/Alert'
 import StarsProfilesModal from '../../global/StarsProfilesModal'
 import ArrowBackIcon from '@material-ui/icons/ArrowBack'
 import { mutate } from 'swr'
@@ -18,13 +20,17 @@ export default function ProjectInfo({ project, setPage, refetchProject }) {
   const [starred, setStarred] = useState(false)
   const [starCount, setStarCount] = useState(project.stars.length)
   const [starsModalIsOpen, setStarsModalIsOpen] = useState(false)
+  const [errorMsg, setErrorMsg] = useState({
+    isOpen: false,
+    message: ''
+  })
 
   useEffect(() => {
     if (!myProfile) return
     setStarred(
       project.stars.map(star => star.profile.id).includes(myProfile.id)
     )
-  }, [myProfile])
+  }, [myProfile]) //eslint-disable-line
 
   const starProject = async () => {
     setStarCount(starCount + 1)
@@ -132,10 +138,10 @@ export default function ProjectInfo({ project, setPage, refetchProject }) {
         </div>
       </div>
       <div className="w-full pl-4 pr-2 py-6 b-bottom-light">
-        <p className="break-words">{project.slogan}</p>
-        <p className={`mt-2 font-bold color-${project.category.value}`}>
+        <p className="break-words mb-2">{project.slogan}</p>
+        <div className={`text-sm px-2 w-max color-${project.category.value}`}>
           {project.category.readable}
-        </p>
+        </div>
       </div>
       <div className="w-full pl-4 pr-1 pt-6 pb-2">
         <ul>
@@ -173,6 +179,18 @@ export default function ProjectInfo({ project, setPage, refetchProject }) {
           refetchProject={refetchProject}
         />
       )}
+      <Snackbar
+        open={errorMsg.isOpen}
+        autoHideDuration={6000}
+        onClose={() =>
+          setErrorMsg({
+            isOpen: false,
+            message: ''
+          })
+        }
+      >
+        <Alert severity="error">{errorMsg.message}</Alert>
+      </Snackbar>
     </div>
   )
 }
