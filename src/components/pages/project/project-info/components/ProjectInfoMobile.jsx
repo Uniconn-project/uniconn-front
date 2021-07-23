@@ -1,17 +1,17 @@
 import React, { useState, useContext, useEffect } from 'react'
 import SchoolIcon from '@material-ui/icons/School'
 import AssignmentIcon from '@material-ui/icons/Assignment'
-import EditProjectDataModal from './EditProjectDataModal'
+import EditProjectDataModal from '../../EditProjectDataModal'
 import StarBorderIcon from '@material-ui/icons/StarBorder'
 import StarIcon from '@material-ui/icons/Star'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import Snackbar from '@material-ui/core/Snackbar'
 import Alert from '@material-ui/lab/Alert'
-import StarsProfilesModal from '../../global/StarsProfilesModal'
+import StarsProfilesModal from '../../../../global/StarsProfilesModal'
 import ArrowBackIcon from '@material-ui/icons/ArrowBack'
 import { mutate } from 'swr'
-import { MyProfileContext } from '../../../contexts/MyProfile'
-import { AuthContext } from '../../../contexts/Auth'
+import { MyProfileContext } from '../../../../../contexts/MyProfile'
+import { AuthContext } from '../../../../../contexts/Auth'
 
 export default function ProjectInfo({ project, setPage, refetchProject }) {
   const { myProfile } = useContext(MyProfileContext)
@@ -102,20 +102,40 @@ export default function ProjectInfo({ project, setPage, refetchProject }) {
       <div className="b-bottom-light">
         {window.history.length > 1 && (
           <div
-            className="absolute top-1 left-1 p-1 rounded-3xl cursor-pointer bg-primary bg-hover color-bg-light"
+            className="mx-2 mt-2 p-1 w-max rounded-3xl cursor-pointer bg-primary bg-hover color-bg-light"
             onClick={() => window.history.back()}
           >
             <ArrowBackIcon className="icon-sm" />
           </div>
         )}
-        <div className="w-full flex justify-center p-2">
-          <img
+        <div className="w-full flex justify-center py-2">
+          <div
             src={project.image}
-            className="w-full h-52 rounded-md object-cover"
-          />
-        </div>
-        <div className="w-full pl-4 pb-4 break-words">
-          <h3 className="mt-2">{project.name}</h3>
+            className="flex flex-col w-full h-52 object-cover"
+            style={{
+              backgroundImage: `url(${project.image})`,
+              backgroundSize: 'cover',
+              backgroundRepeat: 'no-repeat',
+              backgroundPosition: 'center'
+            }}
+          >
+            <div
+              className="flex flex-col justify-between h-full w-full p-4 break-words"
+              style={{
+                backgroundColor: 'rgba(0, 0, 0, .75)'
+              }}
+            >
+              <div>
+                <h3 className="mt-2">{project.name}</h3>
+                <p className="break-words mb-2">{project.slogan}</p>
+              </div>
+              <div
+                className={`text-sm px-2 w-max color-${project.category.value}`}
+              >
+                {project.category.readable}
+              </div>
+            </div>
+          </div>
         </div>
         <div className="w-full flex items-center pl-4 pb-2 cursor-pointer">
           {starred ? (
@@ -135,12 +155,6 @@ export default function ProjectInfo({ project, setPage, refetchProject }) {
           >
             {starCount}
           </span>
-        </div>
-      </div>
-      <div className="w-full pl-4 pr-2 py-6 b-bottom-light">
-        <p className="break-words mb-2">{project.slogan}</p>
-        <div className={`text-sm px-2 w-max color-${project.category.value}`}>
-          {project.category.readable}
         </div>
       </div>
       <div className="w-full pl-4 pr-1 pt-6 pb-2">
