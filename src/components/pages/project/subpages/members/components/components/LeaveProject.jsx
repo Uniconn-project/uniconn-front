@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import ExitToAppIcon from '@material-ui/icons/ExitToApp'
-import { AuthContext } from '../../../../../../contexts/Auth'
+import { AuthContext } from '../../../../../../../contexts/Auth'
 
 export default function LeaveProject({ project, refetchProject, setErrorMsg }) {
   const { getToken } = useContext(AuthContext)

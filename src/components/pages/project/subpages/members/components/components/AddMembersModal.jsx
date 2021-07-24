@@ -12,9 +12,9 @@ import ListItemAvatar from '@material-ui/core/ListItemAvatar'
 import Avatar from '@material-ui/core/Avatar'
 import Snackbar from '@material-ui/core/Snackbar'
 import Alert from '@material-ui/lab/Alert'
-import { fetcher } from '../../../../../../hooks/useFetch'
-import { MyProfileContext } from '../../../../../../contexts/MyProfile'
-import { AuthContext } from '../../../../../../contexts/Auth'
+import { fetcher } from '../../../../../../../hooks/useFetch'
+import { MyProfileContext } from '../../../../../../../contexts/MyProfile'
+import { AuthContext } from '../../../../../../../contexts/Auth'
 
 export default function AddMembersModal({ type, project, refetchProject }) {
   const { myProfile } = useContext(MyProfileContext)
@@ -68,7 +68,7 @@ export default function AddMembersModal({ type, project, refetchProject }) {
           refetchProject('invite-user')
           setIsOpen(false)
         } else {
-          setIsOpen(false)
+          handleClose()
           setErrorMsg({
             isOpen: true,
             message: data

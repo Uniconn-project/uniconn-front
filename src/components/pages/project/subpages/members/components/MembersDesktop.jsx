@@ -3,12 +3,10 @@ import CircularProgress from '@material-ui/core/CircularProgress'
 import CloseIcon from '@material-ui/icons/Close'
 import Snackbar from '@material-ui/core/Snackbar'
 import Alert from '@material-ui/lab/Alert'
-import ProfileListItem from '../../../../../global/ProfileListItem'
 import ProfileListItemWithIcon from '../../../../../global/ProfileListItemWithIcon'
-import AddMembersModal from '../components/AddMembersModal'
-import AskToJoinProjectModal from '../components/AskToJoinProjectModal'
-import SettingsPopover from '../components/SettingsPopover'
-import LeaveProject from '../components/LeaveProject'
+import AddMembersModal from './components/AddMembersModal'
+import AskToJoinProjectModal from './components/AskToJoinProjectModal'
+import SettingsPopover from './components/SettingsPopover'
 import { MyProfileContext } from '../../../../../../contexts/MyProfile'
 import { AuthContext } from '../../../../../../contexts/Auth'
 
@@ -23,13 +21,11 @@ export default function Members({ project, refetchProject }) {
 
   const projectStudentsId = project.students.map(profile => profile.id)
 
-  const projectMentorsId = project.mentors.map(profile => profile.id)
-
   const projectMembersId = projectStudentsId.concat(
     project.mentors.map(profile => profile.id)
   )
 
-  const handleCancelProjectInvitation = async (e, username) => {
+  const handleCancelProjectInvitation = async (e, type, username) => {
     e.stopPropagation()
 
     if (window.confirm('Remover convite?')) {
@@ -69,154 +65,106 @@ export default function Members({ project, refetchProject }) {
   }
 
   return (
-    <div className="w-full flex py-4 pt-0">
-      <div className="p-2 flex-grow">
-        {projectStudentsId.includes(myProfile.id) && (
-          <AddMembersModal
-            type="student"
-            project={project}
-            refetchProject={refetchProject}
-          />
-        )}
-        {projectMembersId.includes(myProfile.id) ? (
-          <LeaveProject
-            project={project}
-            refetchProject={refetchProject}
-            setErrorMsg={setErrorMsg}
-          />
-        ) : (
-          <AskToJoinProjectModal
-            type="student"
-            project={project}
-            refetchProject={refetchProject}
-          />
-        )}
-        {projectStudentsId.includes(myProfile.id) ? (
-          <>
-            {project.students.map(profile => (
-              <>
-                <ProfileListItemWithIcon key={profile.id} profile={profile}>
-                  {profile.id !== myProfile.id && (
-                    <SettingsPopover
-                      profile={profile}
-                      project={project}
-                      refetchProject={refetchProject}
-                      setErrorMsg={setErrorMsg}
-                    />
-                  )}
-                </ProfileListItemWithIcon>
-              </>
-            ))}
-          </>
-        ) : (
-          <>
-            {project.students.map(profile => (
-              <ProfileListItem key={profile.id} profile={profile} />
-            ))}
-          </>
-        )}
-        {projectMembersId.includes(myProfile.id) && (
-          <>
-            {project.pending_invited_students.map(profile => (
-              <>
-                {projectStudentsId.includes(myProfile.id) ? (
-                  <ProfileListItemWithIcon
-                    key={profile.id}
-                    profile={profile}
-                    className="filter brightness-50"
-                  >
+    <div className="w-full">
+      {!projectMembersId.includes(myProfile.id) && (
+        <AskToJoinProjectModal
+          type={myProfile.type}
+          project={project}
+          refetchProject={refetchProject}
+        />
+      )}
+      <div className="flex">
+        <div className="p-2 w-1/2">
+          {projectStudentsId.includes(myProfile.id) && (
+            <AddMembersModal
+              type="student"
+              project={project}
+              refetchProject={refetchProject}
+            />
+          )}
+          {project.students.map(profile => (
+            <ProfileListItemWithIcon key={profile.id} profile={profile}>
+              {projectStudentsId.includes(myProfile.id) && (
+                <SettingsPopover
+                  profile={profile}
+                  project={project}
+                  refetchProject={refetchProject}
+                  setErrorMsg={setErrorMsg}
+                />
+              )}
+            </ProfileListItemWithIcon>
+          ))}
+          {projectMembersId.includes(myProfile.id) && (
+            <>
+              {project.pending_invited_students.map(profile => (
+                <ProfileListItemWithIcon
+                  key={profile.id}
+                  profile={profile}
+                  className="filter brightness-50"
+                >
+                  {projectStudentsId.includes(myProfile.id) && (
                     <CloseIcon
                       className="icon-sm color-red-hover"
                       onClick={e =>
-                        handleCancelProjectInvitation(e, profile.user.username)
+                        handleCancelProjectInvitation(
+                          e,
+                          profile.type,
+                          profile.user.username
+                        )
                       }
-                    />
-                  </ProfileListItemWithIcon>
-                ) : (
-                  <ProfileListItem
-                    key={profile.id}
-                    profile={profile}
-                    className="filter brightness-50"
-                  />
-                )}
-              </>
-            ))}
-          </>
-        )}
-      </div>
-      <div className="p-2 flex-grow">
-        {projectStudentsId.includes(myProfile.id) && (
-          <AddMembersModal
-            type="mentor"
-            project={project}
-            refetchProject={refetchProject}
-          />
-        )}
-        {projectMembersId.includes(myProfile.id) ? (
-          <LeaveProject
-            project={project}
-            refetchProject={refetchProject}
-            setErrorMsg={setErrorMsg}
-          />
-        ) : (
-          <AskToJoinProjectModal
-            type="mentor"
-            project={project}
-            refetchProject={refetchProject}
-          />
-        )}
-        {projectStudentsId.includes(myProfile.id) ? (
-          <>
-            {project.mentors.map(profile => (
-              <>
-                <ProfileListItemWithIcon key={profile.id} profile={profile}>
-                  {profile.id !== myProfile.id && (
-                    <SettingsPopover
-                      profile={profile}
-                      project={project}
-                      refetchProject={refetchProject}
-                      setErrorMsg={setErrorMsg}
                     />
                   )}
                 </ProfileListItemWithIcon>
-              </>
-            ))}
-          </>
-        ) : (
-          <>
-            {project.mentors.map(profile => (
-              <ProfileListItem key={profile.id} profile={profile} />
-            ))}
-          </>
-        )}
-        {projectMentorsId.includes(myProfile.id) && (
-          <>
-            {project.pending_invited_mentors.map(profile => (
-              <>
-                {project.includes(myProfile.id) ? (
-                  <ProfileListItemWithIcon
-                    key={profile.id}
-                    profile={profile}
-                    className="filter brightness-50"
-                  >
+              ))}
+            </>
+          )}
+        </div>
+        <div className="p-2 w-1/2">
+          {projectStudentsId.includes(myProfile.id) && (
+            <AddMembersModal
+              type="mentor"
+              project={project}
+              refetchProject={refetchProject}
+            />
+          )}
+          {project.mentors.map(profile => (
+            <ProfileListItemWithIcon key={profile.id} profile={profile}>
+              {(projectStudentsId.includes(myProfile.id) ||
+                profile.id === myProfile.id) && (
+                <SettingsPopover
+                  profile={profile}
+                  project={project}
+                  refetchProject={refetchProject}
+                  setErrorMsg={setErrorMsg}
+                />
+              )}
+            </ProfileListItemWithIcon>
+          ))}
+          {projectMembersId.includes(myProfile.id) && (
+            <>
+              {project.pending_invited_mentors.map(profile => (
+                <ProfileListItemWithIcon
+                  key={profile.id}
+                  profile={profile}
+                  className="filter brightness-50"
+                >
+                  {projectStudentsId.includes(myProfile.id) && (
                     <CloseIcon
                       className="icon-sm color-red-hover"
                       onClick={e =>
-                        handleCancelProjectInvitation(e, profile.user.username)
+                        handleCancelProjectInvitation(
+                          e,
+                          profile.type,
+                          profile.user.username
+                        )
                       }
                     />
-                  </ProfileListItemWithIcon>
-                ) : (
-                  <ProfileListItem
-                    key={profile.id}
-                    profile={profile}
-                    className="filter brightness-50"
-                  />
-                )}
-              </>
-            ))}
-          </>
-        )}
+                  )}
+                </ProfileListItemWithIcon>
+              ))}
+            </>
+          )}
+        </div>
       </div>
       <Snackbar
         open={errorMsg.isOpen}

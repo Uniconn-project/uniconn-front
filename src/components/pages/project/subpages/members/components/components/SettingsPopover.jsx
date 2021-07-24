@@ -2,7 +2,7 @@ import React, { useState, useRef, useContext } from 'react'
 import SettingsIcon from '@material-ui/icons/Settings'
 import HighlightOffIcon from '@material-ui/icons/HighlightOff'
 import Popover from '@material-ui/core/Popover'
-import { AuthContext } from '../../../../../../contexts/Auth'
+import { AuthContext } from '../../../../../../../contexts/Auth'
 
 export default function SettingsPopover({
   profile,

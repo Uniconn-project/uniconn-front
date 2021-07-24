@@ -1,5 +1,6 @@
 {
     "baseUrl": "http://localhost:1234",
+    "screenshotOnRunFailure": false,
     "env": {
         "api_url": "http://127.0.0.1:8000",
         "test_user_username": "john.doe",
