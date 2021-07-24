@@ -149,7 +149,7 @@ export default function ProjectInfo({ project, setPage, refetchProject }) {
             <SchoolIcon className="color-primary" />{' '}
             <span
               className="cursor-pointer hover:underline"
-              onClick={() => setPage('students')}
+              onClick={() => setPage('members')}
             >
               <strong>{project.students.length}</strong>{' '}
               {project.students.length === 1
@@ -161,7 +161,7 @@ export default function ProjectInfo({ project, setPage, refetchProject }) {
             <AssignmentIcon className="color-secondary" />{' '}
             <span
               className="cursor-pointer hover:underline"
-              onClick={() => setPage('mentors')}
+              onClick={() => setPage('members')}
             >
               <strong>{project.mentors.length}</strong>{' '}
               {project.mentors.length === 1 ? 'mentor' : 'mentores'}

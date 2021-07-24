@@ -9,6 +9,7 @@ import AskToJoinProjectModal from './components/AskToJoinProjectModal'
 import SettingsPopover from './components/SettingsPopover'
 import { MyProfileContext } from '../../../../../../contexts/MyProfile'
 import { AuthContext } from '../../../../../../contexts/Auth'
+import DescriptiveHeader from '../../../../../global/DescriptiveHeader'
 
 export default function Members({ project, refetchProject }) {
   const { myProfile } = useContext(MyProfileContext)
@@ -66,21 +67,29 @@ export default function Members({ project, refetchProject }) {
 
   return (
     <div className="w-full">
-      {!projectMembersId.includes(myProfile.id) && (
-        <AskToJoinProjectModal
-          type={myProfile.type}
-          project={project}
-          refetchProject={refetchProject}
-        />
-      )}
       <div className="flex">
         <div className="p-2 w-1/2">
-          {projectStudentsId.includes(myProfile.id) && (
+          <DescriptiveHeader
+            title={`Universitários (${project.students.length})`}
+            description="Os universitários são protagonistas no projeto, aqueles que de fato colocam a mão na massa.
+            Somente universitários podem editar os dados e descrição do projeto."
+          />
+          {projectStudentsId.includes(myProfile.id) ? (
             <AddMembersModal
               type="student"
               project={project}
               refetchProject={refetchProject}
             />
+          ) : (
+            <>
+              {myProfile.type === 'student' && (
+                <AskToJoinProjectModal
+                  type="student"
+                  project={project}
+                  refetchProject={refetchProject}
+                />
+              )}
+            </>
           )}
           {project.students.map(profile => (
             <ProfileListItemWithIcon key={profile.id} profile={profile}>
@@ -120,12 +129,27 @@ export default function Members({ project, refetchProject }) {
           )}
         </div>
         <div className="p-2 w-1/2">
-          {projectStudentsId.includes(myProfile.id) && (
+          <DescriptiveHeader
+            title={`Mentores (${project.mentors.length})`}
+            description="Os mentores são usuários que possuem conhecimento e experiência em áreas específicas,
+             podendo assim direcionar e auxiliar os universitários do projeto."
+          />
+          {projectStudentsId.includes(myProfile.id) ? (
             <AddMembersModal
               type="mentor"
               project={project}
               refetchProject={refetchProject}
             />
+          ) : (
+            <>
+              {myProfile.type === 'mentor' && (
+                <AskToJoinProjectModal
+                  type="mentor"
+                  project={project}
+                  refetchProject={refetchProject}
+                />
+              )}
+            </>
           )}
           {project.mentors.map(profile => (
             <ProfileListItemWithIcon key={profile.id} profile={profile}>
