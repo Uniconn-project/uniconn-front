@@ -116,7 +116,9 @@ export default function SettingsPopover({
             }
           >
             <HighlightOffIcon className="icon-sm mr-2" />
-            Remover do projeto
+            {profile.id === myProfile.id
+              ? 'Sair do projeto'
+              : 'Remover do projeto'}
           </li>
         </ul>
       </Popover>

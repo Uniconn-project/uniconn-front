@@ -17,7 +17,7 @@ export default function AskToJoinProjectModal({
 
   const [isOpen, setIsOpen] = useState(false)
   const [message, setMessage] = useState(
-    'Ei! Acredito que possa contribuir com o projeto.'
+    'Ei! Acredito que posso contribuir com o projeto.'
   )
   const [errorMsg, setErrorMsg] = useState({
     isOpen: false,

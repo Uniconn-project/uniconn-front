@@ -1,61 +1,29 @@
 import React, { useContext, useState } from 'react'
 import CircularProgress from '@material-ui/core/CircularProgress'
-import CloseIcon from '@material-ui/icons/Close'
 import Snackbar from '@material-ui/core/Snackbar'
 import Alert from '@material-ui/lab/Alert'
-import ProfileListItem from '../../../../../global/ProfileListItem'
-import ProfileListItemWithIcon from '../../../../../global/ProfileListItemWithIcon'
+import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos'
+import AnimateHeight from 'react-animate-height'
 import AddMembersModal from './components/AddMembersModal'
 import AskToJoinProjectModal from './components/AskToJoinProjectModal'
-import SettingsPopover from './components/SettingsPopover'
 import { MyProfileContext } from '../../../../../../contexts/MyProfile'
-import { AuthContext } from '../../../../../../contexts/Auth'
+import DescriptiveHeader from '../../../../../global/DescriptiveHeader'
+import MembersList from './components/MembersList'
 
 export default function Members({ project, refetchProject }) {
   const { myProfile } = useContext(MyProfileContext)
-  const { getToken } = useContext(AuthContext)
 
+  const [studentListIsOpen, setStudentListIsOpen] = useState(false)
+  const [mentorListIsOpen, setMentorListIsOpen] = useState(false)
   const [errorMsg, setErrorMsg] = useState({
     isOpen: false,
     message: ''
   })
 
   const projectStudentsId = project.students.map(profile => profile.id)
-
   const projectMembersId = projectStudentsId.concat(
     project.mentors.map(profile => profile.id)
   )
-
-  const handleCancelProjectInvitation = async (e, username) => {
-    e.stopPropagation()
-
-    if (window.confirm('Remover convite?')) {
-      fetch(
-        `${process.env.NEXT_PUBLIC_API_HOST}/api/projects/uninvite-${type}-from-project/${project.id}`,
-        {
-          method: 'PUT',
-          headers: {
-            Authorization: 'JWT ' + (await getToken()),
-            'Content-type': 'application/json'
-          },
-          body: JSON.stringify({
-            username: username
-          })
-        }
-      )
-        .then(response => response.json())
-        .then(data => {
-          if (data === 'success') {
-            refetchProject('uninvite-user')
-          } else {
-            setErrorMsg({
-              isOpen: true,
-              message: data
-            })
-          }
-        })
-    }
-  }
 
   if (!myProfile || !project) {
     return (
@@ -66,85 +34,94 @@ export default function Members({ project, refetchProject }) {
   }
 
   return (
-    <div className="w-full py-4 pt-0">
-      <div>
-        {projectStudentsId.includes(myProfile.id) ? (
-          <>
-            {project[`${type}s`].map(profile => (
-              <>
-                <ProfileListItemWithIcon key={profile.id} profile={profile}>
-                  {profile.id !== myProfile.id && (
-                    <SettingsPopover
-                      profile={profile}
-                      project={project}
-                      refetchProject={refetchProject}
-                      setErrorMsg={setErrorMsg}
-                    />
-                  )}
-                </ProfileListItemWithIcon>
-              </>
-            ))}
-          </>
-        ) : (
-          <>
-            {project[`${type}s`].map(profile => (
-              <ProfileListItem key={profile.id} profile={profile} />
-            ))}
-          </>
-        )}
-        {projectMembersId.includes(myProfile.id) && (
-          <>
-            {project[`pending_invited_${type}s`].map(profile => (
-              <>
-                {projectStudentsId.includes(myProfile.id) ? (
-                  <ProfileListItemWithIcon
-                    key={profile.id}
-                    profile={profile}
-                    className="filter brightness-50"
-                  >
-                    <CloseIcon
-                      className="icon-sm color-red-hover"
-                      onClick={e =>
-                        handleCancelProjectInvitation(e, profile.user.username)
-                      }
-                    />
-                  </ProfileListItemWithIcon>
-                ) : (
-                  <ProfileListItem
-                    key={profile.id}
-                    profile={profile}
-                    className="filter brightness-50"
-                  />
-                )}
-              </>
-            ))}
-          </>
-        )}
-      </div>
-      {projectStudentsId.includes(myProfile.id) && (
-        <AddMembersModal
-          type={type}
-          project={project}
-          refetchProject={refetchProject}
-        />
-      )}
-      {myProfile.type === type && (
-        <>
-          {projectMembersId.includes(myProfile.id) ? (
-            <LeaveProject
+    <div className="w-full">
+      <div className="">
+        <div className="px-2 pt-2">
+          <DescriptiveHeader
+            title={`Universitários (${project.students.length})`}
+            description="Os universitários são protagonistas no projeto, aqueles que de fato colocam a mão na massa.
+            Somente universitários podem editar os dados e descrição do projeto."
+            onClick={() => setStudentListIsOpen(!studentListIsOpen)}
+          >
+            <ArrowForwardIosIcon
+              className="icon-sm transition-300"
+              style={{
+                transform: `rotate(${studentListIsOpen ? '90deg' : '0'})`
+              }}
+            />
+          </DescriptiveHeader>
+          {projectStudentsId.includes(myProfile.id) ? (
+            <AddMembersModal
+              type="student"
               project={project}
               refetchProject={refetchProject}
-              setErrorMsg={setErrorMsg}
             />
           ) : (
-            <AskToJoinProjectModal
-              type={type}
+            <>
+              {myProfile.type === 'student' && (
+                <AskToJoinProjectModal
+                  type="student"
+                  project={project}
+                  refetchProject={refetchProject}
+                />
+              )}
+            </>
+          )}
+          <AnimateHeight height={studentListIsOpen ? 'auto' : 0}>
+            <MembersList
+              type="students"
+              project={project}
+              refetchProject={refetchProject}
+              projectStudentsId={projectStudentsId}
+              projectMembersId={projectMembersId}
+              setErrorMsg={setErrorMsg}
+            />
+          </AnimateHeight>
+        </div>
+        <div className="px-2 pt-2">
+          <DescriptiveHeader
+            title={`Mentores (${project.mentors.length})`}
+            description="Os mentores são usuários que possuem conhecimento e experiência em áreas específicas,
+             podendo assim direcionar e auxiliar os universitários do projeto."
+            onClick={() => setMentorListIsOpen(!mentorListIsOpen)}
+          >
+            <ArrowForwardIosIcon
+              className="icon-sm transition-300"
+              style={{
+                transform: `rotate(${mentorListIsOpen ? '90deg' : '0'})`
+              }}
+            />
+          </DescriptiveHeader>
+          {projectStudentsId.includes(myProfile.id) ? (
+            <AddMembersModal
+              type="mentor"
               project={project}
               refetchProject={refetchProject}
             />
+          ) : (
+            <>
+              {!projectMembersId.includes(myProfile.id) &&
+                myProfile.type === 'mentor' && (
+                  <AskToJoinProjectModal
+                    type="mentor"
+                    project={project}
+                    refetchProject={refetchProject}
+                  />
+                )}
+            </>
           )}
-        </>
-      )}
+          <AnimateHeight height={mentorListIsOpen ? 'auto' : 0}>
+            <MembersList
+              type="mentors"
+              project={project}
+              refetchProject={refetchProject}
+              projectStudentsId={projectStudentsId}
+              projectMembersId={projectMembersId}
+              setErrorMsg={setErrorMsg}
+            />
+          </AnimateHeight>
+        </div>
+      </div>
       <Snackbar
         open={errorMsg.isOpen}
         autoHideDuration={6000}

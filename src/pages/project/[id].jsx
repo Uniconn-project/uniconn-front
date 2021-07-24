@@ -180,24 +180,32 @@ export default function Project(props) {
         <div className="w-full flex justify-center p-2 pt-0 lg:p-0 lg:w-2/3 lg:justify-start lg:box-border">
           <div className="w-full" style={{ maxWidth: 600 }}>
             <ProjectHeader project={project} page={page} setPage={setPage} />
-            {page === 'description' && (
-              <Description project={project} refetchProject={refetchProject} />
-            )}
-            {page === 'discussions' && (
-              <Discussions project={project} openDiscussion={openDiscussion} />
-            )}
-            {page === 'discussion' && (
-              <Discussion discussion={openedDiscussion} />
-            )}
-            {page === 'links' && (
-              <Links project={project} refetchProject={refetchProject} />
-            )}
-            {isProjectMember && page === 'tools' && (
-              <Tools project={project} refetchProject={refetchProject} />
-            )}
-            {page === 'members' && (
-              <Members project={project} refetchProject={refetchProject} />
-            )}
+            <div style={{ height: '80vh' }}>
+              {page === 'description' && (
+                <Description
+                  project={project}
+                  refetchProject={refetchProject}
+                />
+              )}
+              {page === 'discussions' && (
+                <Discussions
+                  project={project}
+                  openDiscussion={openDiscussion}
+                />
+              )}
+              {page === 'discussion' && (
+                <Discussion discussion={openedDiscussion} />
+              )}
+              {page === 'links' && (
+                <Links project={project} refetchProject={refetchProject} />
+              )}
+              {isProjectMember && page === 'tools' && (
+                <Tools project={project} refetchProject={refetchProject} />
+              )}
+              {page === 'members' && (
+                <Members project={project} refetchProject={refetchProject} />
+              )}
+            </div>
           </div>
         </div>
       </div>
