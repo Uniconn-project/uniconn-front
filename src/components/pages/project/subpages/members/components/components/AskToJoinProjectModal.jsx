@@ -16,7 +16,9 @@ export default function AskToJoinProjectModal({
   const { getToken } = useContext(AuthContext)
 
   const [isOpen, setIsOpen] = useState(false)
-  const [message, setMessage] = useState('')
+  const [message, setMessage] = useState(
+    'Ei! Acredito que possa contribuir com o projeto.'
+  )
   const [errorMsg, setErrorMsg] = useState({
     isOpen: false,
     message: ''

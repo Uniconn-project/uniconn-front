@@ -8,7 +8,6 @@ import ProfileListItemWithIcon from '../../../../../global/ProfileListItemWithIc
 import AddMembersModal from './components/AddMembersModal'
 import AskToJoinProjectModal from './components/AskToJoinProjectModal'
 import SettingsPopover from './components/SettingsPopover'
-import LeaveProject from './components/LeaveProject'
 import { MyProfileContext } from '../../../../../../contexts/MyProfile'
 import { AuthContext } from '../../../../../../contexts/Auth'
 
