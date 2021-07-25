@@ -15,8 +15,6 @@ export default function Projects() {
   const [renderedProjects, setRenderedProjects] = useState(null)
 
   useEffect(() => {
-    if (renderedProjects !== null) return
-
     setRenderedProjects(projects)
   }, [projects]) // eslint-disable-line
 
@@ -32,6 +30,7 @@ export default function Projects() {
 
   return (
     <Page title="Projetos | Uniconn" page="projects" loginRequired header>
+      {renderedProjects &&
       <div className="justify-center w-full h-full flex">
         <div className="hidden lg:w-1/3 lg:flex lg:justify-end lg:mr-10 lg:box-border">
           <div className="w-60">
