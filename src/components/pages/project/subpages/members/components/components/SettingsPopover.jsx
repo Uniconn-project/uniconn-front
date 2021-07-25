@@ -2,7 +2,8 @@ import React, { useState, useRef, useContext } from 'react'
 import SettingsIcon from '@material-ui/icons/Settings'
 import HighlightOffIcon from '@material-ui/icons/HighlightOff'
 import Popover from '@material-ui/core/Popover'
-import { AuthContext } from '../../../../../../contexts/Auth'
+import { MyProfileContext } from '../../../../../../../contexts/MyProfile'
+import { AuthContext } from '../../../../../../../contexts/Auth'
 
 export default function SettingsPopover({
   profile,
@@ -10,6 +11,7 @@ export default function SettingsPopover({
   refetchProject,
   setErrorMsg
 }) {
+  const { myProfile } = useContext(MyProfileContext)
   const { getToken } = useContext(AuthContext)
 
   const [isOpen, setIsOpen] = useState(false)
@@ -58,6 +60,31 @@ export default function SettingsPopover({
     }
   }
 
+  const handleLeaveProject = async () => {
+    if (window.confirm('Tem certeza que deseja sair do projeto?')) {
+      fetch(
+        `${process.env.NEXT_PUBLIC_API_HOST}/api/projects/leave-project/${project.id}`,
+        {
+          method: 'PATCH',
+          headers: {
+            Authorization: 'JWT ' + (await getToken())
+          }
+        }
+      )
+        .then(response => response.json())
+        .then(data => {
+          if (data === 'success') {
+            refetchProject('leave-project')
+          } else {
+            setErrorMsg({
+              isOpen: true,
+              message: data
+            })
+          }
+        })
+    }
+  }
+
   return (
     <>
       <SettingsIcon
@@ -82,10 +109,16 @@ export default function SettingsPopover({
         <ul>
           <li
             className="flex items-center bg-dark bg-hover cursor-pointer rounded-none p-2"
-            onClick={handleRemoveFromProject}
+            onClick={
+              profile.id === myProfile.id
+                ? handleLeaveProject
+                : handleRemoveFromProject
+            }
           >
             <HighlightOffIcon className="icon-sm mr-2" />
-            Remover do projeto
+            {profile.id === myProfile.id
+              ? 'Sair do projeto'
+              : 'Remover do projeto'}
           </li>
         </ul>
       </Popover>

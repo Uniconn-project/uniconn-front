@@ -16,6 +16,7 @@
   "rules": {
     "space-before-function-paren": "off",
     "multiline-ternary": "off",
+    "indent": "off",
     "react/prop-types": "off",
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn"

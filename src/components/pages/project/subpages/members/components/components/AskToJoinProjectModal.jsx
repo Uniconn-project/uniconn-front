@@ -6,7 +6,7 @@ import Fade from '@material-ui/core/Fade'
 import TextField from '@material-ui/core/TextField'
 import Snackbar from '@material-ui/core/Snackbar'
 import Alert from '@material-ui/lab/Alert'
-import { AuthContext } from '../../../../../../contexts/Auth'
+import { AuthContext } from '../../../../../../../contexts/Auth'
 
 export default function AskToJoinProjectModal({
   type,
@@ -16,7 +16,9 @@ export default function AskToJoinProjectModal({
   const { getToken } = useContext(AuthContext)
 
   const [isOpen, setIsOpen] = useState(false)
-  const [message, setMessage] = useState('')
+  const [message, setMessage] = useState(
+    'Ei! Acredito que posso contribuir com o projeto.'
+  )
   const [errorMsg, setErrorMsg] = useState({
     isOpen: false,
     message: ''
