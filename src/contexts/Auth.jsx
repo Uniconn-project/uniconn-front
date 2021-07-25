@@ -2,6 +2,7 @@ import React, { useState, useEffect, createContext } from 'react'
 import Router from 'next/router'
 
 const API_BASE = process.env.NEXT_PUBLIC_API_HOST
+const isDev = process.env.NODE_ENV === 'development'
 
 const fetchToken = (username, password) => {
   const url = API_BASE + '/token/'
@@ -39,14 +40,14 @@ export default function AuthProvider({ children }) {
       return false
     }
     const expiry = new Date(accessTokenExpiry)
-    console.log('Checking token expiry:', expiry)
+    isDev && console.log('Checking token expiry:', expiry)
     return expiry.getTime() > Date.now()
   }
 
   const initAuth = async () => {
     setLoading(true)
     if (!accessTokenIsValid()) {
-      console.log('Invalid access token so refetching')
+      isDev && console.log('Invalid access token so refetching')
       await refreshToken()
     } else {
       setIsAuthenticated(true)
@@ -92,18 +93,21 @@ export default function AuthProvider({ children }) {
 
   const getToken = async () => {
     // Returns an access token if there's one or refetches a new one
-    console.log('Getting access token..')
+    isDev && console.log('Getting access token..')
     if (accessTokenIsValid()) {
-      console.log('Getting access token.. existing token still valid')
+      isDev && console.log('Getting access token.. existing token still valid')
       return Promise.resolve(accessToken)
     } else if (loading) {
-      while (loading) {
-        console.log('Getting access token.. waiting for token to be refreshed')
-      }
-      // Assume this means the token is in the middle of refreshing
-      return Promise.resolve(accessToken)
+      return new Promise(resolve => {
+        const interval = setInterval(() => {
+          if (!loading) {
+            clearInterval(interval)
+            resolve(accessToken)
+          }
+        })
+      }, 100)
     } else {
-      console.log('Getting access token.. getting a new token')
+      isDev && console.log('Getting access token.. getting a new token')
       const token = await refreshToken()
       return token
     }
