@@ -5,7 +5,7 @@ import Fade from '@material-ui/core/Fade'
 import TextField from '@material-ui/core/TextField'
 import CloseIcon from '@material-ui/icons/Close'
 import AddAPhotoOutlinedIcon from '@material-ui/icons/AddAPhotoOutlined'
-import UniversityMajorSkillsForm from '../../../../UniversityMajorSkillsForm'
+import UniversityMajorSkillsForm from '../../../UniversityMajorSkillsForm'
 
 export default function EditProfileModal({
   profile,
