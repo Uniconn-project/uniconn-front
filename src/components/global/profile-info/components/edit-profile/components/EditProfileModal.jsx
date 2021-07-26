@@ -2,13 +2,10 @@ import React from 'react'
 import Modal from '@material-ui/core/Modal'
 import Backdrop from '@material-ui/core/Backdrop'
 import Fade from '@material-ui/core/Fade'
-import SchoolIcon from '@material-ui/icons/School'
-import AssignmentIcon from '@material-ui/icons/Assignment'
 import TextField from '@material-ui/core/TextField'
 import CloseIcon from '@material-ui/icons/Close'
 import AddAPhotoOutlinedIcon from '@material-ui/icons/AddAPhotoOutlined'
-import StudentBaseForm from '../../../../StudentBaseForm'
-import MentorBaseForm from '../../../../MentorBaseForm'
+import UniversityMajorSkillsForm from '../../../../UniversityMajorSkillsForm'
 
 export default function EditProfileModal({
   profile,
@@ -51,17 +48,10 @@ export default function EditProfileModal({
           </div>
           <div className="relative w-full flex justify-center items-center p-4 b-bottom-transparent">
             <div className="flex flex-col items-center">
-              <div className="relative">
-                <img
-                  src={postData.photo || profile.photo}
-                  className={`profile-img-lg img-${profile.type}`}
-                />
-                {profile.type === 'student' ? (
-                  <SchoolIcon className="icon" />
-                ) : (
-                  <AssignmentIcon className="icon" />
-                )}
-              </div>
+              <img
+                src={postData.photo || profile.photo}
+                className="profile-img-lg"
+              />
               <span className="mt-2">{profile.user.email}</span>
             </div>
             <label
@@ -122,15 +112,10 @@ export default function EditProfileModal({
                   onChange={handleChange('linkedIn')}
                 />
               </div>
-              {profile.type === 'student' && (
-                <StudentBaseForm
-                  className="justify-between"
-                  usePostData={usePostData}
-                />
-              )}
-              {profile.type === 'mentor' && (
-                <MentorBaseForm usePostData={usePostData} />
-              )}
+              <UniversityMajorSkillsForm
+                className="justify-between"
+                usePostData={usePostData}
+              />
             </div>
           </div>
           <div className="w-full p-4">

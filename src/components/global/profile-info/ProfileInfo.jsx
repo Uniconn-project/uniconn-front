@@ -1,10 +1,7 @@
 import React, { useContext } from 'react'
 import CircularProgress from '@material-ui/core/CircularProgress'
-import SchoolIcon from '@material-ui/icons/School'
-import AssignmentIcon from '@material-ui/icons/Assignment'
 import ArrowBackIcon from '@material-ui/icons/ArrowBack'
 import StudentInfo from './components/StudentInfo'
-import MentorInfo from './components/MentorInfo'
 import EditProfile from './components/edit-profile/EditProfile'
 import { MyProfileContext } from '../../../contexts/MyProfile'
 
@@ -30,17 +27,7 @@ export default function ProfileInfo({ profile }) {
           </div>
         )}
         <div className="w-full flex justify-start pl-10 lg:justify-center lg:pl-0">
-          <div className="relative">
-            <img
-              src={profile.photo}
-              className={`profile-img-lg img-${profile.type}`}
-            />
-            {profile.type === 'student' ? (
-              <SchoolIcon className="icon" />
-            ) : (
-              <AssignmentIcon className="icon" />
-            )}
-          </div>
+          <img src={profile.photo} className="profile-img-lg shadow-md" />
         </div>
         <div className="w-full pl-10">
           <h4 className="mt-2 break-words">
@@ -56,8 +43,7 @@ export default function ProfileInfo({ profile }) {
       </div>
       <div className="w-full pl-4 pr-1 pt-6 pb-2">
         <ul>
-          {profile.type === 'student' && <StudentInfo profile={profile} />}
-          {profile.type === 'mentor' && <MentorInfo profile={profile} />}
+          <StudentInfo profile={profile} />
         </ul>
       </div>
       {profile.id === myProfile.id && <EditProfile profile={profile} />}

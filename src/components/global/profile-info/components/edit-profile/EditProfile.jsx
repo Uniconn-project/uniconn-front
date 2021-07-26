@@ -16,14 +16,10 @@ export default function EditProfile({ profile }) {
     last_name: profile.last_name,
     bio: profile.bio,
     linkedIn: profile.linkedIn || '',
-    university: profile.type === 'student' && profile.student.university.name,
-    major: profile.type === 'student' && profile.student.major.name,
-    skills:
-      profile.type === 'student' &&
-      profile.student.skills.map(skill => skill.name),
-    markets:
-      profile.type === 'mentor' &&
-      profile.mentor.markets.map(market => market.name)
+    is_attending_university: profile.is_attending_university,
+    university_name: profile.university && profile.university.name,
+    major_name: profile.major && profile.major.name,
+    skills_names: profile.skills.map(skill => skill.name)
   }
 
   const { getToken } = useContext(AuthContext)

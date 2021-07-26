@@ -22,7 +22,7 @@ export const getStaticProps = async () => {
   }
 }
 
-export default function StudentBaseForm(props) {
+export default function UniversityMajorSkillsForm(props) {
   const [postData, setPostData] = props.usePostData()
 
   const { data: universities } = useFetch(
@@ -61,7 +61,7 @@ export default function StudentBaseForm(props) {
             labelId="university-input-label"
             data-cy="student-university-select"
             value={postData.university}
-            onChange={handleChange('university')}
+            onChange={handleChange('university_name')}
           >
             {universities.map(university => (
               <MenuItem key={university.id} value={university.name}>
@@ -76,7 +76,7 @@ export default function StudentBaseForm(props) {
             labelId="major-input-label"
             data-cy="student-major-select"
             value={postData.major}
-            onChange={handleChange('major')}
+            onChange={handleChange('major_name')}
           >
             {majors.map(major => (
               <MenuItem key={major.id} value={major.name}>

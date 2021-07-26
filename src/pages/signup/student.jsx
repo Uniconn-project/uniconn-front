@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react'
 import { useRouter } from 'next/router'
 import Page from '../../components/Page'
 import BaseForm from '../../components/pages/signup/SignupBaseForm'
-import StudentBaseForm from '../../components/global/StudentBaseForm'
+import UniversityMajorSkillsForm from '../../components/global/UniversityMajorSkillsForm'
 import { AuthContext } from '../../contexts/Auth'
 
 export default function Student() {
@@ -22,7 +22,9 @@ export default function Student() {
       <div className="h-full flex flex-col justify-start items-center">
         <h1>Aluno</h1>
         <BaseForm parentPostData={postData} type="student">
-          <StudentBaseForm usePostData={() => [postData, setPostData]} />
+          <UniversityMajorSkillsForm
+            usePostData={() => [postData, setPostData]}
+          />
         </BaseForm>
       </div>
     </Page>
