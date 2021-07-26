@@ -6,11 +6,10 @@ import { MyProfileContext } from '../../../../../../../contexts/MyProfile'
 import { AuthContext } from '../../../../../../../contexts/Auth'
 
 export default function MembersList({
-  type,
   project,
   refetchProject,
-  projectStudentsId,
-  projectMembersId,
+  isProjectMember,
+  isProjectAdmin,
   setErrorMsg
 }) {
   const { myProfile } = useContext(MyProfileContext)
@@ -21,7 +20,7 @@ export default function MembersList({
 
     if (window.confirm('Remover convite?')) {
       fetch(
-        `${process.env.NEXT_PUBLIC_API_HOST}/api/projects/uninvite-${type}-from-project/${project.id}`,
+        `${process.env.NEXT_PUBLIC_API_HOST}/api/projects/uninvite-user-from-project/${project.id}`,
         {
           method: 'PUT',
           headers: {
@@ -49,7 +48,7 @@ export default function MembersList({
 
   return (
     <>
-      {project[type].map(profile => profile.id).includes(myProfile.id) && (
+      {isProjectMember && (
         <ProfileListItemWithIcon profile={myProfile}>
           <SettingsPopover
             profile={myProfile}
@@ -59,13 +58,16 @@ export default function MembersList({
           />
         </ProfileListItemWithIcon>
       )}
-      {project[type]
-        .filter(profile => profile.id !== myProfile.id)
-        .map(profile => (
-          <ProfileListItemWithIcon key={profile.id} profile={profile}>
-            {projectStudentsId.includes(myProfile.id) && (
+      {project.members
+        .filter(membership => membership.profile.id !== myProfile.id)
+        .map(membership => (
+          <ProfileListItemWithIcon
+            key={membership.id}
+            profile={membership.profile}
+          >
+            {isProjectAdmin && (
               <SettingsPopover
-                profile={profile}
+                profile={membership.profile}
                 project={project}
                 refetchProject={refetchProject}
                 setErrorMsg={setErrorMsg}
@@ -73,15 +75,15 @@ export default function MembersList({
             )}
           </ProfileListItemWithIcon>
         ))}
-      {projectMembersId.includes(myProfile.id) && (
+      {isProjectMember && (
         <>
-          {project[`pending_invited_${type}`].map(profile => (
+          {project.pending_invited_profiles.map(profile => (
             <ProfileListItemWithIcon
               key={profile.id}
               profile={profile}
               className="filter brightness-50"
             >
-              {projectStudentsId.includes(myProfile.id) && (
+              {isProjectAdmin && (
                 <CloseIcon
                   className="icon-sm color-red-hover"
                   onClick={e =>

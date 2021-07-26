@@ -82,7 +82,7 @@ export default function UniversityMajorSkillsForm(props) {
               <Select
                 labelId="university-input-label"
                 data-cy="student-university-select"
-                value={postData.university}
+                value={postData.university_name}
                 onChange={handleChange('university_name')}
               >
                 {universities.map(university => (
@@ -97,7 +97,7 @@ export default function UniversityMajorSkillsForm(props) {
               <Select
                 labelId="major-input-label"
                 data-cy="student-major-select"
-                value={postData.major}
+                value={postData.major_name}
                 onChange={handleChange('major_name')}
               >
                 {majors.map(major => (

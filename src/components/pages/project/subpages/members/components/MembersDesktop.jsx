@@ -8,18 +8,18 @@ import { MyProfileContext } from '../../../../../../contexts/MyProfile'
 import DescriptiveHeader from '../../../../../global/DescriptiveHeader'
 import MembersList from './components/MembersList'
 
-export default function Members({ project, refetchProject }) {
+export default function Members({
+  project,
+  isProjectMember,
+  isProjectAdmin,
+  refetchProject
+}) {
   const { myProfile } = useContext(MyProfileContext)
 
   const [errorMsg, setErrorMsg] = useState({
     isOpen: false,
     message: ''
   })
-
-  const projectStudentsId = project.students.map(profile => profile.id)
-  const projectMembersId = projectStudentsId.concat(
-    project.mentors.map(profile => profile.id)
-  )
 
   if (!myProfile || !project) {
     return (
@@ -31,72 +31,33 @@ export default function Members({ project, refetchProject }) {
 
   return (
     <div className="w-full">
-      <div className="flex">
-        <div className="p-2 w-1/2">
-          <DescriptiveHeader
-            title={`Universitários (${project.students.length})`}
-            description="Os universitários são protagonistas no projeto, aqueles que de fato colocam a mão na massa.
-            Somente universitários podem editar os dados e descrição do projeto."
-          />
-          {projectStudentsId.includes(myProfile.id) ? (
-            <AddMembersModal
-              type="student"
-              project={project}
-              refetchProject={refetchProject}
-            />
-          ) : (
-            <>
-              {myProfile.type === 'student' && (
-                <AskToJoinProjectModal
-                  type="student"
-                  project={project}
-                  refetchProject={refetchProject}
-                />
-              )}
-            </>
-          )}
-          <MembersList
-            type="students"
-            project={project}
-            refetchProject={refetchProject}
-            projectStudentsId={projectStudentsId}
-            projectMembersId={projectMembersId}
-            setErrorMsg={setErrorMsg}
-          />
-        </div>
-        <div className="p-2 w-1/2">
-          <DescriptiveHeader
-            title={`Mentores (${project.mentors.length})`}
-            description="Os mentores são usuários que possuem conhecimento e experiência em áreas específicas,
-             podendo assim direcionar e auxiliar os universitários do projeto."
-          />
-          {projectStudentsId.includes(myProfile.id) ? (
-            <AddMembersModal
-              type="mentor"
-              project={project}
-              refetchProject={refetchProject}
-            />
-          ) : (
-            <>
-              {!projectMembersId.includes(myProfile.id) &&
-                myProfile.type === 'mentor' && (
-                  <AskToJoinProjectModal
-                    type="mentor"
-                    project={project}
-                    refetchProject={refetchProject}
-                  />
-                )}
-            </>
-          )}
-          <MembersList
-            type="mentors"
-            project={project}
-            refetchProject={refetchProject}
-            projectStudentsId={projectStudentsId}
-            projectMembersId={projectMembersId}
-            setErrorMsg={setErrorMsg}
-          />
-        </div>
+      <div className="w-full p-2">
+        <DescriptiveHeader
+          title="Participantes do projeto"
+          description="Os participantes de um projeto são divididos em dois cargos: Admin e Membro.
+           Os admins tem acesso a todas as funcionalidades (convidar usuários, editar descrição, deletar discussões, etc).
+           Os membros podem apenas adicionar e remover links e ferramentas."
+        />
+        {isProjectAdmin ? (
+          <AddMembersModal project={project} refetchProject={refetchProject} />
+        ) : (
+          <>
+            {myProfile.type === 'student' && (
+              <AskToJoinProjectModal
+                type="student"
+                project={project}
+                refetchProject={refetchProject}
+              />
+            )}
+          </>
+        )}
+        <MembersList
+          project={project}
+          refetchProject={refetchProject}
+          isProjectMember={isProjectMember}
+          isProjectAdmin={isProjectAdmin}
+          setErrorMsg={setErrorMsg}
+        />
       </div>
       <Snackbar
         open={errorMsg.isOpen}

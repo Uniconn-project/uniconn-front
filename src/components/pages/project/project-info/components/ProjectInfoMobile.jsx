@@ -1,6 +1,4 @@
 import React, { useState, useContext, useEffect } from 'react'
-import SchoolIcon from '@material-ui/icons/School'
-import AssignmentIcon from '@material-ui/icons/Assignment'
 import EditProjectDataModal from '../../EditProjectDataModal'
 import StarBorderIcon from '@material-ui/icons/StarBorder'
 import StarIcon from '@material-ui/icons/Star'
@@ -13,7 +11,11 @@ import { mutate } from 'swr'
 import { MyProfileContext } from '../../../../../contexts/MyProfile'
 import { AuthContext } from '../../../../../contexts/Auth'
 
-export default function ProjectInfo({ project, setPage, refetchProject }) {
+export default function ProjectInfo({
+  project,
+  isProjectAdmin,
+  refetchProject
+}) {
   const { myProfile } = useContext(MyProfileContext)
   const { getToken } = useContext(AuthContext)
 
@@ -157,37 +159,12 @@ export default function ProjectInfo({ project, setPage, refetchProject }) {
           </span>
         </div>
       </div>
-      <div className="w-full pl-4 pr-1 pt-6 pb-2">
-        <ul>
-          <li className="mb-2">
-            <SchoolIcon className="color-primary" />{' '}
-            <span
-              className="cursor-pointer hover:underline"
-              onClick={() => setPage('members')}
-            >
-              <strong>{project.students.length}</strong>{' '}
-              {project.students.length === 1
-                ? 'universitário'
-                : 'universitários'}
-            </span>
-          </li>
-          <li className="mb-2">
-            <AssignmentIcon className="color-secondary" />{' '}
-            <span
-              className="cursor-pointer hover:underline"
-              onClick={() => setPage('members')}
-            >
-              <strong>{project.mentors.length}</strong>{' '}
-              {project.mentors.length === 1 ? 'mentor' : 'mentores'}
-            </span>
-          </li>
-        </ul>
-      </div>
+
       <StarsProfilesModal
         useIsOpen={() => [starsModalIsOpen, setStarsModalIsOpen]}
         profiles={project.stars.map(star => star.profile)}
       />
-      {project.students.map(profile => profile.id).includes(myProfile.id) && (
+      {isProjectAdmin && (
         <EditProjectDataModal
           project={project}
           refetchProject={refetchProject}
