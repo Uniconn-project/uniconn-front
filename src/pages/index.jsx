@@ -59,13 +59,12 @@ export default function Index() {
                 <span style={{ color: 'var(--secondary-color)' }}>
                   projetos que vão fazer diferença
                 </span>{' '}
-                para sua carreira.
+                para sua vida.
               </h1>
               <p className="mt-4 mb-8">
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                Molestiae, iusto, sint magni molestias officia id maxime eaque
-                placeat consequuntur voluptatem quibusdam, cupiditate assumenda
-                similique error eos ex rem nostrum est.
+                Na Uniconn, você pode se conectar com pessoas de diversas áreas
+                para o desenvolvimento de startups, projetos sociais e
+                iniciativas acadêmicas.
               </p>
               <Link href="/signup">
                 <button className="btn-primary text-xl">Criar conta</button>
