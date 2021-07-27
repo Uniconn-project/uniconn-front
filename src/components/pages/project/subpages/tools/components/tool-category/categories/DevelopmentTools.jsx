@@ -12,10 +12,10 @@ export default function DevelopmentTools({ children }) {
           </strong>
         </div>
         <span className="text-xs">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque
-          architecto quidem totam a facere, voluptates laborum nam consequatur
-          vero et officiis repellendus amet eius recusandae dignissimos pariatur
-          nobis cum! Asperiores.
+          Ferramentas de desenvolvimento são aquelas utilizadas no
+          desenvolvimento de uma solução tecnológica como um site ou aplicativo.
+          São comumente utilizadas para desenvolver mockups e mvps funcionais.
+          Para mockups, recomendamos a plataforma Figma.
         </span>
       </div>
       <div className="pl-4">{children}</div>

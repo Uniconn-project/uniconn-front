@@ -151,6 +151,13 @@ export default function Project(props) {
           value: 'Você saiu do projeto!'
         })
         break
+
+      case 'promote-member':
+        setSuccessMsg({
+          isOpen: true,
+          value: 'Membro promovido!'
+        })
+        break
     }
   }
 

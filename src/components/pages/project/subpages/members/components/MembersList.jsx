@@ -60,12 +60,12 @@ export default function MembersList({
           <SettingsPopover
             profile={myProfile}
             project={project}
+            isProjectAdmin={isProjectAdmin}
             refetchProject={refetchProject}
             setErrorMsg={setErrorMsg}
           />
         </ProfileListItemWithIcon>
       )}
-      {console.log(project)}
       {project.members
         .filter(membership => membership.profile.id !== myProfile.id)
         .map(membership => (
@@ -78,6 +78,7 @@ export default function MembersList({
               <SettingsPopover
                 profile={membership.profile}
                 project={project}
+                isProjectAdmin={isProjectAdmin}
                 refetchProject={refetchProject}
                 setErrorMsg={setErrorMsg}
               />

@@ -48,7 +48,7 @@ export default function UniversityMajorSkillsForm(props) {
   }
 
   if (!universities || !majors || !skills) {
-    return <CircularProgress />
+    return <CircularProgress size={30} className="mb-2" />
   }
 
   return (
