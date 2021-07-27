@@ -84,12 +84,8 @@ export default function Discussions({
     <div className="w-full p-2">
       <DescriptiveHeader
         title="Discussões do projeto"
-        description="Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-        Integer nec nisi lobortis, viverra quam eu, ultricies leo. Proin a dictum ipsum.
-        Pellentesque nec nulla in est porta maximus. Aenean pellentesque tortor non lorem vestibulum luctus.
-        Sed ornare eros ac ante tempor aliquet.
-        Maecenas blandit, massa a feugiat sollicitudin, neque leo posuere odio, vel pharetra magna eros nec lectus.
-        Quisque blandit imperdiet egestas."
+        description="As discussões são o lugar onde usuários de fora do projeto se conectam com os de dentro.
+         Funcionam como comentários e podem ser de 3 tipos: dúvida, sugestão e feedback."
       />
       {!isProjectMember && (
         <CreateDiscussionForm
