@@ -1,4 +1,4 @@
-import React, { useState, useContext, useMemo } from 'react'
+import React, { useState, useContext } from 'react'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import Snackbar from '@material-ui/core/Snackbar'
 import Alert from '@material-ui/lab/Alert'
@@ -62,7 +62,7 @@ export default function Project(props) {
     .includes(myProfile.id)
 
   const isProjectAdmin = project.members
-    .filter(membership => membership.role === 'admin')
+    .filter(membership => membership.role.value === 'admin')
     .map(membership => membership.profile.id)
     .includes(myProfile.id)
 

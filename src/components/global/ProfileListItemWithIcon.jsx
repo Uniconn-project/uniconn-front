@@ -4,6 +4,7 @@ import Link from 'next/link'
 export default function ProfileListItemWithIcon({
   profile,
   children,
+  role = null,
   className = ''
 }) {
   return (
@@ -15,9 +16,12 @@ export default function ProfileListItemWithIcon({
           <div className="flex">
             <img src={profile.photo} className="profile-img-md mr-2" />
             <div>
-              <h5>
-                {profile.first_name} {profile.last_name}
-              </h5>
+              <div className="flex">
+                <h5>
+                  {profile.first_name} {profile.last_name}
+                </h5>
+                {role !== null && <span className="ml-2 text-sm">{role}</span>}
+              </div>
               <p className="self-start break-all color-secondary">
                 @{profile.user.username}
               </p>

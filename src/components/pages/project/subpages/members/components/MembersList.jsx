@@ -1,9 +1,9 @@
 import React, { useContext } from 'react'
 import CloseIcon from '@material-ui/icons/Close'
-import ProfileListItemWithIcon from '../../../../../../global/ProfileListItemWithIcon'
-import SettingsPopover from '../components/SettingsPopover'
-import { MyProfileContext } from '../../../../../../../contexts/MyProfile'
-import { AuthContext } from '../../../../../../../contexts/Auth'
+import ProfileListItemWithIcon from '../../../../../global/ProfileListItemWithIcon'
+import SettingsPopover from './SettingsPopover'
+import { MyProfileContext } from '../../../../../../contexts/MyProfile'
+import { AuthContext } from '../../../../../../contexts/Auth'
 
 export default function MembersList({
   project,
@@ -49,7 +49,14 @@ export default function MembersList({
   return (
     <>
       {isProjectMember && (
-        <ProfileListItemWithIcon profile={myProfile}>
+        <ProfileListItemWithIcon
+          profile={myProfile}
+          role={
+            project.members.filter(
+              membership => membership.profile.id === myProfile.id
+            )[0].role.readable
+          }
+        >
           <SettingsPopover
             profile={myProfile}
             project={project}
@@ -58,12 +65,14 @@ export default function MembersList({
           />
         </ProfileListItemWithIcon>
       )}
+      {console.log(project)}
       {project.members
         .filter(membership => membership.profile.id !== myProfile.id)
         .map(membership => (
           <ProfileListItemWithIcon
             key={membership.id}
             profile={membership.profile}
+            role={membership.role.readable}
           >
             {isProjectAdmin && (
               <SettingsPopover
