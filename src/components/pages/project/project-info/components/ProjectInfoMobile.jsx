@@ -101,7 +101,7 @@ export default function ProjectInfo({
       className="relative bg-transparent h-4/5 rounded-md shadow-lg w-full md:max-w-2xl lg:w-60"
       style={{ maxHeight: '50rem' }}
     >
-      <div className="b-bottom-light">
+      <div>
         {window.history.length > 1 && (
           <div
             className="mx-2 mt-2 p-1 w-max rounded-3xl cursor-pointer bg-primary bg-hover color-bg-light"

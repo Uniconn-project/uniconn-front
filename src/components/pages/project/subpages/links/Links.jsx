@@ -6,12 +6,10 @@ import Alert from '@material-ui/lab/Alert'
 import LinkIcon from '@material-ui/icons/Link'
 import AddLinkModal from './components/AddLinkModal'
 import LinkIconResolver from '../../../../global/LinkIconResolver'
-import { MyProfileContext } from '../../../../../contexts/MyProfile'
 import { AuthContext } from '../../../../../contexts/Auth'
 import DescriptiveHeader from '../../../../global/DescriptiveHeader'
 
-export default function Links({ project, refetchProject }) {
-  const { myProfile } = useContext(MyProfileContext)
+export default function Links({ project, isProjectMember, refetchProject }) {
   const { getToken } = useContext(AuthContext)
 
   const [errorMsg, setErrorMsg] = useState({
@@ -26,11 +24,6 @@ export default function Links({ project, refetchProject }) {
       </div>
     )
   }
-
-  const isProjectMember = project.students
-    .concat(project.mentors)
-    .map(profile => profile.id)
-    .includes(myProfile.id)
 
   const handleDelete = async linkId => {
     if (window.confirm('Remover link?')) {

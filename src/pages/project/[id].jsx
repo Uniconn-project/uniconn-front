@@ -208,7 +208,11 @@ export default function Project(props) {
                 <Discussion discussion={openedDiscussion} />
               )}
               {page === 'links' && (
-                <Links project={project} refetchProject={refetchProject} />
+                <Links
+                  project={project}
+                  isProjectMember={isProjectMember}
+                  refetchProject={refetchProject}
+                />
               )}
               {isProjectMember && page === 'tools' && (
                 <Tools project={project} refetchProject={refetchProject} />
