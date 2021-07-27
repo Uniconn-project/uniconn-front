@@ -50,22 +50,6 @@ export default function EditProfile({ profile }) {
   }
 
   const handleSubmit = async () => {
-    if (profile.type === 'student' && !postData.skills.length) {
-      setErrorMsg({
-        isOpen: true,
-        message: 'Selecione pelo menos uma habilidade!'
-      })
-      return
-    }
-
-    if (profile.type === 'mentor' && !postData.markets.length) {
-      setErrorMsg({
-        isOpen: true,
-        message: 'Selecione pelo menos uma expertise!'
-      })
-      return
-    }
-
     fetch(`${process.env.NEXT_PUBLIC_API_HOST}/api/profiles/edit-my-profile`, {
       method: 'PUT',
       headers: {

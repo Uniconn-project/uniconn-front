@@ -42,7 +42,7 @@ export default function Notifications() {
     })
 
     setProjectsInvitations(notifications.projects_invitations)
-    setProjectsEntryRequests(notifications.projects_entering_requests)
+    setProjectsEntryRequests(notifications.projects_entry_requests)
     setDiscussionsReplies(notifications.discussions_replies)
     setDiscussionsStars(notifications.discussions_stars)
   }

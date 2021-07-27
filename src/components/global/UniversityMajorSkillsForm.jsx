@@ -81,7 +81,7 @@ export default function UniversityMajorSkillsForm(props) {
               <InputLabel id="university-input-label">Universidade</InputLabel>
               <Select
                 labelId="university-input-label"
-                data-cy="student-university-select"
+                data-cy="university-select"
                 value={postData.university_name}
                 onChange={handleChange('university_name')}
               >
@@ -96,7 +96,7 @@ export default function UniversityMajorSkillsForm(props) {
               <InputLabel id="major-input-label">Curso</InputLabel>
               <Select
                 labelId="major-input-label"
-                data-cy="student-major-select"
+                data-cy="major-select"
                 value={postData.major_name}
                 onChange={handleChange('major_name')}
               >
@@ -113,12 +113,12 @@ export default function UniversityMajorSkillsForm(props) {
       </div>
       <div className="w-4/5">
         <FormControl className="w-full" style={{ marginBottom: '1rem' }}>
-          <InputLabel id="student-skills-select-label">
+          <InputLabel id="skills-select-label">
             Quais são suas habilidades?
           </InputLabel>
           <Select
-            data-cy="student-skills-select"
-            labelId="student-skills-select-label"
+            data-cy="skills-select"
+            labelId="skills-select-label"
             multiple
             value={postData.skills_names}
             onChange={handleChange('skills_names')}

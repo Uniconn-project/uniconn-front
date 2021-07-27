@@ -79,7 +79,7 @@ export default function Index() {
             <div className="md:w-1/2">
               <h2>
                 <span style={{ color: 'var(--secondary-color)' }}>1.</span> Crie
-                seu perfil como mentor ou universitário
+                seu perfil
               </h2>
               <p className="my-4">
                 Lorem ipsum dolor, sit amet consectetur adipisicing elit.

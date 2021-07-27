@@ -43,7 +43,6 @@ export default function Members({
         )}
         {!isProjectMember && (
           <AskToJoinProjectModal
-            type="student"
             project={project}
             refetchProject={refetchProject}
           />

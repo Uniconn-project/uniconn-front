@@ -13,7 +13,7 @@ import PrimaryLink from '../components/helpers/PrimaryLink'
 import UniversityMajorSkillsForm from '../components/global/UniversityMajorSkillsForm'
 import { AuthContext } from '../contexts/Auth'
 
-export default function Student() {
+export default function Signup() {
   const [postData, setPostData] = useState({
     first_name: '',
     last_name: '',
