@@ -8,17 +8,17 @@ import LinkIcon from '@material-ui/icons/Link'
 import BuildIcon from '@material-ui/icons/Build'
 import { MyProfileContext } from '../../../contexts/MyProfile'
 
-export default function ProjectHeader({ project, page, setPage }) {
+export default function ProjectHeader({
+  project,
+  page,
+  isProjectMember,
+  setPage
+}) {
   const { myProfile } = useContext(MyProfileContext)
 
   if (!project || !myProfile) {
     return <CircularProgress />
   }
-
-  const isProjectMember = project.students
-    .concat(project.mentors)
-    .map(profile => profile.id)
-    .includes(myProfile.id)
 
   return (
     <div className="sticky top-24 w-full mb-4 z-10 sm:top-32">
@@ -47,7 +47,7 @@ export default function ProjectHeader({ project, page, setPage }) {
               <span>({project.discussions_length})</span>
             </div>
           </Tooltip>
-          <Tooltip title="Equipe" placement="top" arrow>
+          <Tooltip title="Participantes" placement="top" arrow>
             <div
               className={`project-menu-item p-3 nav-link cursor-pointer color-headline-hover flex justify-center items-center flex-grow ${
                 page === 'members' ? 'b-bottom-primary' : ''
@@ -55,7 +55,7 @@ export default function ProjectHeader({ project, page, setPage }) {
               onClick={() => setPage('members')}
             >
               <GroupIcon className="icon-sm" />{' '}
-              <span>({project.students.concat(project.mentors).length})</span>
+              <span>({project.members.length})</span>
             </div>
           </Tooltip>
           <Tooltip title="Links" placement="top" arrow>

@@ -15,7 +15,12 @@ import { AuthContext } from '../../../../../contexts/Auth'
 import { MyProfileContext } from '../../../../../contexts/MyProfile'
 import { mutate } from 'swr'
 
-export default function Discussions({ project, openDiscussion }) {
+export default function Discussions({
+  project,
+  isProjectMember,
+  isProjectAdmin,
+  openDiscussion
+}) {
   const { myProfile } = useContext(MyProfileContext)
   const { getToken } = useContext(AuthContext)
 
@@ -31,11 +36,6 @@ export default function Discussions({ project, openDiscussion }) {
   const { data: discussions } = useFetch(
     `projects/get-project-discussions/${project.id}`
   )
-
-  const isProjectMember = project.students
-    .concat(project.mentors)
-    .map(profile => profile.id)
-    .includes(myProfile.id)
 
   const handleDelete = async (e, discussionId) => {
     e.stopPropagation()
@@ -129,8 +129,7 @@ export default function Discussions({ project, openDiscussion }) {
                 <div className="ml-2">
                   {renderTimestamp(discussion.created_at)}
                 </div>
-                {(isProjectMember ||
-                  myProfile.id === discussion.profile.id) && (
+                {(isProjectAdmin || myProfile.id === discussion.profile.id) && (
                   <div
                     className="cursor-pointer p-2"
                     onClick={e => handleDelete(e, discussion.id)}

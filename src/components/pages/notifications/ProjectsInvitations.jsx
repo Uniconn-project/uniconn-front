@@ -1,6 +1,5 @@
 import React, { useContext } from 'react'
 import Link from 'next/link'
-import { mutate } from 'swr'
 import { AuthContext } from '../../../contexts/Auth'
 import { NotificationsContext } from '../../../contexts/Notifications'
 
@@ -61,23 +60,24 @@ export default function ProjectsInvitations({
 
   return (
     <div className="w-full">
-      {projectsInvitations.map(project => (
+      {console.log(projectsInvitations)}
+      {projectsInvitations.map(request => (
         <div
-          key={project.id}
+          key={request.project.id}
           className="w-full flex bg-transparent rounded-md shadow-lg p-2 mb-2"
         >
-          <Link href={`/project/${project.id}`}>
+          <Link href={`/project/${request.project.id}`}>
             <img
-              src={project.image}
+              src={request.project.image}
               className="w-16 h-16 mr-2 rounded-md object-cover cursor-pointer"
             />
           </Link>
           <div className="flex flex-col justify-between">
             <span className="color-headline">
               o projeto{' '}
-              <Link href={`/project/${project.id}`}>
+              <Link href={`/project/${request.project.id}`}>
                 <strong className="cursor-pointer hover:underline">
-                  {project.name}
+                  {request.project.name}
                 </strong>
               </Link>{' '}
               convidou você
@@ -85,13 +85,13 @@ export default function ProjectsInvitations({
             <div className="flex">
               <button
                 className="rounded-lg bg-green bg-hover color-bg-light p-1 mr-1"
-                onClick={() => handleSubmit('accept', project)}
+                onClick={() => handleSubmit('accept', request.project)}
               >
                 Aceitar
               </button>
               <button
                 className="rounded-lg bg-secondary bg-hover color-bg-light p-1 ml-1"
-                onClick={() => handleSubmit('decline', project)}
+                onClick={() => handleSubmit('decline', request.project)}
               >
                 Recusar
               </button>

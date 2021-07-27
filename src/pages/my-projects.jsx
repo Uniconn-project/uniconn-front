@@ -46,14 +46,12 @@ export default function MyProjects() {
               <span>Meus projetos ({myProfile.projects.length})</span>
             </div>
             <div className="w-full px-2">
-              {myProfile.type === 'student' && (
-                <Link href="/create-project">
-                  <div className="w-full flex items-center cursor-pointer bg-transparent bg-hover rounded-md shadow-lg p-2 mb-4">
-                    <span>CRIAR PROJETO</span>
-                    <AddIcon className="ml-auto" />
-                  </div>
-                </Link>
-              )}
+              <Link href="/create-project">
+                <div className="w-full flex items-center cursor-pointer bg-transparent bg-hover rounded-md shadow-lg p-2 mb-4">
+                  <span>CRIAR PROJETO</span>
+                  <AddIcon className="ml-auto" />
+                </div>
+              </Link>
               <ProjectList projects={myProfile.projects} />
             </div>
           </div>

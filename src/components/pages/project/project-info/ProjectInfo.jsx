@@ -4,7 +4,11 @@ import ProjectInfoMobile from './components/ProjectInfoMobile'
 
 const tailwindConfig = require('../../../../../tailwind.config')
 
-export default function ProjectInfo({ project, setPage, refetchProject }) {
+export default function ProjectInfo({
+  project,
+  isProjectAdmin,
+  refetchProject
+}) {
   const mobileBreakpoint = tailwindConfig.theme.screens.sm
 
   return (
@@ -13,13 +17,13 @@ export default function ProjectInfo({ project, setPage, refetchProject }) {
       Number(mobileBreakpoint.slice(0, mobileBreakpoint.length - 2)) ? (
         <ProjectInfoDesktop
           project={project}
-          setPage={setPage}
+          isProjectAdmin={isProjectAdmin}
           refetchProject={refetchProject}
         />
       ) : (
         <ProjectInfoMobile
           project={project}
-          setPage={setPage}
+          isProjectAdmin={isProjectAdmin}
           refetchProject={refetchProject}
         />
       )}

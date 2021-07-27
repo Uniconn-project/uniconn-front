@@ -6,7 +6,11 @@ import { MyProfileContext } from '../../../../../contexts/MyProfile'
 import { AuthContext } from '../../../../../contexts/Auth'
 import DescriptiveHeader from '../../../../global/DescriptiveHeader'
 
-export default function Description({ project, refetchProject }) {
+export default function Description({
+  project,
+  isProjectAdmin,
+  refetchProject
+}) {
   const { myProfile } = useContext(MyProfileContext)
   const { getToken } = useContext(AuthContext)
 
@@ -65,9 +69,7 @@ export default function Description({ project, refetchProject }) {
       />
       <div className="w-full bg-transparent rounded-md shadow-lg">
         <RichTextEditor
-          canEdit={project.students
-            .map(profile => profile.id)
-            .includes(myProfile.id)}
+          canEdit={isProjectAdmin}
           editorState={editorState}
           isEditing={isEditing}
           setEditorState={setEditorState}

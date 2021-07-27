@@ -57,10 +57,13 @@ export default function Project(props) {
       </Page>
     )
   }
+  const isProjectMember = project.members
+    .map(membership => membership.profile.id)
+    .includes(myProfile.id)
 
-  const isProjectMember = project.students
-    .concat(project.mentors)
-    .map(profile => profile.id)
+  const isProjectAdmin = project.members
+    .filter(membership => membership.role.value === 'admin')
+    .map(membership => membership.profile.id)
     .includes(myProfile.id)
 
   const openDiscussion = discussion => {
@@ -164,7 +167,7 @@ export default function Project(props) {
             <div className="h-full flex flex-col items-center px-2 sm:px-12 lg:px-0 lg:fixed lg:top-32">
               <ProjectInfo
                 project={project}
-                setPage={setPage}
+                isProjectAdmin={isProjectAdmin}
                 refetchProject={refetchProject}
               />
               <Snackbar
@@ -179,17 +182,25 @@ export default function Project(props) {
         </div>
         <div className="w-full flex justify-center p-2 pt-0 lg:p-0 lg:w-2/3 lg:justify-start lg:box-border">
           <div className="w-full" style={{ maxWidth: 600 }}>
-            <ProjectHeader project={project} page={page} setPage={setPage} />
+            <ProjectHeader
+              project={project}
+              page={page}
+              isProjectMember={isProjectMember}
+              setPage={setPage}
+            />
             <div style={{ height: '80vh' }}>
               {page === 'description' && (
                 <Description
                   project={project}
+                  isProjectAdmin={isProjectAdmin}
                   refetchProject={refetchProject}
                 />
               )}
               {page === 'discussions' && (
                 <Discussions
                   project={project}
+                  isProjectMember={isProjectMember}
+                  isProjectAdmin={isProjectAdmin}
                   openDiscussion={openDiscussion}
                 />
               )}
@@ -197,13 +208,22 @@ export default function Project(props) {
                 <Discussion discussion={openedDiscussion} />
               )}
               {page === 'links' && (
-                <Links project={project} refetchProject={refetchProject} />
+                <Links
+                  project={project}
+                  isProjectMember={isProjectMember}
+                  refetchProject={refetchProject}
+                />
               )}
               {isProjectMember && page === 'tools' && (
                 <Tools project={project} refetchProject={refetchProject} />
               )}
               {page === 'members' && (
-                <Members project={project} refetchProject={refetchProject} />
+                <Members
+                  project={project}
+                  isProjectMember={isProjectMember}
+                  isProjectAdmin={isProjectAdmin}
+                  refetchProject={refetchProject}
+                />
               )}
             </div>
           </div>

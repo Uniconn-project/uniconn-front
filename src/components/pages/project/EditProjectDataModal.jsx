@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useMemo, useState } from 'react'
 import Tooltip from '@material-ui/core/Tooltip'
 import EditIcon from '@material-ui/icons/Edit'
 import Modal from '@material-ui/core/Modal'
@@ -12,13 +12,16 @@ import ProjectBaseForm from '../../global/ProjectBaseForm'
 import { AuthContext } from '../../../contexts/Auth'
 
 export default function EditProjectDataModal({ project, refetchProject }) {
-  const postDataInitialState = {
-    image: null,
-    name: project.name,
-    category: project.category.value,
-    slogan: project.slogan,
-    markets: project.markets.map(market => market.name)
-  }
+  const postDataInitialState = useMemo(
+    () => ({
+      image: null,
+      name: project.name,
+      category: project.category.value,
+      slogan: project.slogan,
+      fields: project.fields.map(field => field.name)
+    }),
+    [project]
+  )
 
   const { getToken } = useContext(AuthContext)
 

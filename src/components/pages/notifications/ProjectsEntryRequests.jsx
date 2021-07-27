@@ -3,8 +3,8 @@ import Link from 'next/link'
 import { AuthContext } from '../../../contexts/Auth'
 import { NotificationsContext } from '../../../contexts/Notifications'
 
-export default function ProjectsEnteringRequests({
-  projectsEnteringRequests,
+export default function ProjectsEntryRequests({
+  projectsEntryRequests,
   fetchNotifications,
   setSuccessMsg,
   setErrorMsg
@@ -12,18 +12,18 @@ export default function ProjectsEnteringRequests({
   const { getToken } = useContext(AuthContext)
   const { fetchNotificationsNumber } = useContext(NotificationsContext)
 
-  const handleSubmit = async (reply, enteringRequest) => {
+  const handleSubmit = async (reply, request) => {
     fetch(
       `${process.env.NEXT_PUBLIC_API_HOST}/api/projects/reply-project-entering-request`,
       {
-        method: 'PUT',
+        method: 'DELETE',
         headers: {
           'Content-type': 'application/json',
           Authorization: 'JWT ' + (await getToken())
         },
         body: JSON.stringify({
           reply,
-          project_entering_request_id: enteringRequest.id
+          request_id: request.id
         })
       }
     )
@@ -37,23 +37,23 @@ export default function ProjectsEnteringRequests({
             isOpen: true,
             message: data
           })
+          return
         }
 
         if (reply === 'accept') {
-          console.log(data)
           setSuccessMsg({
             isOpen: true,
             message: (
               <span>
-                <Link href={`/user/${enteringRequest.profile.user.username}`}>
+                <Link href={`/user/${request.profile.user.username}`}>
                   <strong className="cursor-pointer hover:underline">
-                    @{enteringRequest.profile.user.username}
+                    @{request.profile.user.username}
                   </strong>
                 </Link>{' '}
                 entrou no projeto{' '}
-                <Link href={`/project/${enteringRequest.project.id}`}>
+                <Link href={`/project/${request.project.id}`}>
                   <strong className="cursor-pointer hover:underline">
-                    {enteringRequest.project.name}
+                    {request.project.name}
                   </strong>
                 </Link>
                 !
@@ -66,54 +66,52 @@ export default function ProjectsEnteringRequests({
 
   return (
     <div className="w-full">
-      {projectsEnteringRequests.map(enteringRequest => (
+      {projectsEntryRequests.map(request => (
         <div
-          key={enteringRequest.id}
+          key={request.id}
           className="w-full flex color-headline bg-transparent rounded-md shadow-lg p-2 mb-2"
         >
-          <Link href={`/project/${enteringRequest.project.id}`}>
+          <Link href={`/project/${request.project.id}`}>
             <img
-              src={enteringRequest.project.image}
+              src={request.project.image}
               className="w-16 h-16 mr-2 rounded-md object-cover cursor-pointer"
             />
           </Link>
           <div className="flex flex-col justify-between flex-grow">
             <div className="flex flex-col mb-2 sm:flex-row sm:items-start">
-              <Link href={`/user/${enteringRequest.profile.user.username}`}>
+              <Link href={`/user/${request.profile.user.username}`}>
                 <div className="flex">
                   <img
-                    src={enteringRequest.profile.photo}
+                    src={request.profile.photo}
                     className="profile-img-sm cursor-pointer"
                   />
                   <strong className="color-secondary cursor-pointer mx-1 hover:underline">
-                    @{enteringRequest.profile.user.username}
+                    @{request.profile.user.username}
                   </strong>
                 </div>
               </Link>
               <div style={{ maxWidth: '70%' }}>
                 pediu para entrar no projeto
-                <Link href={`/project/${enteringRequest.project.id}`}>
+                <Link href={`/project/${request.project.id}`}>
                   <strong className="cursor-pointer mx-1 hover:underline">
-                    {enteringRequest.project.name}
+                    {request.project.name}
                   </strong>
                 </Link>
               </div>
             </div>
             <div className="w-full p-1 mb-2">
-              <p className="color-paragraph break-all">
-                {enteringRequest.message}
-              </p>
+              <p className="color-paragraph break-all">{request.message}</p>
             </div>
             <div className="flex">
               <button
                 className="rounded-lg bg-green bg-hover color-bg-light p-1 mr-1"
-                onClick={() => handleSubmit('accept', enteringRequest)}
+                onClick={() => handleSubmit('accept', request)}
               >
                 Aceitar
               </button>
               <button
                 className="rounded-lg bg-secondary bg-hover color-bg-light p-1 ml-1"
-                onClick={() => handleSubmit('decline', enteringRequest)}
+                onClick={() => handleSubmit('decline', request)}
               >
                 Recusar
               </button>

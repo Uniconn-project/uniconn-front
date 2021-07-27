@@ -5,7 +5,7 @@ import Alert from '@material-ui/lab/Alert'
 import ProfileInfo from '../components/global/profile-info/ProfileInfo'
 import Page from '../components/Page'
 import ProjectsInvitations from '../components/pages/notifications/ProjectsInvitations'
-import ProjectsEnteringRequests from '../components/pages/notifications/ProjectsEnteringRequests'
+import ProjectsEntryRequests from '../components/pages/notifications/ProjectsEntryRequests'
 import DiscussionsStars from '../components/pages/notifications/DiscussionsStars'
 import { AuthContext } from '../contexts/Auth'
 import { MyProfileContext } from '../contexts/MyProfile'
@@ -19,7 +19,7 @@ export default function Notifications() {
   const { fetchNotificationsNumber } = useContext(NotificationsContext)
 
   const [projectsInvitations, setProjectsInvitations] = useState(null)
-  const [projectsEnteringRequests, setProjectsEnteringRequests] = useState(null)
+  const [projectsEntryRequests, setProjectsEntryRequests] = useState(null)
   const [discussionsReplies, setDiscussionsReplies] = useState(null)
   const [discussionsStars, setDiscussionsStars] = useState(null)
   const [successMsg, setSuccessMsg] = useState({ isOpen: false, message: '' })
@@ -42,7 +42,7 @@ export default function Notifications() {
     })
 
     setProjectsInvitations(notifications.projects_invitations)
-    setProjectsEnteringRequests(notifications.projects_entering_requests)
+    setProjectsEntryRequests(notifications.projects_entry_requests)
     setDiscussionsReplies(notifications.discussions_replies)
     setDiscussionsStars(notifications.discussions_stars)
   }
@@ -106,9 +106,9 @@ export default function Notifications() {
                 setErrorMsg={setErrorMsg}
               />
             )}
-            {projectsEnteringRequests !== null && (
-              <ProjectsEnteringRequests
-                projectsEnteringRequests={projectsEnteringRequests}
+            {projectsEntryRequests !== null && (
+              <ProjectsEntryRequests
+                projectsEntryRequests={projectsEntryRequests}
                 fetchNotifications={fetchNotifications}
                 setSuccessMsg={setSuccessMsg}
                 setErrorMsg={setErrorMsg}

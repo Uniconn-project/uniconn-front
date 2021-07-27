@@ -15,7 +15,7 @@ export default function CreateProject() {
     name: '',
     category: '',
     slogan: '',
-    markets: []
+    fields: []
   })
   const [successIsOpen, setSuccessIsOpen] = useState(false)
   const [errorMsg, setErrorMsg] = useState({
@@ -28,7 +28,7 @@ export default function CreateProject() {
       !postData.name.length ||
       !postData.slogan.length ||
       !postData.category.length ||
-      !postData.markets.length
+      !postData.fields.length
     ) {
       setErrorMsg({
         isOpen: true,

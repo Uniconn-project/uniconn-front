@@ -2,8 +2,8 @@ import React, { useState, useRef, useContext } from 'react'
 import SettingsIcon from '@material-ui/icons/Settings'
 import HighlightOffIcon from '@material-ui/icons/HighlightOff'
 import Popover from '@material-ui/core/Popover'
-import { MyProfileContext } from '../../../../../../../contexts/MyProfile'
-import { AuthContext } from '../../../../../../../contexts/Auth'
+import { MyProfileContext } from '../../../../../../contexts/MyProfile'
+import { AuthContext } from '../../../../../../contexts/Auth'
 
 export default function SettingsPopover({
   profile,

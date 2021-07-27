@@ -10,7 +10,7 @@ export default function ProjectsFilter({ projects, setRenderedProjects }) {
   const [filterHeight, setFilterHeight] = useState(0)
 
   const { data: categories } = useFetch('projects/get-projects-categories-list')
-  const { data: markets } = useFetch('projects/get-markets-name-list')
+  const { data: fields } = useFetch('projects/get-fields-name-list')
 
   useEffect(() => {
     if (!projects || !setRenderedProjects) return
@@ -42,13 +42,13 @@ export default function ProjectsFilter({ projects, setRenderedProjects }) {
       }
     }
 
-    const marketCheckboxes = Array.from(document.querySelectorAll('.market'))
-    for (let i in marketCheckboxes) {
+    const fieldCheckboxes = Array.from(document.querySelectorAll('.field'))
+    for (let i in fieldCheckboxes) {
       i = Number(i)
-      if (marketCheckboxes[i].checked) break
+      if (fieldCheckboxes[i].checked) break
       else if (
-        i === marketCheckboxes.length - 1 &&
-        !marketCheckboxes[i].checked
+        i === fieldCheckboxes.length - 1 &&
+        !fieldCheckboxes[i].checked
       ) {
         window.alert('Selecione pelo menos uma mercado!')
         return
@@ -60,14 +60,14 @@ export default function ProjectsFilter({ projects, setRenderedProjects }) {
       .querySelectorAll('.category')
       .forEach(el => el.checked && selectedCategories.push(el.name))
 
-    const selectedMarkets = []
+    const selectedFields = []
     document
-      .querySelectorAll('.market')
-      .forEach(el => el.checked && selectedMarkets.push(el.name))
+      .querySelectorAll('.field')
+      .forEach(el => el.checked && selectedFields.push(el.name))
 
     const queryParams = `categories=${selectedCategories.join(
       ';'
-    )}&markets=${selectedMarkets.join(';')}`
+    )}&fields=${selectedFields.join(';')}`
 
     const projects = await fetcher(
       `projects/get-filtered-projects-list?${queryParams}`
@@ -132,23 +132,23 @@ export default function ProjectsFilter({ projects, setRenderedProjects }) {
             <div className="flex items-center">
               <h4 className="ml-1">Áreas de atuação</h4>
             </div>
-            {markets ? (
+            {fields ? (
               <ul className="max-h-36 overflow-y-auto">
                 <li>
                   <input
                     type="checkbox"
-                    onChange={e => toggleAllFields(e.target.checked, '.market')}
+                    onChange={e => toggleAllFields(e.target.checked, '.field')}
                   />{' '}
                   Todos
                 </li>
-                {markets.map(market => (
-                  <li key={market.id}>
+                {fields.map(field => (
+                  <li key={field.id}>
                     <input
                       type="checkbox"
-                      className="market"
-                      name={market.name}
+                      className="field"
+                      name={field.name}
                     />{' '}
-                    {market.name[0].toUpperCase() + market.name.slice(1)}
+                    {field.name[0].toUpperCase() + field.name.slice(1)}
                   </li>
                 ))}
               </ul>

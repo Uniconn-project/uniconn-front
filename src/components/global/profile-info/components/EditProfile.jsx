@@ -1,30 +1,29 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useMemo } from 'react'
 import Tooltip from '@material-ui/core/Tooltip'
 import EditIcon from '@material-ui/icons/Edit'
 import Snackbar from '@material-ui/core/Snackbar'
 import Alert from '@material-ui/lab/Alert'
 import EditProfileModal from './components/EditProfileModal'
-import { AuthContext } from '../../../../../contexts/Auth'
-import { MyProfileContext } from '../../../../../contexts/MyProfile'
+import { AuthContext } from '../../../../contexts/Auth'
+import { MyProfileContext } from '../../../../contexts/MyProfile'
 import CropPhotoModal from './components/CropPhotoModal'
 
 export default function EditProfile({ profile }) {
-  const postDataInitialState = {
-    username: profile.user.username,
-    photo: null,
-    first_name: profile.first_name,
-    last_name: profile.last_name,
-    bio: profile.bio,
-    linkedIn: profile.linkedIn || '',
-    university: profile.type === 'student' && profile.student.university.name,
-    major: profile.type === 'student' && profile.student.major.name,
-    skills:
-      profile.type === 'student' &&
-      profile.student.skills.map(skill => skill.name),
-    markets:
-      profile.type === 'mentor' &&
-      profile.mentor.markets.map(market => market.name)
-  }
+  const postDataInitialState = useMemo(
+    () => ({
+      username: profile.user.username,
+      photo: null,
+      first_name: profile.first_name,
+      last_name: profile.last_name,
+      bio: profile.bio,
+      linkedIn: profile.linkedIn || '',
+      is_attending_university: profile.is_attending_university,
+      university_name: profile.university && profile.university.name,
+      major_name: profile.major && profile.major.name,
+      skills_names: profile.skills.map(skill => skill.name)
+    }),
+    [profile]
+  )
 
   const { getToken } = useContext(AuthContext)
   const { refetchMyProfile } = useContext(MyProfileContext)
@@ -51,22 +50,6 @@ export default function EditProfile({ profile }) {
   }
 
   const handleSubmit = async () => {
-    if (profile.type === 'student' && !postData.skills.length) {
-      setErrorMsg({
-        isOpen: true,
-        message: 'Selecione pelo menos uma habilidade!'
-      })
-      return
-    }
-
-    if (profile.type === 'mentor' && !postData.markets.length) {
-      setErrorMsg({
-        isOpen: true,
-        message: 'Selecione pelo menos uma expertise!'
-      })
-      return
-    }
-
     fetch(`${process.env.NEXT_PUBLIC_API_HOST}/api/profiles/edit-my-profile`, {
       method: 'PUT',
       headers: {

@@ -12,11 +12,11 @@ import ListItemAvatar from '@material-ui/core/ListItemAvatar'
 import Avatar from '@material-ui/core/Avatar'
 import Snackbar from '@material-ui/core/Snackbar'
 import Alert from '@material-ui/lab/Alert'
-import { fetcher } from '../../../../../../../hooks/useFetch'
-import { MyProfileContext } from '../../../../../../../contexts/MyProfile'
-import { AuthContext } from '../../../../../../../contexts/Auth'
+import { fetcher } from '../../../../../../hooks/useFetch'
+import { MyProfileContext } from '../../../../../../contexts/MyProfile'
+import { AuthContext } from '../../../../../../contexts/Auth'
 
-export default function AddMembersModal({ type, project, refetchProject }) {
+export default function AddMembersModal({ project, refetchProject }) {
   const { myProfile } = useContext(MyProfileContext)
   const { getToken } = useContext(AuthContext)
 
@@ -50,15 +50,16 @@ export default function AddMembersModal({ type, project, refetchProject }) {
 
   const handleSubmit = async () => {
     fetch(
-      `${process.env.NEXT_PUBLIC_API_HOST}/api/projects/invite-${type}s-to-project/${project.id}`,
+      `${process.env.NEXT_PUBLIC_API_HOST}/api/projects/invite-users-to-project/${project.id}`,
       {
-        method: 'PUT',
+        method: 'POST',
         headers: {
           Authorization: 'JWT ' + (await getToken()),
           'Content-type': 'application/json'
         },
         body: JSON.stringify({
-          [`${type}s`]: selectedProfiles.map(profile => profile.user.username)
+          usernames: selectedProfiles.map(profile => profile.user.username),
+          message: ''
         })
       }
     )
@@ -83,17 +84,8 @@ export default function AddMembersModal({ type, project, refetchProject }) {
         className="w-full flex items-center p-2 pl-4 mb-2 cursor-pointer bg-transparent bg-hover rounded-md shadow-lg"
         onClick={() => setIsOpen(true)}
       >
-        {type === 'student' ? (
-          <>
-            <PersonAddIcon className="color-primary mr-2" />
-            <strong className="color-primary">Convidar universitário</strong>
-          </>
-        ) : (
-          <>
-            <PersonAddIcon className="color-secondary mr-2" />
-            <strong className="color-secondary">Convidar mentor</strong>
-          </>
-        )}
+        <PersonAddIcon className="color-primary mr-2" />
+        <strong className="color-primary">Convidar usuários</strong>
       </div>
       <Modal
         className="flex justify-center items-center"
@@ -109,11 +101,7 @@ export default function AddMembersModal({ type, project, refetchProject }) {
           <div className="bg-dark rounded-md shadow-lg">
             <div className="w-full px-4 py-2">
               <TextField
-                label={
-                  type === 'student'
-                    ? 'Pesquisar universitários...'
-                    : 'Pesquisar mentores...'
-                }
+                label="Pesquisar usuários"
                 className="w-full"
                 value={profilesSearch}
                 onChange={e => setProfilesSearch(e.target.value)}
@@ -123,13 +111,12 @@ export default function AddMembersModal({ type, project, refetchProject }) {
                   .filter(
                     profile =>
                       profile.user.username !== myProfile.user.username &&
-                      profile.type === type &&
                       !selectedProfiles.map(s => s.id).includes(profile.id) &&
-                      !project[`${type}s`]
-                        .map(s => s.id)
+                      !project.members
+                        .map(membership => membership.profile.id)
                         .includes(profile.id) &&
-                      !project[`pending_invited_${type}s`]
-                        .map(s => s.id)
+                      !project.pending_invited_profiles
+                        .map(profile => profile.id)
                         .includes(profile.id)
                   )
                   .map(profile => {
@@ -163,9 +150,7 @@ export default function AddMembersModal({ type, project, refetchProject }) {
                 <Chip
                   key={profile.id}
                   label={profile.user.username}
-                  className={`b-${
-                    type === 'student' ? 'primary' : 'secondary'
-                  } mr-1`}
+                  className="b-primary"
                   avatar={
                     <Avatar alt={profile.user.username} src={profile.photo} />
                   }
@@ -178,12 +163,7 @@ export default function AddMembersModal({ type, project, refetchProject }) {
               ))}
             </div>
             <div className="w-full p-4 flex items-center">
-              <button
-                className={`btn-${
-                  type === 'student' ? 'primary' : 'secondary'
-                } ml-auto`}
-                onClick={handleSubmit}
-              >
+              <button className="btn-primary ml-auto" onClick={handleSubmit}>
                 Convidar
               </button>
             </div>

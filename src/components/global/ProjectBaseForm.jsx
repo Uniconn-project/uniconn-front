@@ -12,20 +12,20 @@ export default function ProjectBaseForm({ usePostData }) {
   const [postData, setPostData] = usePostData()
 
   const { data: categories } = useFetch('projects/get-projects-categories-list')
-  const { data: markets } = useFetch('projects/get-markets-name-list')
+  const { data: fields } = useFetch('projects/get-fields-name-list')
 
   const handleChange = key => e => {
     setPostData({ ...postData, [key]: e.target.value })
   }
 
-  const handleDeleteMarket = marketName => {
+  const handleDeleteField = marketName => {
     setPostData({
       ...postData,
-      markets: postData.markets.filter(market => market !== marketName)
+      fields: postData.fields.filter(market => market !== marketName)
     })
   }
 
-  if (!categories || !markets) {
+  if (!categories || !fields) {
     return (
       <div className="flex justify-content">
         <CircularProgress />
@@ -61,12 +61,12 @@ export default function ProjectBaseForm({ usePostData }) {
       </div>
       <div className="w-full mb-2">
         <FormControl className="w-full">
-          <InputLabel id="markets-select-label">Áreas de atuação</InputLabel>
+          <InputLabel id="fields-select-label">Áreas de atuação</InputLabel>
           <Select
-            labelId="markets-select-label"
-            value={postData.markets}
+            labelId="fields-select-label"
+            value={postData.fields}
             multiple
-            onChange={handleChange('markets')}
+            onChange={handleChange('fields')}
             renderValue={selected => (
               <div className="overflow-x-auto">
                 {selected.map(value => (
@@ -75,16 +75,16 @@ export default function ProjectBaseForm({ usePostData }) {
                     label={value}
                     className="b-primary mr-1"
                     onMouseDown={e => e.stopPropagation()}
-                    onDelete={() => handleDeleteMarket(value)}
+                    onDelete={() => handleDeleteField(value)}
                   />
                 ))}
               </div>
             )}
           >
-            {markets.map(market => (
-              <MenuItem key={market.id} value={market.name}>
-                {market.name[0].toUpperCase()}
-                {market.name.slice(1)}
+            {fields.map(field => (
+              <MenuItem key={field.id} value={field.name}>
+                {field.name[0].toUpperCase()}
+                {field.name.slice(1)}
               </MenuItem>
             ))}
           </Select>

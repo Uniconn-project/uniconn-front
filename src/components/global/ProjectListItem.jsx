@@ -91,15 +91,15 @@ export default function ProjectListItem({
             <h4 className="break-words">{project.name}</h4>
           </div>
           <div className="flex items-center">
-            {project.students.slice(0, 3).map(student => (
-              <Link href={`/user/${student.user.username}`} key={student.id}>
+            {project.members_profiles.slice(0, 3).map(profile => (
+              <Link href={`/user/${profile.user.username}`} key={profile.id}>
                 <Tooltip
-                  title={student.user.username}
+                  title={profile.user.username}
                   className="bg-light"
                   arrow
                 >
                   <img
-                    src={student.photo}
+                    src={profile.photo}
                     className="profile-img-sm mx-0.5 cursor-pointer"
                   />
                 </Tooltip>
