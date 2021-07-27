@@ -20,7 +20,7 @@ export default function Index() {
     }
   }, [loading, isAuthenticated])
 
-  if (!loading && !isAuthenticated) {
+  if (!loading && !isAuthenticated && false) {
     return (
       <>
         <Head>
