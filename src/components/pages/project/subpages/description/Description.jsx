@@ -2,6 +2,8 @@ import React, { useContext, useState } from 'react'
 import { EditorState, convertToRaw, convertFromRaw } from 'draft-js'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import RichTextEditor from './components/RichTextEditor'
+import Snackbar from '@material-ui/core/Snackbar'
+import Alert from '@material-ui/lab/Alert'
 import { MyProfileContext } from '../../../../../contexts/MyProfile'
 import { AuthContext } from '../../../../../contexts/Auth'
 import DescriptiveHeader from '../../../../global/DescriptiveHeader'
@@ -21,6 +23,10 @@ export default function Description({
       convertFromRaw(JSON.parse(project.description.replace(/'/g, '"')))
     )
   )
+  const [errorMsg, setErrorMsg] = useState({
+    isOpen: false,
+    message: ''
+  })
 
   const handleSubmit = async () => {
     setIsEditing(false)
@@ -28,7 +34,7 @@ export default function Description({
     fetch(
       `${process.env.NEXT_PUBLIC_API_HOST}/api/projects/edit-project-description/${project.id}`,
       {
-        method: 'PUT',
+        method: 'PATCH',
         headers: {
           'Content-type': 'application/json',
           Authorization: 'JWT ' + (await getToken())
@@ -43,7 +49,10 @@ export default function Description({
         if (data === 'success') {
           refetchProject('edit-description')
         } else {
-          alert(`Ocorreu um erro: ${data}`)
+          setErrorMsg({
+            isOpen: true,
+            message: data
+          })
         }
       })
   }
@@ -77,6 +86,18 @@ export default function Description({
           handleSubmit={handleSubmit}
         />
       </div>
+      <Snackbar
+        open={errorMsg.isOpen}
+        autoHideDuration={6000}
+        onClose={() =>
+          setErrorMsg({
+            isOpen: false,
+            message: ''
+          })
+        }
+      >
+        <Alert severity="error">{errorMsg.message}</Alert>
+      </Snackbar>
     </div>
   )
 }

@@ -6,8 +6,8 @@ import Alert from '@material-ui/lab/Alert'
 import LinkIcon from '@material-ui/icons/Link'
 import AddLinkModal from './components/AddLinkModal'
 import LinkIconResolver from '../../../../global/LinkIconResolver'
-import { AuthContext } from '../../../../../contexts/Auth'
 import DescriptiveHeader from '../../../../global/DescriptiveHeader'
+import { AuthContext } from '../../../../../contexts/Auth'
 
 export default function Links({ project, isProjectMember, refetchProject }) {
   const { getToken } = useContext(AuthContext)
