@@ -10,10 +10,10 @@ export default function CloudDocuments({ children }) {
           <strong className="color-primary">Documentos em nuvem</strong>
         </div>
         <span className="text-xs">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque
-          architecto quidem totam a facere, voluptates laborum nam consequatur
-          vero et officiis repellendus amet eius recusandae dignissimos pariatur
-          nobis cum! Asperiores.
+          Documentos em nuvem são ferramentas úteis para manter os arquivos
+          utilizados no projeto organizados. São comumente utilizados para
+          centralizar o armazenamento de imagens, documentos, vídeos, etc.
+          Recomendamos a plataforma Google Drive.
         </span>
       </div>
       <div className="pl-4">{children}</div>

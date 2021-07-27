@@ -1,6 +1,7 @@
-import React, { useState, useRef, useContext } from 'react'
+import React, { useState, useRef, useContext, useMemo } from 'react'
 import SettingsIcon from '@material-ui/icons/Settings'
 import HighlightOffIcon from '@material-ui/icons/HighlightOff'
+import PersonOutlineIcon from '@material-ui/icons/PersonOutline'
 import Popover from '@material-ui/core/Popover'
 import { MyProfileContext } from '../../../../../../contexts/MyProfile'
 import { AuthContext } from '../../../../../../contexts/Auth'
@@ -8,6 +9,7 @@ import { AuthContext } from '../../../../../../contexts/Auth'
 export default function SettingsPopover({
   profile,
   project,
+  isProjectAdmin,
   refetchProject,
   setErrorMsg
 }) {
@@ -15,6 +17,14 @@ export default function SettingsPopover({
   const { getToken } = useContext(AuthContext)
 
   const [isOpen, setIsOpen] = useState(false)
+
+  const profileProjectMembership = useMemo(
+    () =>
+      project.members.filter(
+        membership => membership.profile.id === profile.id
+      )[0],
+    [project, profile]
+  )
 
   const anchorRef = useRef(null)
 
@@ -24,7 +34,7 @@ export default function SettingsPopover({
   }
 
   const handleClose = e => {
-    e.stopPropagation()
+    e && e.stopPropagation()
     setIsOpen(false)
   }
 
@@ -33,9 +43,9 @@ export default function SettingsPopover({
 
     if (window.confirm(`Remover ${profile.first_name} do projeto?`)) {
       fetch(
-        `${process.env.NEXT_PUBLIC_API_HOST}/api/projects/remove-${profile.type}-from-project/${project.id}`,
+        `${process.env.NEXT_PUBLIC_API_HOST}/api/projects/remove-user-from-project/${project.id}`,
         {
-          method: 'PUT',
+          method: 'DELETE',
           headers: {
             Authorization: 'JWT ' + (await getToken()),
             'Content-type': 'application/json'
@@ -60,7 +70,9 @@ export default function SettingsPopover({
     }
   }
 
-  const handleLeaveProject = async () => {
+  const handleLeaveProject = async e => {
+    e.stopPropagation()
+
     if (window.confirm('Tem certeza que deseja sair do projeto?')) {
       fetch(
         `${process.env.NEXT_PUBLIC_API_HOST}/api/projects/leave-project/${project.id}`,
@@ -73,8 +85,45 @@ export default function SettingsPopover({
       )
         .then(response => response.json())
         .then(data => {
+          handleClose()
           if (data === 'success') {
             refetchProject('leave-project')
+          } else {
+            setErrorMsg({
+              isOpen: true,
+              message: data
+            })
+          }
+        })
+    }
+  }
+
+  const handlePromoteMemberToAdmin = async e => {
+    e.stopPropagation()
+
+    if (
+      window.confirm(
+        `Tem certeza que deseja promover ${profile.first_name} para admin?`
+      )
+    ) {
+      fetch(
+        `${process.env.NEXT_PUBLIC_API_HOST}/api/projects/promote-project-member-to-admin/${project.id}`,
+        {
+          method: 'PATCH',
+          headers: {
+            'Content-type': 'application/json',
+            Authorization: 'JWT ' + (await getToken())
+          },
+          body: JSON.stringify({
+            username: profile.user.username
+          })
+        }
+      )
+        .then(response => response.json())
+        .then(data => {
+          handleClose()
+          if (data === 'success') {
+            refetchProject('promote-member')
           } else {
             setErrorMsg({
               isOpen: true,
@@ -120,6 +169,17 @@ export default function SettingsPopover({
               ? 'Sair do projeto'
               : 'Remover do projeto'}
           </li>
+          {isProjectAdmin &&
+            profile.id !== myProfile.id &&
+            profileProjectMembership.role.value !== 'admin' && (
+              <li
+                className="flex items-center bg-dark bg-hover cursor-pointer rounded-none p-2"
+                onClick={handlePromoteMemberToAdmin}
+              >
+                <PersonOutlineIcon className="icon-sm mr-2" />
+                Promover a admin
+              </li>
+            )}
         </ul>
       </Popover>
     </>

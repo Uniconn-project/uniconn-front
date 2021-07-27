@@ -10,10 +10,10 @@ export default function TaskManagers({ children }) {
           <strong className="color-primary">Gerenciadores de tarefas</strong>
         </div>
         <span className="text-xs">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque
-          architecto quidem totam a facere, voluptates laborum nam consequatur
-          vero et officiis repellendus amet eius recusandae dignissimos pariatur
-          nobis cum! Asperiores.
+          Gerenciadores de tarefas são ferramentas úteis para manter o
+          operacional do projeto organizado e aumentar a produtividade da
+          equipe. São comumente utilizados para fazer lista de tarefas,
+          roadmaps, kanbans, etc. Recomendamos a plataforma Trello.
         </span>
       </div>
       <div className="pl-4">{children}</div>
