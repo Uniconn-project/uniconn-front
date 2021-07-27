@@ -27,16 +27,16 @@ export default function Links({ project, isProjectMember, refetchProject }) {
 
   const handleDelete = async linkId => {
     if (window.confirm('Remover link?')) {
-      fetch(`${process.env.NEXT_PUBLIC_API_HOST}/api/projects/delete-link`, {
-        method: 'DELETE',
-        headers: {
-          Authorization: 'JWT ' + (await getToken()),
-          'Content-type': 'application/json'
-        },
-        body: JSON.stringify({
-          link_id: linkId
-        })
-      })
+      fetch(
+        `${process.env.NEXT_PUBLIC_API_HOST}/api/projects/delete-link/${linkId}`,
+        {
+          method: 'DELETE',
+          headers: {
+            Authorization: 'JWT ' + (await getToken()),
+            'Content-type': 'application/json'
+          }
+        }
+      )
         .then(response => response.json())
         .then(data => {
           if (data === 'success') {
