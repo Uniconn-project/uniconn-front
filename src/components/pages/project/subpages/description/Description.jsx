@@ -69,12 +69,8 @@ export default function Description({
     <div className="p-2">
       <DescriptiveHeader
         title="Descrição do projeto"
-        description="Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-        Integer nec nisi lobortis, viverra quam eu, ultricies leo.
-        Proin a dictum ipsum. Pellentesque nec nulla in est porta maximus.
-        Aenean pellentesque tortor non lorem vestibulum luctus.
-        Sed ornare eros ac ante tempor aliquet.
-        Maecenas blandit, massa a feugiat sollicitudin, neque leo posuere odio, vel pharetra magna eros nec lectus. Quisque blandit imperdiet egestas."
+        description="A descrição de um projeto é o local onde seus admins tem total liberdade para se comunicar com o público da maneira que for mais conveniente.
+         Normalmente a descrição explica melhor a ideia e propósito por trás do projeto."
       />
       <div className="w-full bg-transparent rounded-md shadow-lg">
         <RichTextEditor
