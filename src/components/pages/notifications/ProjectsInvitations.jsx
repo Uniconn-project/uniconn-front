@@ -16,7 +16,7 @@ export default function ProjectsInvitations({
     fetch(
       `${process.env.NEXT_PUBLIC_API_HOST}/api/projects/reply-project-invitation`,
       {
-        method: 'PUT',
+        method: 'DELETE',
         headers: {
           'Content-type': 'application/json',
           Authorization: 'JWT ' + (await getToken())
@@ -60,7 +60,6 @@ export default function ProjectsInvitations({
 
   return (
     <div className="w-full">
-      {console.log(projectsInvitations)}
       {projectsInvitations.map(request => (
         <div
           key={request.project.id}
