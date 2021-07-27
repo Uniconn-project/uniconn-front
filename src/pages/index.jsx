@@ -15,6 +15,8 @@ export default function Index() {
 
     if (isAuthenticated) {
       Router.replace('/projects')
+    } else {
+      Router.replace('/login')
     }
   }, [loading, isAuthenticated])
 
