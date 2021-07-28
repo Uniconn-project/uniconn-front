@@ -78,95 +78,95 @@ export default function ProjectsFilter({ projects, setRenderedProjects }) {
 
   return (
     <div className="sticky top-24 w-full mb-4 sm:top-32">
-      <div
-        className={`w-full bg-light h-14 ${
-          filterHeight === 0 ? 'rounded-md' : 'rounded-t-md'
-        } shadow-lg p-2 flex items-center`}
-      >
-        <input
-          type="text"
-          placeholder="Pesquisar projeto..."
-          className="bg-transparent p-2"
-          value={search}
-          onChange={e => setSearch(e.target.value)}
-        />
-        <Tooltip title="Filtrar projetos" placement="top" arrow>
-          <TuneIcon
-            className="ml-auto cursor-pointer color-primary color-hover"
-            onClick={() =>
-              setFilterHeight(filterHeight === 'auto' ? 0 : 'auto')
-            }
+      <div className="w-full bg-light m-h-14 rounded-md shadow-lg p-2 flex flex-col">
+        <div className="w-full flex items-center">
+          <input
+            type="text"
+            placeholder="Pesquisar projeto..."
+            className="bg-transparent p-2"
+            value={search}
+            onChange={e => setSearch(e.target.value)}
           />
-        </Tooltip>
-      </div>
-      <AnimateHeight height={filterHeight}>
-        <div className="w-full bg-light shadow-lg rounded-md rounded-t-none">
-          <div className="b-bottom-transparent p-2">
-            <div className="flex items-center">
-              <h4 className="ml-1">Categorias</h4>
-            </div>
-            {categories ? (
-              <ul className="max-h-36 overflow-y-auto">
-                <li>
-                  <input
-                    type="checkbox"
-                    onChange={e =>
-                      toggleAllFields(e.target.checked, '.category')
-                    }
-                  />{' '}
-                  Todos
-                </li>
-                {categories.map(category => (
-                  <li key={category.value}>
-                    <input
-                      type="checkbox"
-                      className="category"
-                      name={category.value}
-                    />{' '}
-                    {category.readable[0].toUpperCase() +
-                      category.readable.slice(1)}
-                  </li>
-                ))}
-              </ul>
-            ) : (
-              <CircularProgress size={30} />
-            )}
-          </div>
-          <div className="b-bottom-transparent p-2">
-            <div className="flex items-center">
-              <h4 className="ml-1">Áreas de atuação</h4>
-            </div>
-            {fields ? (
-              <ul className="max-h-36 overflow-y-auto">
-                <li>
-                  <input
-                    type="checkbox"
-                    onChange={e => toggleAllFields(e.target.checked, '.field')}
-                  />{' '}
-                  Todos
-                </li>
-                {fields.map(field => (
-                  <li key={field.id}>
-                    <input
-                      type="checkbox"
-                      className="field"
-                      name={field.name}
-                    />{' '}
-                    {field.name[0].toUpperCase() + field.name.slice(1)}
-                  </li>
-                ))}
-              </ul>
-            ) : (
-              <CircularProgress size={30} />
-            )}
-          </div>
-          <div className="flex justify-end p-4">
-            <button className="btn-primary" onClick={handleFilterSubmit}>
-              Confirmar
-            </button>
-          </div>
+          <Tooltip title="Filtrar projetos" placement="top" arrow>
+            <TuneIcon
+              className="ml-auto cursor-pointer color-primary color-hover"
+              onClick={() =>
+                setFilterHeight(filterHeight === 'auto' ? 0 : 'auto')
+              }
+            />
+          </Tooltip>
         </div>
-      </AnimateHeight>
+        <AnimateHeight height={filterHeight}>
+          <div className="w-full">
+            <div className="b-bottom-transparent p-2">
+              <div className="flex items-center">
+                <h4>Categorias</h4>
+              </div>
+              {categories ? (
+                <ul className="max-h-36 overflow-y-auto">
+                  <li>
+                    <input
+                      type="checkbox"
+                      onChange={e =>
+                        toggleAllFields(e.target.checked, '.category')
+                      }
+                    />{' '}
+                    Todos
+                  </li>
+                  {categories.map(category => (
+                    <li key={category.value}>
+                      <input
+                        type="checkbox"
+                        className="category"
+                        name={category.value}
+                      />{' '}
+                      {category.readable[0].toUpperCase() +
+                        category.readable.slice(1)}
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <CircularProgress size={30} />
+              )}
+            </div>
+            <div className="b-bottom-transparent p-2">
+              <div className="flex items-center">
+                <h4>Áreas de atuação</h4>
+              </div>
+              {fields ? (
+                <ul className="max-h-36 overflow-y-auto">
+                  <li>
+                    <input
+                      type="checkbox"
+                      onChange={e =>
+                        toggleAllFields(e.target.checked, '.field')
+                      }
+                    />{' '}
+                    Todos
+                  </li>
+                  {fields.map(field => (
+                    <li key={field.id}>
+                      <input
+                        type="checkbox"
+                        className="field"
+                        name={field.name}
+                      />{' '}
+                      {field.name[0].toUpperCase() + field.name.slice(1)}
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <CircularProgress size={30} />
+              )}
+            </div>
+            <div className="flex justify-end p-4">
+              <button className="btn-primary" onClick={handleFilterSubmit}>
+                Confirmar
+              </button>
+            </div>
+          </div>
+        </AnimateHeight>
+      </div>
     </div>
   )
 }
