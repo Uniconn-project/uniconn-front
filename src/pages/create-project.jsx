@@ -3,6 +3,7 @@ import Snackbar from '@material-ui/core/Snackbar'
 import Alert from '@material-ui/lab/Alert'
 import ProfileInfo from '../components/global/profile-info/ProfileInfo'
 import Page from '../components/Page'
+import Router from 'next/router'
 import { MyProfileContext } from '../contexts/MyProfile'
 import { AuthContext } from '../contexts/Auth'
 import ProjectBaseForm from '../components/global/ProjectBaseForm'
@@ -44,12 +45,12 @@ export default function CreateProject() {
         Authorization: 'JWT ' + (await getToken())
       },
       body: JSON.stringify(postData)
-    })
-      .then(response => response.json())
-      .then(data => {
-        if (data === 'success') {
+    }).then(response =>
+      response.json().then(data => {
+        if (response.status === 200) {
           refetchMyProfile()
           setSuccessIsOpen(true)
+          Router.push(`/project/${data}`)
         } else {
           setErrorMsg({
             isOpen: true,
@@ -57,6 +58,7 @@ export default function CreateProject() {
           })
         }
       })
+    )
   }
 
   return (
