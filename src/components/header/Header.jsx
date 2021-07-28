@@ -11,7 +11,7 @@ export default function Header({ page }) {
   const { notificationsNumber } = useContext(NotificationsContext)
 
   return (
-    <header className="fixed z-10 top-0 w-full h-20 flex items-center px-4 py-2 header bg-light shadow-md sm:pl-8 sm:pr-20">
+    <header className="fixed z-20 top-0 w-full h-20 flex items-center px-4 py-2 header bg-light shadow-md sm:pl-8 sm:pr-20">
       <div className="sm:hidden">
         <MobileMenu />
       </div>
