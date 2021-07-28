@@ -32,8 +32,8 @@ export default function UniversityMajorSkillsForm(props) {
   const selectedSkillsMatrix = useMemo(() => {
     const matrix = []
 
-    for (let i = 0; i < Math.ceil(postData.skills_names.length / 3); i++) {
-      matrix.push(postData.skills_names.slice(i * 3, i * 3 + 3))
+    for (let i = 0; i < Math.ceil(postData.skills_names.length / 2); i++) {
+      matrix.push(postData.skills_names.slice(i * 2, i * 2 + 2))
     }
 
     return matrix
@@ -136,7 +136,7 @@ export default function UniversityMajorSkillsForm(props) {
             renderValue={() => (
               <div>
                 {selectedSkillsMatrix.map((skills, index) => (
-                  <div key={index} className="mb-1">
+                  <div key={index} className="mb-1 overflow-x-hidden">
                     {skills.map(value => (
                       <Chip
                         key={value}
