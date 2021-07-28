@@ -85,7 +85,7 @@ export default function ProjectBaseForm({ usePostData }) {
             {fields.map(field => (
               <MenuItem key={field.id} value={field.name}>
                 <div className="w-8 flex justify-center">
-                  {postData.field.includes(field.name) && (
+                  {postData.fields.includes(field.name) && (
                     <CheckIcon className="icon-sm color-primary" />
                   )}
                 </div>
