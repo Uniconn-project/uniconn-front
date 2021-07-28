@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Checkbox from '@material-ui/core/Checkbox'
@@ -28,6 +28,16 @@ export const getStaticProps = async () => {
 
 export default function UniversityMajorSkillsForm(props) {
   const [postData, setPostData] = props.usePostData()
+
+  const selectedSkillsMatrix = useMemo(() => {
+    const matrix = []
+
+    for (let i = 0; i < Math.ceil(postData.skills_names.length / 3); i++) {
+      matrix.push(postData.skills_names.slice(i * 3, i * 3 + 3))
+    }
+
+    return matrix
+  }, [postData.skills_names])
 
   const { data: universities } = useFetch(
     'universities/get-universities-name-list',
@@ -123,10 +133,18 @@ export default function UniversityMajorSkillsForm(props) {
             multiple
             value={postData.skills_names}
             onChange={handleChange('skills_names')}
-            renderValue={selected => (
+            renderValue={() => (
               <div>
-                {selected.map(value => (
-                  <Chip key={value} label={value} className="b-primary mr-1" />
+                {selectedSkillsMatrix.map((skills, index) => (
+                  <div key={index} className="mb-1">
+                    {skills.map(value => (
+                      <Chip
+                        key={value}
+                        label={value}
+                        className="b-primary mr-1"
+                      />
+                    ))}
+                  </div>
                 ))}
               </div>
             )}
