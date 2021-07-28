@@ -6,6 +6,7 @@ import MenuItem from '@material-ui/core/MenuItem'
 import InputLabel from '@material-ui/core/InputLabel'
 import Chip from '@material-ui/core/Chip'
 import FormControl from '@material-ui/core/FormControl'
+import CheckIcon from '@material-ui/icons/Check'
 import useFetch from '../../hooks/useFetch'
 
 export default function ProjectBaseForm({ usePostData }) {
@@ -83,6 +84,11 @@ export default function ProjectBaseForm({ usePostData }) {
           >
             {fields.map(field => (
               <MenuItem key={field.id} value={field.name}>
+                <div className="w-8 flex justify-center">
+                  {postData.field.includes(field.name) && (
+                    <CheckIcon className="icon-sm color-primary" />
+                  )}
+                </div>
                 {field.name[0].toUpperCase()}
                 {field.name.slice(1)}
               </MenuItem>
