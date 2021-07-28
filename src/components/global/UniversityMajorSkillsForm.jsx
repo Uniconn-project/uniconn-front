@@ -6,6 +6,7 @@ import InputLabel from '@material-ui/core/InputLabel'
 import FormControl from '@material-ui/core/FormControl'
 import Select from '@material-ui/core/Select'
 import MenuItem from '@material-ui/core/MenuItem'
+import CheckIcon from '@material-ui/icons/Check'
 import Chip from '@material-ui/core/Chip'
 import useFetch, { fetcher } from '../../hooks/useFetch'
 import AnimateHeight from 'react-animate-height'
@@ -131,7 +132,16 @@ export default function UniversityMajorSkillsForm(props) {
             )}
           >
             {skills.map(skill => (
-              <MenuItem key={skill.id} value={skill.name}>
+              <MenuItem
+                key={skill.id}
+                value={skill.name}
+                style={{ paddingLeft: 0 }}
+              >
+                <div className="w-8 flex justify-center">
+                  {postData.skills_names.includes(skill.name) && (
+                    <CheckIcon className="icon-sm color-primary" />
+                  )}
+                </div>
                 {skill.name[0].toUpperCase()}
                 {skill.name.slice(1)}
               </MenuItem>
