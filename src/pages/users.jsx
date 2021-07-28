@@ -50,7 +50,7 @@ export default function Users() {
               profiles={renderedProfiles}
               setProfiles={setRenderedProfiles}
             />
-            <div className="w-full" style={{ maxWidth: 600 }}>
+            <div className="w-full px-2" style={{ maxWidth: 600 }}>
               {renderedProfiles.map(profile => (
                 <ProfileListItem key={profile.id} profile={profile} />
               ))}
