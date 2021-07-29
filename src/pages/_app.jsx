@@ -18,22 +18,36 @@ import '../styles/material-ui/mobile_menu.scss'
 import '../styles/material-ui/popover.scss'
 import '../styles/material-ui/switch.scss'
 
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import Head from 'next/head'
+import Router from 'next/router'
 import PropTypes from 'prop-types'
+import CircularProgress from '@material-ui/core/CircularProgress'
 import AuthProvider from '../contexts/Auth'
 import MyProfileProvider from '../contexts/MyProfile'
 import NotificationsProvider from '../contexts/Notifications'
 import ThemeProvider from '../contexts/Theme'
+import Header from '../components/header/Header'
 
-export default function MyApp(props) {
-  const { Component, pageProps } = props
+export default function MyApp({ Component, pageProps }) {
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
-    // Remove the server-side injected CSS.
-    const jssStyles = document.querySelector('#jss-server-side')
-    if (jssStyles) {
-      jssStyles.parentElement.removeChild(jssStyles)
+    const start = url => {
+      if (!url.includes('/project/') && !url.includes('/user/')) return
+      setLoading(true)
+    }
+    const end = url => {
+      if (!url.includes('/project/') && !url.includes('/user/')) return
+      setLoading(false)
+    }
+    Router.events.on('routeChangeStart', start)
+    Router.events.on('routeChangeComplete', end)
+    Router.events.on('routeChangeError', end)
+    return () => {
+      Router.events.off('routeChangeStart', start)
+      Router.events.off('routeChangeComplete', end)
+      Router.events.off('routeChangeError', end)
     }
   }, [])
 
@@ -49,7 +63,14 @@ export default function MyApp(props) {
         <MyProfileProvider>
           <NotificationsProvider>
             <ThemeProvider>
-              <Component {...pageProps} />
+              {loading ? (
+                <div className="w-full h-screen flex justify-center items-center">
+                  <Header />
+                  <CircularProgress />
+                </div>
+              ) : (
+                <Component {...pageProps} />
+              )}
             </ThemeProvider>
           </NotificationsProvider>
         </MyProfileProvider>

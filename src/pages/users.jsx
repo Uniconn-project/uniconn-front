@@ -22,12 +22,7 @@ export default function Users() {
 
   if (!myProfile) {
     return (
-      <Page
-        title="Encontrar usuários | Uniconn"
-        page="search-users"
-        loginRequired
-        header
-      >
+      <Page title="Usuários | Uniconn" page="users" loginRequired header>
         <CircularProgress />
       </Page>
     )

@@ -48,10 +48,8 @@ export default function ProfileInfo({ profile }) {
         <ul>
           {profile.university && (
             <li className="pb-2">
-              <SchoolIcon className="icon-sm" />{' '}
-              {profile.major.name[0].toUpperCase() +
-                profile.major.name.slice(1)}{' '}
-              - {profile.university.name}
+              <SchoolIcon className="icon-sm" /> {profile.major.name} -{' '}
+              {profile.university.name}
             </li>
           )}
           {profile.linkedIn && (
