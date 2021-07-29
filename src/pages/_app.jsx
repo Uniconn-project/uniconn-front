@@ -34,12 +34,12 @@ export default function MyApp({ Component, pageProps }) {
 
   useEffect(() => {
     const start = url => {
-      if (!url.includes('/project/') && !url.includes('/user/')) return
-      setLoading(true)
+      if (!url) return
+      if (url.includes('/project/') || url.includes('/user/')) setLoading(true)
     }
     const end = url => {
-      if (!url.includes('/project/') && !url.includes('/user/')) return
-      setLoading(false)
+      if (!url) return
+      if (url.includes('/project/') || url.includes('/user/')) setLoading(false)
     }
     Router.events.on('routeChangeStart', start)
     Router.events.on('routeChangeComplete', end)

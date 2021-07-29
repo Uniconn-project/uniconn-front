@@ -1,5 +1,5 @@
-import React, { useState, useContext } from 'react'
-import Router, { useRouter } from 'next/router'
+import React, { useState, useContext, useEffect } from 'react'
+import Router from 'next/router'
 import IconButton from '@material-ui/core/IconButton'
 import Alert from '@material-ui/lab/Alert'
 import FormGroup from '@material-ui/core/FormGroup'
@@ -33,10 +33,12 @@ export default function Signup() {
   const [errorMsg, setErrorMsg] = useState(null)
   const [showPassword, setShowPassword] = useState(false)
 
-  const router = useRouter()
-
   const { loading, isAuthenticated } = useContext(AuthContext)
-  if (!loading && isAuthenticated) router.push('/')
+  if (!loading && isAuthenticated) Router.push('/')
+
+  useEffect(() => {
+    Router.prefetch('/projects')
+  }, [])
 
   const handleChange = key => e => {
     setPostData({ ...postData, [key]: e.target.value })
