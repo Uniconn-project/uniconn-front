@@ -113,8 +113,7 @@ export default function UniversityMajorSkillsForm(props) {
               >
                 {majors.map(major => (
                   <MenuItem key={major.id} value={major.name}>
-                    {major.name[0].toUpperCase()}
-                    {major.name.slice(1)}
+                    {major.name}
                   </MenuItem>
                 ))}
               </Select>
@@ -160,8 +159,7 @@ export default function UniversityMajorSkillsForm(props) {
                     <CheckIcon className="icon-sm color-primary" />
                   )}
                 </div>
-                {skill.name[0].toUpperCase()}
-                {skill.name.slice(1)}
+                {skill.name}
               </MenuItem>
             ))}
           </Select>
