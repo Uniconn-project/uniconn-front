@@ -26,11 +26,11 @@ export default function ThemeProvider({ children }) {
 
       window.localStorage.setItem('theme', 'dark')
     } else if (theme === 'light') {
-      cssVariables.setProperty('--background-dark', 'white')
-      cssVariables.setProperty('--background-light', '#efefef')
+      cssVariables.setProperty('--background-dark', '#f6f6f6')
+      cssVariables.setProperty('--background-light', '#f8f8f8')
       cssVariables.setProperty('--headline', 'black')
       cssVariables.setProperty('--paragraph', '#72757e')
-      cssVariables.setProperty('--transparent', '#f6f6f6')
+      cssVariables.setProperty('--transparent', 'white')
       cssVariables.setProperty('--yellow', '#a79012')
       cssVariables.setProperty(
         '--landing-page-waves',
