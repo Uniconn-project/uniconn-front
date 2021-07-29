@@ -5,7 +5,7 @@ export default function ProfileListItem({ profile, className = '' }) {
   return (
     <Link href={`/user/${profile.user.username}`}>
       <div
-        className={`w-full flex flex-col items-start bg-transparent rounded-md shadow-lg p-2 my-3 cursor-pointer bg-hover sm:flex-row ${className}`}
+        className={`w-full flex flex-col items-start bg-transparent rounded-md shadow-lg p-2 my-3 cursor-pointer bg-hover ${className}`}
       >
         <div className="flex">
           <img src={profile.photo} className="profile-img-md mr-2" />
@@ -18,7 +18,7 @@ export default function ProfileListItem({ profile, className = '' }) {
             </p>
           </div>
         </div>
-        <div className="w-full flex items-start ml-auto mr-4 mt-1 sm:w-auto sm:items-center">
+        <div className="w-full flex items-start ml-auto mr-4 mt-1">
           <span className="whitespace-nowrap overflow-ellipsis overflow-hidden">
             {profile.bio}
           </span>
