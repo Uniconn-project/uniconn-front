@@ -83,7 +83,7 @@ export default function ProjectsFilter({ projects, setRenderedProjects }) {
           <input
             type="text"
             placeholder="Pesquisar projeto..."
-            className="bg-transparent p-2"
+            className="w-9/12 bg-transparent p-2"
             value={search}
             onChange={e => setSearch(e.target.value)}
           />

@@ -27,7 +27,7 @@ export default function ProfilesFilter({
         <input
           type="text"
           placeholder="Pesquisar usuários..."
-          className="bg-transparent p-2"
+          className="w-9/12 bg-transparent p-2"
           value={search}
           onChange={e => setSearch(e.target.value.toLowerCase())}
         />
