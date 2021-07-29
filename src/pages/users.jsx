@@ -4,23 +4,20 @@ import Page from '../components/Page'
 import ProfileInfo from '../components/global/profile-info/ProfileInfo'
 import ProfilesFilter from '../components/pages/users/ProfilesFilter'
 import { MyProfileContext } from '../contexts/MyProfile'
-import { fetcher } from '../hooks/useFetch'
+import useFetch from '../hooks/useFetch'
 import ProfileListItem from '../components/global/ProfileListItem'
 
 export default function Users() {
   const { myProfile } = useContext(MyProfileContext)
-  const [initialProfiles, setInitialProfiles] = useState([])
+  const { data: initialProfiles } = useFetch('profiles/get-profile-list')
   const [renderedProfiles, setRenderedProfiles] = useState([])
 
   useEffect(() => {
-    ;(async () => {
-      const data = await fetcher('profiles/get-profile-list')
-      if (!renderedProfiles.length) setRenderedProfiles(data)
-      setInitialProfiles(data)
-    })()
-  }, []) //eslint-disable-line
+    if (!initialProfiles || renderedProfiles.length) return
+    setRenderedProfiles(initialProfiles)
+  }, [initialProfiles]) //eslint-disable-line
 
-  if (!myProfile) {
+  if (!myProfile || !initialProfiles) {
     return (
       <Page title="Usuários | Uniconn" page="users" loginRequired header>
         <CircularProgress />
