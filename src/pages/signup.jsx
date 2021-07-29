@@ -43,10 +43,15 @@ export default function Signup() {
   }
 
   const handleSubmit = () => {
-    const valuesInput = Object.values({ ...postData })
-
-    for (const value of valuesInput) {
-      if (!value) {
+    for (const key of [
+      'first_name',
+      'last_name',
+      'username',
+      'email',
+      'birth_date',
+      'password'
+    ]) {
+      if (!postData[key]) {
         setErrorMsg('Todos os campos devem ser preenchidos!')
         return
       }
