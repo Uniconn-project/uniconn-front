@@ -21,7 +21,6 @@ export default function ThemeProvider({ children }) {
       cssVariables.setProperty('--headline', '#fffffe')
       cssVariables.setProperty('--paragraph', '#94a1b2')
       cssVariables.setProperty('--transparent', 'rgba(255, 255, 255, 0.02)')
-      cssVariables.setProperty('--yellow', '#ffd803')
       cssVariables.setProperty('--landing-page-waves', 'rgba(0, 0, 0, 0.2)')
 
       window.localStorage.setItem('theme', 'dark')
@@ -31,7 +30,6 @@ export default function ThemeProvider({ children }) {
       cssVariables.setProperty('--headline', 'black')
       cssVariables.setProperty('--paragraph', '#72757e')
       cssVariables.setProperty('--transparent', 'white')
-      cssVariables.setProperty('--yellow', '#a79012')
       cssVariables.setProperty(
         '--landing-page-waves',
         'rgba(255, 255, 255, 0.4)'
