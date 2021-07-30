@@ -2,12 +2,16 @@ import React, { useState, useContext } from 'react'
 import Modal from '@material-ui/core/Modal'
 import Backdrop from '@material-ui/core/Backdrop'
 import Fade from '@material-ui/core/Fade'
-import Snackbar from '@material-ui/core/Snackbar'
-import Alert from '@material-ui/lab/Alert'
 import TextField from '@material-ui/core/TextField'
-import { AuthContext } from '../../../../../../contexts/Auth'
+import { AuthContext } from '../../contexts/Auth'
 
-export default function AddLinkModal({ project, refetchProject, children }) {
+export default function AddLinkModal({
+  project = null,
+  profile = null,
+  successCallback,
+  setErrorMsg,
+  children
+}) {
   const postDataInitialState = {
     name: '',
     href: ''
@@ -17,10 +21,6 @@ export default function AddLinkModal({ project, refetchProject, children }) {
 
   const [isOpen, setIsOpen] = useState(false)
   const [postData, setPostData] = useState(postDataInitialState)
-  const [errorMsg, setErrorMsg] = useState({
-    isOpen: false,
-    message: ''
-  })
 
   const handleChange = key => e => {
     setPostData({ ...postData, [key]: e.target.value })
@@ -33,7 +33,9 @@ export default function AddLinkModal({ project, refetchProject, children }) {
 
   const handleSubmit = async () => {
     fetch(
-      `${process.env.NEXT_PUBLIC_API_HOST}/api/projects/create-link/${project.id}`,
+      `${process.env.NEXT_PUBLIC_API_HOST}/api/${
+        project ? 'projects' : 'profiles'
+      }/create-link${project ? `/${project.id}` : ''}`,
       {
         method: 'POST',
         headers: {
@@ -47,7 +49,7 @@ export default function AddLinkModal({ project, refetchProject, children }) {
       .then(data => {
         setIsOpen(false)
         if (data === 'success') {
-          refetchProject('add-link')
+          successCallback && successCallback()
           setPostData(postDataInitialState)
         } else {
           setErrorMsg({
@@ -105,18 +107,6 @@ export default function AddLinkModal({ project, refetchProject, children }) {
           </div>
         </Fade>
       </Modal>
-      <Snackbar
-        open={errorMsg.isOpen}
-        autoHideDuration={6000}
-        onClose={() =>
-          setErrorMsg({
-            isOpen: false,
-            message: ''
-          })
-        }
-      >
-        <Alert severity="error">{errorMsg.message}</Alert>
-      </Snackbar>
     </>
   )
 }

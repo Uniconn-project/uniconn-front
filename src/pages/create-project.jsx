@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react'
 import Snackbar from '@material-ui/core/Snackbar'
 import Alert from '@material-ui/lab/Alert'
+import ArrowBackIcon from '@material-ui/icons/ArrowBack'
 import ProfileInfo from '../components/global/profile-info/ProfileInfo'
 import Page from '../components/Page'
 import Router from 'next/router'
@@ -47,7 +48,7 @@ export default function CreateProject() {
       body: JSON.stringify(postData)
     }).then(response =>
       response.json().then(data => {
-        if (response.status === 200) {
+        if (response.ok) {
           refetchMyProfile()
           setSuccessIsOpen(true)
           Router.push(`/project/${data}`)
@@ -74,6 +75,12 @@ export default function CreateProject() {
         <div className="w-full flex justify-center p-2 pt-0 lg:p-0 lg:w-2/3 lg:justify-start lg:box-border">
           <div className="w-full" style={{ maxWidth: 600 }}>
             <div className="w-full flex items-center bg-light h-14 rounded-md shadow-lg p-2 mb-4">
+              <div
+                className="p-1 mr-2 rounded-3xl bg-transparent-hover cursor-pointer"
+                onClick={() => window.history.back()}
+              >
+                <ArrowBackIcon className="icon-sm color-primary" />
+              </div>
               <h3 className="color-paragraph">Criar projeto</h3>
             </div>
             <div className="w-full flex flex-col bg-transparent rounded-md shadow-lg">

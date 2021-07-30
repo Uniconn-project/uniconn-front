@@ -56,12 +56,12 @@ export default function MobileMenu() {
                 <ListItemText primary={'Usuários'} />
               </ListItem>
             </Link>
-            <Link href="/my-projects">
+            <Link href="/profile">
               <ListItem button>
                 <ListItemIcon className="mr-2">
                   <PersonOutlineOutlinedIcon />
                 </ListItemIcon>
-                <ListItemText primary={'Meus projetos'} />
+                <ListItemText primary={'Perfil'} />
               </ListItem>
             </Link>
             <Link href="/settings">
