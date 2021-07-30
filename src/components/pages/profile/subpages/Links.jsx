@@ -53,6 +53,16 @@ export default function Links({ profile }) {
 
   return (
     <>
+      {profile.id === myProfile.id && (
+        <AddLinkModal profile={profile} setErrorMsg={setErrorMsg}>
+          <div>
+            <div className="flex items-center w-full">
+              <LinkIcon className="color-primary mr-2" />
+              <strong className="color-primary">Adicionar link</strong>
+            </div>
+          </div>
+        </AddLinkModal>
+      )}
       <div>
         {profile.links.map(link => (
           <div
@@ -81,16 +91,6 @@ export default function Links({ profile }) {
           </div>
         ))}
       </div>
-      {profile.id === myProfile.id && (
-        <AddLinkModal profile={profile} setErrorMsg={setErrorMsg}>
-          <div>
-            <div className="flex items-center w-full">
-              <LinkIcon className="color-primary mr-2" />
-              <strong className="color-primary">Adicionar link</strong>
-            </div>
-          </div>
-        </AddLinkModal>
-      )}
       <Snackbar
         open={errorMsg.isOpen}
         autoHideDuration={6000}

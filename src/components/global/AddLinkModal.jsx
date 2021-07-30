@@ -35,7 +35,7 @@ export default function AddLinkModal({
     fetch(
       `${process.env.NEXT_PUBLIC_API_HOST}/api/${
         project ? 'projects' : 'profiles'
-      }/create-link/${project ? project.id : profile.id}`,
+      }/create-link${project ? `/${project.id}` : ''}`,
       {
         method: 'POST',
         headers: {
