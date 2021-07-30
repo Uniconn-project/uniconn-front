@@ -1,0 +1,9 @@
+@media (min-width: 640px) {
+  .sm\:color-primary {
+    color: var(--primary-color) !important;
+  }
+
+  .sm\:bg-transparent {
+    background-color: var(--transparent) !important;
+  }
+}

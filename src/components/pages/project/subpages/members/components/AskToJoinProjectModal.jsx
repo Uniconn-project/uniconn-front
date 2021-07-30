@@ -55,11 +55,13 @@ export default function AskToJoinProjectModal({
   return (
     <>
       <div
-        className="w-full flex items-center p-2 pl-4 mb-2 cursor-pointer bg-transparent bg-hover rounded-md shadow-lg"
+        className="w-full flex items-center p-2 pl-4 mb-2 cursor-pointer bg-primary bg-hover rounded-md shadow-lg sm:bg-transparent"
         onClick={() => setIsOpen(true)}
       >
-        <PeopleIcon className="color-primary mr-2" />
-        <strong className="color-primary">Quero colaborar</strong>
+        <PeopleIcon className="color-btn-text sm:color-primary mr-2" />
+        <strong className="color-btn-text sm:color-primary">
+          Quero colaborar
+        </strong>
       </div>
       <Modal
         className="flex justify-center items-center"

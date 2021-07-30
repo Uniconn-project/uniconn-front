@@ -3,6 +3,7 @@ import '../styles/header.scss'
 import '../styles/landing-page/landing_page.scss'
 import '../styles/utils/background.scss'
 import '../styles/utils/border.scss'
+import '../styles/utils/breakpoints.scss'
 import '../styles/utils/color.scss'
 import '../styles/utils/hover.scss'
 import '../styles/utils/transition.scss'
@@ -35,11 +36,23 @@ export default function MyApp({ Component, pageProps }) {
   useEffect(() => {
     const start = url => {
       if (!url) return
-      if (url.includes('/project/') || url.includes('/user/')) setLoading(true)
+      if (
+        url.includes('/project/') ||
+        url.includes('/projects/') ||
+        url.includes('/user/')
+      ) {
+        setLoading(true)
+      }
     }
     const end = url => {
       if (!url) return
-      if (url.includes('/project/') || url.includes('/user/')) setLoading(false)
+      if (
+        url.includes('/project/') ||
+        url.includes('/projects/') ||
+        url.includes('/user/')
+      ) {
+        setLoading(false)
+      }
     }
     Router.events.on('routeChangeStart', start)
     Router.events.on('routeChangeComplete', end)
