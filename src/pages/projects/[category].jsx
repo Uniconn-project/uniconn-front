@@ -35,7 +35,7 @@ export default function Category({ initialProjects, category }) {
 
   if (!myProfile) {
     return (
-      <Page title="Projetos | Uniconn" page="projects" loginRequired header>
+      <Page title="Projetos | Uniconn" loginRequired header>
         <div>
           <CircularProgress />
         </div>
@@ -44,7 +44,7 @@ export default function Category({ initialProjects, category }) {
   }
 
   return (
-    <Page title="Projetos | Uniconn" page="projects" loginRequired header>
+    <Page title="Projetos | Uniconn" loginRequired header>
       {projects && (
         <div className="justify-center w-full h-full flex">
           <div className="hidden lg:w-1/3 lg:flex lg:justify-end lg:mr-10 lg:box-border">
