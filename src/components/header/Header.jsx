@@ -51,13 +51,13 @@ export default function Header({ page }) {
             Usuários
           </div>
         </Link>
-        <Link href="/my-projects">
+        <Link href="/profile">
           <div
             className={`p-3 ml-2 nav-link ${
-              page === 'my-projects' ? 'active' : ''
+              page === 'profile' ? 'active' : ''
             }`}
           >
-            Meus projetos
+            Perfil
           </div>
         </Link>
         <Link href="/settings">

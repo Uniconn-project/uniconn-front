@@ -48,7 +48,7 @@ export default function CreateProject() {
       body: JSON.stringify(postData)
     }).then(response =>
       response.json().then(data => {
-        if (response.status === 200) {
+        if (response.ok) {
           refetchMyProfile()
           setSuccessIsOpen(true)
           Router.push(`/project/${data}`)

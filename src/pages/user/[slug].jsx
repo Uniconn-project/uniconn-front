@@ -74,7 +74,7 @@ export default function Profile({ initialProfile }) {
         </div>
         <div className="w-full flex justify-center p-2 pt-0 lg:p-0 lg:w-2/3 lg:justify-start lg:box-border">
           <div className="w-full" style={{ maxWidth: 600 }}>
-            <ProfileHeader profile={myProfile} page={page} setPage={setPage} />
+            <ProfileHeader profile={profile} page={page} setPage={setPage} />
             <div className="w-full px-2">
               {page === 'projects' && <Projects profile={profile} />}
               {page === 'links' && <Links profile={profile} />}

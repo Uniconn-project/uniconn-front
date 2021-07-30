@@ -9,7 +9,7 @@ import LinkIconResolver from '../../../global/LinkIconResolver'
 import { AuthContext } from '../../../../contexts/Auth'
 import { MyProfileContext } from '../../../../contexts/MyProfile'
 
-export default function Links({ profile }) {
+export default function Links({ profile, refetchProfile }) {
   const { myProfile } = useContext(MyProfileContext)
   const { getToken } = useContext(AuthContext)
 
@@ -29,7 +29,7 @@ export default function Links({ profile }) {
   const handleDelete = async linkId => {
     if (window.confirm('Remover link?')) {
       fetch(
-        `${process.env.NEXT_PUBLIC_API_HOST}/api/projects/delete-link/${linkId}`,
+        `${process.env.NEXT_PUBLIC_API_HOST}/api/profiles/delete-link/${linkId}`,
         {
           method: 'DELETE',
           headers: {
@@ -37,10 +37,10 @@ export default function Links({ profile }) {
             'Content-type': 'application/json'
           }
         }
-      )
-        .then(response => response.json())
-        .then(data => {
-          if (data === 'success') {
+      ).then(response =>
+        response.json().then(data => {
+          if (response.ok) {
+            refetchProfile && refetchProfile('delete-link')
           } else {
             setErrorMsg({
               isOpen: true,
@@ -48,13 +48,18 @@ export default function Links({ profile }) {
             })
           }
         })
+      )
     }
   }
 
   return (
     <>
       {profile.id === myProfile.id && (
-        <AddLinkModal profile={profile} setErrorMsg={setErrorMsg}>
+        <AddLinkModal
+          profile={profile}
+          successCallback={() => refetchProfile('add-link')}
+          setErrorMsg={setErrorMsg}
+        >
           <div>
             <div className="flex items-center w-full">
               <LinkIcon className="color-primary mr-2" />
