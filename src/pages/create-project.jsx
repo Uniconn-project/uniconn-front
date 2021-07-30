@@ -73,8 +73,8 @@ export default function CreateProject() {
         </div>
         <div className="w-full flex justify-center p-2 pt-0 lg:p-0 lg:w-2/3 lg:justify-start lg:box-border">
           <div className="w-full" style={{ maxWidth: 600 }}>
-            <div className="w-full flex items-center bg-transparent rounded-md shadow-lg p-2 mb-4">
-              <h3>Criar projeto</h3>
+            <div className="w-full flex items-center bg-light h-14 rounded-md shadow-lg p-2 mb-4">
+              <h3 className="color-paragraph">Criar projeto</h3>
             </div>
             <div className="w-full flex flex-col bg-transparent rounded-md shadow-lg">
               <div className="w-full p-2 b-bottom-transparent">
