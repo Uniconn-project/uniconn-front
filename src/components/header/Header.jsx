@@ -34,7 +34,7 @@ export default function Header({ page }) {
           <CircularProgress size={20} />
         )}
       </div>
-      <div className="hidden sm:flex sm:ml-32">
+      <div className="hidden sm:flex sm:ml-10 lg:ml-32">
         <Link href="/projects">
           <div
             className={`p-3 mr-2 nav-link ${
