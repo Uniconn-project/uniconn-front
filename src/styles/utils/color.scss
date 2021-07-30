@@ -66,7 +66,7 @@
   }
 }
 
-.color-junior_enterprise,
+.color-academic,
 .color-doubt {
   color: var(--secondary-color);
   border: 1px solid var(--secondary-color);
@@ -75,18 +75,6 @@
   &:hover {
     color: var(--btn-text);
     background-color: var(--secondary-color);
-    cursor: pointer;
-  }
-}
-
-.color-academic {
-  color: var(--yellow);
-  border: 1px solid var(--yellow);
-  border-radius: 20px;
-
-  &:hover {
-    color: var(--btn-text);
-    background-color: var(--yellow);
     cursor: pointer;
   }
 }
