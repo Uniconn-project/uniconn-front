@@ -4,12 +4,13 @@ import DeleteIcon from '@material-ui/icons/Delete'
 import Snackbar from '@material-ui/core/Snackbar'
 import Alert from '@material-ui/lab/Alert'
 import LinkIcon from '@material-ui/icons/Link'
-import AddLinkModal from '../../../../global/AddLinkModal'
-import LinkIconResolver from '../../../../global/LinkIconResolver'
-import DescriptiveHeader from '../../../../global/DescriptiveHeader'
-import { AuthContext } from '../../../../../contexts/Auth'
+import AddLinkModal from '../../../global/AddLinkModal'
+import LinkIconResolver from '../../../global/LinkIconResolver'
+import { AuthContext } from '../../../../contexts/Auth'
+import { MyProfileContext } from '../../../../contexts/MyProfile'
 
-export default function Links({ project, isProjectMember, refetchProject }) {
+export default function Links({ profile }) {
+  const { myProfile } = useContext(MyProfileContext)
   const { getToken } = useContext(AuthContext)
 
   const [errorMsg, setErrorMsg] = useState({
@@ -17,7 +18,7 @@ export default function Links({ project, isProjectMember, refetchProject }) {
     message: ''
   })
 
-  if (!project) {
+  if (!profile) {
     return (
       <div className="w-full flex justify-center mt-10">
         <CircularProgress />
@@ -40,7 +41,6 @@ export default function Links({ project, isProjectMember, refetchProject }) {
         .then(response => response.json())
         .then(data => {
           if (data === 'success') {
-            refetchProject('delete-link')
           } else {
             setErrorMsg({
               isOpen: true,
@@ -52,15 +52,9 @@ export default function Links({ project, isProjectMember, refetchProject }) {
   }
 
   return (
-    <div className="p-2">
-      <DescriptiveHeader
-        title="Links do projeto"
-        description="Links são uma ótima forma dos membros de um projeto compartilharem
-              informações para o público que estão guardadas em outras
-              plataformas."
-      />
+    <>
       <div>
-        {project.links.map(link => (
+        {profile.links.map(link => (
           <div
             key={link.id}
             className="flex bg-transparent rounded-md shadow-lg mb-4 bg-hover"
@@ -76,7 +70,7 @@ export default function Links({ project, isProjectMember, refetchProject }) {
                 <div className="break-all">{link.name}</div>
               </div>
             </a>
-            {isProjectMember && (
+            {profile.id === myProfile.id && (
               <div
                 className="cursor-pointer p-2"
                 onClick={() => handleDelete(link.id)}
@@ -87,12 +81,8 @@ export default function Links({ project, isProjectMember, refetchProject }) {
           </div>
         ))}
       </div>
-      {isProjectMember && (
-        <AddLinkModal
-          project={project}
-          successCallback={() => refetchProject('add-link')}
-          setErrorMsg={setErrorMsg}
-        >
+      {profile.id === myProfile.id && (
+        <AddLinkModal profile={profile} setErrorMsg={setErrorMsg}>
           <div>
             <div className="flex items-center w-full">
               <LinkIcon className="color-primary mr-2" />
@@ -113,6 +103,6 @@ export default function Links({ project, isProjectMember, refetchProject }) {
       >
         <Alert severity="error">{errorMsg.message}</Alert>
       </Snackbar>
-    </div>
+    </>
   )
 }

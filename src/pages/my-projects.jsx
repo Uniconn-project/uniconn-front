@@ -1,14 +1,15 @@
-import React, { useContext } from 'react'
-import Link from 'next/link'
-import AddIcon from '@material-ui/icons/Add'
+import React, { useContext, useState } from 'react'
 import ProfileInfo from '../components/global/profile-info/ProfileInfo'
 import Page from '../components/Page'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import { MyProfileContext } from '../contexts/MyProfile'
-import ProjectList from '../components/global/ProjectList'
+import ProfileHeader from '../components/pages/profile/ProfileHeader'
+import Projects from '../components/pages/profile/subpages/Projects'
+import Links from '../components/pages/profile/subpages/Links'
 
 export default function MyProjects() {
   const { myProfile } = useContext(MyProfileContext)
+  const [page, setPage] = useState('projects')
 
   if (!myProfile) {
     return (
@@ -42,17 +43,10 @@ export default function MyProjects() {
         </div>
         <div className="w-full flex justify-center p-2 pt-0 lg:p-0 lg:w-2/3 lg:justify-start lg:box-border">
           <div className="w-full" style={{ maxWidth: 600 }}>
-            <div className="sticky top-24 bg-light w-full h-14 rounded-md shadow-lg p-2 mb-4 flex justify-center items-center sm:top-32">
-              <span>Meus projetos ({myProfile.projects.length})</span>
-            </div>
+            <ProfileHeader profile={myProfile} page={page} setPage={setPage} />
             <div className="w-full px-2">
-              <Link href="/create-project">
-                <div className="w-full flex items-center cursor-pointer bg-transparent bg-hover rounded-md shadow-lg p-2 mb-4">
-                  <span>CRIAR PROJETO</span>
-                  <AddIcon className="ml-auto" />
-                </div>
-              </Link>
-              <ProjectList projects={myProfile.projects} />
+              {page === 'projects' && <Projects profile={myProfile} />}
+              {page === 'links' && <Links profile={myProfile} />}
             </div>
           </div>
         </div>

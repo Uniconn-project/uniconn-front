@@ -3,9 +3,11 @@ import Router from 'next/router'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import Page from '../../components/Page'
 import ProfileInfo from '../../components/global/profile-info/ProfileInfo'
-import ProjectList from '../../components/global/ProjectList'
 import { fetcher } from '../../hooks/useFetch'
 import { MyProfileContext } from '../../contexts/MyProfile'
+import ProfileHeader from '../../components/pages/profile/ProfileHeader'
+import Projects from '../../components/pages/profile/subpages/Projects'
+import Links from '../../components/pages/profile/subpages/Links'
 
 export const getServerSideProps = async context => {
   const profile = await fetcher(`profiles/get-profile/${context.params.slug}`)
@@ -18,14 +20,15 @@ export const getServerSideProps = async context => {
 
   return {
     props: {
-      profile
+      initialProfile: profile
     }
   }
 }
 
-export default function Profile({ profile }) {
+export default function Profile({ initialProfile }) {
   const { myProfile } = useContext(MyProfileContext)
-  const [projects, setProjects] = useState(null)
+  const [profile, setProfile] = useState(initialProfile)
+  const [page, setPage] = useState('projects')
 
   useEffect(() => {
     if (!profile || !myProfile) return
@@ -38,14 +41,14 @@ export default function Profile({ profile }) {
   useEffect(() => {
     if (!profile) return
     ;(async () => {
-      const data = await fetcher(
+      const projects = await fetcher(
         `profiles/get-profile-projects/${profile.user.username}`
       )
-      await setProjects(data)
+      setProfile({ ...profile, projects })
     })()
   }, [profile])
 
-  if (!profile) {
+  if (!myProfile || !profile || !profile.projects) {
     return (
       <Page loginRequired header>
         <div className="w-full flex justify-center mt-10">
@@ -71,15 +74,10 @@ export default function Profile({ profile }) {
         </div>
         <div className="w-full flex justify-center p-2 pt-0 lg:p-0 lg:w-2/3 lg:justify-start lg:box-border">
           <div className="w-full" style={{ maxWidth: 600 }}>
-            <div className="sticky top-24 bg-light w-full h-14 rounded-md shadow-lg p-2 mb-4 flex justify-center items-center sm:top-32">
-              {projects !== null ? (
-                <span>Projetos ({projects.length})</span>
-              ) : (
-                <CircularProgress size={30} />
-              )}
-            </div>
-            <div className="w-full lg:px-2">
-              <ProjectList projects={projects} />
+            <ProfileHeader profile={myProfile} page={page} setPage={setPage} />
+            <div className="w-full px-2">
+              {page === 'projects' && <Projects profile={profile} />}
+              {page === 'links' && <Links profile={profile} />}
             </div>
           </div>
         </div>
