@@ -4,6 +4,7 @@ import Tooltip from '@material-ui/core/Tooltip'
 import StarIcon from '@material-ui/icons/Star'
 import StarBorderIcon from '@material-ui/icons/StarBorder'
 import CommentIcon from '@material-ui/icons/Comment'
+import ProjectCategory from './ProjectCategory'
 import { MyProfileContext } from '../../contexts/MyProfile'
 import { AuthContext } from '../../contexts/Auth'
 
@@ -115,9 +116,7 @@ export default function ProjectListItem({
             src={project.image}
             className="w-80 h-52 rounded-md object-cover mb-2"
           />
-          <div className={`text-sm px-2 w-max color-${project.category.value}`}>
-            {project.category.readable}
-          </div>
+          <ProjectCategory category={project.category} />
         </div>
         <div className="p-2 flex items-center">
           <Tooltip title="Curtidas" placement="bottom" arrow>

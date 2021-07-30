@@ -11,6 +11,12 @@
     }
   }
 
+  .bg-transparent-hover {
+    &:hover {
+      background-color: var(--transparent);
+    }
+  }
+
   .color-red-hover {
     &:hover {
       color: var(--red);

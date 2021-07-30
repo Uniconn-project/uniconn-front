@@ -7,6 +7,7 @@ import Snackbar from '@material-ui/core/Snackbar'
 import Alert from '@material-ui/lab/Alert'
 import StarsProfilesModal from '../../../../global/StarsProfilesModal'
 import ArrowBackIcon from '@material-ui/icons/ArrowBack'
+import ProjectCategory from '../../../../global/ProjectCategory'
 import { mutate } from 'swr'
 import { MyProfileContext } from '../../../../../contexts/MyProfile'
 import { AuthContext } from '../../../../../contexts/Auth'
@@ -141,9 +142,7 @@ export default function ProjectInfoDesktop({
       </div>
       <div className="w-full pl-4 pr-2 py-6 b-bottom-light">
         <p className="break-words mb-2">{project.slogan}</p>
-        <div className={`text-sm px-2 w-max color-${project.category.value}`}>
-          {project.category.readable}
-        </div>
+        <ProjectCategory category={project.category} />
       </div>
       <StarsProfilesModal
         useIsOpen={() => [starsModalIsOpen, setStarsModalIsOpen]}
