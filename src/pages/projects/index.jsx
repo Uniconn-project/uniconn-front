@@ -1,11 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react'
 import CircularProgress from '@material-ui/core/CircularProgress'
-import Page from '../components/Page'
-import ProjectList from '../components/global/ProjectList'
-import ProfileInfo from '../components/global/profile-info/ProfileInfo'
-import ProjectsFilter from '../components/pages/projects/ProjectsFilter'
-import useFetch from '../hooks/useFetch'
-import { MyProfileContext } from '../contexts/MyProfile'
+import Page from '../../components/Page'
+import ProjectList from '../../components/global/ProjectList'
+import ProfileInfo from '../../components/global/profile-info/ProfileInfo'
+import ProjectsFilter from '../../components/pages/projects/ProjectsFilter'
+import useFetch from '../../hooks/useFetch'
+import { MyProfileContext } from '../../contexts/MyProfile'
 
 export default function Projects() {
   const { myProfile } = useContext(MyProfileContext)

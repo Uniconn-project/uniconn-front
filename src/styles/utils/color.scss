@@ -41,6 +41,12 @@
   color: var(--primary-color);
   border: 1px solid var(--primary-color);
   border-radius: 20px;
+
+  &:hover {
+    color: var(--btn-text);
+    background-color: var(--primary-color);
+    cursor: pointer;
+  }
 }
 
 .color-social_project,
@@ -48,6 +54,12 @@
   color: var(--green);
   border: 1px solid var(--green);
   border-radius: 20px;
+
+  &:hover {
+    color: var(--btn-text);
+    background-color: var(--green);
+    cursor: pointer;
+  }
 }
 
 .color-junior_enterprise,
@@ -55,12 +67,24 @@
   color: var(--secondary-color);
   border: 1px solid var(--secondary-color);
   border-radius: 20px;
+
+  &:hover {
+    color: var(--btn-text);
+    background-color: var(--secondary-color);
+    cursor: pointer;
+  }
 }
 
 .color-academic {
   color: var(--yellow);
   border: 1px solid var(--yellow);
   border-radius: 20px;
+
+  &:hover {
+    color: var(--btn-text);
+    background-color: var(--yellow);
+    cursor: pointer;
+  }
 }
 
 .color-red {

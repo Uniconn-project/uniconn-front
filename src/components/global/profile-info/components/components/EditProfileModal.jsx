@@ -42,7 +42,10 @@ export default function EditProfileModal({
         <div className="bg-dark py-2 rounded-md shadow-lg w-full max-w-screen-md">
           <div className="flex justify-between items-center w-full b-bottom p-4">
             <h2>Editar perfil</h2>
-            <div className="p-1 cursor-pointer" onClick={handleClose}>
+            <div
+              className="p-1 rounded-3xl bg-transparent-hover cursor-pointer"
+              onClick={handleClose}
+            >
               <CloseIcon className="color-red" />
             </div>
           </div>

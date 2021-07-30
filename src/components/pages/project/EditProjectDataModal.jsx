@@ -103,7 +103,7 @@ export default function EditProjectDataModal({ project, refetchProject }) {
             <div className="flex justify-between items-center w-full b-bottom p-4">
               <h2>Editar projeto</h2>
               <div
-                className="p-1 cursor-pointer"
+                className="p-1 rounded-3xl bg-transparent-hover cursor-pointer"
                 onClick={() => setIsOpen(false)}
               >
                 <CloseIcon className="color-red" />
