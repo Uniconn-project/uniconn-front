@@ -101,18 +101,11 @@ export default function EditProfileModal({
               </div>
               <div className="w-full flex justify-between items-center mb-2">
                 <TextField
-                  className="w-2/5"
-                  label="nome de usuário"
+                  className="w-full"
+                  label="Nome de usuário"
                   value={postData.username}
                   inputProps={{ maxLength: 25 }}
                   onChange={handleChange('username')}
-                />
-                <TextField
-                  className="w-2/5"
-                  label="LinkedIn"
-                  value={postData.linkedIn}
-                  inputProps={{ maxLength: 50 }}
-                  onChange={handleChange('linkedIn')}
                 />
               </div>
               <UniversityMajorSkillsForm
