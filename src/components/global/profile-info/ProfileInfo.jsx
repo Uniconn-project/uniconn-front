@@ -4,7 +4,6 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack'
 import PaletteIcon from '@material-ui/icons/Palette'
 import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt'
 import SchoolIcon from '@material-ui/icons/School'
-import LinkedInIcon from '@material-ui/icons/LinkedIn'
 import EditProfile from './components/EditProfile'
 import { MyProfileContext } from '../../../contexts/MyProfile'
 
@@ -50,19 +49,6 @@ export default function ProfileInfo({ profile }) {
             <li className="pb-2">
               <SchoolIcon className="icon-sm" /> {profile.major.name} -{' '}
               {profile.university.name}
-            </li>
-          )}
-          {profile.linkedIn && (
-            <li className="pb-2 break-all">
-              <a
-                href={`https://www.linkedin.com/in/${profile.linkedIn}`}
-                target="_blank"
-                rel="noreferrer"
-              >
-                <div className="color-paragraph hover:underline">
-                  <LinkedInIcon className="icon-sm" /> {profile.linkedIn}
-                </div>
-              </a>
             </li>
           )}
           <li className="pb-2">

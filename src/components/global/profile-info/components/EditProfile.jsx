@@ -16,7 +16,6 @@ export default function EditProfile({ profile }) {
       first_name: profile.first_name,
       last_name: profile.last_name,
       bio: profile.bio,
-      linkedIn: profile.linkedIn || '',
       is_attending_university: profile.is_attending_university,
       university_name: profile.university && profile.university.name,
       major_name: profile.major && profile.major.name,
