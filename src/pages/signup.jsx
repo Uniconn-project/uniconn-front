@@ -88,6 +88,7 @@ export default function Signup() {
 
   return (
     <Page title="Criar conta | Uniconn" className="h-screen">
+      <h1 className="m-6">Criar conta</h1>
       {errorMsg !== null && (
         <div>
           <Alert severity="error">{errorMsg}</Alert>
@@ -181,7 +182,7 @@ export default function Signup() {
         />
         <button
           className="btn-primary w-4/5"
-          data-cy="btn-submit-signup"
+          data-cy="signup-submit-button"
           onClick={handleSubmit}
         >
           Criar conta

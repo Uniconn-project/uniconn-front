@@ -70,6 +70,7 @@ export default function UniversityMajorSkillsForm(props) {
             className="w-4/5"
             control={
               <Checkbox
+                data-cy="is-attending-university-checkbox"
                 checked={postData.is_attending_university}
                 onChange={() =>
                   setPostData({
@@ -127,8 +128,8 @@ export default function UniversityMajorSkillsForm(props) {
             Quais são suas habilidades?
           </InputLabel>
           <Select
-            data-cy="skills-select"
             labelId="skills-select-label"
+            data-cy="skills-select"
             multiple
             value={postData.skills_names}
             onChange={handleChange('skills_names')}

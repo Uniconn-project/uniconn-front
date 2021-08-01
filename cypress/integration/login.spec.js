@@ -31,6 +31,7 @@ context('Login Page', () => {
       .should('be.visible')
       .should('contain', 'Todos os campos devem ser preenchidos!')
 
+    // ----------
     cy.get('input[placeholder="Nome de usuário"]').type('abcdefghijkl')
     cy.get('input[placeholder="Senha"]').type('lkjihgfedcba')
 
@@ -52,6 +53,6 @@ context('Login Page', () => {
     cy.get('input[placeholder="Senha"]').type(Cypress.env('test_user_password'))
 
     cy.get('button').contains('Entrar').click()
-    cy.title().should('equal', 'Home | Uniconn')
+    cy.title().should('equal', 'Projetos | Uniconn')
   })
 })
