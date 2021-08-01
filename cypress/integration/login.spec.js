@@ -46,7 +46,7 @@ context('Login Page', () => {
     cy.title().should('equal', 'Criar conta | Uniconn')
   })
 
-  it('Asserting successful login redirects to home page', () => {
+  it('Asserting successful login redirects to projects page', () => {
     cy.get('input[placeholder="Nome de usuário"]').type(
       Cypress.env('test_user_username')
     )

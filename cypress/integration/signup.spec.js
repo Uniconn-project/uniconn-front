@@ -32,14 +32,9 @@ context('Signup Page', () => {
       .should('contain', 'Criar conta')
   })
 
-  it('Asserting back arrow redirects to signup page', () => {
-    cy.get('[data-cy="signup-form-back-arrow"]').click()
-    cy.get('h1').should('contain', 'Uniconn')
-  })
-
   it('Asserting error messages are properly displayed', () => {
     // making sure user can't submit an empty form
-    cy.get('[data-cy="btn-submit-signup"').click()
+    cy.get('[data-cy="signup-submit-button"').click()
     cy.get('.MuiAlert-standardError')
       .should('be.visible')
       .should('contain', 'Todos os campos devem ser preenchidos!')
@@ -48,7 +43,7 @@ context('Signup Page', () => {
     fillForm()
     selectUniversityAndMajorAndSkills()
     cy.get('input[placeholder="Confirmar senha"]').type('dummy_passwordddddd')
-    cy.get('[data-cy="btn-submit-signup"').click()
+    cy.get('[data-cy="signup-submit-button"').click()
     cy.get('.MuiAlert-standardError')
       .should('be.visible')
       .should('contain', 'As senhas devem ser iguais!')
@@ -58,7 +53,7 @@ context('Signup Page', () => {
     cy.get('input[placeholder="Nome de usuário"]')
       .clear()
       .type(Cypress.env('test_user_username'))
-    cy.get('[data-cy="btn-submit-signup"').click()
+    cy.get('[data-cy="signup-submit-button"').click()
     cy.get('.MuiAlert-standardError')
       .should('be.visible')
       .should('contain', 'Nome de usuário já utilizado!')
@@ -68,17 +63,22 @@ context('Signup Page', () => {
     cy.get('input[placeholder="E-mail"]')
       .clear()
       .type(Cypress.env('test_user_email'))
-    cy.get('[data-cy="btn-submit-signup"').click()
+    cy.get('[data-cy="signup-submit-button"').click()
     cy.get('.MuiAlert-standardError')
       .should('be.visible')
       .should('contain', 'Email já utilizado!')
   })
 
-  it('Asserting successful signup redirects to home page', () => {
+  it('Asserting login link redirects to login page', () => {
+    cy.get('a').contains('Já tem uma conta?').click()
+    cy.title().should('equal', 'Entrar | Uniconn')
+  })
+
+  it('Asserting successful signup redirects to projects page', () => {
     fillForm()
     selectUniversityAndMajorAndSkills()
-    cy.get('[data-cy="btn-submit-signup"').click()
-    cy.title().should('equal', 'Home | Uniconn')
+    cy.get('[data-cy="signup-submit-button"').click()
+    cy.title().should('equal', 'Projetos | Uniconn')
   })
 })
 
@@ -93,13 +93,15 @@ const fillForm = () => {
 }
 
 const selectUniversityAndMajorAndSkills = () => {
-  cy.get('[data-cy="student-university-select"]').click()
+  cy.get('[data-cy="is-attending-university-checkbox"]').click()
+
+  cy.get('[data-cy="university-select"]').click()
   cy.get('ul.MuiMenu-list li').first().click()
 
-  cy.get('[data-cy="student-major-select"]').click()
+  cy.get('[data-cy="major-select"]').click()
   cy.get('ul.MuiMenu-list li').first().click()
 
-  cy.get('[data-cy="student-skills-select"]').click()
+  cy.get('[data-cy="skills-select"]').click()
   cy.get('ul.MuiMenu-list li').first().click()
   cy.get('ul.MuiMenu-list li').last().click()
   cy.get('body').click()
