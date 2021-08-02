@@ -140,7 +140,7 @@ export default function Signup() {
             id="date"
             label="Data de nascimento"
             type="date"
-            className="w-4/5 mr-2"
+            style={{ width: 'calc(80% + 1rem)' }}
             onChange={handleChange('birth_date')}
             InputLabelProps={{
               shrink: true
@@ -189,8 +189,8 @@ export default function Signup() {
           usePostData={() => [postData, setPostData]}
         />
         <button
-          className="btn-primary w-4/5"
           data-cy="signup-submit-button"
+          className="btn-primary w-4/5"
           onClick={handleSubmit}
         >
           Criar conta
