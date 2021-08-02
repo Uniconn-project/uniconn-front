@@ -62,8 +62,8 @@ export default function ProjectsInvitations({
     <div className="w-full">
       {projectsInvitations.map(request => (
         <div
-          key={request.project.id}
-          className="w-full flex bg-transparent rounded-md shadow-lg p-2 mb-2"
+          key={request.id}
+          className="w-full flex color-headline bg-transparent rounded-md shadow-lg p-2 mb-2"
         >
           <Link href={`/project/${request.project.id}`}>
             <img
@@ -71,26 +71,35 @@ export default function ProjectsInvitations({
               className="w-16 h-16 mr-2 rounded-md object-cover cursor-pointer"
             />
           </Link>
-          <div className="flex flex-col justify-between">
-            <span className="color-headline">
-              o projeto{' '}
-              <Link href={`/project/${request.project.id}`}>
-                <strong className="cursor-pointer hover:underline">
-                  {request.project.name}
+          <div className="flex flex-col justify-between flex-grow">
+            <div className="flex flex-col mb-2 sm:flex-row sm:items-start">
+              <Link href={`/user/${request.sender.user.username}`}>
+                <strong className="color-secondary cursor-pointer mx-1 hover:underline">
+                  @{request.sender.user.username}
                 </strong>
-              </Link>{' '}
-              convidou você
-            </span>
+              </Link>
+              <div style={{ maxWidth: '70%' }}>
+                te convidou para entrar no projeto
+                <Link href={`/project/${request.project.id}`}>
+                  <strong className="cursor-pointer mx-1 hover:underline">
+                    {request.project.name}
+                  </strong>
+                </Link>
+              </div>
+            </div>
+            <div className="w-full p-1 mb-2">
+              <p className="color-paragraph break-all">{request.message}</p>
+            </div>
             <div className="flex">
               <button
                 className="rounded-lg bg-green bg-hover color-bg-light p-1 mr-1"
-                onClick={() => handleSubmit('accept', request.project)}
+                onClick={() => handleSubmit('accept', request)}
               >
                 Aceitar
               </button>
               <button
                 className="rounded-lg bg-secondary bg-hover color-bg-light p-1 ml-1"
-                onClick={() => handleSubmit('decline', request.project)}
+                onClick={() => handleSubmit('decline', request)}
               >
                 Recusar
               </button>

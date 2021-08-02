@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useMemo, useState } from 'react'
 import PersonAddIcon from '@material-ui/icons/PersonAdd'
 import Modal from '@material-ui/core/Modal'
 import Backdrop from '@material-ui/core/Backdrop'
@@ -24,10 +24,23 @@ export default function AddMembersModal({ project, refetchProject }) {
   const [profilesSearch, setProfilesSearch] = useState('')
   const [filteredProfiles, setFilteredProfiles] = useState([])
   const [selectedProfiles, setSelectedProfiles] = useState([])
+  const [message, setMessage] = useState(
+    'Ei! Acredito que pode contribuir com o projeto.'
+  )
   const [errorMsg, setErrorMsg] = useState({
     isOpen: false,
     message: ''
   })
+
+  const selectedProfilesMatrix = useMemo(() => {
+    const matrix = []
+
+    for (let i = 0; i < Math.ceil(selectedProfiles.length / 2); i++) {
+      matrix.push(selectedProfiles.slice(i * 2, i * 2 + 2))
+    }
+
+    return matrix
+  }, [selectedProfiles])
 
   useEffect(() => {
     if (!profilesSearch.length) {
@@ -59,7 +72,7 @@ export default function AddMembersModal({ project, refetchProject }) {
         },
         body: JSON.stringify({
           usernames: selectedProfiles.map(profile => profile.user.username),
-          message: ''
+          message: message
         })
       }
     )
@@ -98,14 +111,46 @@ export default function AddMembersModal({ project, refetchProject }) {
         }}
       >
         <Fade in={isOpen}>
-          <div className="bg-dark rounded-md shadow-lg">
+          <div className="bg-dark rounded-md shadow-lg max-w-2xl">
             <div className="w-full px-4 py-2">
+              <TextField
+                label="Mensagem"
+                helperText="Breve texto dizendo o motivo do convite"
+                className="w-full"
+                value={message}
+                multiline
+                onChange={e => setMessage(e.target.value)}
+              />
               <TextField
                 label="Pesquisar usuários"
                 className="w-full"
                 value={profilesSearch}
                 onChange={e => setProfilesSearch(e.target.value)}
               />
+            </div>
+            <div className="px-4 py-2 b-bottom-light">
+              {selectedProfilesMatrix.map((profiles, index) => (
+                <div key={index} className="mb-1 overflow-x-hidden">
+                  {profiles.map(profile => (
+                    <Chip
+                      key={profile.id}
+                      label={profile.user.username}
+                      className="b-primary mr-1"
+                      avatar={
+                        <Avatar
+                          alt={profile.user.username}
+                          src={profile.photo}
+                        />
+                      }
+                      onDelete={() =>
+                        setSelectedProfiles(
+                          selectedProfiles.filter(s => s.id !== profile.id)
+                        )
+                      }
+                    />
+                  ))}
+                </div>
+              ))}
               <List dense className="w-full">
                 {filteredProfiles
                   .filter(
@@ -144,23 +189,6 @@ export default function AddMembersModal({ project, refetchProject }) {
                     )
                   })}
               </List>
-            </div>
-            <div className="flex px-4 py-2 b-bottom-light">
-              {selectedProfiles.map(profile => (
-                <Chip
-                  key={profile.id}
-                  label={profile.user.username}
-                  className="b-primary"
-                  avatar={
-                    <Avatar alt={profile.user.username} src={profile.photo} />
-                  }
-                  onDelete={() =>
-                    setSelectedProfiles(
-                      selectedProfiles.filter(s => s.id !== profile.id)
-                    )
-                  }
-                />
-              ))}
             </div>
             <div className="w-full p-4 flex items-center">
               <button className="btn-primary ml-auto" onClick={handleSubmit}>

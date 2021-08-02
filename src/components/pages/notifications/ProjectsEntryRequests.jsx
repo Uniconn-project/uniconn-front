@@ -14,7 +14,7 @@ export default function ProjectsEntryRequests({
 
   const handleSubmit = async (reply, request) => {
     fetch(
-      `${process.env.NEXT_PUBLIC_API_HOST}/api/projects/reply-project-entering-request`,
+      `${process.env.NEXT_PUBLIC_API_HOST}/api/projects/reply-project-entry-request`,
       {
         method: 'DELETE',
         headers: {
@@ -80,15 +80,9 @@ export default function ProjectsEntryRequests({
           <div className="flex flex-col justify-between flex-grow">
             <div className="flex flex-col mb-2 sm:flex-row sm:items-start">
               <Link href={`/user/${request.profile.user.username}`}>
-                <div className="flex">
-                  <img
-                    src={request.profile.photo}
-                    className="profile-img-sm cursor-pointer"
-                  />
-                  <strong className="color-secondary cursor-pointer mx-1 hover:underline">
-                    @{request.profile.user.username}
-                  </strong>
-                </div>
+                <strong className="color-secondary cursor-pointer mx-1 hover:underline">
+                  @{request.profile.user.username}
+                </strong>
               </Link>
               <div style={{ maxWidth: '70%' }}>
                 pediu para entrar no projeto

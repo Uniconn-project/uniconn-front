@@ -35,7 +35,7 @@ export default function MyApp({ Component, pageProps }) {
 
   useEffect(() => {
     const start = url => {
-      if (!url) return
+      if (!url.includes) return
       if (
         url.includes('/project/') ||
         url.includes('/projects/') ||
@@ -45,7 +45,7 @@ export default function MyApp({ Component, pageProps }) {
       }
     }
     const end = url => {
-      if (!url) return
+      if (!url.includes) return
       if (
         url.includes('/project/') ||
         url.includes('/projects/') ||
