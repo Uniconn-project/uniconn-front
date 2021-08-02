@@ -151,7 +151,7 @@ export default function AddMembersModal({ project, refetchProject }) {
                   ))}
                 </div>
               ))}
-              <List dense className="w-full">
+              <List dense className="w-full max-h-52 overflow-y-auto">
                 {filteredProfiles
                   .filter(
                     profile =>
