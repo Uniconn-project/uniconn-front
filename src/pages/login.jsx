@@ -1,5 +1,6 @@
 import React, { useContext, useState } from 'react'
 import { useRouter } from 'next/router'
+import Snackbar from '@material-ui/core/Snackbar'
 import Alert from '@material-ui/lab/Alert'
 import IconButton from '@material-ui/core/IconButton'
 import FilledInput from '@material-ui/core/FilledInput'
@@ -11,12 +12,16 @@ import PrimaryLink from '../components/helpers/PrimaryLink'
 import { AuthContext } from '../contexts/Auth'
 
 export default function Login() {
+  const { loading, isAuthenticated, login } = useContext(AuthContext)
+
   const router = useRouter()
 
-  const [errorMsg, setErrorMsg] = useState(null)
   const [showPassword, setShowPassword] = useState(false)
   const [postData, setPostData] = useState({ username: '', password: '' })
-  const { loading, isAuthenticated, login } = useContext(AuthContext)
+  const [errorMsg, setErrorMsg] = useState({
+    isOpen: false,
+    message: ''
+  })
 
   const handleChange = key => e => {
     setPostData({ ...postData, [key]: e.target.value })
@@ -29,7 +34,10 @@ export default function Login() {
     for (const value of valuesInput) {
       if (!value) {
         error = true
-        setErrorMsg('Todos os campos devem ser preenchidos!')
+        setErrorMsg({
+          isOpen: true,
+          message: 'Todos os campos devem ser preenchidos!'
+        })
         break
       }
     }
@@ -39,25 +47,26 @@ export default function Login() {
     try {
       const resp = await login(postData.username, postData.password)
       if (resp.status === 401) {
-        setErrorMsg('Credenciais inválidas!')
+        setErrorMsg({
+          isOpen: true,
+          message: 'Credenciais inválidas!'
+        })
       }
     } catch (error) {
       console.error(error)
-      setErrorMsg('Occoreu um erro, por favor tente novamente.')
+      setErrorMsg({
+        isOpen: true,
+        message: 'Ocorreu um erro, por favor tente novamente.'
+      })
     }
   }
 
   if (!loading && isAuthenticated) router.push('/')
 
   return (
-    <Page title="Entrar | Uniconn" className="h-screen">
+    <Page title="Entrar | Uniconn" className="pt-24 sm:pt-32">
       <div className="h-full flex flex-col justify-start items-center">
         <h1 className="m-6">Entrar na Uniconn</h1>
-        {errorMsg !== null && (
-          <div>
-            <Alert severity="error">{errorMsg}</Alert>
-          </div>
-        )}
         <div className="flex flex-col my-4">
           <FilledInput
             type="text"
@@ -91,6 +100,18 @@ export default function Login() {
         <PrimaryLink href="/signup">
           <span>Inscrever-se na Uniconn</span>
         </PrimaryLink>
+        <Snackbar
+          open={errorMsg.isOpen}
+          autoHideDuration={6000}
+          onClose={() =>
+            setErrorMsg({
+              isOpen: false,
+              message: ''
+            })
+          }
+        >
+          <Alert severity="error">{errorMsg.message}</Alert>
+        </Snackbar>
       </div>
     </Page>
   )

@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react'
 import Router from 'next/router'
 import IconButton from '@material-ui/core/IconButton'
+import Snackbar from '@material-ui/core/Snackbar'
 import Alert from '@material-ui/lab/Alert'
 import FormGroup from '@material-ui/core/FormGroup'
 import FilledInput from '@material-ui/core/FilledInput'
@@ -30,8 +31,11 @@ export default function Signup() {
 
   const { login } = useContext(AuthContext)
 
-  const [errorMsg, setErrorMsg] = useState(null)
   const [showPassword, setShowPassword] = useState(false)
+  const [errorMsg, setErrorMsg] = useState({
+    isOpen: false,
+    message: ''
+  })
 
   const { loading, isAuthenticated } = useContext(AuthContext)
   if (!loading && isAuthenticated) Router.push('/')
@@ -54,13 +58,19 @@ export default function Signup() {
       'password'
     ]) {
       if (!postData[key]) {
-        setErrorMsg('Todos os campos devem ser preenchidos!')
+        setErrorMsg({
+          isOpen: true,
+          message: 'Todos os campos devem ser preenchidos!'
+        })
         return
       }
     }
 
     if (postData.password !== postData.passwordc) {
-      setErrorMsg('As senhas devem ser iguais!')
+      setErrorMsg({
+        isOpen: true,
+        message: 'As senhas devem ser iguais!'
+      })
       return
     }
 
@@ -70,10 +80,9 @@ export default function Signup() {
         'Content-type': 'application/json'
       },
       body: JSON.stringify({ ...postData })
-    })
-      .then(response => response.json())
-      .then(async data => {
-        if (data === 'success') {
+    }).then(response =>
+      response.json().then(data => {
+        if (response.ok) {
           login(
             postData.username.toLowerCase().replace(' ', ''),
             postData.password
@@ -81,18 +90,18 @@ export default function Signup() {
             Router.push('/projects')
           })
         } else {
-          setErrorMsg(data)
+          setErrorMsg({
+            isOpen: true,
+            message: data
+          })
         }
       })
+    )
   }
 
   return (
-    <Page title="Criar conta | Uniconn" className="h-screen">
-      {errorMsg !== null && (
-        <div>
-          <Alert severity="error">{errorMsg}</Alert>
-        </div>
-      )}
+    <Page title="Criar conta | Uniconn" className="pt-6 sm:pt-12 lg:pt-12">
+      <h1 className="m-6">Criar conta</h1>
       <div className="flex flex-col items-center my-4">
         <FormGroup className="w-full mb-4 justify-center items-center" row>
           <FilledInput
@@ -131,7 +140,7 @@ export default function Signup() {
             id="date"
             label="Data de nascimento"
             type="date"
-            className="w-4/5 mr-2"
+            style={{ width: 'calc(80% + 1rem)' }}
             onChange={handleChange('birth_date')}
             InputLabelProps={{
               shrink: true
@@ -180,8 +189,8 @@ export default function Signup() {
           usePostData={() => [postData, setPostData]}
         />
         <button
+          data-cy="signup-submit-button"
           className="btn-primary w-4/5"
-          data-cy="btn-submit-signup"
           onClick={handleSubmit}
         >
           Criar conta
@@ -190,6 +199,18 @@ export default function Signup() {
       <PrimaryLink href="/login">
         <span>Já tem uma conta?</span>
       </PrimaryLink>
+      <Snackbar
+        open={errorMsg.isOpen}
+        autoHideDuration={6000}
+        onClose={() =>
+          setErrorMsg({
+            isOpen: false,
+            message: ''
+          })
+        }
+      >
+        <Alert severity="error">{errorMsg.message}</Alert>
+      </Snackbar>
     </Page>
   )
 }

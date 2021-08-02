@@ -18,16 +18,22 @@ export const getStaticProps = async () => {
 
   return {
     props: {
-      universities,
-      majors,
-      skills
+      initialUniversities: universities,
+      initialMajors: majors,
+      initialSkills: skills
     },
     revalidate: 60 * 60 // 1 hour
   }
 }
 
-export default function UniversityMajorSkillsForm(props) {
-  const [postData, setPostData] = props.usePostData()
+export default function UniversityMajorSkillsForm({
+  initialUniversities,
+  initialMajors,
+  initialSkills,
+  isModal = false,
+  usePostData
+}) {
+  const [postData, setPostData] = usePostData()
 
   const selectedSkillsMatrix = useMemo(() => {
     const matrix = []
@@ -42,16 +48,16 @@ export default function UniversityMajorSkillsForm(props) {
   const { data: universities } = useFetch(
     'universities/get-universities-name-list',
     {
-      initialData: props.universities
+      initialData: initialUniversities
     }
   )
 
   const { data: majors } = useFetch('universities/get-majors-name-list', {
-    initialData: props.majors
+    initialData: initialMajors
   })
 
   const { data: skills } = useFetch('profiles/get-skills-name-list', {
-    initialData: props.skills
+    initialData: initialSkills
   })
 
   const handleChange = key => e => {
@@ -67,9 +73,9 @@ export default function UniversityMajorSkillsForm(props) {
       <div className="w-full">
         <div className="w-full flex justify-center">
           <FormControlLabel
-            className="w-4/5"
             control={
               <Checkbox
+                data-cy="is-attending-university-checkbox"
                 checked={postData.is_attending_university}
                 onChange={() =>
                   setPostData({
@@ -80,12 +86,14 @@ export default function UniversityMajorSkillsForm(props) {
               />
             }
             label="Sou universitário"
+            className={`${isModal ? 'mb-2' : ''}`}
+            style={{ width: isModal ? '100%' : 'calc(80% + 1rem)' }}
           />
         </div>
         <AnimateHeight height={postData.is_attending_university ? 'auto' : '0'}>
           <div
             className={`w-full flex justify-center items-center mb-4 ${
-              props.className ? props.className : ''
+              isModal ? 'justify-between' : ''
             }`}
           >
             <FormControl className="w-2/5" style={{ marginRight: '.5rem' }}>
@@ -103,7 +111,7 @@ export default function UniversityMajorSkillsForm(props) {
                 ))}
               </Select>
             </FormControl>
-            <FormControl className="w-2/5" style={{ marginLeft: '0.5rem' }}>
+            <FormControl className="w-2/5" style={{ marginLeft: '.5rem' }}>
               <InputLabel id="major-input-label">Curso</InputLabel>
               <Select
                 labelId="major-input-label"
@@ -121,14 +129,14 @@ export default function UniversityMajorSkillsForm(props) {
           </div>
         </AnimateHeight>
       </div>
-      <div className="w-4/5">
+      <div style={{ width: isModal ? '100%' : 'calc(80% + 1rem)' }}>
         <FormControl className="w-full" style={{ marginBottom: '1rem' }}>
           <InputLabel id="skills-select-label">
             Quais são suas habilidades?
           </InputLabel>
           <Select
-            data-cy="skills-select"
             labelId="skills-select-label"
+            data-cy="skills-select"
             multiple
             value={postData.skills_names}
             onChange={handleChange('skills_names')}

@@ -49,27 +49,27 @@ export default function EditProfileModal({
               <CloseIcon className="color-red" />
             </div>
           </div>
-          <div className="relative w-full flex justify-center items-center p-4 b-bottom-transparent">
-            <div className="flex flex-col items-center">
+          <div className="flex flex-col items-center p-4 b-bottom-transparent">
+            <div className="relative w-full flex justify-center items-center">
               <img
                 src={postData.photo || profile.photo}
                 className="profile-img-lg"
               />
-              <span className="mt-2">{profile.user.email}</span>
+              <label
+                htmlFor="profile-image"
+                className="absolute cursor-pointer color-headline-hover"
+              >
+                <AddAPhotoOutlinedIcon />
+              </label>
+              <input
+                type="file"
+                accept="image/png, image/jpg, image/jpeg, image/webp"
+                className="hidden"
+                id="profile-image"
+                onChange={handleProfilePhotoChange}
+              />
             </div>
-            <label
-              htmlFor="profile-image"
-              className="absolute cursor-pointer color-headline-hover"
-            >
-              <AddAPhotoOutlinedIcon />
-            </label>
-            <input
-              type="file"
-              accept="image/png, image/jpg, image/jpeg, image/webp"
-              className="hidden"
-              id="profile-image"
-              onChange={handleProfilePhotoChange}
-            />
+            <span className="mt-2">{profile.user.email}</span>
           </div>
           <div className="w-full max-h-72 overflow-y-auto pb-10 b-bottom-transparent">
             <div className="w-full p-4">
@@ -108,10 +108,7 @@ export default function EditProfileModal({
                   onChange={handleChange('username')}
                 />
               </div>
-              <UniversityMajorSkillsForm
-                className="justify-between"
-                usePostData={usePostData}
-              />
+              <UniversityMajorSkillsForm isModal usePostData={usePostData} />
             </div>
           </div>
           <div className="w-full p-4">

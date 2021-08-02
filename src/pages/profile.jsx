@@ -19,12 +19,7 @@ export default function Profile() {
 
   if (!myProfile) {
     return (
-      <Page
-        title="Meus projetos | Uniconn"
-        page="my-projects"
-        loginRequired
-        header
-      >
+      <Page title="Perfil | Uniconn" page="profile" loginRequired header>
         <div>
           <CircularProgress />
         </div>
