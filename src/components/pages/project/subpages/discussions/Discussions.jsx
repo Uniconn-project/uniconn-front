@@ -5,7 +5,7 @@ import Tooltip from '@material-ui/core/Tooltip'
 import DeleteIcon from '@material-ui/icons/Delete'
 import Snackbar from '@material-ui/core/Snackbar'
 import Alert from '@material-ui/lab/Alert'
-import StarIcon from '@material-ui/icons/Star'
+import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt'
 import CommentIcon from '@material-ui/icons/Comment'
 import DescriptiveHeader from '../../../../global/DescriptiveHeader'
 import CreateDiscussionForm from './components/CreateDiscussionForm'
@@ -141,7 +141,8 @@ export default function Discussions({
             <div className="p-2 flex items-center">
               <Tooltip title="Curtidas" placement="bottom" arrow>
                 <div className="mr-2">
-                  <StarIcon className="icon-xs" /> {discussion.stars.length}
+                  <ThumbUpAltIcon className="icon-xs" />{' '}
+                  {discussion.stars.length}
                 </div>
               </Tooltip>
               <Tooltip title="Respostas" placement="bottom" arrow>

@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react'
 import Link from 'next/link'
 import Tooltip from '@material-ui/core/Tooltip'
-import StarIcon from '@material-ui/icons/Star'
-import StarBorderIcon from '@material-ui/icons/StarBorder'
+import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt'
+import ThumbUpOutlinedIcon from '@material-ui/icons/ThumbUpOutlined'
 import CommentIcon from '@material-ui/icons/Comment'
 import ProjectCategory from './ProjectCategory'
 import { MyProfileContext } from '../../contexts/MyProfile'
@@ -122,12 +122,12 @@ export default function ProjectListItem({
           <Tooltip title="Curtidas" placement="bottom" arrow>
             <div className="flex mr-2 cursor-pointer">
               {starred ? (
-                <StarIcon
+                <ThumbUpAltIcon
                   className="icon-sm mr-1 color-primary"
                   onClick={unstarProject}
                 />
               ) : (
-                <StarBorderIcon
+                <ThumbUpOutlinedIcon
                   className="icon-sm mr-1 color-primary-hover"
                   onClick={starProject}
                 />
