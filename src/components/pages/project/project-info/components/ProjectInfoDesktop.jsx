@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react'
 import EditProjectDataModal from '../../EditProjectDataModal'
-import StarBorderIcon from '@material-ui/icons/StarBorder'
-import StarIcon from '@material-ui/icons/Star'
+import ThumbUpOutlinedIcon from '@material-ui/icons/ThumbUpOutlined'
+import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import Snackbar from '@material-ui/core/Snackbar'
 import Alert from '@material-ui/lab/Alert'
@@ -122,12 +122,12 @@ export default function ProjectInfoDesktop({
         </div>
         <div className="w-full flex items-center pl-4 pb-2 cursor-pointer">
           {starred ? (
-            <StarIcon
+            <ThumbUpAltIcon
               className="icon-sm mr-1 color-primary"
               onClick={unstarProject}
             />
           ) : (
-            <StarBorderIcon
+            <ThumbUpOutlinedIcon
               className="icon-sm mr-1 color-primary-hover"
               onClick={starProject}
             />

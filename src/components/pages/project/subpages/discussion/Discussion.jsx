@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react'
 import Link from 'next/link'
-import StarBorderIcon from '@material-ui/icons/StarBorder'
-import StarIcon from '@material-ui/icons/Star'
+import ThumbUpOutlinedIcon from '@material-ui/icons/ThumbUpOutlined'
+import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt'
 import CommentIcon from '@material-ui/icons/Comment'
 import Snackbar from '@material-ui/core/Snackbar'
 import Alert from '@material-ui/lab/Alert'
@@ -148,12 +148,12 @@ export default function Discussion(props) {
             style={{ width: 'fit-content' }}
           >
             {starred ? (
-              <StarIcon
+              <ThumbUpAltIcon
                 className="icon-sm mr-1 color-primary"
                 onClick={unstarDiscussion}
               />
             ) : (
-              <StarBorderIcon
+              <ThumbUpOutlinedIcon
                 className="icon-sm mr-1 color-primary-hover"
                 onClick={starDiscussion}
               />
