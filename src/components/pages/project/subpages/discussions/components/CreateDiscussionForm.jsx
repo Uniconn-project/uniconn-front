@@ -80,11 +80,11 @@ export default function CreateDiscussionForm({
   return (
     <>
       <div
-        className="w-full flex items-center cursor-pointer bg-transparent bg-hover rounded-md shadow-lg p-2 mb-4"
+        className="w-full flex items-center cursor-pointer bg-transparent bg-hover color-primary rounded-md shadow-lg p-2 mb-4"
         onClick={() => setIsOpen(true)}
       >
-        <span>CRIAR DISCUSSÃO</span>
-        <AddIcon className="ml-auto" />
+        <AddIcon className="mr-2" />
+        <strong>Criar Discussão</strong>
       </div>
       <Modal
         className="flex justify-center items-center"
