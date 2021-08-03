@@ -45,7 +45,7 @@ export default function ProjectsInvitations({
             message: (
               <span>
                 Você entrou no projeto{' '}
-                <Link href={`/project/${project.id}`}>
+                <Link href={`/project/${project.id}?page=description`}>
                   <strong className="cursor-pointer hover:underline">
                     {project.name}
                   </strong>
@@ -65,7 +65,7 @@ export default function ProjectsInvitations({
           key={request.id}
           className="w-full flex color-headline bg-transparent rounded-md shadow-lg p-2 mb-2"
         >
-          <Link href={`/project/${request.project.id}`}>
+          <Link href={`/project/${request.project.id}?page=description`}>
             <img
               src={request.project.image}
               className="w-16 h-16 mr-2 rounded-md object-cover cursor-pointer"
@@ -80,7 +80,7 @@ export default function ProjectsInvitations({
               </Link>
               <div style={{ maxWidth: '70%' }}>
                 te convidou para entrar no projeto
-                <Link href={`/project/${request.project.id}`}>
+                <Link href={`/project/${request.project.id}?page=description`}>
                   <strong className="cursor-pointer mx-1 hover:underline">
                     {request.project.name}
                   </strong>

@@ -1,10 +1,12 @@
 import React, { useContext, useState, useEffect } from 'react'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import ThumbUpOutlinedIcon from '@material-ui/icons/ThumbUpOutlined'
 import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt'
 import CommentIcon from '@material-ui/icons/Comment'
 import Snackbar from '@material-ui/core/Snackbar'
 import Alert from '@material-ui/lab/Alert'
+import CircularProgress from '@material-ui/core/CircularProgress'
 import ReplyFrom from './components/ReplyForm'
 import StarsProfilesModal from '../../../../global/StarsProfilesModal'
 import useFetch from '../../../../../hooks/useFetch'
@@ -18,14 +20,13 @@ export default function Discussion(props) {
   const { myProfile } = useContext(MyProfileContext)
   const { getToken } = useContext(AuthContext)
 
+  const router = useRouter()
+
   const { data: discussion } = useFetch(
-    `projects/get-project-discussion/${props.discussion.id}`,
-    {
-      initialData: props.discussion
-    }
+    `projects/get-project-discussion/${router.query.discussionId}`
   )
   const [starred, setStarred] = useState(false)
-  const [starCount, setStarCount] = useState(discussion.stars.length)
+  const [starCount, setStarCount] = useState(0)
   const [starsModalIsOpen, setStarsModalIsOpen] = useState(false)
   const [successMsg, setSuccessMsg] = useState({
     isOpen: false,
@@ -37,15 +38,26 @@ export default function Discussion(props) {
   })
 
   useEffect(() => {
-    if (!myProfile) return
+    if (!myProfile || !discussion) return
     setStarred(
       discussion.stars.map(star => star.profile.id).includes(myProfile.id)
     )
-  }, [myProfile])
+
+    setStarCount(discussion.stars.length)
+  }, [myProfile, discussion]) // eslint-disable-line
 
   useEffect(() => {
+    if (!discussion) return
     setStarCount(discussion.stars.length)
   }, [discussion])
+
+  if (!discussion || !myProfile) {
+    return (
+      <div className="w-full flex justify-center pb-4">
+        <CircularProgress size={30} />
+      </div>
+    )
+  }
 
   const starDiscussion = async () => {
     setStarCount(starCount + 1)

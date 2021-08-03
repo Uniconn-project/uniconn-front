@@ -51,7 +51,7 @@ export default function CreateProject() {
         if (response.ok) {
           refetchMyProfile()
           setSuccessIsOpen(true)
-          Router.push(`/project/${data}`)
+          Router.push(`/project/${data}?page=description`)
         } else {
           setErrorMsg({
             isOpen: true,

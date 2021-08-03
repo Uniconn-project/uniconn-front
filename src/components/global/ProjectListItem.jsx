@@ -85,7 +85,7 @@ export default function ProjectListItem({
   }
 
   return (
-    <Link href={`/project/${project.id}`}>
+    <Link href={`/project/${project.id}?page=description`}>
       <div className="w-full mb-4 rounded-md shadow-lg cursor-pointer bg-transparent bg-hover">
         <div className="flex justify-between px-4 pt-4">
           <div style={{ maxWidth: '60%' }}>
