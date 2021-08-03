@@ -7,7 +7,10 @@ export default function DiscussionsStars({ stars }) {
   return (
     <div className="w-full">
       {stars.map(star => (
-        <Link key={star.id} href={`/project/${star.discussion.project_id}`}>
+        <Link
+          key={star.id}
+          href={`/project/${star.discussion.project_id}?page=description`}
+        >
           <div className="w-full flex flex-col color-headline bg-transparent rounded-md shadow-lg p-2 mb-2 cursor-pointer bg-hover">
             <div className="flex flex-col justify-between sm:flex-row">
               <div className="flex flex-col mb-2 sm:flex-row sm:items-start">

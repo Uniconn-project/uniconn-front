@@ -51,7 +51,7 @@ export default function ProjectsEntryRequests({
                   </strong>
                 </Link>{' '}
                 entrou no projeto{' '}
-                <Link href={`/project/${request.project.id}`}>
+                <Link href={`/project/${request.project.id}?page=description`}>
                   <strong className="cursor-pointer hover:underline">
                     {request.project.name}
                   </strong>
@@ -71,7 +71,7 @@ export default function ProjectsEntryRequests({
           key={request.id}
           className="w-full flex color-headline bg-transparent rounded-md shadow-lg p-2 mb-2"
         >
-          <Link href={`/project/${request.project.id}`}>
+          <Link href={`/project/${request.project.id}?page=description`}>
             <img
               src={request.project.image}
               className="w-16 h-16 mr-2 rounded-md object-cover cursor-pointer"

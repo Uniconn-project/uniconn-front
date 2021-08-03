@@ -1,4 +1,5 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
+import { useRouter } from 'next/router'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import Snackbar from '@material-ui/core/Snackbar'
 import Alert from '@material-ui/lab/Alert'
@@ -32,10 +33,11 @@ export const getServerSideProps = async context => {
 }
 
 export default function Project(props) {
+  const router = useRouter()
+
   const { myProfile } = useContext(MyProfileContext)
 
   const [openedDiscussion, setOpenedDiscussion] = useState(null)
-  const [page, setPage] = useState('description')
   const [successMsg, setSuccessMsg] = useState({
     isOpen: false,
     value: ''
@@ -47,6 +49,13 @@ export default function Project(props) {
       initialData: props.project
     }
   )
+
+  useEffect(() => {
+    !router.query.page &&
+      router.push(`/project/${project.id}?page=description`, undefined, {
+        shallow: true
+      })
+  }, []) // eslint-disable-line
 
   if (!project || !myProfile) {
     return (
@@ -67,8 +76,13 @@ export default function Project(props) {
     .includes(myProfile.id)
 
   const openDiscussion = discussion => {
-    setPage('discussion')
-    setOpenedDiscussion(discussion)
+    router.push(
+      `/project/${project.id}?page=discussion&discussionId=${discussion.id}`,
+      undefined,
+      {
+        shallow: true
+      }
+    )
   }
 
   const refetchProject = async action => {
@@ -191,19 +205,18 @@ export default function Project(props) {
           <div className="w-full" style={{ maxWidth: 600 }}>
             <ProjectHeader
               project={project}
-              page={page}
+              page={router.query.page}
               isProjectMember={isProjectMember}
-              setPage={setPage}
             />
             <div style={{ height: '80vh' }}>
-              {page === 'description' && (
+              {router.query.page === 'description' && (
                 <Description
                   project={project}
                   isProjectAdmin={isProjectAdmin}
                   refetchProject={refetchProject}
                 />
               )}
-              {page === 'discussions' && (
+              {router.query.page === 'discussions' && (
                 <Discussions
                   project={project}
                   isProjectMember={isProjectMember}
@@ -211,20 +224,20 @@ export default function Project(props) {
                   openDiscussion={openDiscussion}
                 />
               )}
-              {page === 'discussion' && (
+              {router.query.page === 'discussion' && (
                 <Discussion discussion={openedDiscussion} />
               )}
-              {page === 'links' && (
+              {router.query.page === 'links' && (
                 <Links
                   project={project}
                   isProjectMember={isProjectMember}
                   refetchProject={refetchProject}
                 />
               )}
-              {isProjectMember && page === 'tools' && (
+              {isProjectMember && router.query.page === 'tools' && (
                 <Tools project={project} refetchProject={refetchProject} />
               )}
-              {page === 'members' && (
+              {router.query.page === 'members' && (
                 <Members
                   project={project}
                   isProjectMember={isProjectMember}
