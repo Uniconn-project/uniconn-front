@@ -59,7 +59,7 @@ export default function CropPhotoModal({
             className="flex justify-center w-full"
             style={{ maxHeight: '480px' }}
           >
-            <Image
+            <img
               src={postData.photo}
               ref={imageRef}
               alt="Source"
