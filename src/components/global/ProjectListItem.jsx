@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import Tooltip from '@material-ui/core/Tooltip'
 import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt'
 import ThumbUpOutlinedIcon from '@material-ui/icons/ThumbUpOutlined'
@@ -99,8 +100,10 @@ export default function ProjectListItem({
                   className="bg-light"
                   arrow
                 >
-                  <img
+                  <Image
                     src={profile.photo}
+                    width="2rem"
+                    height="2rem"
                     className="profile-img-sm mx-0.5 cursor-pointer"
                   />
                 </Tooltip>
@@ -112,7 +115,9 @@ export default function ProjectListItem({
           <p className="max-h-20 whitespace-nowrap overflow-ellipsis overflow-hidden mb-2">
             {project.slogan}
           </p>
-          <img
+          <Image
+            width="20rem"
+            height="13rem"
             src={project.image}
             className="w-80 h-52 rounded-md object-cover mb-2"
           />

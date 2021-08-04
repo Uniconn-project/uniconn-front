@@ -1,5 +1,6 @@
 import React, { useContext, useState } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import FilledInput from '@material-ui/core/FilledInput'
 import { mutate } from 'swr'
 import { MyProfileContext } from '../../../../../../contexts/MyProfile'
@@ -59,8 +60,10 @@ export default function ReplyFrom({ discussion, setErrorMsg }) {
         <div className="flex flex-col sm:flex-row">
           <div className="mr-2">
             <Link href="/profile">
-              <img
+              <Image
                 src={myProfile.photo}
+                width="2rem"
+                height="2rem"
                 className="profile-img-sm mx-0.5 cursor-pointer"
               />
             </Link>

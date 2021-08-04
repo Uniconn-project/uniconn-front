@@ -13,6 +13,7 @@ import CircularProgress from '@material-ui/core/CircularProgress'
 import ExitToAppOutlinedIcon from '@material-ui/icons/ExitToAppOutlined'
 import { MyProfileContext } from '../../../contexts/MyProfile'
 import Logout from '../../helpers/Logout'
+import Image from 'next/image'
 
 export default function MobileMenu() {
   const { myProfile } = useContext(MyProfileContext)
@@ -25,8 +26,10 @@ export default function MobileMenu() {
 
   return (
     <div>
-      <img
+      <Image
         src={myProfile.photo}
+        width="2rem"
+        height="2rem"
         className="profile-img-sm mr-2 cursor-pointer"
         onClick={() => setMobileMenuIsOpen(!mobileMenuIsOpen)}
       />

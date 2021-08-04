@@ -10,6 +10,7 @@ import CloseIcon from '@material-ui/icons/Close'
 import AddAPhotoOutlinedIcon from '@material-ui/icons/AddAPhotoOutlined'
 import ProjectBaseForm from '../../global/ProjectBaseForm'
 import { AuthContext } from '../../../contexts/Auth'
+import Image from 'next/image'
 
 export default function EditProjectDataModal({ project, refetchProject }) {
   const postDataInitialState = useMemo(
@@ -110,8 +111,10 @@ export default function EditProjectDataModal({ project, refetchProject }) {
               </div>
             </div>
             <div className="relative w-full flex justify-center items-center p-4 b-bottom-transparent">
-              <img
+              <Image
                 src={postData.image || project.image}
+                width="15rem"
+                height="13rem"
                 className="w-60 h-52 rounded-md object-cover filter brightness-75"
               />
               <label

@@ -2,6 +2,7 @@ import React from 'react'
 import Link from 'next/link'
 import CommentIcon from '@material-ui/icons/Comment'
 import { renderTimestamp } from '../../../utils/utils'
+import Image from 'next/image'
 
 export default function DiscussionsReplies({ replies }) {
   return (
@@ -17,8 +18,10 @@ export default function DiscussionsReplies({ replies }) {
                 <Link href={`/user/${reply.profile.user.username}`}>
                   <div className="flex">
                     <CommentIcon className="color-paragraph self-center" />
-                    <img
+                    <Image
                       src={reply.profile.photo}
+                      width="2rem"
+                      height="2rem"
                       className="profile-img-sm cursor-pointer"
                     />
                     <strong className="color-secondary cursor-pointer mx-1 hover:underline">

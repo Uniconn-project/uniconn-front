@@ -1,5 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { useRouter } from 'next/router'
 import ThumbUpOutlinedIcon from '@material-ui/icons/ThumbUpOutlined'
 import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt'
@@ -124,8 +125,10 @@ export default function Discussion(props) {
           <div className="flex flex-col sm:flex-row">
             <div className="mr-2">
               <Link href={`/user/${discussion.profile.user.username}`}>
-                <img
+                <Image
                   src={discussion.profile.photo}
+                  width="2rem"
+                  height="2rem"
                   className="profile-img-sm mx-0.5 cursor-pointer"
                 />
               </Link>

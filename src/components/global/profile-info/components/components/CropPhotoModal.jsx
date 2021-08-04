@@ -3,6 +3,7 @@ import Cropper from 'cropperjs'
 import Modal from '@material-ui/core/Modal'
 import Backdrop from '@material-ui/core/Backdrop'
 import Fade from '@material-ui/core/Fade'
+import Image from 'next/image'
 
 import 'cropperjs/dist/cropper.min.css'
 
@@ -58,10 +59,9 @@ export default function CropPhotoModal({
             className="flex justify-center w-full"
             style={{ maxHeight: '480px' }}
           >
-            <img
-              className="w-full"
-              ref={imageRef}
+            <Image
               src={postData.photo}
+              ref={imageRef}
               alt="Source"
               crossOrigin
               onLoad={createCropper}

@@ -2,6 +2,7 @@ import React, { useContext } from 'react'
 import Link from 'next/link'
 import { AuthContext } from '../../../contexts/Auth'
 import { NotificationsContext } from '../../../contexts/Notifications'
+import Image from 'next/image'
 
 export default function ProjectsInvitations({
   projectsInvitations,
@@ -66,7 +67,7 @@ export default function ProjectsInvitations({
           className="w-full flex color-headline bg-transparent rounded-md shadow-lg p-2 mb-2"
         >
           <Link href={`/project/${request.project.id}?page=description`}>
-            <img
+            <Image
               src={request.project.image}
               className="w-16 h-16 mr-2 rounded-md object-cover cursor-pointer"
             />

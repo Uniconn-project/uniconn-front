@@ -2,6 +2,7 @@ import React, { useContext } from 'react'
 import Link from 'next/link'
 import { AuthContext } from '../../../contexts/Auth'
 import { NotificationsContext } from '../../../contexts/Notifications'
+import Image from 'next/image'
 
 export default function ProjectsEntryRequests({
   projectsEntryRequests,
@@ -72,8 +73,10 @@ export default function ProjectsEntryRequests({
           className="w-full flex color-headline bg-transparent rounded-md shadow-lg p-2 mb-2"
         >
           <Link href={`/project/${request.project.id}?page=description`}>
-            <img
+            <Image
               src={request.project.image}
+              width="4rem"
+              height="4rem"
               className="w-16 h-16 mr-2 rounded-md object-cover cursor-pointer"
             />
           </Link>

@@ -2,6 +2,7 @@ import React from 'react'
 import Link from 'next/link'
 import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt'
 import { renderTimestamp } from '../../../utils/utils'
+import Image from 'next/image'
 
 export default function DiscussionsStars({ stars }) {
   return (
@@ -17,8 +18,10 @@ export default function DiscussionsStars({ stars }) {
                 <Link href={`/user/${star.profile.user.username}`}>
                   <div className="flex">
                     <ThumbUpAltIcon className="color-paragraph self-center" />
-                    <img
+                    <Image
                       src={star.profile.photo}
+                      width="2rem"
+                      height="2rem"
                       className="profile-img-sm cursor-pointer"
                     />
                     <strong className="color-secondary cursor-pointer mx-1 hover:underline">

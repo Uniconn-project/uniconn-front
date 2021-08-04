@@ -1,4 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react'
+import Image from 'next/image'
 import EditProjectDataModal from '../../EditProjectDataModal'
 import ThumbUpOutlinedIcon from '@material-ui/icons/ThumbUpOutlined'
 import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt'
@@ -112,8 +113,10 @@ export default function ProjectInfoDesktop({
           </div>
         )}
         <div className="w-full flex justify-center">
-          <img
+          <Image
             src={project.image}
+            width="100%"
+            height="13rem"
             className="w-full h-52 rounded-t-md object-cover"
           />
         </div>
