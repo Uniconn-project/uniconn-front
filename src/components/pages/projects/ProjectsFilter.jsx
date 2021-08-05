@@ -77,7 +77,7 @@ export default function ProjectsFilter({ projects, setRenderedProjects }) {
   }
 
   return (
-    <div className="sticky top-24 w-full mb-4 sm:top-32">
+    <div className="sticky z-10 top-24 w-full mb-4 sm:top-32">
       <div className="w-full bg-light m-h-14 rounded-md shadow-lg p-2 flex flex-col">
         <div className="w-full flex items-center">
           <input

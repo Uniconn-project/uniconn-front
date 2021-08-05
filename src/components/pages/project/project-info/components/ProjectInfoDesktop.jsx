@@ -1,4 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react'
+import Image from 'next/image'
 import EditProjectDataModal from '../../EditProjectDataModal'
 import ThumbUpOutlinedIcon from '@material-ui/icons/ThumbUpOutlined'
 import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt'
@@ -105,16 +106,17 @@ export default function ProjectInfoDesktop({
       <div className="b-bottom-light">
         {window.history.length > 1 && (
           <div
-            className="absolute top-2 left-2 p-1 rounded-3xl cursor-pointer bg-primary bg-hover color-bg-light"
+            className="absolute top-2 left-2 z-10 p-1 rounded-3xl cursor-pointer bg-primary bg-hover color-bg-light"
             onClick={() => window.history.back()}
           >
             <ArrowBackIcon className="icon-sm" />
           </div>
         )}
-        <div className="w-full flex justify-center">
-          <img
+        <div className="relative w-full h-52 flex justify-center">
+          <Image
             src={project.image}
-            className="w-full h-52 rounded-t-md object-cover"
+            layout="fill"
+            className="rounded-t-md object-cover"
           />
         </div>
         <div className="w-full pl-4 pb-4 break-words">
@@ -122,15 +124,19 @@ export default function ProjectInfoDesktop({
         </div>
         <div className="w-full flex items-center pl-4 pb-2 cursor-pointer">
           {starred ? (
-            <ThumbUpAltIcon
-              className="icon-sm mr-1 color-primary"
+            <div
+              className="p-1 rounded-3xl bg-transparent-hover cursor-pointer"
               onClick={unstarProject}
-            />
+            >
+              <ThumbUpAltIcon className="icon-sm color-primary" />
+            </div>
           ) : (
-            <ThumbUpOutlinedIcon
-              className="icon-sm mr-1 color-primary-hover"
+            <div
+              className="p-1 rounded-3xl bg-transparent-hover cursor-pointer"
               onClick={starProject}
-            />
+            >
+              <ThumbUpOutlinedIcon className="icon-sm color-primary-hover" />
+            </div>
           )}{' '}
           <span
             className="hover:underline"

@@ -59,9 +59,8 @@ export default function CropPhotoModal({
             style={{ maxHeight: '480px' }}
           >
             <img
-              className="w-full"
-              ref={imageRef}
               src={postData.photo}
+              ref={imageRef}
               alt="Source"
               crossOrigin
               onLoad={createCropper}

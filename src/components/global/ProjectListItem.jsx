@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import Tooltip from '@material-ui/core/Tooltip'
 import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt'
 import ThumbUpOutlinedIcon from '@material-ui/icons/ThumbUpOutlined'
@@ -94,15 +95,10 @@ export default function ProjectListItem({
           <div className="flex items-center">
             {project.members_profiles.slice(0, 3).map(profile => (
               <Link href={`/user/${profile.user.username}`} key={profile.id}>
-                <Tooltip
-                  title={profile.user.username}
-                  className="bg-light"
-                  arrow
-                >
-                  <img
-                    src={profile.photo}
-                    className="profile-img-sm mx-0.5 cursor-pointer"
-                  />
+                <Tooltip title={profile.user.username} arrow>
+                  <div className="profile-img-sm mx-0.5 cursor-pointer">
+                    <Image src={profile.photo} layout="fill" />
+                  </div>
                 </Tooltip>
               </Link>
             ))}
@@ -112,25 +108,32 @@ export default function ProjectListItem({
           <p className="max-h-20 whitespace-nowrap overflow-ellipsis overflow-hidden mb-2">
             {project.slogan}
           </p>
-          <img
-            src={project.image}
-            className="w-80 h-52 rounded-md object-cover mb-2"
-          />
+          <div className="relative w-80 h-52 mb-2">
+            <Image
+              src={project.image}
+              layout="fill"
+              className="rounded-md object-cover"
+            />
+          </div>
           <ProjectCategory category={project.category} />
         </div>
         <div className="p-2 flex items-center">
           <Tooltip title="Curtidas" placement="bottom" arrow>
-            <div className="flex mr-2 cursor-pointer">
+            <div className="flex items-center mr-2 cursor-pointer">
               {starred ? (
-                <ThumbUpAltIcon
-                  className="icon-sm mr-1 color-primary"
+                <div
+                  className="p-1 rounded-3xl bg-transparent-hover cursor-pointer"
                   onClick={unstarProject}
-                />
+                >
+                  <ThumbUpAltIcon className="icon-sm color-primary" />
+                </div>
               ) : (
-                <ThumbUpOutlinedIcon
-                  className="icon-sm mr-1 color-primary-hover"
+                <div
+                  className="p-1 rounded-3xl bg-transparent-hover cursor-pointer"
                   onClick={starProject}
-                />
+                >
+                  <ThumbUpOutlinedIcon className="icon-sm color-primary-hover" />
+                </div>
               )}{' '}
               <span
                 className="hover:underline"

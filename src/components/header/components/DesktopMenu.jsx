@@ -12,6 +12,7 @@ import CircularProgress from '@material-ui/core/CircularProgress'
 import { MyProfileContext } from '../../../contexts/MyProfile'
 import { NotificationsContext } from '../../../contexts/Notifications'
 import Logout from '../../helpers/Logout'
+import Image from 'next/image'
 
 export default function DesktopMenu() {
   const { myProfile } = useContext(MyProfileContext)
@@ -24,12 +25,14 @@ export default function DesktopMenu() {
   return (
     <div className="flex">
       {myProfile !== null && (
-        <img
-          ref={anchorRef}
-          src={myProfile.photo}
-          className="profile-img-sm mr-2 cursor-pointer"
-          onClick={() => setIsOpen(!isOpen)}
-        />
+        <div className="profile-img-sm mr-2 cursor-pointer">
+          <Image
+            src={myProfile.photo}
+            ref={anchorRef}
+            layout="fill"
+            onClick={() => setIsOpen(!isOpen)}
+          />
+        </div>
       )}
       {notificationsNumber !== null ? (
         <Link href="/notifications">

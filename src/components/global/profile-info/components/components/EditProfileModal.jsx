@@ -6,6 +6,7 @@ import TextField from '@material-ui/core/TextField'
 import CloseIcon from '@material-ui/icons/Close'
 import AddAPhotoOutlinedIcon from '@material-ui/icons/AddAPhotoOutlined'
 import UniversityMajorSkillsForm from '../../../UniversityMajorSkillsForm'
+import Image from 'next/image'
 
 export default function EditProfileModal({
   profile,
@@ -51,10 +52,9 @@ export default function EditProfileModal({
           </div>
           <div className="flex flex-col items-center p-4 b-bottom-transparent">
             <div className="relative w-full flex justify-center items-center">
-              <img
-                src={postData.photo || profile.photo}
-                className="profile-img-lg"
-              />
+              <div className="profile-img-lg">
+                <Image src={postData.photo || profile.photo} layout="fill" />
+              </div>
               <label
                 htmlFor="profile-image"
                 className="absolute cursor-pointer color-headline-hover"

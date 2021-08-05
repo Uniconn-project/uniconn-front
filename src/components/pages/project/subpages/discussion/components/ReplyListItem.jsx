@@ -1,5 +1,6 @@
 import React, { useContext } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import DeleteIcon from '@material-ui/icons/Delete'
 import { mutate } from 'swr'
 import { MyProfileContext } from '../../../../../../contexts/MyProfile'
@@ -51,10 +52,13 @@ export default function ReplyListItem({
         <div className="flex flex-col b-bottom-light p-2 sm:flex-row">
           <div className="mr-2">
             <Link href={`/user/${reply.profile.user.username}`}>
-              <img
-                src={reply.profile.photo}
-                className="profile-img-sm mx-0.5 cursor-pointer"
-              />
+              <div className="profile-img-sm mx-0.5">
+                <Image
+                  src={reply.profile.photo}
+                  layout="fill"
+                  className="cursor-pointer"
+                />
+              </div>
             </Link>
           </div>
           <div>

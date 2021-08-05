@@ -10,6 +10,7 @@ import CloseIcon from '@material-ui/icons/Close'
 import AddAPhotoOutlinedIcon from '@material-ui/icons/AddAPhotoOutlined'
 import ProjectBaseForm from '../../global/ProjectBaseForm'
 import { AuthContext } from '../../../contexts/Auth'
+import Image from 'next/image'
 
 export default function EditProjectDataModal({ project, refetchProject }) {
   const postDataInitialState = useMemo(
@@ -110,10 +111,13 @@ export default function EditProjectDataModal({ project, refetchProject }) {
               </div>
             </div>
             <div className="relative w-full flex justify-center items-center p-4 b-bottom-transparent">
-              <img
-                src={postData.image || project.image}
-                className="w-60 h-52 rounded-md object-cover filter brightness-75"
-              />
+              <div className="relative w-60 h-52">
+                <Image
+                  src={postData.image || project.image}
+                  layout="fill"
+                  className="rounded-md object-cover filter brightness-75"
+                />
+              </div>
               <label
                 htmlFor="project-image"
                 className="absolute cursor-pointer color-headline-hover"

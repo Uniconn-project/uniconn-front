@@ -6,6 +6,7 @@ import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt'
 import SchoolIcon from '@material-ui/icons/School'
 import EditProfile from './components/EditProfile'
 import { MyProfileContext } from '../../../contexts/MyProfile'
+import Image from 'next/image'
 
 export default function ProfileInfo({ profile }) {
   const { myProfile } = useContext(MyProfileContext)
@@ -29,7 +30,9 @@ export default function ProfileInfo({ profile }) {
           </div>
         )}
         <div className="w-full flex justify-start pl-10 lg:justify-center lg:pl-0">
-          <img src={profile.photo} className="profile-img-lg shadow-md" />
+          <div className="profile-img-lg">
+            <Image src={profile.photo} layout="fill" className="shadow-md" />
+          </div>
         </div>
         <div className="w-full pl-10">
           <h4 className="mt-2 break-words">

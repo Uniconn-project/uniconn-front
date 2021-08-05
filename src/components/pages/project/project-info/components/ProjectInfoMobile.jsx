@@ -138,15 +138,13 @@ export default function ProjectInfo({
         </div>
         <div className="w-full flex items-center pl-4 pb-2 cursor-pointer">
           {starred ? (
-            <ThumbUpAltIcon
-              className="icon-sm mr-1 color-primary"
-              onClick={unstarProject}
-            />
+            <div className="p-1 rounded-3xl" onClick={unstarProject}>
+              <ThumbUpAltIcon className="icon-sm color-primary" />
+            </div>
           ) : (
-            <ThumbUpOutlinedIcon
-              className="icon-sm mr-1 color-primary-hover"
-              onClick={starProject}
-            />
+            <div className="p-1 rounded-3xl" onClick={starProject}>
+              <ThumbUpOutlinedIcon className="icon-sm color-primary-hover" />
+            </div>
           )}{' '}
           <span
             className="hover:underline"
@@ -156,7 +154,6 @@ export default function ProjectInfo({
           </span>
         </div>
       </div>
-
       <StarsProfilesModal
         useIsOpen={() => [starsModalIsOpen, setStarsModalIsOpen]}
         profiles={project.stars.map(star => star.profile)}

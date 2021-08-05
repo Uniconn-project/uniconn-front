@@ -1,5 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { useRouter } from 'next/router'
 import ThumbUpOutlinedIcon from '@material-ui/icons/ThumbUpOutlined'
 import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt'
@@ -76,7 +77,7 @@ export default function Discussion(props) {
       .then(response => response.json())
       .then(data => {
         if (data === 'success') {
-          mutate(`projects/get-project-discussion/${props.discussion.id}`)
+          mutate(`projects/get-project-discussion/${discussion.id}`)
         } else {
           setErrorMsg({
             isOpen: true,
@@ -105,7 +106,7 @@ export default function Discussion(props) {
       .then(response => response.json())
       .then(data => {
         if (data === 'success') {
-          mutate(`projects/get-project-discussion/${props.discussion.id}`)
+          mutate(`projects/get-project-discussion/${discussion.id}`)
         } else {
           setErrorMsg({
             isOpen: true,
@@ -124,10 +125,13 @@ export default function Discussion(props) {
           <div className="flex flex-col sm:flex-row">
             <div className="mr-2">
               <Link href={`/user/${discussion.profile.user.username}`}>
-                <img
-                  src={discussion.profile.photo}
-                  className="profile-img-sm mx-0.5 cursor-pointer"
-                />
+                <div className="profile-img-sm mx-0.5 ">
+                  <Image
+                    src={discussion.profile.photo}
+                    layout="fill"
+                    className="cursor-pointer"
+                  />
+                </div>
               </Link>
             </div>
             <div>
@@ -156,19 +160,23 @@ export default function Discussion(props) {
         </div>
         <div className="flex items-center">
           <div
-            className="p-2 mr-2 flex items-center cursor-pointer"
+            className="p-2 mr-1 flex items-center cursor-pointer"
             style={{ width: 'fit-content' }}
           >
             {starred ? (
-              <ThumbUpAltIcon
-                className="icon-sm mr-1 color-primary"
+              <div
+                className="p-1 rounded-3xl bg-transparent-hover cursor-pointer"
                 onClick={unstarDiscussion}
-              />
+              >
+                <ThumbUpAltIcon className="icon-sm color-primary" />
+              </div>
             ) : (
-              <ThumbUpOutlinedIcon
-                className="icon-sm mr-1 color-primary-hover"
+              <div
+                className="p-1 rounded-3xl bg-transparent-hover cursor-pointer"
                 onClick={starDiscussion}
-              />
+              >
+                <ThumbUpOutlinedIcon className="icon-sm color-primary-hover" />
+              </div>
             )}{' '}
             <span
               className="hover:underline"
@@ -177,8 +185,8 @@ export default function Discussion(props) {
               {starCount}
             </span>
           </div>
-          <div>
-            <CommentIcon className="icon-xs mr-1" /> {discussion.replies.length}
+          <div className="p-1 mr-1">
+            <CommentIcon className="icon-xs" /> {discussion.replies.length}
           </div>
         </div>
       </div>

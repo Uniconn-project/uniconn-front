@@ -14,6 +14,7 @@ import { renderTimestamp } from '../../../../../utils/utils'
 import { AuthContext } from '../../../../../contexts/Auth'
 import { MyProfileContext } from '../../../../../contexts/MyProfile'
 import { mutate } from 'swr'
+import Image from 'next/image'
 
 export default function Discussions({
   project,
@@ -109,10 +110,13 @@ export default function Discussions({
                     className="bg-light"
                     arrow
                   >
-                    <img
-                      src={discussion.profile.photo}
-                      className="profile-img-sm mx-0.5 cursor-pointer"
-                    />
+                    <div className="profile-img-sm mx-0.5">
+                      <Image
+                        src={discussion.profile.photo}
+                        layout="fill"
+                        className="cursor-pointer"
+                      />
+                    </div>
                   </Tooltip>
                 </Link>
               </div>

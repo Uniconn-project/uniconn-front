@@ -1,5 +1,6 @@
 import React from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 
 export default function ProfileListItem({ profile, className = '' }) {
   return (
@@ -8,7 +9,9 @@ export default function ProfileListItem({ profile, className = '' }) {
         className={`w-full flex flex-col items-start bg-transparent rounded-md shadow-lg p-2 my-3 cursor-pointer bg-hover ${className}`}
       >
         <div className="flex">
-          <img src={profile.photo} className="profile-img-md mr-2" />
+          <div className="profile-img-md mr-2">
+            <Image src={profile.photo} layout="fill" />
+          </div>
           <div>
             <h5>
               {profile.first_name} {profile.last_name}
