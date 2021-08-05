@@ -3,7 +3,6 @@ import Cropper from 'cropperjs'
 import Modal from '@material-ui/core/Modal'
 import Backdrop from '@material-ui/core/Backdrop'
 import Fade from '@material-ui/core/Fade'
-import Image from 'next/image'
 
 import 'cropperjs/dist/cropper.min.css'
 

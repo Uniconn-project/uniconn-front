@@ -111,12 +111,13 @@ export default function EditProjectDataModal({ project, refetchProject }) {
               </div>
             </div>
             <div className="relative w-full flex justify-center items-center p-4 b-bottom-transparent">
-              <Image
-                src={postData.image || project.image}
-                width="15rem"
-                height="13rem"
-                className="w-60 h-52 rounded-md object-cover filter brightness-75"
-              />
+              <div className="relative w-60 h-52">
+                <Image
+                  src={postData.image || project.image}
+                  layout="fill"
+                  className="rounded-md object-cover filter brightness-75"
+                />
+              </div>
               <label
                 htmlFor="project-image"
                 className="absolute cursor-pointer color-headline-hover"

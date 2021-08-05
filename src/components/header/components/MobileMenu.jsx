@@ -26,13 +26,13 @@ export default function MobileMenu() {
 
   return (
     <div>
-      <Image
-        src={myProfile.photo}
-        width="2rem"
-        height="2rem"
-        className="profile-img-sm mr-2 cursor-pointer"
-        onClick={() => setMobileMenuIsOpen(!mobileMenuIsOpen)}
-      />
+      <div className="profile-img-sm mr-2 cursor-pointer">
+        <Image
+          src={myProfile.photo}
+          layout="fill"
+          onClick={() => setMobileMenuIsOpen(!mobileMenuIsOpen)}
+        />
+      </div>
       <Drawer
         anchor="left"
         open={mobileMenuIsOpen}

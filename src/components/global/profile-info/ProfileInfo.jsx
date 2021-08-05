@@ -30,12 +30,9 @@ export default function ProfileInfo({ profile }) {
           </div>
         )}
         <div className="w-full flex justify-start pl-10 lg:justify-center lg:pl-0">
-          <Image
-            src={profile.photo}
-            width="8rem"
-            height="8rem"
-            className="profile-img-lg shadow-md"
-          />
+          <div className="profile-img-lg">
+            <Image src={profile.photo} layout="fill" className="shadow-md" />
+          </div>
         </div>
         <div className="w-full pl-10">
           <h4 className="mt-2 break-words">

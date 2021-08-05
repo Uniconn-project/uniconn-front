@@ -25,14 +25,14 @@ export default function DesktopMenu() {
   return (
     <div className="flex">
       {myProfile !== null && (
-        <Image
-          src={myProfile.photo}
-          width="2rem"
-          height="2rem"
-          ref={anchorRef}
-          className="profile-img-sm mr-2 cursor-pointer"
-          onClick={() => setIsOpen(!isOpen)}
-        />
+        <div className="profile-img-sm mr-2 cursor-pointer">
+          <Image
+            src={myProfile.photo}
+            ref={anchorRef}
+            layout="fill"
+            onClick={() => setIsOpen(!isOpen)}
+          />
+        </div>
       )}
       {notificationsNumber !== null ? (
         <Link href="/notifications">

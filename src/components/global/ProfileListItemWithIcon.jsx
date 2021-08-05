@@ -15,12 +15,9 @@ export default function ProfileListItemWithIcon({
           className={`w-full flex items-start bg-transparent rounded-md shadow-lg p-2 cursor-pointer bg-hover ${className}`}
         >
           <div className="flex">
-            <Image
-              width="4rem"
-              height="4rem"
-              src={profile.photo}
-              className="profile-img-md mr-2"
-            />
+            <div className="profile-img-md mr-2">
+              <Image src={profile.photo} layout="fill" />
+            </div>
             <div>
               <div className="flex">
                 <h5>

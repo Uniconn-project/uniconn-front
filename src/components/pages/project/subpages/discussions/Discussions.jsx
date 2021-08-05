@@ -110,12 +110,13 @@ export default function Discussions({
                     className="bg-light"
                     arrow
                   >
-                    <Image
-                      src={discussion.profile.photo}
-                      width="2rem"
-                      height="2rem"
-                      className="profile-img-sm mx-0.5 cursor-pointer"
-                    />
+                    <div className="profile-img-sm mx-0.5">
+                      <Image
+                        src={discussion.profile.photo}
+                        layout="fill"
+                        className="cursor-pointer"
+                      />
+                    </div>
                   </Tooltip>
                 </Link>
               </div>

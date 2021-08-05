@@ -106,18 +106,17 @@ export default function ProjectInfoDesktop({
       <div className="b-bottom-light">
         {window.history.length > 1 && (
           <div
-            className="absolute top-2 left-2 p-1 rounded-3xl cursor-pointer bg-primary bg-hover color-bg-light"
+            className="absolute top-2 left-2 z-10 p-1 rounded-3xl cursor-pointer bg-primary bg-hover color-bg-light"
             onClick={() => window.history.back()}
           >
             <ArrowBackIcon className="icon-sm" />
           </div>
         )}
-        <div className="w-full flex justify-center">
+        <div className="relative w-full h-52 flex justify-center">
           <Image
             src={project.image}
-            width="100%"
-            height="13rem"
-            className="w-full h-52 rounded-t-md object-cover"
+            layout="fill"
+            className="rounded-t-md object-cover"
           />
         </div>
         <div className="w-full pl-4 pb-4 break-words">

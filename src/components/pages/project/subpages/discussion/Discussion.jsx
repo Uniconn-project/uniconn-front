@@ -77,7 +77,7 @@ export default function Discussion(props) {
       .then(response => response.json())
       .then(data => {
         if (data === 'success') {
-          mutate(`projects/get-project-discussion/${props.discussion.id}`)
+          mutate(`projects/get-project-discussion/${discussion.id}`)
         } else {
           setErrorMsg({
             isOpen: true,
@@ -106,7 +106,7 @@ export default function Discussion(props) {
       .then(response => response.json())
       .then(data => {
         if (data === 'success') {
-          mutate(`projects/get-project-discussion/${props.discussion.id}`)
+          mutate(`projects/get-project-discussion/${discussion.id}`)
         } else {
           setErrorMsg({
             isOpen: true,
@@ -125,12 +125,13 @@ export default function Discussion(props) {
           <div className="flex flex-col sm:flex-row">
             <div className="mr-2">
               <Link href={`/user/${discussion.profile.user.username}`}>
-                <Image
-                  src={discussion.profile.photo}
-                  width="2rem"
-                  height="2rem"
-                  className="profile-img-sm mx-0.5 cursor-pointer"
-                />
+                <div className="profile-img-sm mx-0.5 ">
+                  <Image
+                    src={discussion.profile.photo}
+                    layout="fill"
+                    className="cursor-pointer"
+                  />
+                </div>
               </Link>
             </div>
             <div>

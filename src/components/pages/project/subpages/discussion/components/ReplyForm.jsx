@@ -60,12 +60,13 @@ export default function ReplyFrom({ discussion, setErrorMsg }) {
         <div className="flex flex-col sm:flex-row">
           <div className="mr-2">
             <Link href="/profile">
-              <Image
-                src={myProfile.photo}
-                width="2rem"
-                height="2rem"
-                className="profile-img-sm mx-0.5 cursor-pointer"
-              />
+              <div className="profile-img-sm mx-0.5">
+                <Image
+                  src={myProfile.photo}
+                  layout="fill"
+                  className="cursor-pointer"
+                />
+              </div>
             </Link>
           </div>
           <div>

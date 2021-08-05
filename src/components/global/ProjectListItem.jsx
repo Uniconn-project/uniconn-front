@@ -95,17 +95,10 @@ export default function ProjectListItem({
           <div className="flex items-center">
             {project.members_profiles.slice(0, 3).map(profile => (
               <Link href={`/user/${profile.user.username}`} key={profile.id}>
-                <Tooltip
-                  title={profile.user.username}
-                  className="bg-light"
-                  arrow
-                >
-                  <Image
-                    src={profile.photo}
-                    width="2rem"
-                    height="2rem"
-                    className="profile-img-sm mx-0.5 cursor-pointer"
-                  />
+                <Tooltip title={profile.user.username} arrow>
+                  <div className="profile-img-sm mx-0.5 cursor-pointer">
+                    <Image src={profile.photo} layout="fill" />
+                  </div>
                 </Tooltip>
               </Link>
             ))}
@@ -115,12 +108,13 @@ export default function ProjectListItem({
           <p className="max-h-20 whitespace-nowrap overflow-ellipsis overflow-hidden mb-2">
             {project.slogan}
           </p>
-          <Image
-            width="20rem"
-            height="13rem"
-            src={project.image}
-            className="w-80 h-52 rounded-md object-cover mb-2"
-          />
+          <div className="relative w-80 h-52 mb-2">
+            <Image
+              src={project.image}
+              layout="fill"
+              className="rounded-md object-cover"
+            />
+          </div>
           <ProjectCategory category={project.category} />
         </div>
         <div className="p-2 flex items-center">
