@@ -150,9 +150,11 @@ export default function ProjectListItem({
             </div>
           </Tooltip>
           <Tooltip title="Discussões" placement="bottom" arrow>
-            <div>
-              <CommentIcon className="icon-xs" /> {project.discussions_length}
-            </div>
+            <Link href={`/project/${project.id}?page=discussions`}>
+              <div>
+                <CommentIcon className="icon-xs" /> {project.discussions_length}
+              </div>
+            </Link>
           </Tooltip>
         </div>
       </div>
