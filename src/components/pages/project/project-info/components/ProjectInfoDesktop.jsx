@@ -124,15 +124,19 @@ export default function ProjectInfoDesktop({
         </div>
         <div className="w-full flex items-center pl-4 pb-2 cursor-pointer">
           {starred ? (
-            <ThumbUpAltIcon
-              className="icon-sm mr-1 color-primary"
+            <div
+              className="p-1 rounded-3xl bg-transparent-hover cursor-pointer"
               onClick={unstarProject}
-            />
+            >
+              <ThumbUpAltIcon className="icon-sm color-primary" />
+            </div>
           ) : (
-            <ThumbUpOutlinedIcon
-              className="icon-sm mr-1 color-primary-hover"
+            <div
+              className="p-1 rounded-3xl bg-transparent-hover cursor-pointer"
               onClick={starProject}
-            />
+            >
+              <ThumbUpOutlinedIcon className="icon-sm color-primary-hover" />
+            </div>
           )}{' '}
           <span
             className="hover:underline"

@@ -160,19 +160,23 @@ export default function Discussion(props) {
         </div>
         <div className="flex items-center">
           <div
-            className="p-2 mr-2 flex items-center cursor-pointer"
+            className="p-2 mr-1 flex items-center cursor-pointer"
             style={{ width: 'fit-content' }}
           >
             {starred ? (
-              <ThumbUpAltIcon
-                className="icon-sm mr-1 color-primary"
+              <div
+                className="p-1 rounded-3xl bg-transparent-hover cursor-pointer"
                 onClick={unstarDiscussion}
-              />
+              >
+                <ThumbUpAltIcon className="icon-sm color-primary" />
+              </div>
             ) : (
-              <ThumbUpOutlinedIcon
-                className="icon-sm mr-1 color-primary-hover"
+              <div
+                className="p-1 rounded-3xl bg-transparent-hover cursor-pointer"
                 onClick={starDiscussion}
-              />
+              >
+                <ThumbUpOutlinedIcon className="icon-sm color-primary-hover" />
+              </div>
             )}{' '}
             <span
               className="hover:underline"
@@ -181,8 +185,8 @@ export default function Discussion(props) {
               {starCount}
             </span>
           </div>
-          <div>
-            <CommentIcon className="icon-xs mr-1" /> {discussion.replies.length}
+          <div className="p-1 mr-1">
+            <CommentIcon className="icon-xs" /> {discussion.replies.length}
           </div>
         </div>
       </div>

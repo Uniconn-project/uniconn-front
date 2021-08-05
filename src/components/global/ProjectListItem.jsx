@@ -119,17 +119,21 @@ export default function ProjectListItem({
         </div>
         <div className="p-2 flex items-center">
           <Tooltip title="Curtidas" placement="bottom" arrow>
-            <div className="flex mr-2 cursor-pointer">
+            <div className="flex items-center mr-2 cursor-pointer">
               {starred ? (
-                <ThumbUpAltIcon
-                  className="icon-sm mr-1 color-primary"
+                <div
+                  className="p-1 rounded-3xl bg-transparent-hover cursor-pointer"
                   onClick={unstarProject}
-                />
+                >
+                  <ThumbUpAltIcon className="icon-sm color-primary" />
+                </div>
               ) : (
-                <ThumbUpOutlinedIcon
-                  className="icon-sm mr-1 color-primary-hover"
+                <div
+                  className="p-1 rounded-3xl bg-transparent-hover cursor-pointer"
                   onClick={starProject}
-                />
+                >
+                  <ThumbUpOutlinedIcon className="icon-sm color-primary-hover" />
+                </div>
               )}{' '}
               <span
                 className="hover:underline"
