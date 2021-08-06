@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import AnimateHeight from 'react-animate-height'
+import Checkbox from '@material-ui/core/Checkbox'
 import Tooltip from '@material-ui/core/Tooltip'
 import TuneIcon from '@material-ui/icons/Tune'
 import useFetch, { fetcher } from '../../../hooks/useFetch'
@@ -8,6 +9,8 @@ import CircularProgress from '@material-ui/core/CircularProgress'
 export default function ProjectsFilter({ projects, setRenderedProjects }) {
   const [search, setSearch] = useState('')
   const [filterHeight, setFilterHeight] = useState(0)
+  const [categoriesCheckedState, setCategoriesCheckedState] = useState(null)
+  const [fieldsCheckedState, setFieldsCheckedState] = useState(null)
 
   const { data: categories } = useFetch('projects/get-projects-categories-list')
   const { data: fields } = useFetch('projects/get-fields-name-list')
@@ -22,48 +25,47 @@ export default function ProjectsFilter({ projects, setRenderedProjects }) {
     )
   }, [search, projects, setRenderedProjects])
 
-  const toggleAllFields = (checked, selector) => {
-    document.querySelectorAll(selector).forEach(el => (el.checked = checked))
+  useEffect(() => {
+    if (!categories || categoriesCheckedState) return
+
+    resetCategoriesCheckboxes(true)
+  }, [categories]) // eslint-disable-line
+
+  useEffect(() => {
+    if (!fields || fieldsCheckedState) return
+
+    resetFieldsCheckboxes(true)
+  }, [fields]) // eslint-disable-line
+
+  const resetCategoriesCheckboxes = checked => {
+    const checkedState = {}
+
+    for (const category of categories) {
+      checkedState[category.value] = checked
+    }
+
+    setCategoriesCheckedState(checkedState)
+  }
+
+  const resetFieldsCheckboxes = checked => {
+    const checkedState = {}
+
+    for (const field of fields) {
+      checkedState[field.name] = checked
+    }
+
+    setFieldsCheckedState(checkedState)
   }
 
   const handleFilterSubmit = async () => {
-    const categoryCheckboxes = Array.from(
-      document.querySelectorAll('.category')
+    console.log(categoriesCheckedState, fieldsCheckedState)
+    const selectedCategories = Object.keys(categoriesCheckedState).filter(
+      key => categoriesCheckedState[key]
     )
-    for (let i in categoryCheckboxes) {
-      i = Number(i)
-      if (categoryCheckboxes[i].checked) break
-      else if (
-        i === categoryCheckboxes.length - 1 &&
-        !categoryCheckboxes[i].checked
-      ) {
-        window.alert('Selecione pelo menos uma categoria!')
-        return
-      }
-    }
 
-    const fieldCheckboxes = Array.from(document.querySelectorAll('.field'))
-    for (let i in fieldCheckboxes) {
-      i = Number(i)
-      if (fieldCheckboxes[i].checked) break
-      else if (
-        i === fieldCheckboxes.length - 1 &&
-        !fieldCheckboxes[i].checked
-      ) {
-        window.alert('Selecione pelo menos uma mercado!')
-        return
-      }
-    }
-
-    const selectedCategories = []
-    document
-      .querySelectorAll('.category')
-      .forEach(el => el.checked && selectedCategories.push(el.name))
-
-    const selectedFields = []
-    document
-      .querySelectorAll('.field')
-      .forEach(el => el.checked && selectedFields.push(el.name))
+    const selectedFields = Object.keys(fieldsCheckedState).filter(
+      key => fieldsCheckedState[key]
+    )
 
     const queryParams = `categories=${selectedCategories.join(
       ';'
@@ -74,6 +76,10 @@ export default function ProjectsFilter({ projects, setRenderedProjects }) {
     )
     await setRenderedProjects(projects)
     setFilterHeight(0)
+  }
+
+  if (!categoriesCheckedState || !fieldsCheckedState) {
+    return <CircularProgress size={30} />
   }
 
   return (
@@ -102,62 +108,66 @@ export default function ProjectsFilter({ projects, setRenderedProjects }) {
               <div className="flex items-center">
                 <h4>Categorias</h4>
               </div>
-              {categories ? (
-                <ul className="max-h-36 overflow-y-auto">
-                  <li>
-                    <input
-                      type="checkbox"
+              <ul className="max-h-36 overflow-y-auto">
+                <li className="flex items-center">
+                  <Checkbox
+                    className="p-0 color-primary"
+                    checked={
+                      !Object.values(categoriesCheckedState).includes(false)
+                    }
+                    onChange={e => resetCategoriesCheckboxes(e.target.checked)}
+                  />
+                  <span className="color-headline">Todos</span>
+                </li>
+                {categories.map(category => (
+                  <li key={category.value} className="flex items-center">
+                    <Checkbox
+                      className="p-0 color-primary"
+                      checked={categoriesCheckedState[category.value]}
                       onChange={e =>
-                        toggleAllFields(e.target.checked, '.category')
+                        setCategoriesCheckedState({
+                          ...categoriesCheckedState,
+                          [category.value]: e.target.checked
+                        })
                       }
-                    />{' '}
-                    Todos
-                  </li>
-                  {categories.map(category => (
-                    <li key={category.value}>
-                      <input
-                        type="checkbox"
-                        className="category"
-                        name={category.value}
-                      />{' '}
+                    />
+                    <span>
                       {category.readable[0].toUpperCase() +
                         category.readable.slice(1)}
-                    </li>
-                  ))}
-                </ul>
-              ) : (
-                <CircularProgress size={30} />
-              )}
+                    </span>
+                  </li>
+                ))}
+              </ul>
             </div>
             <div className="b-bottom-transparent p-2">
               <div className="flex items-center">
                 <h4>Áreas de atuação</h4>
               </div>
-              {fields ? (
-                <ul className="max-h-36 overflow-y-auto">
-                  <li>
-                    <input
-                      type="checkbox"
+              <ul className="max-h-36 overflow-y-auto">
+                <li className="flex items-center">
+                  <Checkbox
+                    className="p-0 color-primary"
+                    checked={!Object.values(fieldsCheckedState).includes(false)}
+                    onChange={e => resetFieldsCheckboxes(e.target.checked)}
+                  />
+                  <span className="color-headline">Todos</span>
+                </li>
+                {fields.map(field => (
+                  <li key={field.id} className="flex items-center">
+                    <Checkbox
+                      className="p-0 color-primary"
+                      checked={fieldsCheckedState[field.name]}
                       onChange={e =>
-                        toggleAllFields(e.target.checked, '.field')
+                        setFieldsCheckedState({
+                          ...fieldsCheckedState,
+                          [field.name]: e.target.checked
+                        })
                       }
-                    />{' '}
-                    Todos
+                    />
+                    <span>{field.name}</span>
                   </li>
-                  {fields.map(field => (
-                    <li key={field.id}>
-                      <input
-                        type="checkbox"
-                        className="field"
-                        name={field.name}
-                      />{' '}
-                      {field.name[0].toUpperCase() + field.name.slice(1)}
-                    </li>
-                  ))}
-                </ul>
-              ) : (
-                <CircularProgress size={30} />
-              )}
+                ))}
+              </ul>
             </div>
             <div className="flex justify-end p-4">
               <button className="btn-primary" onClick={handleFilterSubmit}>

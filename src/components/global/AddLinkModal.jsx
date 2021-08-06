@@ -7,7 +7,7 @@ import { AuthContext } from '../../contexts/Auth'
 
 export default function AddLinkModal({
   project = null,
-  profile = null,
+  className = '',
   successCallback,
   setErrorMsg,
   children
@@ -62,10 +62,7 @@ export default function AddLinkModal({
 
   return (
     <>
-      <div
-        className="p-2 pl-4 mb-4 cursor-pointer bg-transparent bg-hover rounded-md shadow-lg"
-        onClick={() => setIsOpen(true)}
-      >
+      <div className={className} onClick={() => setIsOpen(true)}>
         {children}
       </div>
       <Modal

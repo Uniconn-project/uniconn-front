@@ -76,6 +76,7 @@ export default function UniversityMajorSkillsForm({
             control={
               <Checkbox
                 data-cy="is-attending-university-checkbox"
+                className="m-0"
                 checked={postData.is_attending_university}
                 onChange={() =>
                   setPostData({
