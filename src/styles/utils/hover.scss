@@ -22,4 +22,10 @@
       color: var(--red);
     }
   }
+
+  .color-paragraph-hover {
+    &:hover {
+      color: var(--paragraph);
+    }
+  }
 }

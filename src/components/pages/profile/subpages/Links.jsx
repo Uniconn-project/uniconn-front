@@ -26,7 +26,8 @@ export default function Links({ profile, refetchProfile }) {
     )
   }
 
-  const handleDelete = async linkId => {
+  const handleDelete = async (e, linkId) => {
+    e.preventDefault()
     if (window.confirm('Remover link?')) {
       fetch(
         `${process.env.NEXT_PUBLIC_API_HOST}/api/profiles/delete-link/${linkId}`,
@@ -60,7 +61,7 @@ export default function Links({ profile, refetchProfile }) {
           successCallback={() => refetchProfile('add-link')}
           setErrorMsg={setErrorMsg}
         >
-          <div>
+          <div className="p-3 mb-4 cursor-pointer bg-transparent bg-hover rounded-md shadow-lg">
             <div className="flex items-center w-full">
               <LinkIcon className="color-primary mr-2" />
               <strong className="color-primary">Adicionar link</strong>
@@ -69,32 +70,52 @@ export default function Links({ profile, refetchProfile }) {
         </AddLinkModal>
       )}
       <div>
-        {profile.links.map(link => (
-          <div
-            key={link.id}
-            className="flex bg-transparent rounded-md shadow-lg mb-4 bg-hover"
-          >
+        {profile.links.length ? (
+          profile.links.map(link => (
             <a
+              key={link.id}
               href={link.href}
               target="_blank"
               rel="noreferrer"
-              className="no-underline flex-grow"
+              className="no-underline flex items-start p-3 color-paragraph color-paragraph-hover bg-transparent rounded-md shadow-lg mb-4 bg-hover"
             >
-              <div className="flex items-center p-4 color-paragraph">
-                <LinkIconResolver url={link.href} />
-                <div className="break-all">{link.name}</div>
-              </div>
+              <LinkIconResolver url={link.href} />
+              <div className="break-all">{link.name}</div>
+              {profile.id === myProfile.id && (
+                <div
+                  className="cursor-pointer ml-auto"
+                  style={{ height: 'max-content' }}
+                  onClick={e => handleDelete(e, link.id)}
+                >
+                  <DeleteIcon className="icon-sm color-paragraph color-red-hover" />
+                </div>
+              )}
             </a>
-            {profile.id === myProfile.id && (
-              <div
-                className="cursor-pointer p-2"
-                onClick={() => handleDelete(link.id)}
-              >
-                <DeleteIcon className="icon-sm color-red-hover" />
-              </div>
+          ))
+        ) : (
+          <div className="w-full p-5 pt-2 text-center sm:pt-5">
+            {profile.id === myProfile.id ? (
+              <span>
+                Links são uma forma de compartilhar seus perfis de outras
+                plataformas, como LinkedIn, GitHub e Instagram. Adicione seu
+                primeiro{' '}
+                <AddLinkModal
+                  profile={profile}
+                  className="inline"
+                  successCallback={() => refetchProfile('add-link')}
+                  setErrorMsg={setErrorMsg}
+                >
+                  <span className="color-primary cursor-pointer hover:underline">
+                    aqui
+                  </span>
+                </AddLinkModal>
+                .
+              </span>
+            ) : (
+              <span>{profile.first_name} não tem links.</span>
             )}
           </div>
-        ))}
+        )}
       </div>
       <Snackbar
         open={errorMsg.isOpen}

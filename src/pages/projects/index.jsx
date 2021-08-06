@@ -1,4 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
+import Link from 'next/link'
+import AddIcon from '@material-ui/icons/Add'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import Page from '../../components/Page'
 import ProjectList from '../../components/global/ProjectList'
@@ -46,6 +48,12 @@ export default function Projects() {
                 setRenderedProjects={setRenderedProjects}
               />
               <div className="w-full flex flex-col items-center px-2">
+                <Link href="/create-project">
+                  <div className="w-full flex items-center cursor-pointer bg-transparent bg-hover color-primary rounded-md shadow-lg p-3 mb-4">
+                    <AddIcon className="mr-2" />
+                    <strong>Criar Projeto</strong>
+                  </div>
+                </Link>
                 <ProjectList projects={renderedProjects} />
               </div>
             </div>

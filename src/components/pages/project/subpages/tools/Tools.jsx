@@ -24,8 +24,8 @@ export default function Tools({ project, refetchProject }) {
       <DescriptiveHeader
         title="Ferramentas do projeto"
         description="Ferramentas são uma ótima forma dos membros de um projeto
-        compartilharem informações entre si que estão guardadas em outras
-        plataformas."
+        compartilharem informações que estão guardadas em outras
+        plataformas entre si."
       />
       {project.tools_categories.map(category => (
         <ToolCategory
