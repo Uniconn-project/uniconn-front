@@ -37,7 +37,6 @@ export default function Project(props) {
 
   const { myProfile } = useContext(MyProfileContext)
 
-  const [openedDiscussion, setOpenedDiscussion] = useState(null)
   const [successMsg, setSuccessMsg] = useState({
     isOpen: false,
     value: ''
@@ -224,9 +223,7 @@ export default function Project(props) {
                   openDiscussion={openDiscussion}
                 />
               )}
-              {router.query.page === 'discussion' && (
-                <Discussion discussion={openedDiscussion} />
-              )}
+              {router.query.page === 'discussion' && <Discussion />}
               {router.query.page === 'links' && (
                 <Links
                   project={project}
