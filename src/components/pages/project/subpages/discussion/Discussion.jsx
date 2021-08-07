@@ -17,7 +17,7 @@ import { MyProfileContext } from '../../../../../contexts/MyProfile'
 import { AuthContext } from '../../../../../contexts/Auth'
 import ReplyListItem from './components/ReplyListItem'
 
-export default function Discussion(props) {
+export default function Discussion() {
   const { myProfile } = useContext(MyProfileContext)
   const { getToken } = useContext(AuthContext)
 
