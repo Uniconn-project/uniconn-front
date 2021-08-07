@@ -80,7 +80,6 @@ export default function Users() {
           <div className="w-full" style={{ maxWidth: 600 }}>
             <ProfilesFilter
               baseProfiles={baseProfiles.profiles}
-              profiles={renderedProfiles}
               setProfiles={setRenderedProfiles}
             />
             <div className="w-full px-2" style={{ maxWidth: 600 }}>

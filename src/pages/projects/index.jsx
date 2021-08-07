@@ -39,12 +39,11 @@ export default function Projects() {
     fetch(
       `${
         process.env.NEXT_PUBLIC_API_HOST
-      }/api/projects/get-projects-list?length=${scrollCount * 5}`
+      }/api/projects/get-projects-list?length=${scrollCount * 10}`
     )
       .then(response => response.json())
       .then(data => {
         mutate('projects/get-projects-list', data, false)
-        console.log(data.projects)
         setRenderedProjects(data.projects)
       })
   }, [scrollCount])
@@ -58,7 +57,6 @@ export default function Projects() {
 
   useEffect(() => {
     if (!baseProjects || renderedProjects.length) return
-    console.log(baseProjects.projects)
     setRenderedProjects(baseProjects.projects)
   }, [baseProjects]) //eslint-disable-line
 
@@ -83,7 +81,7 @@ export default function Projects() {
         <div className="w-full flex justify-center p-2 pt-0 lg:p-0 lg:w-2/3 lg:justify-start lg:box-border">
           <div className="w-full" style={{ maxWidth: 600 }}>
             <ProjectsFilter
-              projects={baseProjects.projects}
+              baseProjects={baseProjects.projects}
               setRenderedProjects={setRenderedProjects}
             />
             <div className="w-full flex flex-col items-center px-2">
@@ -94,6 +92,11 @@ export default function Projects() {
                 </div>
               </Link>
               <ProjectList projects={renderedProjects} />
+              {!projectsAreFiltered && !baseProjects.isall && (
+                <div className="w-full flex justify-center p-4">
+                  <CircularProgress size={30} />
+                </div>
+              )}
             </div>
           </div>
         </div>

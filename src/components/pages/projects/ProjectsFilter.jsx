@@ -6,7 +6,7 @@ import TuneIcon from '@material-ui/icons/Tune'
 import useFetch, { fetcher } from '../../../hooks/useFetch'
 import CircularProgress from '@material-ui/core/CircularProgress'
 
-export default function ProjectsFilter({ projects, setRenderedProjects }) {
+export default function ProjectsFilter({ baseProjects, setRenderedProjects }) {
   const [search, setSearch] = useState('')
   const [filterHeight, setFilterHeight] = useState(0)
   const [categoriesCheckedState, setCategoriesCheckedState] = useState(null)
@@ -16,14 +16,16 @@ export default function ProjectsFilter({ projects, setRenderedProjects }) {
   const { data: fields } = useFetch('projects/get-fields-name-list')
 
   useEffect(() => {
-    if (!projects || !setRenderedProjects) return
+    if (!search.trim().length) {
+      setRenderedProjects(baseProjects)
+      return
+    }
 
-    setRenderedProjects(
-      projects.filter(project =>
-        project.name.toLowerCase().includes(search.toLowerCase())
-      )
-    )
-  }, [search, projects, setRenderedProjects])
+    ;(async () => {
+      const data = await fetcher(`projects/get-filtered-projects/${search}`)
+      setRenderedProjects(data)
+    })()
+  }, [search]) // eslint-disable-line
 
   useEffect(() => {
     if (!categories || categoriesCheckedState) return
@@ -58,7 +60,6 @@ export default function ProjectsFilter({ projects, setRenderedProjects }) {
   }
 
   const handleFilterSubmit = async () => {
-    console.log(categoriesCheckedState, fieldsCheckedState)
     const selectedCategories = Object.keys(categoriesCheckedState).filter(
       key => categoriesCheckedState[key]
     )
@@ -71,10 +72,10 @@ export default function ProjectsFilter({ projects, setRenderedProjects }) {
       ';'
     )}&fields=${selectedFields.join(';')}`
 
-    const projects = await fetcher(
-      `projects/get-filtered-projects-list?${queryParams}`
+    const data = await fetcher(
+      `projects/get-projects-list?length=5&${queryParams}`
     )
-    await setRenderedProjects(projects)
+    await setRenderedProjects(data.projects)
     setFilterHeight(0)
   }
 
