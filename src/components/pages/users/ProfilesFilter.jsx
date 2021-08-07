@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { fetcher } from '../../../hooks/useFetch'
 
 export default function ProfilesFilter({
-  initialProfiles,
+  baseProfiles,
   profiles,
   setProfiles
 }) {
@@ -11,7 +11,7 @@ export default function ProfilesFilter({
   useEffect(() => {
     if (!profiles) return
     if (!search.trim().length) {
-      setProfiles(initialProfiles)
+      setProfiles(baseProfiles)
       return
     }
 
