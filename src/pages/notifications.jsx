@@ -89,8 +89,8 @@ export default function Notifications() {
         <div className="w-full flex justify-center p-2 pt-0 lg:p-0 lg:w-2/3 lg:justify-start lg:box-border">
           <div className="w-full" style={{ maxWidth: 600 }}>
             <div className="sticky top-24 w-full mb-4 sm:top-32">
-              <div className="w-full bg-light h-14 rounded-md shadow-lg p-2 flex items-center">
-                Notificações
+              <div className="w-full flex items-center bg-light h-14 rounded-md shadow-lg p-2 mb-4">
+                <h3 className="color-paragraph">Notificações</h3>
               </div>
             </div>
             {projectsInvitations === null && (
@@ -120,6 +120,18 @@ export default function Notifications() {
             {discussionsStars !== null && (
               <DiscussionsStars stars={discussionsStars} />
             )}
+            {projectsInvitations &&
+              projectsInvitations.length == 0 &&
+              projectsEntryRequests &&
+              projectsEntryRequests.length == 0 &&
+              discussionsReplies &&
+              discussionsReplies.length == 0 &&
+              discussionsStars &&
+              discussionsStars.length == 0 && (
+                <div className="w-full p-5 pt-2 text-center sm:pt-5">
+                  <span>Você não tem notificações.</span>
+                </div>
+              )}
           </div>
         </div>
         <Snackbar
