@@ -60,7 +60,7 @@ export default function ProfileInfo({ profile }) {
                 <PaletteIcon className="icon-sm" /> Habilidades:
               </span>
             </div>
-            <ul className="max-h-32 overflow-y-auto">
+            <ul className="max-h-32 overflow-y-auto lg:text-sm">
               {profile.skills.map(skill => (
                 <li key={skill.id}>
                   <ArrowRightAltIcon className="color-primary icon-sm" />{' '}
