@@ -75,14 +75,14 @@ export default function MobileMenu() {
                 <ListItemText primary={'Configurações'} />
               </ListItem>
             </Link>
-            <ListItem button>
-              <ListItemIcon className="mr-2">
-                <ExitToAppOutlinedIcon />
-              </ListItemIcon>
-              <Logout>
+            <Logout>
+              <ListItem button>
+                <ListItemIcon className="mr-2">
+                  <ExitToAppOutlinedIcon />
+                </ListItemIcon>
                 <ListItemText primary={'Sair'} />
-              </Logout>
-            </ListItem>
+              </ListItem>
+            </Logout>
           </List>
         </div>
       </Drawer>
