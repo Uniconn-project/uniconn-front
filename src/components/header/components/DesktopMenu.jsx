@@ -25,10 +25,9 @@ export default function DesktopMenu() {
   return (
     <div className="flex">
       {myProfile !== null && (
-        <div className="profile-img-sm mr-2 cursor-pointer">
+        <div ref={anchorRef} className="profile-img-sm mr-2 cursor-pointer">
           <Image
             src={myProfile.photo}
-            ref={anchorRef}
             layout="fill"
             onClick={() => setIsOpen(!isOpen)}
           />
@@ -64,8 +63,11 @@ export default function DesktopMenu() {
             <Paper>
               <ClickAwayListener onClickAway={() => setIsOpen(false)}>
                 <MenuList>
-                  <MenuItem onClick={() => setIsOpen(false)}>
-                    <Logout />
+                  <MenuItem
+                    style={{ padding: '0' }}
+                    onClick={() => setIsOpen(false)}
+                  >
+                    <Logout className="px-4 py-1.5" />
                   </MenuItem>
                 </MenuList>
               </ClickAwayListener>
