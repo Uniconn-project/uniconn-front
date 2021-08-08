@@ -62,7 +62,7 @@ export default function Projects() {
 
   if (!myProfile || !baseProjects) {
     return (
-      <Page title="Usuários | Uniconn" page="users" loginRequired header>
+      <Page title="Usuários | Uniconn" page="projects" loginRequired header>
         <CircularProgress />
       </Page>
     )
