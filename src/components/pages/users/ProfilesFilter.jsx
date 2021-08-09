@@ -3,6 +3,7 @@ import AnimateHeight from 'react-animate-height'
 import Checkbox from '@material-ui/core/Checkbox'
 import Tooltip from '@material-ui/core/Tooltip'
 import TuneIcon from '@material-ui/icons/Tune'
+import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import useFetch, { fetcher } from '../../../hooks/useFetch'
 import { formattedQueryString } from '../../../utils/utils'
@@ -13,7 +14,12 @@ export default function ProfilesFilter({
   setQueryParams
 }) {
   const [search, setSearch] = useState('')
-  const [filterHeight, setFilterHeight] = useState(0)
+  const [filterHeight, setFilterHeight] = useState('0%')
+  const [universitiesFilterIsOpen, setUniversitiesFilterIsOpen] = useState(
+    false
+  )
+  const [majorsFilterIsOpen, setMajorsFilterIsOpen] = useState(false)
+  const [skillsFilterIsOpen, setSkillsFilterIsOpen] = useState(true)
   const [isAttUnivCheckedState, setIsAttUnivCheckedState] = useState({
     yes: true,
     no: true
@@ -117,7 +123,6 @@ export default function ProfilesFilter({
       : ''
 
     const queryParams = `${skillsQ}${isAttUnivQ}${universitiesQ}${majorsQ}`
-    console.log(queryParams)
     setQueryParams(formattedQueryString(queryParams))
     setFilterHeight(0)
   }
@@ -141,14 +146,14 @@ export default function ProfilesFilter({
             <TuneIcon
               className="ml-auto cursor-pointer color-primary color-hover"
               onClick={() =>
-                setFilterHeight(filterHeight === 'auto' ? 0 : 'auto')
+                setFilterHeight(filterHeight === 'auto' ? '0%' : 'auto')
               }
             />
           </Tooltip>
         </div>
         <AnimateHeight height={filterHeight}>
           <div className="w-full">
-            <div className="b-bottom-transparent p-2">
+            <div className="b-bottom-transparent py-2">
               <div className="flex items-center">
                 <h4>Cursando universidade</h4>
               </div>
@@ -181,10 +186,24 @@ export default function ProfilesFilter({
                 </li>
               </ul>
             </div>
-            <AnimateHeight height={isAttUnivCheckedState.yes ? 'auto' : '0'}>
+            <AnimateHeight height={isAttUnivCheckedState.yes ? 'auto' : '0%'}>
               <>
-                <div className="b-bottom-transparent p-2">
-                  <div className="flex items-center">
+                <div className="b-bottom-transparent">
+                  <div
+                    className="flex items-center cursor-pointer py-2"
+                    onClick={() =>
+                      setUniversitiesFilterIsOpen(!universitiesFilterIsOpen)
+                    }
+                  >
+                    <ArrowForwardIosIcon
+                      className="icon-xs mr-1"
+                      style={{
+                        transform: `rotate(${
+                          universitiesFilterIsOpen ? '90deg' : '0'
+                        })`,
+                        transition: '.2s'
+                      }}
+                    />
                     <h4>
                       Universidades{' '}
                       <span className="color-paragraph text-sm">
@@ -192,40 +211,60 @@ export default function ProfilesFilter({
                       </span>
                     </h4>
                   </div>
-                  <ul className="max-h-36 overflow-y-auto">
-                    <li className="flex items-center">
-                      <Checkbox
-                        className="p-0 color-primary"
-                        checked={
-                          !Object.values(universitiesCheckedState).includes(
-                            false
-                          )
-                        }
-                        onChange={e =>
-                          resetUniversitiesCheckboxes(e.target.checked)
-                        }
-                      />
-                      <span className="color-headline">Todos</span>
-                    </li>
-                    {universities.map(university => (
-                      <li key={university.id} className="flex items-center">
-                        <Checkbox
-                          className="p-0 color-primary"
-                          checked={universitiesCheckedState[university.name]}
-                          onChange={e =>
-                            setUniversitiesCheckedState({
-                              ...universitiesCheckedState,
-                              [university.name]: e.target.checked
-                            })
-                          }
-                        />
-                        <span>{university.name}</span>
-                      </li>
-                    ))}
-                  </ul>
+                  <AnimateHeight
+                    height={universitiesFilterIsOpen ? 'auto' : '0%'}
+                  >
+                    <div className="pb-2">
+                      <ul className="max-h-36 overflow-y-auto">
+                        <li className="flex items-center">
+                          <Checkbox
+                            className="p-0 color-primary"
+                            checked={
+                              !Object.values(universitiesCheckedState).includes(
+                                false
+                              )
+                            }
+                            onChange={e =>
+                              resetUniversitiesCheckboxes(e.target.checked)
+                            }
+                          />
+                          <span className="color-headline">Todos</span>
+                        </li>
+                        {universities.map(university => (
+                          <li key={university.id} className="flex items-center">
+                            <Checkbox
+                              className="p-0 color-primary"
+                              checked={
+                                universitiesCheckedState[university.name]
+                              }
+                              onChange={e =>
+                                setUniversitiesCheckedState({
+                                  ...universitiesCheckedState,
+                                  [university.name]: e.target.checked
+                                })
+                              }
+                            />
+                            <span>{university.name}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </AnimateHeight>
                 </div>
-                <div className="b-bottom-transparent p-2">
-                  <div className="flex items-center">
+                <div className="b-bottom-transparent">
+                  <div
+                    className="flex items-center cursor-pointer py-2"
+                    onClick={() => setMajorsFilterIsOpen(!majorsFilterIsOpen)}
+                  >
+                    <ArrowForwardIosIcon
+                      className="icon-xs mr-1"
+                      style={{
+                        transform: `rotate(${
+                          majorsFilterIsOpen ? '90deg' : '0'
+                        })`,
+                        transition: '.2s'
+                      }}
+                    />
                     <h4>
                       Cursos{' '}
                       <span className="color-paragraph text-sm">
@@ -233,65 +272,87 @@ export default function ProfilesFilter({
                       </span>
                     </h4>
                   </div>
+                  <AnimateHeight height={majorsFilterIsOpen ? 'auto' : '0%'}>
+                    <div className="pb-2">
+                      <ul className="max-h-36 overflow-y-auto">
+                        <li className="flex items-center">
+                          <Checkbox
+                            className="p-0 color-primary"
+                            checked={
+                              !Object.values(majorsCheckedState).includes(false)
+                            }
+                            onChange={e =>
+                              resetMajorsCheckboxes(e.target.checked)
+                            }
+                          />
+                          <span className="color-headline">Todos</span>
+                        </li>
+                        {majors.map(major => (
+                          <li key={major.id} className="flex items-center">
+                            <Checkbox
+                              className="p-0 color-primary"
+                              checked={majorsCheckedState[major.name]}
+                              onChange={e =>
+                                setMajorsCheckedState({
+                                  ...majorsCheckedState,
+                                  [major.name]: e.target.checked
+                                })
+                              }
+                            />
+                            <span>{major.name}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </AnimateHeight>
+                </div>
+              </>
+            </AnimateHeight>
+            <div className="b-bottom-transparent">
+              <div
+                className="flex items-center cursor-pointer py-2"
+                onClick={() => setSkillsFilterIsOpen(!skillsFilterIsOpen)}
+              >
+                <ArrowForwardIosIcon
+                  className="icon-xs mr-1"
+                  style={{
+                    transform: `rotate(${skillsFilterIsOpen ? '90deg' : '0'})`,
+                    transition: '.2s'
+                  }}
+                />
+                <h4>Habilidades</h4>
+              </div>
+              <AnimateHeight height={skillsFilterIsOpen ? 'auto' : '0%'}>
+                <div className="pb-2">
                   <ul className="max-h-36 overflow-y-auto">
                     <li className="flex items-center">
                       <Checkbox
                         className="p-0 color-primary"
                         checked={
-                          !Object.values(majorsCheckedState).includes(false)
+                          !Object.values(skillsCheckedState).includes(false)
                         }
-                        onChange={e => resetMajorsCheckboxes(e.target.checked)}
+                        onChange={e => resetSkillsCheckboxes(e.target.checked)}
                       />
                       <span className="color-headline">Todos</span>
                     </li>
-                    {majors.map(major => (
-                      <li key={major.id} className="flex items-center">
+                    {skills.map(skill => (
+                      <li key={skill.id} className="flex items-center">
                         <Checkbox
                           className="p-0 color-primary"
-                          checked={majorsCheckedState[major.name]}
+                          checked={skillsCheckedState[skill.name]}
                           onChange={e =>
-                            setMajorsCheckedState({
-                              ...majorsCheckedState,
-                              [major.name]: e.target.checked
+                            setSkillsCheckedState({
+                              ...skillsCheckedState,
+                              [skill.name]: e.target.checked
                             })
                           }
                         />
-                        <span>{major.name}</span>
+                        <span>{skill.name}</span>
                       </li>
                     ))}
                   </ul>
                 </div>
-              </>
-            </AnimateHeight>
-            <div className="b-bottom-transparent p-2">
-              <div className="flex items-center">
-                <h4>Habilidades</h4>
-              </div>
-              <ul className="max-h-36 overflow-y-auto">
-                <li className="flex items-center">
-                  <Checkbox
-                    className="p-0 color-primary"
-                    checked={!Object.values(skillsCheckedState).includes(false)}
-                    onChange={e => resetSkillsCheckboxes(e.target.checked)}
-                  />
-                  <span className="color-headline">Todos</span>
-                </li>
-                {skills.map(skill => (
-                  <li key={skill.id} className="flex items-center">
-                    <Checkbox
-                      className="p-0 color-primary"
-                      checked={skillsCheckedState[skill.name]}
-                      onChange={e =>
-                        setSkillsCheckedState({
-                          ...skillsCheckedState,
-                          [skill.name]: e.target.checked
-                        })
-                      }
-                    />
-                    <span>{skill.name}</span>
-                  </li>
-                ))}
-              </ul>
+              </AnimateHeight>
             </div>
             <div className="flex justify-end p-4">
               <button className="btn-primary" onClick={handleFilterSubmit}>

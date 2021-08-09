@@ -14,7 +14,7 @@ export default function Projects() {
   const { myProfile } = useContext(MyProfileContext)
   const { data: baseProjects } = useFetch('projects/get-projects-list')
 
-  const [queryParams, setQueryParams] = useState('projects/get-projects-list')
+  const [queryParams, setQueryParams] = useState('')
   const [scrollCount, setScrollCount] = useState(1)
   const [renderedProjects, setRenderedProjects] = useState([])
   const [projectsAreFiltered, setProjectsAreFiltered] = useState(false)

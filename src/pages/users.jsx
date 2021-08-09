@@ -12,7 +12,7 @@ export default function Users() {
   const { myProfile } = useContext(MyProfileContext)
   const { data: baseProfiles } = useFetch('profiles/get-profile-list')
 
-  const [queryParams, setQueryParams] = useState('profiles/get-profile-list')
+  const [queryParams, setQueryParams] = useState('')
   const [scrollCount, setScrollCount] = useState(1)
   const [renderedProfiles, setRenderedProfiles] = useState([])
   const [profilesAreFiltered, setProfilesAreFiltered] = useState(false)
