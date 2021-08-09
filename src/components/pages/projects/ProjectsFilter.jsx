@@ -3,12 +3,17 @@ import AnimateHeight from 'react-animate-height'
 import Checkbox from '@material-ui/core/Checkbox'
 import Tooltip from '@material-ui/core/Tooltip'
 import TuneIcon from '@material-ui/icons/Tune'
-import useFetch, { fetcher } from '../../../hooks/useFetch'
 import CircularProgress from '@material-ui/core/CircularProgress'
+import useFetch, { fetcher } from '../../../hooks/useFetch'
+import { formattedQueryString } from '../../../utils/utils'
 
-export default function ProjectsFilter({ baseProjects, setRenderedProjects }) {
+export default function ProjectsFilter({
+  baseProjects,
+  setRenderedProjects,
+  setQueryParams
+}) {
   const [search, setSearch] = useState('')
-  const [filterHeight, setFilterHeight] = useState(0)
+  const [filterHeight, setFilterHeight] = useState('0%')
   const [categoriesCheckedState, setCategoriesCheckedState] = useState(null)
   const [fieldsCheckedState, setFieldsCheckedState] = useState(null)
 
@@ -68,14 +73,11 @@ export default function ProjectsFilter({ baseProjects, setRenderedProjects }) {
       key => fieldsCheckedState[key]
     )
 
-    const queryParams = `categories=${selectedCategories.join(
+    const queryParams = `&categories=${selectedCategories.join(
       ';'
     )}&fields=${selectedFields.join(';')}`
 
-    const data = await fetcher(
-      `projects/get-projects-list?length=5&${queryParams}`
-    )
-    await setRenderedProjects(data.projects)
+    setQueryParams(formattedQueryString(queryParams))
     setFilterHeight(0)
   }
 
@@ -98,77 +100,85 @@ export default function ProjectsFilter({ baseProjects, setRenderedProjects }) {
             <TuneIcon
               className="ml-auto cursor-pointer color-primary color-hover"
               onClick={() =>
-                setFilterHeight(filterHeight === 'auto' ? 0 : 'auto')
+                setFilterHeight(filterHeight === 'auto' ? '0%' : 'auto')
               }
             />
           </Tooltip>
         </div>
         <AnimateHeight height={filterHeight}>
           <div className="w-full">
-            <div className="b-bottom-transparent p-2">
-              <div className="flex items-center">
+            <div className="b-bottom-transparent">
+              <div className="flex items-center py-2">
                 <h4>Categorias</h4>
               </div>
-              <ul className="max-h-36 overflow-y-auto">
-                <li className="flex items-center">
-                  <Checkbox
-                    className="p-0 color-primary"
-                    checked={
-                      !Object.values(categoriesCheckedState).includes(false)
-                    }
-                    onChange={e => resetCategoriesCheckboxes(e.target.checked)}
-                  />
-                  <span className="color-headline">Todos</span>
-                </li>
-                {categories.map(category => (
-                  <li key={category.value} className="flex items-center">
+              <div className="pb-2">
+                <ul className="max-h-36 overflow-y-auto">
+                  <li className="flex items-center">
                     <Checkbox
                       className="p-0 color-primary"
-                      checked={categoriesCheckedState[category.value]}
+                      checked={
+                        !Object.values(categoriesCheckedState).includes(false)
+                      }
                       onChange={e =>
-                        setCategoriesCheckedState({
-                          ...categoriesCheckedState,
-                          [category.value]: e.target.checked
-                        })
+                        resetCategoriesCheckboxes(e.target.checked)
                       }
                     />
-                    <span>
-                      {category.readable[0].toUpperCase() +
-                        category.readable.slice(1)}
-                    </span>
+                    <span className="color-headline">Todos</span>
                   </li>
-                ))}
-              </ul>
+                  {categories.map(category => (
+                    <li key={category.value} className="flex items-center">
+                      <Checkbox
+                        className="p-0 color-primary"
+                        checked={categoriesCheckedState[category.value]}
+                        onChange={e =>
+                          setCategoriesCheckedState({
+                            ...categoriesCheckedState,
+                            [category.value]: e.target.checked
+                          })
+                        }
+                      />
+                      <span>
+                        {category.readable[0].toUpperCase() +
+                          category.readable.slice(1)}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
-            <div className="b-bottom-transparent p-2">
-              <div className="flex items-center">
+            <div className="b-bottom-transparent">
+              <div className="flex items-center py-2">
                 <h4>Áreas de atuação</h4>
               </div>
-              <ul className="max-h-36 overflow-y-auto">
-                <li className="flex items-center">
-                  <Checkbox
-                    className="p-0 color-primary"
-                    checked={!Object.values(fieldsCheckedState).includes(false)}
-                    onChange={e => resetFieldsCheckboxes(e.target.checked)}
-                  />
-                  <span className="color-headline">Todos</span>
-                </li>
-                {fields.map(field => (
-                  <li key={field.id} className="flex items-center">
+              <div className="pb-2">
+                <ul className="max-h-36 overflow-y-auto">
+                  <li className="flex items-center">
                     <Checkbox
                       className="p-0 color-primary"
-                      checked={fieldsCheckedState[field.name]}
-                      onChange={e =>
-                        setFieldsCheckedState({
-                          ...fieldsCheckedState,
-                          [field.name]: e.target.checked
-                        })
+                      checked={
+                        !Object.values(fieldsCheckedState).includes(false)
                       }
+                      onChange={e => resetFieldsCheckboxes(e.target.checked)}
                     />
-                    <span>{field.name}</span>
+                    <span className="color-headline">Todos</span>
                   </li>
-                ))}
-              </ul>
+                  {fields.map(field => (
+                    <li key={field.id} className="flex items-center">
+                      <Checkbox
+                        className="p-0 color-primary"
+                        checked={fieldsCheckedState[field.name]}
+                        onChange={e =>
+                          setFieldsCheckedState({
+                            ...fieldsCheckedState,
+                            [field.name]: e.target.checked
+                          })
+                        }
+                      />
+                      <span>{field.name}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
             <div className="flex justify-end p-4">
               <button className="btn-primary" onClick={handleFilterSubmit}>

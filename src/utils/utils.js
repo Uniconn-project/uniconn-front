@@ -8,4 +8,8 @@ const renderTimestamp = timestamp => {
   return `${day}/${month}/${ts.getFullYear()} - ${hour}:${minute}`
 }
 
-export { renderTimestamp }
+const formattedQueryString = string => {
+  return string.replaceAll('+', '%2B').replaceAll('#', '%23')
+}
+
+export { renderTimestamp, formattedQueryString }

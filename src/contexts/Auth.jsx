@@ -57,7 +57,7 @@ export default function AuthProvider({ children }) {
 
   useEffect(() => {
     initAuth()
-  }, [])
+  }, []) // eslint-disable-line
 
   const refreshToken = async () => {
     setLoading(true)
