@@ -51,6 +51,15 @@ export default function Header({ page }) {
             Usuários
           </div>
         </Link>
+        <Link href="/messages">
+          <div
+            className={`p-3 ml-2 nav-link ${
+              page === 'messages' ? 'active' : ''
+            }`}
+          >
+            Mensagens
+          </div>
+        </Link>
         <Link href="/profile">
           <div
             className={`p-3 ml-2 nav-link ${

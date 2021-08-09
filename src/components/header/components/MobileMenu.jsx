@@ -9,6 +9,7 @@ import CollectionsBookmarkOutlinedIcon from '@material-ui/icons/CollectionsBookm
 import PersonOutlineOutlinedIcon from '@material-ui/icons/PersonOutlineOutlined'
 import GroupOutlinedIcon from '@material-ui/icons/GroupOutlined'
 import SettingsOutlinedIcon from '@material-ui/icons/SettingsOutlined'
+import ChatIcon from '@material-ui/icons/Chat'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import ExitToAppOutlinedIcon from '@material-ui/icons/ExitToAppOutlined'
 import { MyProfileContext } from '../../../contexts/MyProfile'
@@ -57,6 +58,14 @@ export default function MobileMenu() {
                   <GroupOutlinedIcon />
                 </ListItemIcon>
                 <ListItemText primary={'Usuários'} />
+              </ListItem>
+            </Link>
+            <Link href="/messages">
+              <ListItem button>
+                <ListItemIcon className="mr-2">
+                  <ChatIcon />
+                </ListItemIcon>
+                <ListItemText primary={'Mensagens'} />
               </ListItem>
             </Link>
             <Link href="/profile">
