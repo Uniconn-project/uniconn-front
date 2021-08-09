@@ -4,7 +4,7 @@ import Page from '../components/Page'
 import ProfileInfo from '../components/global/profile-info/ProfileInfo'
 import ProfilesFilter from '../components/pages/users/ProfilesFilter'
 import { MyProfileContext } from '../contexts/MyProfile'
-import useFetch from '../hooks/useFetch'
+import useFetch, { fetcher } from '../hooks/useFetch'
 import ProfileListItem from '../components/global/ProfileListItem'
 import { mutate } from 'swr'
 
@@ -12,6 +12,7 @@ export default function Users() {
   const { myProfile } = useContext(MyProfileContext)
   const { data: baseProfiles } = useFetch('profiles/get-profile-list')
 
+  const [queryParams, setQueryParams] = useState('profiles/get-profile-list')
   const [scrollCount, setScrollCount] = useState(1)
   const [renderedProfiles, setRenderedProfiles] = useState([])
   const [profilesAreFiltered, setProfilesAreFiltered] = useState(false)
@@ -34,17 +35,14 @@ export default function Users() {
   }, [handleScroll])
 
   useEffect(() => {
-    fetch(
-      `${
-        process.env.NEXT_PUBLIC_API_HOST
-      }/api/profiles/get-profile-list?length=${scrollCount * 20}`
-    )
-      .then(response => response.json())
-      .then(data => {
-        mutate('profiles/get-profile-list', data, false)
-        setRenderedProfiles(data.profiles)
-      })
-  }, [scrollCount])
+    ;(async () => {
+      const data = await fetcher(
+        `profiles/get-profile-list?length=${scrollCount * 20}${queryParams}`
+      )
+      mutate('profiles/get-profile-list', data, false)
+      setRenderedProfiles(data.profiles)
+    })()
+  }, [scrollCount, queryParams])
 
   useEffect(() => {
     if (!baseProfiles) return
@@ -81,6 +79,7 @@ export default function Users() {
             <ProfilesFilter
               baseProfiles={baseProfiles.profiles}
               setProfiles={setRenderedProfiles}
+              setQueryParams={setQueryParams}
             />
             <div className="w-full px-2" style={{ maxWidth: 600 }}>
               {renderedProfiles.map(profile => (

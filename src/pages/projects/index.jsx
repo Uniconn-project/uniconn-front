@@ -6,7 +6,7 @@ import Page from '../../components/Page'
 import ProjectList from '../../components/global/ProjectList'
 import ProfileInfo from '../../components/global/profile-info/ProfileInfo'
 import ProjectsFilter from '../../components/pages/projects/ProjectsFilter'
-import useFetch from '../../hooks/useFetch'
+import useFetch, { fetcher } from '../../hooks/useFetch'
 import { MyProfileContext } from '../../contexts/MyProfile'
 import { mutate } from 'swr'
 
@@ -14,6 +14,7 @@ export default function Projects() {
   const { myProfile } = useContext(MyProfileContext)
   const { data: baseProjects } = useFetch('projects/get-projects-list')
 
+  const [queryParams, setQueryParams] = useState('projects/get-projects-list')
   const [scrollCount, setScrollCount] = useState(1)
   const [renderedProjects, setRenderedProjects] = useState([])
   const [projectsAreFiltered, setProjectsAreFiltered] = useState(false)
@@ -36,17 +37,14 @@ export default function Projects() {
   }, [handleScroll])
 
   useEffect(() => {
-    fetch(
-      `${
-        process.env.NEXT_PUBLIC_API_HOST
-      }/api/projects/get-projects-list?length=${scrollCount * 10}`
-    )
-      .then(response => response.json())
-      .then(data => {
-        mutate('projects/get-projects-list', data, false)
-        setRenderedProjects(data.projects)
-      })
-  }, [scrollCount])
+    ;(async () => {
+      const data = await fetcher(
+        `projects/get-projects-list?length=${scrollCount * 10}${queryParams}`
+      )
+      mutate('projects/get-projects-list', data, false)
+      setRenderedProjects(data.projects)
+    })()
+  }, [scrollCount, queryParams])
 
   useEffect(() => {
     if (!baseProjects) return
@@ -83,6 +81,7 @@ export default function Projects() {
             <ProjectsFilter
               baseProjects={baseProjects.projects}
               setRenderedProjects={setRenderedProjects}
+              setQueryParams={setQueryParams}
             />
             <div className="w-full flex flex-col items-center px-2">
               <Link href="/create-project">

@@ -7,7 +7,11 @@ import CircularProgress from '@material-ui/core/CircularProgress'
 import useFetch, { fetcher } from '../../../hooks/useFetch'
 import { formattedQueryString } from '../../../utils/utils'
 
-export default function ProfilesFilter({ baseProfiles, setProfiles }) {
+export default function ProfilesFilter({
+  baseProfiles,
+  setProfiles,
+  setQueryParams
+}) {
   const [search, setSearch] = useState('')
   const [filterHeight, setFilterHeight] = useState(0)
   const [isAttUnivCheckedState, setIsAttUnivCheckedState] = useState({
@@ -99,9 +103,12 @@ export default function ProfilesFilter({ baseProfiles, setProfiles }) {
     )
 
     const skillsQ = `&skills=${selectedSkills.join(';')}`
-    const isAttUnivQ = !isAttUnivCheckedState.no
-      ? '&university_students_only=true'
-      : ''
+    const isAttUnivQ =
+      isAttUnivCheckedState.yes !== isAttUnivCheckedState.no
+        ? `&is_attending_university=${Object.keys(isAttUnivCheckedState).find(
+            key => isAttUnivCheckedState[key]
+          )}`
+        : ''
     const universitiesQ = isAttUnivCheckedState.yes
       ? `&universities=${selectedUniversities.join(';')}`
       : ''
@@ -110,11 +117,8 @@ export default function ProfilesFilter({ baseProfiles, setProfiles }) {
       : ''
 
     const queryParams = `${skillsQ}${isAttUnivQ}${universitiesQ}${majorsQ}`
-    console.log(queryParams, formattedQueryString(queryParams))
-    const data = await fetcher(
-      `profiles/get-profile-list?length=15${formattedQueryString(queryParams)}`
-    )
-    await setProfiles(data.profiles)
+    console.log(queryParams)
+    setQueryParams(formattedQueryString(queryParams))
     setFilterHeight(0)
   }
 
@@ -184,7 +188,7 @@ export default function ProfilesFilter({ baseProfiles, setProfiles }) {
                     <h4>
                       Universidades{' '}
                       <span className="color-paragraph text-sm">
-                        (Considerado apenas para universitários)
+                        (Apenas para universitários)
                       </span>
                     </h4>
                   </div>
@@ -225,7 +229,7 @@ export default function ProfilesFilter({ baseProfiles, setProfiles }) {
                     <h4>
                       Cursos{' '}
                       <span className="color-paragraph text-sm">
-                        (Considerado apenas para universitários)
+                        (Apenas para universitários)
                       </span>
                     </h4>
                   </div>

@@ -5,8 +5,13 @@ import Tooltip from '@material-ui/core/Tooltip'
 import TuneIcon from '@material-ui/icons/Tune'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import useFetch, { fetcher } from '../../../hooks/useFetch'
+import { formattedQueryString } from '../../../utils/utils'
 
-export default function ProjectsFilter({ baseProjects, setRenderedProjects }) {
+export default function ProjectsFilter({
+  baseProjects,
+  setRenderedProjects,
+  setQueryParams
+}) {
   const [search, setSearch] = useState('')
   const [filterHeight, setFilterHeight] = useState(0)
   const [categoriesCheckedState, setCategoriesCheckedState] = useState(null)
@@ -68,14 +73,11 @@ export default function ProjectsFilter({ baseProjects, setRenderedProjects }) {
       key => fieldsCheckedState[key]
     )
 
-    const queryParams = `categories=${selectedCategories.join(
+    const queryParams = `&categories=${selectedCategories.join(
       ';'
     )}&fields=${selectedFields.join(';')}`
 
-    const data = await fetcher(
-      `projects/get-projects-list?length=5&${queryParams}`
-    )
-    await setRenderedProjects(data.projects)
+    setQueryParams(formattedQueryString(queryParams))
     setFilterHeight(0)
   }
 
