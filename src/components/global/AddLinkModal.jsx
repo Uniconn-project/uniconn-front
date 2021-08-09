@@ -89,7 +89,7 @@ export default function AddLinkModal({
                 onChange={handleChange('name')}
               />
               <TextField
-                label="Href"
+                label="URL"
                 className="w-full"
                 value={postData.href}
                 inputProps={{ maxLength: 1000 }}
