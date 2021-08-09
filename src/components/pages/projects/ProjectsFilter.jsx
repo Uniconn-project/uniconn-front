@@ -3,8 +3,8 @@ import AnimateHeight from 'react-animate-height'
 import Checkbox from '@material-ui/core/Checkbox'
 import Tooltip from '@material-ui/core/Tooltip'
 import TuneIcon from '@material-ui/icons/Tune'
-import useFetch, { fetcher } from '../../../hooks/useFetch'
 import CircularProgress from '@material-ui/core/CircularProgress'
+import useFetch, { fetcher } from '../../../hooks/useFetch'
 
 export default function ProjectsFilter({ baseProjects, setRenderedProjects }) {
   const [search, setSearch] = useState('')
