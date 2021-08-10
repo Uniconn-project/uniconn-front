@@ -22,18 +22,18 @@ export default function Messages() {
 
   return (
     <Page title="Mensagens | Uniconn" page="messages" loginRequired header>
-      <div className="flex justify-center w-full">
+      <div className="flex justify-center w-full h-full">
         <div className="hidden lg:w-1/3 lg:flex lg:justify-end lg:mr-10 lg:box-border">
           <div className="w-60">
-            <div className="h-full fixed top-32">
+            <div className="fixed top-32">
               <ProfileInfo profile={myProfile} />
             </div>
           </div>
         </div>
         <div className="w-full flex justify-center p-2 pt-0 lg:p-0 lg:w-2/3 lg:justify-start lg:box-border">
           <div
-            className="w-full flex flex-col h-4/5"
-            style={{ maxWidth: 600, maxHeight: '50rem' }}
+            className="w-full flex flex-col"
+            style={{ maxWidth: 600, height: '70vh', maxHeight: '50rem' }}
           >
             <div className="w-full flex items-center bg-light h-14 rounded-md shadow-lg p-2 mb-4">
               <h3 className="color-paragraph">Mensagens</h3>
