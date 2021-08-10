@@ -1,7 +1,10 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import SendIcon from '@material-ui/icons/Send'
+import { MyProfileContext } from '../../../contexts/MyProfile'
 
 export default function SendMessageForm({ socket }) {
+  const { myProfile } = useContext(MyProfileContext)
+
   const [message, setMessage] = useState('')
 
   const handleSubmit = e => {
@@ -9,6 +12,9 @@ export default function SendMessageForm({ socket }) {
 
     socket.emit('message', {
       id: Math.random(),
+      sender: {
+        id: myProfile.id
+      },
       content: message
     })
 

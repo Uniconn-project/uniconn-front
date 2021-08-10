@@ -18,6 +18,7 @@ import '../styles/material-ui/loader.scss'
 import '../styles/material-ui/mobile_menu.scss'
 import '../styles/material-ui/popover.scss'
 import '../styles/material-ui/switch.scss'
+import '../styles/pages/messages.scss'
 
 import React, { useEffect, useState } from 'react'
 import Head from 'next/head'

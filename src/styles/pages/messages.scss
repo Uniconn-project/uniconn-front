@@ -1,0 +1,17 @@
+.sent,
+.received {
+  border-radius: 0.375rem;
+  max-width: 75%;
+}
+
+.sent {
+  margin-left: auto;
+  background-color: var(--primary-color);
+  border-bottom-right-radius: 0;
+}
+
+.received {
+  margin-right: auto;
+  background-color: var(--background-light);
+  border-bottom-left-radius: 0;
+}
