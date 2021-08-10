@@ -83,9 +83,9 @@ export default function Projects() {
               setRenderedProjects={setRenderedProjects}
               setQueryParams={setQueryParams}
             />
-            <div className="w-full flex flex-col items-center px-2">
+            <div className="w-full flex flex-col items-center px-2 pt-14">
               <Link href="/create-project">
-                <div className="w-full flex items-center cursor-pointer bg-transparent bg-hover color-primary rounded-md shadow-lg p-3 mb-4">
+                <div className="w-full flex items-center cursor-pointer bg-transparent bg-hover color-primary rounded-md shadow-lg p-3 mb-4 mt-3">
                   <AddIcon className="mr-2" />
                   <strong>Criar Projeto</strong>
                 </div>

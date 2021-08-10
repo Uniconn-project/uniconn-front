@@ -81,7 +81,7 @@ export default function Users() {
               setProfiles={setRenderedProfiles}
               setQueryParams={setQueryParams}
             />
-            <div className="w-full px-2" style={{ maxWidth: 600 }}>
+            <div className="w-full px-2 pt-14" style={{ maxWidth: 600 }}>
               {renderedProfiles.map(profile => (
                 <ProfileListItem key={profile.id} profile={profile} />
               ))}
