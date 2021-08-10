@@ -17,8 +17,8 @@ export default function ProfileInfo({ profile }) {
 
   return (
     <div
-      className="relative bg-transparent h-4/5 rounded-md shadow-lg pt-4 w-full md:max-w-2xl lg:w-60"
-      style={{ maxHeight: '50rem' }}
+      className="relative bg-transparent rounded-md shadow-lg pt-4 w-full md:max-w-2xl lg:w-60"
+      style={{ height: '70vh', maxHeight: '50rem' }}
     >
       <div className="b-bottom-light pb-6">
         {myProfile.id !== profile.id && window.history.length > 1 && (

@@ -132,7 +132,10 @@ export default function ProfilesFilter({
   }
 
   return (
-    <div className="sticky z-10 top-24 w-full mb-4 sm:top-32">
+    <div
+      className="fixed z-10 top-24 w-full mb-4 sm:top-32"
+      style={{ maxWidth: 'inherit' }}
+    >
       <div className="w-full bg-light m-h-14 rounded-md shadow-lg p-2 flex flex-col">
         <div className="w-full flex items-center">
           <input
