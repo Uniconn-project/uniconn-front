@@ -35,7 +35,7 @@ export default function Page({
         <Head>
           <title>{title}</title>
         </Head>
-        <div className="w-screen min-h-screen">
+        <div className="w-screen h-screen">
           {header && <Header page={page} />}
           <div
             className={`w-full h-full flex flex-col justify-start items-center ${
