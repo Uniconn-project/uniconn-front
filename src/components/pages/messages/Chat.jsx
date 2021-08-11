@@ -9,7 +9,6 @@ export default function Chat({ messages, chatRef }) {
     <div ref={chatRef} className="p-4 flex-grow b-bottom-light overflow-y-auto">
       {messages.map(message => (
         <div key={message.id} className="w-full flex items-center mb-2">
-          {console.log(message)}
           <div
             className={message.sender.id === myProfile.id ? 'sent' : 'received'}
           >

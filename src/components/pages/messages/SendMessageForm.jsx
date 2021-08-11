@@ -9,7 +9,7 @@ export default function SendMessageForm({ socket }) {
 
   const handleSubmit = e => {
     e.preventDefault()
-
+    console.log('message sent')
     socket.emit('message', {
       id: Math.random(),
       sender: {

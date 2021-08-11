@@ -3,11 +3,12 @@ import CircularProgress from '@material-ui/core/CircularProgress'
 import Page from '../components/Page'
 import ProfileInfo from '../components/global/profile-info/ProfileInfo'
 import io from 'socket.io-client'
-import { MyProfileContext } from '../contexts/MyProfile'
 import SendMessageForm from '../components/pages/messages/SendMessageForm'
 import Chat from '../components/pages/messages/Chat'
+import { MyProfileContext } from '../contexts/MyProfile'
 
 const socket = io('ws://localhost:3030')
+let eventListenerWasAdded = false
 
 export default function Messages() {
   const { myProfile } = useContext(MyProfileContext)
@@ -15,9 +16,11 @@ export default function Messages() {
   const chatRef = useRef(null)
 
   useEffect(() => {
-    if (!myProfile) return
+    if (!myProfile || eventListenerWasAdded) return
 
     socket.on('connect', () => {
+      console.log('connected')
+      eventListenerWasAdded = true
       socket.emit('profile-id', myProfile.id)
     })
     socket.on('message', data => {
