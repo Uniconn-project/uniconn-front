@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState, useRef } from 'react'
 import Page from '../components/Page'
 import ProfileInfo from '../components/global/profile-info/ProfileInfo'
 import io from 'socket.io-client'
@@ -11,6 +11,7 @@ const socket = io('ws://localhost:8080')
 export default function Messages() {
   const { myProfile } = useContext(MyProfileContext)
   const [messages, setMessages] = useState([])
+  const chatRef = useRef(null)
 
   useEffect(() => {
     socket.on('connect', () => {
@@ -18,6 +19,9 @@ export default function Messages() {
     })
     socket.on('message', data => {
       setMessages(messages => [...messages, data])
+      if (chatRef.current) {
+        chatRef.current.scrollTop = chatRef.current.scrollHeight
+      }
     })
   }, [])
 
@@ -40,7 +44,7 @@ export default function Messages() {
               <h3 className="color-paragraph">Mensagens</h3>
             </div>
             <div className="w-full flex flex-col flex-grow bg-transparent rounded-md shadow-lg overflow-y-auto">
-              <Chat messages={messages} />
+              <Chat messages={messages} chatRef={chatRef} />
               <SendMessageForm socket={socket} />
             </div>
           </div>
