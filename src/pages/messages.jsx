@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState, useRef } from 'react'
+import CircularProgress from '@material-ui/core/CircularProgress'
 import Page from '../components/Page'
 import ProfileInfo from '../components/global/profile-info/ProfileInfo'
 import io from 'socket.io-client'
@@ -14,8 +15,10 @@ export default function Messages() {
   const chatRef = useRef(null)
 
   useEffect(() => {
+    if (!myProfile) return
+
     socket.on('connect', () => {
-      console.log('connected')
+      socket.emit('profile-id', myProfile.id)
     })
     socket.on('message', data => {
       setMessages(messages => [...messages, data])
@@ -23,7 +26,7 @@ export default function Messages() {
         chatRef.current.scrollTop = chatRef.current.scrollHeight
       }
     })
-  }, [])
+  }, [myProfile])
 
   return (
     <Page title="Mensagens | Uniconn" page="messages" loginRequired header>
@@ -44,8 +47,14 @@ export default function Messages() {
               <h3 className="color-paragraph">Mensagens</h3>
             </div>
             <div className="w-full flex flex-col flex-grow bg-transparent rounded-md shadow-lg overflow-y-auto">
-              <Chat messages={messages} chatRef={chatRef} />
-              <SendMessageForm socket={socket} />
+              {myProfile ? (
+                <>
+                  <Chat messages={messages} chatRef={chatRef} />
+                  <SendMessageForm socket={socket} />
+                </>
+              ) : (
+                <CircularProgress />
+              )}
             </div>
           </div>
         </div>

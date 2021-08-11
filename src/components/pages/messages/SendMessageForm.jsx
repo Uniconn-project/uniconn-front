@@ -15,6 +15,9 @@ export default function SendMessageForm({ socket }) {
       sender: {
         id: myProfile.id
       },
+      receiver: {
+        id: 3
+      },
       content: message,
       timestamp: Date.now()
     })
