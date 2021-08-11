@@ -6,7 +6,7 @@ import { MyProfileContext } from '../contexts/MyProfile'
 import SendMessageForm from '../components/pages/messages/SendMessageForm'
 import Chat from '../components/pages/messages/Chat'
 
-const socket = io('ws://localhost:8080')
+const socket = io('ws://localhost:3030')
 
 export default function Messages() {
   const { myProfile } = useContext(MyProfileContext)
