@@ -11,7 +11,7 @@ export default function Header({ page }) {
   const { notificationsNumber } = useContext(NotificationsContext)
 
   return (
-    <header className="fixed z-20 top-0 w-full h-20 flex items-center px-4 py-2 header bg-light shadow-md sm:pl-8 sm:pr-20">
+    <header className="fixed z-20 top-0 w-full h-20 flex items-center px-4 pt-2 header bg-light shadow-md sm:pl-8 sm:pr-20">
       <div className="sm:hidden">
         <MobileMenu />
       </div>
@@ -34,7 +34,7 @@ export default function Header({ page }) {
           <CircularProgress size={20} />
         )}
       </div>
-      <div className="hidden sm:flex sm:ml-10 lg:ml-32">
+      <nav className="hidden sm:flex sm:ml-10 lg:ml-32">
         <Link href="/projects">
           <div
             className={`p-3 mr-2 nav-link ${
@@ -78,7 +78,7 @@ export default function Header({ page }) {
             Configurações
           </div>
         </Link>
-      </div>
+      </nav>
       <div className="hidden sm:block sm:ml-auto">
         <DesktopMenu />
       </div>

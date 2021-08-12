@@ -27,7 +27,7 @@ export default function Index() {
           <title>Uniconn</title>
         </Head>
         <div className="w-screen pt-20 landing-page">
-          <div className="fixed top-0 z-30 w-full h-20 flex items-center px-4 bg-dark b-bottom-light">
+          <header className="fixed top-0 z-30 w-full h-20 flex items-center px-4 bg-dark b-bottom-light">
             <div>
               <h2 className="text-3xl">Uniconn</h2>
             </div>
@@ -44,8 +44,8 @@ export default function Index() {
                 <PersonOutlineIcon />
               </Link>
             </div>
-          </div>
-          <div className="flex flex-col bg-linear">
+          </header>
+          <section className="flex flex-col bg-linear">
             <video
               className="shadow-lg w-full absolute z-10 hidden object-cover md:block"
               autoPlay
@@ -72,8 +72,8 @@ export default function Index() {
                 <button className="btn-primary text-xl">Criar conta</button>
               </Link>
             </div>
-          </div>
-          <div
+          </section>
+          <section
             className="bg-light flex justify-end px-8 pt-12 pb-4 md:px-24 md:pt-32 md:pb-20"
             style={{ minHeight: '40vh' }}
           >
@@ -89,8 +89,8 @@ export default function Index() {
                 similique error eos ex rem nostrum est.
               </p>
             </div>
-          </div>
-          <div
+          </section>
+          <section
             className="bg-dark flex px-8 pt-20 pb-4 shadow-lg md:px-24 md:pt-24 md:pb-20"
             style={{ minHeight: '40vh' }}
           >
@@ -106,8 +106,8 @@ export default function Index() {
                 similique error eos ex rem nostrum est.
               </p>
             </div>
-          </div>
-          <div
+          </section>
+          <section
             className="bg-light flex justify-end px-8 pt-20 pb-4 md:px-24 md:pt-24 md:pb-20"
             style={{ minHeight: '20vh' }}
           >
@@ -123,7 +123,7 @@ export default function Index() {
                 similique error eos ex rem nostrum est.
               </p>
             </div>
-          </div>
+          </section>
           <div className="w-full relative">
             <div className="wave bg-light">
               <Wave
@@ -136,14 +136,14 @@ export default function Index() {
               />
             </div>
           </div>
-          <div className="flex flex-col items-center w-full pt-10 pb-20 bg-dark">
+          <footer className="flex flex-col items-center w-full pt-10 pb-20 bg-dark">
             <h2>Gostou do que viu?</h2>
             <div className="flex">
               <Link href="/signup">
                 <button className="btn-primary m-2 text-xl">Criar conta</button>
               </Link>
             </div>
-          </div>
+          </footer>
         </div>
       </>
     )

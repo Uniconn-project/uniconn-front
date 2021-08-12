@@ -37,13 +37,13 @@ export default function Page({
         </Head>
         <div className="w-screen h-screen">
           {header && <Header page={page} />}
-          <div
+          <main
             className={`w-full h-full flex flex-col justify-start items-center ${
               header ? 'pt-24 sm:pt-32' : ''
             } ${className}`}
           >
             {children}
-          </div>
+          </main>
         </div>
       </>
     )

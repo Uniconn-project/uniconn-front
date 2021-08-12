@@ -71,14 +71,14 @@ export default function Category() {
   return (
     <Page title="Projetos | Uniconn" loginRequired header>
       <div className="justify-center w-full h-full flex">
-        <div className="hidden lg:w-1/3 lg:flex lg:justify-end lg:mr-10 lg:box-border">
+        <section className="hidden lg:w-1/3 lg:flex lg:justify-end lg:mr-10 lg:box-border">
           <div className="w-60">
             <div className="h-full fixed top-32">
               <ProfileInfo profile={myProfile} />
             </div>
           </div>
-        </div>
-        <div className="w-full flex justify-center p-2 pt-0 lg:p-0 lg:w-2/3 lg:justify-start lg:box-border">
+        </section>
+        <section className="w-full flex justify-center p-2 pt-0 lg:p-0 lg:w-2/3 lg:justify-start lg:box-border">
           <div className="w-full" style={{ maxWidth: 600 }}>
             <div className="sticky z-10 top-24 w-full mb-4 sm:top-32">
               <div className="w-full flex items-center bg-light h-14 rounded-md shadow-lg p-2 mb-4">
@@ -104,7 +104,7 @@ export default function Category() {
               )}
             </div>
           </div>
-        </div>
+        </section>
       </div>
     </Page>
   )
