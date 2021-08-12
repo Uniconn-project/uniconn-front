@@ -67,14 +67,14 @@ export default function Users() {
   return (
     <Page title="Usuários | Uniconn" page="users" loginRequired header>
       <div className="flex justify-center w-full h-full">
-        <div className="hidden lg:w-1/3 lg:flex lg:justify-end lg:mr-10 lg:box-border">
+        <section className="hidden lg:w-1/3 lg:flex lg:justify-end lg:mr-10 lg:box-border">
           <div className="w-60">
             <div className="h-full fixed top-32">
               <ProfileInfo profile={myProfile} />
             </div>
           </div>
-        </div>
-        <div className="w-full flex justify-center p-2 pt-0 lg:p-0 lg:w-2/3 lg:justify-start lg:box-border">
+        </section>
+        <section className="w-full flex justify-center p-2 pt-0 lg:p-0 lg:w-2/3 lg:justify-start lg:box-border">
           <div className="w-full" style={{ maxWidth: 600 }}>
             <ProfilesFilter
               baseProfiles={baseProfiles.profiles}
@@ -92,7 +92,7 @@ export default function Users() {
               )}
             </div>
           </div>
-        </div>
+        </section>
       </div>
     </Page>
   )

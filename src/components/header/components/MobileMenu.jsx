@@ -38,7 +38,7 @@ export default function MobileMenu() {
         open={mobileMenuIsOpen}
         onClose={() => setMobileMenuIsOpen(false)}
       >
-        <div
+        <nav
           role="presentation"
           onClick={() => setMobileMenuIsOpen(!mobileMenuIsOpen)}
         >
@@ -84,7 +84,7 @@ export default function MobileMenu() {
               </ListItem>
             </Logout>
           </List>
-        </div>
+        </nav>
       </Drawer>
     </div>
   )
