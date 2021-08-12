@@ -1,11 +1,11 @@
 import React, { useContext, useEffect, useState, useRef } from 'react'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import Page from '../components/Page'
-import ProfileInfo from '../components/global/profile-info/ProfileInfo'
 import io from 'socket.io-client'
 import SendMessageForm from '../components/pages/messages/SendMessageForm'
 import Chat from '../components/pages/messages/Chat'
 import { MyProfileContext } from '../contexts/MyProfile'
+import Contacts from '../components/pages/messages/Contacts'
 
 export default function Messages() {
   const { myProfile } = useContext(MyProfileContext)
@@ -55,7 +55,7 @@ export default function Messages() {
         <div className="hidden lg:w-1/3 lg:flex lg:justify-end lg:mr-10 lg:box-border">
           <div className="w-60">
             <div className="fixed top-32">
-              <ProfileInfo profile={myProfile} />
+              <Contacts />
             </div>
           </div>
         </div>

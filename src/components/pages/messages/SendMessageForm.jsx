@@ -9,6 +9,7 @@ export default function SendMessageForm({ socket, setMessages }) {
 
   const handleSubmit = e => {
     e.preventDefault()
+    if (messageContent.trim() === '') return
     const message = {
       id: Math.random(),
       sender: {
