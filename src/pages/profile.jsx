@@ -17,16 +17,6 @@ export default function Profile() {
     value: ''
   })
 
-  if (!myProfile) {
-    return (
-      <Page title="Perfil | Uniconn" page="profile" loginRequired header>
-        <div>
-          <CircularProgress />
-        </div>
-      </Page>
-    )
-  }
-
   const refetchProfile = async action => {
     refetchMyProfile()
 
@@ -45,6 +35,16 @@ export default function Profile() {
         })
         break
     }
+  }
+
+  if (!myProfile) {
+    return (
+      <Page title="Perfil | Uniconn" page="profile" loginRequired header>
+        <div>
+          <CircularProgress />
+        </div>
+      </Page>
+    )
   }
 
   return (

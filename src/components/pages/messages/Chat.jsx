@@ -13,7 +13,7 @@ export default function Chat({ messages, chatRef }) {
             className={message.sender.id === myProfile.id ? 'sent' : 'received'}
           >
             <div className="p-2">
-              <p className="color-headline">{message.content}</p>
+              <p className="color-headline break-words">{message.content}</p>
             </div>
             <span className="text-sm">
               {renderTimestamp(message.timestamp)}

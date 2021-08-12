@@ -2,27 +2,27 @@ import React, { useContext, useState } from 'react'
 import SendIcon from '@material-ui/icons/Send'
 import { MyProfileContext } from '../../../contexts/MyProfile'
 
-export default function SendMessageForm({ socket }) {
+export default function SendMessageForm({ socket, setMessages }) {
   const { myProfile } = useContext(MyProfileContext)
 
-  const [message, setMessage] = useState('')
+  const [messageContent, setMessageContent] = useState('')
 
   const handleSubmit = e => {
     e.preventDefault()
-    console.log('message sent')
-    socket.emit('message', {
+    const message = {
       id: Math.random(),
       sender: {
         id: myProfile.id
       },
       receiver: {
-        id: 3
+        id: myProfile.id === 3 ? 105 : 3
       },
-      content: message,
+      content: messageContent,
       timestamp: Date.now()
-    })
-
-    setMessage('')
+    }
+    socket.emit('message', message)
+    setMessages(messages => [...messages, message])
+    setMessageContent('')
   }
 
   return (
@@ -31,8 +31,8 @@ export default function SendMessageForm({ socket }) {
         type="text"
         className="bg-none flex-grow"
         placeholder="Digite uma mensagem..."
-        value={message}
-        onChange={e => setMessage(e.target.value)}
+        value={messageContent}
+        onChange={e => setMessageContent(e.target.value)}
       />
       <div
         className="p-1 rounded-3xl cursor-pointer bg-transparent-hover"

@@ -104,8 +104,8 @@ export default function AuthProvider({ children }) {
             clearInterval(interval)
             resolve(accessToken)
           }
-        })
-      }, 100)
+        }, 100)
+      })
     } else {
       isDev && console.log('Getting access token.. getting a new token')
       const token = await refreshToken()

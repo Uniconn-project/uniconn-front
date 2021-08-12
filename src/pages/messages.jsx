@@ -7,29 +7,47 @@ import SendMessageForm from '../components/pages/messages/SendMessageForm'
 import Chat from '../components/pages/messages/Chat'
 import { MyProfileContext } from '../contexts/MyProfile'
 
-const socket = io('ws://localhost:3030')
-let eventListenerWasAdded = false
-
 export default function Messages() {
   const { myProfile } = useContext(MyProfileContext)
+
   const [messages, setMessages] = useState([])
+
   const chatRef = useRef(null)
+  const socketRef = useRef(null)
 
   useEffect(() => {
-    if (!myProfile || eventListenerWasAdded) return
+    socketRef.current = io('ws://localhost:3030')
 
-    socket.on('connect', () => {
+    socketRef.current.on('connect', () => {
       console.log('connected')
-      eventListenerWasAdded = true
-      socket.emit('profile-id', myProfile.id)
     })
-    socket.on('message', data => {
+    socketRef.current.on('message', data => {
       setMessages(messages => [...messages, data])
-      if (chatRef.current) {
-        chatRef.current.scrollTop = chatRef.current.scrollHeight
-      }
     })
+
+    return () => socketRef.current.disconnect()
+  }, [])
+
+  useEffect(() => {
+    if (!myProfile) return
+    socketRef.current.emit('profile-id', myProfile.id)
   }, [myProfile])
+
+  useEffect(() => {
+    if (chatRef.current) {
+      chatRef.current.scrollTop = chatRef.current.scrollHeight
+    }
+  }, [messages])
+
+  if (!myProfile || !socketRef) {
+    return (
+      <Page title="Mensagens | Uniconn" page="messages" loginRequired header>
+        <div>
+          <CircularProgress />
+        </div>
+      </Page>
+    )
+  }
 
   return (
     <Page title="Mensagens | Uniconn" page="messages" loginRequired header>
@@ -50,14 +68,11 @@ export default function Messages() {
               <h3 className="color-paragraph">Mensagens</h3>
             </div>
             <div className="w-full flex flex-col flex-grow bg-transparent rounded-md shadow-lg overflow-y-auto">
-              {myProfile ? (
-                <>
-                  <Chat messages={messages} chatRef={chatRef} />
-                  <SendMessageForm socket={socket} />
-                </>
-              ) : (
-                <CircularProgress />
-              )}
+              <Chat messages={messages} chatRef={chatRef} />
+              <SendMessageForm
+                socket={socketRef.current}
+                setMessages={setMessages}
+              />
             </div>
           </div>
         </div>
