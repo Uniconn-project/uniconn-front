@@ -52,14 +52,14 @@ export default function Messages() {
   return (
     <Page title="Mensagens | Uniconn" page="messages" loginRequired header>
       <div className="flex justify-center w-full h-full">
-        <div className="hidden lg:w-1/3 lg:flex lg:justify-end lg:mr-10 lg:box-border">
+        <section className="hidden lg:w-1/3 lg:flex lg:justify-end lg:mr-10 lg:box-border">
           <div className="w-60">
             <div className="fixed top-32">
               <Contacts />
             </div>
           </div>
-        </div>
-        <div className="w-full flex justify-center p-2 pt-0 lg:p-0 lg:w-2/3 lg:justify-start lg:box-border">
+        </section>
+        <section className="w-full flex justify-center p-2 pt-0 lg:p-0 lg:w-2/3 lg:justify-start lg:box-border">
           <div
             className="w-full flex flex-col sm:h-70vh"
             style={{ maxWidth: 600, maxHeight: '50rem' }}
@@ -75,7 +75,7 @@ export default function Messages() {
               />
             </div>
           </div>
-        </div>
+        </section>
       </div>
     </Page>
   )
