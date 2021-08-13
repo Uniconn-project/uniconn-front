@@ -61,13 +61,13 @@ export default function Messages() {
         </section>
         <section className="w-full flex justify-center p-2 pt-0 lg:p-0 lg:w-2/3 lg:justify-start lg:box-border">
           <div
-            className="w-full flex flex-col sm:h-70vh"
+            className="w-full flex flex-col items-stretch sm:h-70vh"
             style={{ maxWidth: 600, maxHeight: '50rem' }}
           >
-            <div className="w-full flex items-center bg-light h-14 rounded-md shadow-lg p-2 mb-4">
+            <div className="flex-basis-14 flex-shrink-0 flex items-center bg-light rounded-md shadow-lg p-2 mb-4">
               <h3 className="color-paragraph">Mensagens</h3>
             </div>
-            <div className="w-full flex flex-col flex-grow bg-transparent rounded-md shadow-lg overflow-y-auto">
+            <div className="flex-basis-full flex flex-col bg-transparent rounded-md shadow-lg overflow-y-auto">
               <Chat messages={messages} chatRef={chatRef} />
               <SendMessageForm
                 socket={socketRef.current}
