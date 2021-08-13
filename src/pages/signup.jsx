@@ -48,7 +48,9 @@ export default function Signup() {
     setPostData({ ...postData, [key]: e.target.value })
   }
 
-  const handleSubmit = () => {
+  const handleSubmit = e => {
+    e.preventDefault()
+
     for (const key of [
       'first_name',
       'last_name',
@@ -102,7 +104,7 @@ export default function Signup() {
   return (
     <Page title="Criar conta | Uniconn" className="pt-6 sm:pt-12 lg:pt-12">
       <h1 className="m-6">Criar conta</h1>
-      <div className="flex flex-col items-center my-4">
+      <form className="flex flex-col items-center my-4">
         <FormGroup className="w-full mb-4 justify-center items-center" row>
           <FilledInput
             type="text"
@@ -195,7 +197,7 @@ export default function Signup() {
         >
           Criar conta
         </button>
-      </div>
+      </form>
       <PrimaryLink href="/login">
         <span>Já tem uma conta?</span>
       </PrimaryLink>
