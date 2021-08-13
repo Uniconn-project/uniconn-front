@@ -27,7 +27,9 @@ export default function Login() {
     setPostData({ ...postData, [key]: e.target.value })
   }
 
-  const handleSubmit = async () => {
+  const handleSubmit = async e => {
+    e.preventDefault()
+
     let error = false
     const valuesInput = Object.values(postData)
 
@@ -67,20 +69,18 @@ export default function Login() {
     <Page title="Entrar | Uniconn" className="pt-24 sm:pt-32">
       <div className="h-full flex flex-col justify-start items-center">
         <h1 className="m-6">Entrar na Uniconn</h1>
-        <div className="flex flex-col my-4">
+        <form className="flex flex-col my-4">
           <FilledInput
             type="text"
             className="mb-4"
             placeholder="Nome de usuário"
             onChange={handleChange('username')}
-            onKeyUp={e => e.key === 'Enter' && handleSubmit()}
           />
           <FilledInput
             type={showPassword ? 'text' : 'password'}
             className="mb-4"
             placeholder="Senha"
             onChange={handleChange('password')}
-            onKeyUp={e => e.key === 'Enter' && handleSubmit()}
             endAdornment={
               <InputAdornment position="end">
                 <IconButton
@@ -96,7 +96,7 @@ export default function Login() {
           <button className="btn-primary" onClick={handleSubmit}>
             Entrar
           </button>
-        </div>
+        </form>
         <PrimaryLink href="/signup">
           <span>Inscrever-se na Uniconn</span>
         </PrimaryLink>
