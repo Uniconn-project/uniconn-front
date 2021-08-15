@@ -1,5 +1,5 @@
 {
-    "baseUrl": "http://localhost:1234",
+    "baseUrl": "http://localhost:3000",
     "screenshotOnRunFailure": false,
     "env": {
         "api_url": "http://127.0.0.1:8000",
