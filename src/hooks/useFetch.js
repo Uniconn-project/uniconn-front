@@ -1,12 +1,9 @@
 import useSWR from 'swr'
 
-export const fetcher = async (url, headers = {}) => {
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_HOST}/api/${url}`,
-    {
-      headers: headers
-    }
-  )
+export const fetcher = async (route, headers = {}, ssr) => {
+  const apiURL = ssr ? process.env.NEXT_PUBLIC_DOCKER_API_URL : process.env.NEXT_PUBLIC_API_URL
+  console.log(apiURL)
+  const response = await fetch(`${apiURL}/api/${route}`, { headers: headers })
   const data = await response.json()
   return data
 }

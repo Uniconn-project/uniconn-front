@@ -65,7 +65,7 @@ export default function Discussion() {
     setStarred(true)
 
     fetch(
-      `${process.env.NEXT_PUBLIC_API_HOST}/api/projects/star-discussion/${discussion.id}`,
+      `${process.env.NEXT_PUBLIC_API_URL}/api/projects/star-discussion/${discussion.id}`,
       {
         method: 'POST',
         headers: {
@@ -94,7 +94,7 @@ export default function Discussion() {
     setStarred(false)
 
     fetch(
-      `${process.env.NEXT_PUBLIC_API_HOST}/api/projects/unstar-discussion/${discussion.id}`,
+      `${process.env.NEXT_PUBLIC_API_URL}/api/projects/unstar-discussion/${discussion.id}`,
       {
         method: 'DELETE',
         headers: {

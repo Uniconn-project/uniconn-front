@@ -28,7 +28,7 @@ export default function ReplyFrom({ discussion, setErrorMsg }) {
     }
 
     fetch(
-      `${process.env.NEXT_PUBLIC_API_HOST}/api/projects/reply-discussion/${discussion.id}`,
+      `${process.env.NEXT_PUBLIC_API_URL}/api/projects/reply-discussion/${discussion.id}`,
       {
         method: 'POST',
         headers: {

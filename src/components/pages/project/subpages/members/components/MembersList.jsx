@@ -20,7 +20,7 @@ export default function MembersList({
 
     if (window.confirm('Remover convite?')) {
       fetch(
-        `${process.env.NEXT_PUBLIC_API_HOST}/api/projects/uninvite-user-from-project/${project.id}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/api/projects/uninvite-user-from-project/${project.id}`,
         {
           method: 'PUT',
           headers: {

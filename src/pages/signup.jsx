@@ -76,7 +76,7 @@ export default function Signup() {
       return
     }
 
-    fetch(`${process.env.NEXT_PUBLIC_API_HOST}/api/profiles/post-signup`, {
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/profiles/post-signup`, {
       method: 'POST',
       headers: {
         'Content-type': 'application/json'

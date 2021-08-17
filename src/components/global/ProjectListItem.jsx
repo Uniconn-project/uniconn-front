@@ -35,7 +35,7 @@ export default function ProjectListItem({
     setStarred(true)
 
     fetch(
-      `${process.env.NEXT_PUBLIC_API_HOST}/api/projects/star-project/${project.id}`,
+      `${process.env.NEXT_PUBLIC_API_URL}/api/projects/star-project/${project.id}`,
       {
         method: 'POST',
         headers: {
@@ -63,7 +63,7 @@ export default function ProjectListItem({
     setStarred(false)
 
     fetch(
-      `${process.env.NEXT_PUBLIC_API_HOST}/api/projects/unstar-project/${project.id}`,
+      `${process.env.NEXT_PUBLIC_API_URL}/api/projects/unstar-project/${project.id}`,
       {
         method: 'DELETE',
         headers: {

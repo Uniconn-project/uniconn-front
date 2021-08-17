@@ -49,7 +49,7 @@ export default function EditProfile({ profile }) {
   }
 
   const handleSubmit = async () => {
-    fetch(`${process.env.NEXT_PUBLIC_API_HOST}/api/profiles/edit-my-profile`, {
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/profiles/edit-my-profile`, {
       method: 'PUT',
       headers: {
         Authorization: 'JWT ' + (await getToken()),

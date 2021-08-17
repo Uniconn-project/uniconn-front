@@ -33,7 +33,7 @@ export default function AddLinkModal({
 
   const handleSubmit = async () => {
     fetch(
-      `${process.env.NEXT_PUBLIC_API_HOST}/api/${
+      `${process.env.NEXT_PUBLIC_API_URL}/api/${
         project ? 'projects' : 'profiles'
       }/create-link${project ? `/${project.id}` : ''}`,
       {

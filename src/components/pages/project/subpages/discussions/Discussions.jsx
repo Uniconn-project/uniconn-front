@@ -42,7 +42,7 @@ export default function Discussions({
     e.stopPropagation()
     if (window.confirm('Deletar discussão?')) {
       fetch(
-        `${process.env.NEXT_PUBLIC_API_HOST}/api/projects/delete-project-discussion`,
+        `${process.env.NEXT_PUBLIC_API_URL}/api/projects/delete-project-discussion`,
         {
           method: 'DELETE',
           headers: {

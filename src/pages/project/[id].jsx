@@ -17,7 +17,11 @@ import { mutate } from 'swr'
 import { MyProfileContext } from '../../contexts/MyProfile'
 
 export const getServerSideProps = async context => {
-  const project = await fetcher(`projects/get-project/${context.params.id}`)
+  const project = await fetcher(
+    `projects/get-project/${context.params.id}`,
+    {},
+    true
+  )
 
   if (!project || !project.id) {
     return {

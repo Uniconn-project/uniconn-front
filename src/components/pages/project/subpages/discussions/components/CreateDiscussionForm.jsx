@@ -47,7 +47,7 @@ export default function CreateDiscussionForm({
     }
 
     fetch(
-      `${process.env.NEXT_PUBLIC_API_HOST}/api/projects/create-project-discussion/${projectId}`,
+      `${process.env.NEXT_PUBLIC_API_URL}/api/projects/create-project-discussion/${projectId}`,
       {
         method: 'POST',
         headers: {

@@ -41,7 +41,7 @@ export default function CreateProject() {
       return
     }
 
-    fetch(`${process.env.NEXT_PUBLIC_API_HOST}/api/projects/create-project`, {
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/projects/create-project`, {
       method: 'POST',
       headers: {
         'Content-type': 'application/json',

@@ -43,7 +43,7 @@ export default function Category() {
   useEffect(() => {
     fetch(
       `${
-        process.env.NEXT_PUBLIC_API_HOST
+        process.env.NEXT_PUBLIC_API_URL
       }/api/projects/get-projects-list?length=${scrollCount * 10}&categories=${
         router.query.category
       }`

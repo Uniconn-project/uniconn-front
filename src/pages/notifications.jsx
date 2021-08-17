@@ -49,7 +49,7 @@ export default function Notifications() {
 
   const visualizeNotifications = async () => {
     fetch(
-      `${process.env.NEXT_PUBLIC_API_HOST}/api/profiles/visualize-notifications`,
+      `${process.env.NEXT_PUBLIC_API_URL}/api/profiles/visualize-notifications`,
       {
         method: 'PATCH',
         headers: {

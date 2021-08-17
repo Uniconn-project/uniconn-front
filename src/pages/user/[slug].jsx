@@ -10,7 +10,11 @@ import Projects from '../../components/pages/profile/subpages/Projects'
 import Links from '../../components/pages/profile/subpages/Links'
 
 export const getServerSideProps = async context => {
-  const profile = await fetcher(`profiles/get-profile/${context.params.slug}`)
+  const profile = await fetcher(
+    `profiles/get-profile/${context.params.slug}`,
+    {},
+    true
+  )
 
   if (!profile || !profile.id) {
     return {

@@ -19,7 +19,7 @@ export default function ReplyListItem({
   const handleDelete = async () => {
     if (window.confirm('Deletar comentário?')) {
       fetch(
-        `${process.env.NEXT_PUBLIC_API_HOST}/api/projects/delete-discussion-reply/${reply.id}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/api/projects/delete-discussion-reply/${reply.id}`,
         {
           method: 'DELETE',
           headers: {

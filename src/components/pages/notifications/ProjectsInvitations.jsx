@@ -15,7 +15,7 @@ export default function ProjectsInvitations({
 
   const handleSubmit = async (reply, project) => {
     fetch(
-      `${process.env.NEXT_PUBLIC_API_HOST}/api/projects/reply-project-invitation`,
+      `${process.env.NEXT_PUBLIC_API_URL}/api/projects/reply-project-invitation`,
       {
         method: 'DELETE',
         headers: {

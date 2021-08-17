@@ -26,7 +26,7 @@ export default function AskToJoinProjectModal({
 
   const handleSubmit = async () => {
     fetch(
-      `${process.env.NEXT_PUBLIC_API_HOST}/api/projects/ask-to-join-project/${project.id}`,
+      `${process.env.NEXT_PUBLIC_API_URL}/api/projects/ask-to-join-project/${project.id}`,
       {
         method: 'POST',
         headers: {
