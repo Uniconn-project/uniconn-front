@@ -11,18 +11,11 @@ export default function SendMessageForm({ socket, setMessages }) {
     e.preventDefault()
     if (messageContent.trim() === '') return
     const message = {
-      id: Math.random(),
-      sender: {
-        id: myProfile.id
-      },
-      receiver: {
-        id: myProfile.id === 2 ? 3 : 2
-      },
-      content: messageContent,
-      timestamp: Date.now()
+      chat_id: 1,
+      sender_id: myProfile.id,
+      content: messageContent
     }
     socket.emit('message', message)
-    setMessages(messages => [...messages, message])
     setMessageContent('')
   }
 

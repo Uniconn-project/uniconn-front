@@ -1,16 +1,21 @@
 import React, { useContext, useEffect, useState, useRef } from 'react'
 import CircularProgress from '@material-ui/core/CircularProgress'
+import Snackbar from '@material-ui/core/Snackbar'
+import Alert from '@material-ui/lab/Alert'
 import Page from '../components/Page'
 import io from 'socket.io-client'
-import SendMessageForm from '../components/pages/messages/SendMessageForm'
 import Chat from '../components/pages/messages/Chat'
 import { MyProfileContext } from '../contexts/MyProfile'
-import Contacts from '../components/pages/messages/Contacts'
+import Chats from '../components/pages/messages/Chats'
 
 export default function Messages() {
   const { myProfile } = useContext(MyProfileContext)
 
-  const [messages, setMessages] = useState([])
+  const [openedChat, setOpenedChat] = useState(null)
+  const [errorMsg, setErrorMsg] = useState({
+    isOpen: false,
+    message: ''
+  })
 
   const chatRef = useRef(null)
   const socketRef = useRef(null)
@@ -21,23 +26,9 @@ export default function Messages() {
     socketRef.current.on('connect', () => {
       console.log('connected')
     })
-    socketRef.current.on('message', data => {
-      setMessages(messages => [...messages, data])
-    })
 
     return () => socketRef.current.disconnect()
   }, [])
-
-  useEffect(() => {
-    if (!myProfile) return
-    socketRef.current.emit('profile-id', myProfile.id)
-  }, [myProfile])
-
-  useEffect(() => {
-    if (chatRef.current) {
-      chatRef.current.scrollTop = chatRef.current.scrollHeight
-    }
-  }, [messages])
 
   if (!myProfile || !socketRef) {
     return (
@@ -55,7 +46,7 @@ export default function Messages() {
         <section className="hidden lg:w-1/3 lg:flex lg:justify-end lg:mr-10 lg:box-border">
           <div className="w-60">
             <div className="fixed top-32">
-              <Contacts />
+              <Chats setOpenedChat={setOpenedChat} setErrorMsg={setErrorMsg} />
             </div>
           </div>
         </section>
@@ -67,14 +58,20 @@ export default function Messages() {
             <div className="flex-basis-14 flex-shrink-0 flex items-center bg-light rounded-md shadow-lg p-2 mb-4">
               <h3 className="color-paragraph">Mensagens</h3>
             </div>
-            <div className="flex-basis-full flex flex-col bg-transparent rounded-md shadow-lg overflow-y-auto">
-              <Chat messages={messages} chatRef={chatRef} />
-              <SendMessageForm
-                socket={socketRef.current}
-                setMessages={setMessages}
-              />
-            </div>
+            <Chat socket={socketRef.current} chat={openedChat} chatRef={chatRef} />
           </div>
+          <Snackbar
+              open={errorMsg.isOpen}
+              autoHideDuration={6000}
+              onClose={() =>
+                setErrorMsg({
+                  isOpen: false,
+                  message: ''
+                })
+              }
+            >
+              <Alert severity="error">{errorMsg.message}</Alert>
+            </Snackbar>
         </section>
       </div>
     </Page>
