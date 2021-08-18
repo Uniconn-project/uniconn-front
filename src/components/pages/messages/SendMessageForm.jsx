@@ -1,21 +1,63 @@
 import React, { useContext, useState } from 'react'
 import SendIcon from '@material-ui/icons/Send'
+import { AuthContext } from '../../../contexts/Auth'
 import { MyProfileContext } from '../../../contexts/MyProfile'
 
-export default function SendMessageForm({ socket, setMessages }) {
+export default function SendMessageForm({
+  socket,
+  chat,
+  setMessages,
+  setErrorMsg
+}) {
   const { myProfile } = useContext(MyProfileContext)
+  const { getToken } = useContext(AuthContext)
 
   const [messageContent, setMessageContent] = useState('')
 
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault()
-    if (messageContent.trim() === '') return
-    const message = {
-      chat_id: 1,
-      sender_id: myProfile.id,
-      content: messageContent
+    if (messageContent.trim() === '') {
+      setErrorMsg({
+        isOpen: true,
+        message: 'A mensagem não pode ser vazia!'
+      })
+      return
     }
-    socket.emit('message', message)
+    setMessages(messages => [
+      ...messages,
+      {
+        id: Math.random(),
+        sender: {
+          id: myProfile.id
+        },
+        content: messageContent
+      }
+    ])
+    if (messageContent.trim() === '') return
+    fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/chats/create-message/${chat.id}`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-type': 'application/json',
+          Authorization: 'JWT ' + (await getToken())
+        },
+        body: JSON.stringify({
+          content: messageContent
+        })
+      }
+    ).then(response =>
+      response.json().then(data => {
+        if (response.ok) {
+          socket.emit('message', chat.id)
+        } else {
+          setErrorMsg({
+            isOpen: true,
+            message: data
+          })
+        }
+      })
+    )
     setMessageContent('')
   }
 
