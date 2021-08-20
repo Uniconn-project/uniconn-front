@@ -1,9 +1,9 @@
 .b-bottom-light {
   border-bottom: 3px solid var(--background-light);
-}
 
-.b-bottom-dark {
-  border-bottom: 2px solid var(--background-dark);
+  &.b-width-1px {
+    border-bottom-width: 1px;
+  }
 }
 
 .b-bottom-transparent {

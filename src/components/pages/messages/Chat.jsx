@@ -9,6 +9,7 @@ export default function Chat({
   socket,
   chat,
   chatRef,
+  chatsFilterInputRef,
   useMessages,
   setErrorMsg
 }) {
@@ -30,14 +31,23 @@ export default function Chat({
     <div className="flex-basis-full flex flex-col bg-transparent rounded-md shadow-lg overflow-y-auto">
       {chat === null ? (
         <div className="flex-basis-full flex flex-col justify-center items-center">
-          <div className="w-4/5 flex flex-col items-start mb-4 sm:w-1/2">
+          <div className="w-4/5 flex flex-col items-start sm:w-1/2">
             <span className="text-2xl color-headline mb-2">
-              Você não tem uma conversa selecionado!
+              Você não tem uma conversa selecionada!
             </span>
             <span className="text-sm mb-4">
-              Escolha uma das conversas existentes ou crie uma nova.
+              Escolha uma das conversas existentes ou{' '}
+              <span
+                className="color-primary cursor-pointer hover:underline"
+                onClick={() =>
+                  chatsFilterInputRef.current &&
+                  chatsFilterInputRef.current.focus()
+                }
+              >
+                crie uma nova
+              </span>
+              .
             </span>
-            <button className="btn-primary p-4">Nova conversa</button>
           </div>
         </div>
       ) : (
@@ -71,16 +81,18 @@ export default function Chat({
                       message.sender.id === myProfile.id ? 'sent' : 'received'
                     }
                   >
-                    <div className="p-2">
+                    <div id="message-content" className="p-2">
                       <p className="color-headline break-words">
                         {message.content}
                       </p>
                     </div>
-                    <span className="text-sm">
-                      {message.created_at !== undefined
-                        ? renderTimestamp(message.created_at)
-                        : 'Enviando...'}
-                    </span>
+                    <div className="flex">
+                      <span id="message-details" className="text-sm">
+                        {message.created_at !== undefined
+                          ? renderTimestamp(message.created_at)
+                          : 'Enviando...'}
+                      </span>
+                    </div>
                   </div>
                 </div>
               ))

@@ -27,10 +27,13 @@ export default function Messages() {
     message: ''
   })
 
+  const chatsFilterInputRef = useRef(null)
   const chatRef = useRef(null)
   const socketRef = useRef(null)
 
   const fetchMessages = useCallback(async () => {
+    if (!openedChat.id) return
+
     fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/api/chats/get-chat-messages/${openedChat.id}`,
       {
@@ -87,7 +90,7 @@ export default function Messages() {
   }, [fetchMessages]) // eslint-disable-line
 
   useEffect(() => {
-    if (!openedChat) return
+    if (!openedChat || !openedChat.id) return
 
     socketRef.current.emit('join-room', openedChat.id)
     setMessages(null)
@@ -108,12 +111,14 @@ export default function Messages() {
     <Page title="Mensagens | Uniconn" page="messages" loginRequired header>
       <div className="flex justify-center w-full h-full">
         <section className="hidden lg:w-1/3 lg:flex lg:justify-end lg:mr-10 lg:box-border">
-          <div className="w-60">
+          <div className="w-72">
             <div className="fixed top-32">
               <Chats
                 chats={chats}
+                chatsFilterInputRef={chatsFilterInputRef}
                 fetchChats={fetchChats}
                 setOpenedChat={setOpenedChat}
+                setErrorMsg={setErrorMsg}
               />
             </div>
           </div>
@@ -130,6 +135,7 @@ export default function Messages() {
               socket={socketRef.current}
               chat={openedChat}
               chatRef={chatRef}
+              chatsFilterInputRef={chatsFilterInputRef}
               useMessages={() => [messages, setMessages]}
               setErrorMsg={setErrorMsg}
             />
