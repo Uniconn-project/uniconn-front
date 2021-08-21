@@ -58,7 +58,10 @@ export default function Chats({
       `profiles/get-filtered-profiles/${chatSearch}`
     )
     setSearchedProfiles(
-      profiles.filter(profile => !chatsMembersId.includes(profile.id))
+      profiles.filter(
+        profile =>
+          !chatsMembersId.includes(profile.id) && profile.id !== myProfile.id
+      )
     )
   }
 
