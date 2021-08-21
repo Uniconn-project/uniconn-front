@@ -41,7 +41,9 @@ export default function AuthProvider({ children }) {
     }
     const expiry = new Date(accessTokenExpiry)
     isDev && console.log('Checking token expiry:', expiry)
-    return expiry.getTime() > Date.now()
+
+    // subtracting 5000ms from the expiry to prevent the token from being valid in the client side but not in the server - due to the lattency
+    return expiry.getTime() - 5000 > Date.now()
   }
 
   const initAuth = async () => {
