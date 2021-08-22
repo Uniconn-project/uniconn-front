@@ -1,12 +1,19 @@
-import React, { useContext, useEffect, useMemo } from 'react'
+import React, {
+  useContext,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState
+} from 'react'
 import Image from 'next/image'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import SendMessageForm from './SendMessageForm'
 import { MyProfileContext } from '../../../contexts/MyProfile'
+import { AuthContext } from '../../../contexts/Auth'
+import { WebSocketsContext } from '../../../contexts/WebSockets'
 import { renderTimestamp } from '../../../utils/utils'
 
 export default function Chat({
-  socket,
   chat,
   chatRef,
   chatsFilterInputRef,
@@ -14,12 +21,54 @@ export default function Chat({
   setErrorMsg
 }) {
   const { myProfile } = useContext(MyProfileContext)
+  const { getToken } = useContext(AuthContext)
+  const { socketEvent } = useContext(WebSocketsContext)
+
+  const [messages, setMessages] = useState(null)
+
   const otherProfile = useMemo(
     () => chat && chat.members.find(profile => profile.id !== myProfile.id),
     [chat, myProfile]
   )
 
-  const [messages, setMessages] = useMessages()
+  const fetchMessages = useCallback(async () => {
+    if (!chat) return
+
+    fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/chats/get-chat-messages/${chat.id}`,
+      {
+        headers: {
+          Authorization: 'JWT ' + (await getToken())
+        }
+      }
+    ).then(response =>
+      response.json().then(data => {
+        if (response.ok) {
+          setMessages(data)
+        } else {
+          setErrorMsg({
+            isOpen: true,
+            message: data
+          })
+        }
+      })
+    )
+  }, [chat, getToken])
+
+  useEffect(() => {
+    if (
+      (socketEvent.type === 'message' ||
+        socketEvent.type === 'message-visualization') &&
+      socketEvent.chatId === chat.id
+    ) {
+      console.log('inside if')
+      fetchMessages()
+    }
+  }, [socketEvent])
+
+  useEffect(() => {
+    fetchMessages()
+  }, [fetchMessages])
 
   useEffect(() => {
     if (chatRef.current) {
@@ -103,7 +152,6 @@ export default function Chat({
             )}
           </div>
           <SendMessageForm
-            socket={socket}
             chat={chat}
             chatRef={chatRef}
             setMessages={setMessages}

@@ -1,6 +1,12 @@
-import React, { createContext, useContext, useEffect, useRef } from 'react'
+import React, {
+  createContext,
+  useEffect,
+  useContext,
+  useState,
+  useRef
+} from 'react'
 import io from 'socket.io-client'
-import { AuthContext } from './Auth'
+import { MyProfileContext } from './MyProfile'
 import { fetcher } from '../hooks/useFetch'
 
 const isDev = process.env.NODE_ENV === 'development'
@@ -8,27 +14,57 @@ const isDev = process.env.NODE_ENV === 'development'
 export const WebSocketsContext = createContext()
 
 export default function WebSocketsProvider({ children }) {
-  const { isAuthenticated, getToken } = useContext(AuthContext)
+  const { myProfile } = useContext(MyProfileContext)
+  const [socketEvent, setSocketEvent] = useState({
+    type: ''
+  })
 
   const socketRef = useRef(null)
 
   useEffect(() => {
+    if (!myProfile || (socketRef.current && socketRef.current.connected)) return
+
     socketRef.current = io('ws://localhost:3030')
 
     socketRef.current.on('connect', () => {
+      socketRef.current.emit('initialize', myProfile.id)
       isDev && console.log('WebSockets connected')
     })
 
-    socketRef.current.on('message', data => {
-      fetchMessages()
-      fetchChats()
+    socketRef.current.on('message', chatId => {
+      setSocketEvent({
+        type: 'message',
+        chatId
+      })
     })
 
-    return () => socketRef.current.disconnect()
-  }, [])
+    socketRef.current.on('notification', () => {
+      setSocketEvent({
+        type: 'notification'
+      })
+    })
+
+    socketRef.current.on(
+      'message-visualization',
+      ({ viewerProfileId, chatId }) => {
+        setSocketEvent({
+          type: 'message-visualization',
+          viewerProfileId,
+          chatId
+        })
+      }
+    )
+
+    return () => {
+      isDev && console.log('WebSockets disconnected')
+      socketRef.current.disconnect()
+    }
+  }, [myProfile])
 
   return (
-    <WebSocketsContext.Provider value={{ socket: socketRef.current }}>
+    <WebSocketsContext.Provider
+      value={{ socket: socketRef.current, socketEvent }}
+    >
       {children}
     </WebSocketsContext.Provider>
   )

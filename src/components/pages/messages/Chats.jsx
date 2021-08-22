@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useCallback, useState } from 'react'
 import Image from 'next/image'
 import SearchIcon from '@material-ui/icons/Search'
 import ArrowBackIcon from '@material-ui/icons/ArrowBack'
@@ -7,22 +7,51 @@ import ProfileListItem from '../../global/ProfileListItem'
 import { MyProfileContext } from '../../../contexts/MyProfile'
 import { fetcher } from '../../../hooks/useFetch'
 import { AuthContext } from '../../../contexts/Auth'
+import { WebSocketsContext } from '../../../contexts/WebSockets'
 
 export default function Chats({
-  chats,
   chatsFilterInputRef,
-  fetchChats,
   setOpenedChat,
   setErrorMsg
 }) {
   const { myProfile } = useContext(MyProfileContext)
   const { getToken } = useContext(AuthContext)
+  const { socketEvent } = useContext(WebSocketsContext)
 
   const [chatSearch, setChatSearch] = useState('')
   const [renderedChats, setRenderedChats] = useState(null)
   const [searchedProfiles, setSearchedProfiles] = useState([])
+  const [chats, setChats] = useState(null)
 
   const isFiltering = chatSearch !== ''
+
+  const fetchChats = useCallback(async () => {
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/chats/get-chats-list`, {
+      headers: {
+        Authorization: 'JWT ' + (await getToken())
+      }
+    }).then(response =>
+      response.json().then(data => {
+        if (response.ok) {
+          setChats(data)
+        } else {
+          setErrorMsg({
+            isOpen: true,
+            message: data
+          })
+        }
+      })
+    )
+  }, [getToken])
+
+  useEffect(() => {
+    if (
+      socketEvent.type === 'message' ||
+      socketEvent.type === 'message-visualization'
+    ) {
+      fetchChats()
+    }
+  }, [socketEvent])
 
   useEffect(() => {
     fetchChats()

@@ -30,6 +30,7 @@ import AuthProvider from '../contexts/Auth'
 import MyProfileProvider from '../contexts/MyProfile'
 import NotificationsProvider from '../contexts/Notifications'
 import ThemeProvider from '../contexts/Theme'
+import WebSocketsProvider from '../contexts/WebSockets'
 import Header from '../components/header/Header'
 
 export default function MyApp({ Component, pageProps }) {
@@ -78,14 +79,16 @@ export default function MyApp({ Component, pageProps }) {
         <MyProfileProvider>
           <NotificationsProvider>
             <ThemeProvider>
-              {loading ? (
-                <div className="w-full h-screen flex justify-center items-center">
-                  <Header />
-                  <CircularProgress />
-                </div>
-              ) : (
-                <Component {...pageProps} />
-              )}
+              <WebSocketsProvider>
+                {loading ? (
+                  <div className="w-full h-screen flex justify-center items-center">
+                    <Header />
+                    <CircularProgress />
+                  </div>
+                ) : (
+                  <Component {...pageProps} />
+                )}
+              </WebSocketsProvider>
             </ThemeProvider>
           </NotificationsProvider>
         </MyProfileProvider>

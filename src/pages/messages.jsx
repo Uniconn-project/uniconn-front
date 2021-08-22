@@ -9,19 +9,14 @@ import CircularProgress from '@material-ui/core/CircularProgress'
 import Snackbar from '@material-ui/core/Snackbar'
 import Alert from '@material-ui/lab/Alert'
 import Page from '../components/Page'
-import io from 'socket.io-client'
 import Chat from '../components/pages/messages/Chat'
-import { MyProfileContext } from '../contexts/MyProfile'
 import Chats from '../components/pages/messages/Chats'
-import { AuthContext } from '../contexts/Auth'
+import { MyProfileContext } from '../contexts/MyProfile'
 
 export default function Messages() {
   const { myProfile } = useContext(MyProfileContext)
-  const { getToken } = useContext(AuthContext)
 
   const [openedChat, setOpenedChat] = useState(null)
-  const [messages, setMessages] = useState(null)
-  const [chats, setChats] = useState(null)
   const [errorMsg, setErrorMsg] = useState({
     isOpen: false,
     message: ''
@@ -29,75 +24,8 @@ export default function Messages() {
 
   const chatsFilterInputRef = useRef(null)
   const chatRef = useRef(null)
-  const socketRef = useRef(null)
 
-  const fetchMessages = useCallback(async () => {
-    if (!openedChat.id) return
-
-    fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/chats/get-chat-messages/${openedChat.id}`,
-      {
-        headers: {
-          Authorization: 'JWT ' + (await getToken())
-        }
-      }
-    ).then(response =>
-      response.json().then(data => {
-        if (response.ok) {
-          setMessages(data)
-        } else {
-          setErrorMsg({
-            isOpen: true,
-            message: data
-          })
-        }
-      })
-    )
-  }, [openedChat, getToken])
-
-  const fetchChats = useCallback(async () => {
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/chats/get-chats-list`, {
-      headers: {
-        Authorization: 'JWT ' + (await getToken())
-      }
-    }).then(response =>
-      response.json().then(data => {
-        if (response.ok) {
-          setChats(data)
-        } else {
-          setErrorMsg({
-            isOpen: true,
-            message: data
-          })
-        }
-      })
-    )
-  }, [getToken])
-
-  useEffect(() => {
-    socketRef.current = io('ws://localhost:3030')
-
-    socketRef.current.on('connect', () => {
-      console.log('connected')
-    })
-
-    socketRef.current.on('message', data => {
-      fetchMessages()
-      fetchChats()
-    })
-
-    return () => socketRef.current.disconnect()
-  }, [fetchMessages]) // eslint-disable-line
-
-  useEffect(() => {
-    if (!openedChat || !openedChat.id) return
-
-    socketRef.current.emit('join-room', openedChat.id)
-    setMessages(null)
-    fetchMessages()
-  }, [openedChat]) // eslint-disable-line
-
-  if (!myProfile || !socketRef) {
+  if (!myProfile) {
     return (
       <Page title="Mensagens | Uniconn" page="messages" loginRequired header>
         <div>
@@ -114,9 +42,7 @@ export default function Messages() {
           <div className="w-72">
             <div className="fixed top-32">
               <Chats
-                chats={chats}
                 chatsFilterInputRef={chatsFilterInputRef}
-                fetchChats={fetchChats}
                 setOpenedChat={setOpenedChat}
                 setErrorMsg={setErrorMsg}
               />
@@ -132,7 +58,6 @@ export default function Messages() {
               <h3 className="color-paragraph">Mensagens</h3>
             </div>
             <Chat
-              socket={socketRef.current}
               chat={openedChat}
               chatRef={chatRef}
               chatsFilterInputRef={chatsFilterInputRef}

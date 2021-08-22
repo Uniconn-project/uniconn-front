@@ -1,15 +1,12 @@
 import React, { useContext, useState } from 'react'
 import SendIcon from '@material-ui/icons/Send'
-import { AuthContext } from '../../../contexts/Auth'
 import { MyProfileContext } from '../../../contexts/MyProfile'
+import { WebSocketsContext } from '../../../contexts/WebSockets'
+import { AuthContext } from '../../../contexts/Auth'
 
-export default function SendMessageForm({
-  socket,
-  chat,
-  setMessages,
-  setErrorMsg
-}) {
+export default function SendMessageForm({ chat, setMessages, setErrorMsg }) {
   const { myProfile } = useContext(MyProfileContext)
+  const { socket } = useContext(WebSocketsContext)
   const { getToken } = useContext(AuthContext)
 
   const [messageContent, setMessageContent] = useState('')
@@ -49,7 +46,11 @@ export default function SendMessageForm({
     ).then(response =>
       response.json().then(data => {
         if (response.ok) {
-          socket.emit('message', chat.id)
+          socket.emit(
+            'message',
+            chat.members.map(profile => profile.id),
+            chat.id
+          )
         } else {
           setErrorMsg({
             isOpen: true,
