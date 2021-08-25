@@ -5,13 +5,15 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import ProfileListItem from '../../global/ProfileListItem'
 import { MyProfileContext } from '../../../contexts/MyProfile'
-import { fetcher } from '../../../hooks/useFetch'
 import { AuthContext } from '../../../contexts/Auth'
+import { fetcher } from '../../../hooks/useFetch'
 import { WebSocketsContext } from '../../../contexts/WebSockets'
 
 export default function Chats({
   chatsFilterInputRef,
-  setOpenedChat,
+  fetchChats,
+  useChats,
+  useOpenedChat,
   setErrorMsg
 }) {
   const { myProfile } = useContext(MyProfileContext)
@@ -21,28 +23,11 @@ export default function Chats({
   const [chatSearch, setChatSearch] = useState('')
   const [renderedChats, setRenderedChats] = useState(null)
   const [searchedProfiles, setSearchedProfiles] = useState([])
-  const [chats, setChats] = useState(null)
+
+  const [chats, setChats] = useChats()
+  const [openedChat, setOpenedChat] = useOpenedChat()
 
   const isFiltering = chatSearch !== ''
-
-  const fetchChats = useCallback(async () => {
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/chats/get-chats-list`, {
-      headers: {
-        Authorization: 'JWT ' + (await getToken())
-      }
-    }).then(response =>
-      response.json().then(data => {
-        if (response.ok) {
-          setChats(data)
-        } else {
-          setErrorMsg({
-            isOpen: true,
-            message: data
-          })
-        }
-      })
-    )
-  }, [getToken])
 
   useEffect(() => {
     if (
@@ -166,28 +151,44 @@ export default function Chats({
               )
 
               return (
-                <div
-                  key={chat.id}
-                  className="w-full flex flex-col items-start p-2 cursor-pointer bg-transparent-hover b-bottom-light b-width-1px"
-                  onClick={() => setOpenedChat(chat)}
-                >
-                  <div className="flex">
-                    <div className="profile-img-md mr-2">
-                      <Image src={otherProfile.photo} layout="fill" />
+                <div className="b-bottom-light b-width-1px">
+                  <div
+                    key={chat.id}
+                    className={`w-full flex flex-col items-start p-2 cursor-pointer bg-transparent-hover ${
+                      openedChat && openedChat.id === chat.id
+                        ? 'b-right-primary'
+                        : ''
+                    }`}
+                    onClick={() => {
+                      setOpenedChat(chat)
+                      fetchChats()
+                    }}
+                  >
+                    <div className="flex w-full">
+                      <div className="profile-img-sm mr-2">
+                        <Image src={otherProfile.photo} layout="fill" />
+                      </div>
+                      <div className="flex-grow">
+                        <div className="flex w-full relative">
+                          <h5>
+                            {otherProfile.first_name} {otherProfile.last_name}
+                          </h5>
+                          {chat.unvisualized_messages_number > 0 && (
+                            <b className="absolute right-1 top-1 w-8 h-8 flex justify-center items-center rounded-3xl text-lg bg-primary color-headline">
+                              {chat.unvisualized_messages_number}
+                            </b>
+                          )}
+                        </div>
+                        <p className="self-start break-all color-secondary">
+                          @{otherProfile.user.username}
+                        </p>
+                      </div>
                     </div>
-                    <div>
-                      <h5>
-                        {otherProfile.first_name} {otherProfile.last_name}
-                      </h5>
-                      <p className="self-start break-all color-secondary">
-                        @{otherProfile.user.username}
-                      </p>
+                    <div className="w-full flex items-start ml-auto mr-4 mt-1">
+                      <span className="whitespace-nowrap overflow-ellipsis overflow-hidden">
+                        {chat.last_message}
+                      </span>
                     </div>
-                  </div>
-                  <div className="w-full flex items-start ml-auto mr-4 mt-1">
-                    <span className="whitespace-nowrap overflow-ellipsis overflow-hidden">
-                      {chat.last_message}
-                    </span>
                   </div>
                 </div>
               )

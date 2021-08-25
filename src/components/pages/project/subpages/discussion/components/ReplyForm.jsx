@@ -60,7 +60,7 @@ export default function ReplyFrom({ discussion, setErrorMsg }) {
         <div className="flex flex-col sm:flex-row">
           <div className="mr-2">
             <Link href="/profile">
-              <div className="profile-img-sm mx-0.5">
+              <div className="profile-img-xs mx-0.5">
                 <Image
                   src={myProfile.photo}
                   layout="fill"

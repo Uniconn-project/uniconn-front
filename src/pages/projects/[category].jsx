@@ -58,7 +58,7 @@ export default function Category() {
       })
   }, [scrollCount]) // eslint-disable-line
 
-  if (!myProfile || !projectList) {
+  if (!myProfile.id || !projectList) {
     return (
       <Page title="Projetos | Uniconn" loginRequired header>
         <div>

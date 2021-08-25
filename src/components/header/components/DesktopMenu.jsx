@@ -24,8 +24,8 @@ export default function DesktopMenu() {
 
   return (
     <div className="flex">
-      {myProfile !== null && (
-        <div ref={anchorRef} className="profile-img-sm mr-2 cursor-pointer">
+      {myProfile.id !== null && (
+        <div ref={anchorRef} className="profile-img-xs mr-2 cursor-pointer">
           <Image
             src={myProfile.photo}
             layout="fill"

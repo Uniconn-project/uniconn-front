@@ -30,7 +30,7 @@ export default function ProjectInfoDesktop({
   })
 
   useEffect(() => {
-    if (!myProfile) return
+    if (!myProfile.id) return
     setStarred(
       project.stars.map(star => star.profile.id).includes(myProfile.id)
     )
@@ -94,7 +94,7 @@ export default function ProjectInfoDesktop({
       })
   }
 
-  if (!myProfile) {
+  if (!myProfile.id) {
     return <CircularProgress />
   }
 

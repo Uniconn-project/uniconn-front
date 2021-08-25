@@ -111,7 +111,7 @@ export default function Discussions({
                       className="bg-light"
                       arrow
                     >
-                      <div className="profile-img-sm mx-0.5">
+                      <div className="profile-img-xs mx-0.5">
                         <Image
                           src={discussion.profile.photo}
                           layout="fill"

@@ -52,7 +52,7 @@ export default function ReplyListItem({
         <div className="flex flex-col b-bottom-light p-2 sm:flex-row">
           <div className="mr-2">
             <Link href={`/user/${reply.profile.user.username}`}>
-              <div className="profile-img-sm mx-0.5">
+              <div className="profile-img-xs mx-0.5">
                 <Image
                   src={reply.profile.photo}
                   layout="fill"

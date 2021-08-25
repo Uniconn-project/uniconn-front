@@ -58,7 +58,7 @@ export default function Projects() {
     setRenderedProjects(baseProjects.projects)
   }, [baseProjects]) //eslint-disable-line
 
-  if (!myProfile || !baseProjects) {
+  if (!myProfile.id || !baseProjects) {
     return (
       <Page title="Usuários | Uniconn" page="projects" loginRequired header>
         <CircularProgress />

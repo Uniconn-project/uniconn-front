@@ -18,7 +18,7 @@ export default function DiscussionsStars({ stars }) {
                 <Link href={`/user/${star.profile.user.username}`}>
                   <div className="flex">
                     <ThumbUpAltIcon className="color-paragraph self-center" />
-                    <div className="profile-img-sm cursor-pointer">
+                    <div className="profile-img-xs cursor-pointer">
                       <Image src={star.profile.photo} layout="fill" />
                     </div>
                     <strong className="color-secondary cursor-pointer mx-1 hover:underline">

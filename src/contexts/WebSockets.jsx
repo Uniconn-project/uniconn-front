@@ -22,7 +22,7 @@ export default function WebSocketsProvider({ children }) {
   const socketRef = useRef(null)
 
   useEffect(() => {
-    if (!myProfile || (socketRef.current && socketRef.current.connected)) return
+    if (!myProfile.id) return
 
     socketRef.current = io('ws://localhost:3030')
 
@@ -59,7 +59,7 @@ export default function WebSocketsProvider({ children }) {
       isDev && console.log('WebSockets disconnected')
       socketRef.current.disconnect()
     }
-  }, [myProfile])
+  }, [myProfile.id])
 
   return (
     <WebSocketsContext.Provider

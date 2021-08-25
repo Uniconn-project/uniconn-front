@@ -39,7 +39,7 @@ export default function Discussion() {
   })
 
   useEffect(() => {
-    if (!myProfile || !discussion) return
+    if (!myProfile.id || !discussion) return
     setStarred(
       discussion.stars.map(star => star.profile.id).includes(myProfile.id)
     )
@@ -52,7 +52,7 @@ export default function Discussion() {
     setStarCount(discussion.stars.length)
   }, [discussion])
 
-  if (!discussion || !myProfile) {
+  if (!discussion || !myProfile.id) {
     return (
       <div className="w-full flex justify-center pb-4">
         <CircularProgress size={30} />
@@ -125,7 +125,7 @@ export default function Discussion() {
           <div className="flex flex-col sm:flex-row">
             <div className="mr-2">
               <Link href={`/user/${discussion.profile.user.username}`}>
-                <div className="profile-img-sm mx-0.5 ">
+                <div className="profile-img-xs mx-0.5 ">
                   <Image
                     src={discussion.profile.photo}
                     layout="fill"

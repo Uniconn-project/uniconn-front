@@ -57,7 +57,7 @@ export default function Description({
       })
   }
 
-  if (!project || !myProfile) {
+  if (!project || !myProfile.id) {
     return (
       <div className="w-full flex justify-center mt-10">
         <CircularProgress />

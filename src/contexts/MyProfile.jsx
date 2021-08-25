@@ -12,7 +12,9 @@ export const MyProfileContext = createContext()
 
 export default function MyProfileProvider({ children }) {
   const { isAuthenticated, getToken } = useContext(AuthContext)
-  const [myProfile, setMyProfile] = useState(null)
+  const [myProfile, setMyProfile] = useState({
+    id: null
+  })
 
   const fetchMyProfile = useCallback(async () => {
     const fetchedProfile = await fetcher('profiles/get-my-profile', {

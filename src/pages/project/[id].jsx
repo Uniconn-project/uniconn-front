@@ -60,7 +60,7 @@ export default function Project(props) {
       })
   }, []) // eslint-disable-line
 
-  if (!project || !myProfile) {
+  if (!project || !myProfile.id) {
     return (
       <Page loginRequired header>
         <div className="w-full flex justify-center mt-10">

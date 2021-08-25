@@ -56,7 +56,7 @@ export default function Users() {
     setRenderedProfiles(baseProfiles.profiles)
   }, [baseProfiles]) //eslint-disable-line
 
-  if (!myProfile || !baseProfiles) {
+  if (!myProfile.id || !baseProfiles) {
     return (
       <Page title="Usuários | Uniconn" page="users" loginRequired header>
         <CircularProgress />

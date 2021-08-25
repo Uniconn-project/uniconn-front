@@ -17,6 +17,7 @@ export default function Chat({
   chat,
   chatRef,
   chatsFilterInputRef,
+  fetchChats,
   useMessages,
   setErrorMsg
 }) {
@@ -32,7 +33,7 @@ export default function Chat({
   )
 
   const fetchMessages = useCallback(async () => {
-    if (!chat) return
+    if (!chat || !chat.id) return
 
     fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/api/chats/get-chat-messages/${chat.id}`,
@@ -45,6 +46,7 @@ export default function Chat({
       response.json().then(data => {
         if (response.ok) {
           setMessages(data)
+          fetchChats()
         } else {
           setErrorMsg({
             isOpen: true,
@@ -59,6 +61,7 @@ export default function Chat({
     if (
       (socketEvent.type === 'message' ||
         socketEvent.type === 'message-visualization') &&
+      chat &&
       socketEvent.chatId === chat.id
     ) {
       console.log('inside if')

@@ -37,7 +37,7 @@ export default function Profile() {
     }
   }
 
-  if (!myProfile) {
+  if (!myProfile.id) {
     return (
       <Page title="Perfil | Uniconn" page="profile" loginRequired header>
         <div>

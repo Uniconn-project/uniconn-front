@@ -5,7 +5,7 @@ import { MyProfileContext } from '../../../contexts/MyProfile'
 export default function ProfileHeader({ profile, page, setPage }) {
   const { myProfile } = useContext(MyProfileContext)
 
-  if (!profile || !myProfile) {
+  if (!profile || !myProfile.id) {
     return <CircularProgress />
   }
 

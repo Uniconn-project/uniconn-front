@@ -12,20 +12,42 @@ import Page from '../components/Page'
 import Chat from '../components/pages/messages/Chat'
 import Chats from '../components/pages/messages/Chats'
 import { MyProfileContext } from '../contexts/MyProfile'
+import { AuthContext } from '../contexts/Auth'
 
 export default function Messages() {
   const { myProfile } = useContext(MyProfileContext)
+  const { getToken } = useContext(AuthContext)
 
+  const [chats, setChats] = useState(null)
   const [openedChat, setOpenedChat] = useState(null)
   const [errorMsg, setErrorMsg] = useState({
     isOpen: false,
     message: ''
   })
 
+  const fetchChats = useCallback(async () => {
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/chats/get-chats-list`, {
+      headers: {
+        Authorization: 'JWT ' + (await getToken())
+      }
+    }).then(response =>
+      response.json().then(data => {
+        if (response.ok) {
+          setChats(data)
+        } else {
+          setErrorMsg({
+            isOpen: true,
+            message: data
+          })
+        }
+      })
+    )
+  }, [getToken])
+
   const chatsFilterInputRef = useRef(null)
   const chatRef = useRef(null)
 
-  if (!myProfile) {
+  if (!myProfile.id) {
     return (
       <Page title="Mensagens | Uniconn" page="messages" loginRequired header>
         <div>
@@ -43,7 +65,9 @@ export default function Messages() {
             <div className="fixed top-32">
               <Chats
                 chatsFilterInputRef={chatsFilterInputRef}
-                setOpenedChat={setOpenedChat}
+                fetchChats={fetchChats}
+                useChats={() => [chats, setChats]}
+                useOpenedChat={() => [openedChat, setOpenedChat]}
                 setErrorMsg={setErrorMsg}
               />
             </div>
@@ -60,6 +84,7 @@ export default function Messages() {
             <Chat
               chat={openedChat}
               chatRef={chatRef}
+              fetchChats={fetchChats}
               chatsFilterInputRef={chatsFilterInputRef}
               useMessages={() => [messages, setMessages]}
               setErrorMsg={setErrorMsg}

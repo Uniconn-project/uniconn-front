@@ -17,7 +17,7 @@ export default function ProjectHeader({
 }) {
   const { myProfile } = useContext(MyProfileContext)
 
-  if (!project || !myProfile) {
+  if (!project || !myProfile.id) {
     return <CircularProgress />
   }
 

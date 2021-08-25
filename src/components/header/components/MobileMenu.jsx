@@ -21,13 +21,13 @@ export default function MobileMenu() {
 
   const [mobileMenuIsOpen, setMobileMenuIsOpen] = useState(false)
 
-  if (!myProfile) {
+  if (!myProfile.id) {
     return <CircularProgress size={20} />
   }
 
   return (
     <div>
-      <div className="profile-img-sm mr-2 cursor-pointer">
+      <div className="profile-img-xs mr-2 cursor-pointer">
         <Image
           src={myProfile.photo}
           layout="fill"

@@ -35,7 +35,7 @@ export default function Profile({ initialProfile }) {
   const [page, setPage] = useState('projects')
 
   useEffect(() => {
-    if (!profile || !myProfile) return
+    if (!profile || !myProfile.id) return
 
     if (profile.id === myProfile.id) {
       Router.replace('/profile')
@@ -52,7 +52,7 @@ export default function Profile({ initialProfile }) {
     })()
   }, [profile])
 
-  if (!myProfile || !profile || !profile.projects) {
+  if (!myProfile.id || !profile || !profile.projects) {
     return (
       <Page loginRequired header>
         <div className="w-full flex justify-center mt-10">
