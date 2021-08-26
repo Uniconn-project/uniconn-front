@@ -151,9 +151,8 @@ export default function Chats({
               )
 
               return (
-                <div className="b-bottom-light b-width-1px">
+                <div key={chat.id} className="b-bottom-light b-width-1px">
                   <div
-                    key={chat.id}
                     className={`w-full flex flex-col items-start p-2 cursor-pointer bg-transparent-hover ${
                       openedChat && openedChat.id === chat.id
                         ? 'b-right-primary'
@@ -186,7 +185,7 @@ export default function Chats({
                     </div>
                     <div className="w-full flex items-start ml-auto mr-4 mt-1">
                       <span className="whitespace-nowrap overflow-ellipsis overflow-hidden">
-                        {chat.last_message}
+                        {chat.messages[chat.messages.length - 1].content}
                       </span>
                     </div>
                   </div>

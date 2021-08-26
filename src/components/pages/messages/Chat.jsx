@@ -18,7 +18,6 @@ export default function Chat({
   chatRef,
   chatsFilterInputRef,
   fetchChats,
-  useMessages,
   setErrorMsg
 }) {
   const { myProfile } = useContext(MyProfileContext)
@@ -29,10 +28,33 @@ export default function Chat({
 
   const otherProfile = useMemo(
     () => chat && chat.members.find(profile => profile.id !== myProfile.id),
-    [chat, myProfile]
+    [chat, myProfile.id]
   )
 
-  const fetchMessages = useCallback(async () => {
+  useEffect(() => {
+    if (
+      (socketEvent.type === 'message' ||
+        socketEvent.type === 'message-visualization') &&
+      chat &&
+      socketEvent.chatId === chat.id
+    ) {
+      fetchMessages()
+    }
+  }, [socketEvent])
+
+  useEffect(() => {
+    if (!chat) return
+    setMessages(null)
+    fetchMessages()
+  }, [chat])
+
+  useEffect(() => {
+    if (chatRef.current) {
+      chatRef.current.scrollTop = chatRef.current.scrollHeight
+    }
+  })
+
+  const fetchMessages = async () => {
     if (!chat || !chat.id) return
 
     fetch(
@@ -55,29 +77,28 @@ export default function Chat({
         }
       })
     )
-  }, [chat, getToken])
 
-  useEffect(() => {
-    if (
-      (socketEvent.type === 'message' ||
-        socketEvent.type === 'message-visualization') &&
-      chat &&
-      socketEvent.chatId === chat.id
-    ) {
-      console.log('inside if')
-      fetchMessages()
-    }
-  }, [socketEvent])
-
-  useEffect(() => {
-    fetchMessages()
-  }, [fetchMessages])
-
-  useEffect(() => {
-    if (chatRef.current) {
-      chatRef.current.scrollTop = chatRef.current.scrollHeight
-    }
-  })
+    fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/chats/visualize-chat-messages/${chat.id}`,
+      {
+        method: 'PATCH',
+        headers: {
+          Authorization: 'JWT ' + (await getToken())
+        }
+      }
+    ).then(response =>
+      response.json().then(data => {
+        if (response.ok) {
+          fetchChats()
+        } else {
+          setErrorMsg({
+            isOpen: true,
+            message: data
+          })
+        }
+      })
+    )
+  }
 
   return (
     <div className="flex-basis-full flex flex-col bg-transparent rounded-md shadow-lg overflow-y-auto">
