@@ -4,12 +4,17 @@ import { MyProfileContext } from '../../../contexts/MyProfile'
 import { WebSocketsContext } from '../../../contexts/WebSockets'
 import { AuthContext } from '../../../contexts/Auth'
 
-export default function SendMessageForm({ chat, setMessages, setErrorMsg }) {
+export default function SendMessageForm({
+  useChat,
+  setChatMessages,
+  setErrorMsg
+}) {
   const { myProfile } = useContext(MyProfileContext)
   const { socket } = useContext(WebSocketsContext)
   const { getToken } = useContext(AuthContext)
 
   const [messageContent, setMessageContent] = useState('')
+  const [chat, setChat] = useChat()
 
   const handleSubmit = async e => {
     e.preventDefault()
@@ -20,16 +25,19 @@ export default function SendMessageForm({ chat, setMessages, setErrorMsg }) {
       })
       return
     }
-    setMessages(messages => [
-      ...messages,
-      {
-        id: Math.random(),
-        sender: {
-          id: myProfile.id
-        },
-        content: messageContent
-      }
-    ])
+    setChat(chat => ({
+      ...chat,
+      tempMessages: [
+        ...chat.tempMessages,
+        {
+          id: Math.random(),
+          sender: {
+            id: myProfile.id
+          },
+          content: messageContent
+        }
+      ]
+    }))
     if (messageContent.trim() === '') return
     fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/api/chats/create-message/${chat.id}`,
@@ -46,6 +54,7 @@ export default function SendMessageForm({ chat, setMessages, setErrorMsg }) {
     ).then(response =>
       response.json().then(data => {
         if (response.ok) {
+          setChatMessages([data], true)
           socket.emit(
             'message',
             chat.members.map(profile => profile.id),

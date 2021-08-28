@@ -14,20 +14,21 @@ import { WebSocketsContext } from '../../../contexts/WebSockets'
 import { renderTimestamp } from '../../../utils/utils'
 
 export default function Chat({
-  chat,
   chatRef,
   chatsFilterInputRef,
+  useChat,
   fetchChats,
+  setChatMessages,
   setErrorMsg
 }) {
   const { myProfile } = useContext(MyProfileContext)
   const { getToken } = useContext(AuthContext)
   const { socketEvent } = useContext(WebSocketsContext)
 
-  const [messages, setMessages] = useState(null)
+  const [chat, setChat] = useChat()
 
   const otherProfile = useMemo(
-    () => chat && chat.members.find(profile => profile.id !== myProfile.id),
+    () => chat.id && chat.members.find(profile => profile.id !== myProfile.id),
     [chat, myProfile.id]
   )
 
@@ -35,18 +36,12 @@ export default function Chat({
     if (
       (socketEvent.type === 'message' ||
         socketEvent.type === 'message-visualization') &&
-      chat &&
+      chat.id &&
       socketEvent.chatId === chat.id
     ) {
       fetchMessages()
     }
   }, [socketEvent])
-
-  useEffect(() => {
-    if (!chat) return
-    setMessages(null)
-    fetchMessages()
-  }, [chat])
 
   useEffect(() => {
     if (chatRef.current) {
@@ -67,7 +62,7 @@ export default function Chat({
     ).then(response =>
       response.json().then(data => {
         if (response.ok) {
-          setMessages(data)
+          setChatMessages(data)
           fetchChats()
         } else {
           setErrorMsg({
@@ -102,7 +97,7 @@ export default function Chat({
 
   return (
     <div className="flex-basis-full flex flex-col bg-transparent rounded-md shadow-lg overflow-y-auto">
-      {chat === null ? (
+      {chat.id === null ? (
         <div className="flex-basis-full flex flex-col justify-center items-center">
           <div className="w-4/5 flex flex-col items-start sm:w-1/2">
             <span className="text-2xl color-headline mb-2">
@@ -146,39 +141,32 @@ export default function Chat({
             ref={chatRef}
             className="p-4 flex-grow b-bottom-light overflow-y-auto"
           >
-            {messages !== null ? (
-              messages.map(message => (
-                <div key={message.id} className="w-full flex items-center mb-2">
-                  <div
-                    className={
-                      message.sender.id === myProfile.id ? 'sent' : 'received'
-                    }
-                  >
-                    <div id="message-content" className="p-2">
-                      <p className="color-headline break-words">
-                        {message.content}
-                      </p>
-                    </div>
-                    <div className="flex">
-                      <span id="message-details" className="text-sm">
-                        {message.created_at !== undefined
-                          ? renderTimestamp(message.created_at)
-                          : 'Enviando...'}
-                      </span>
-                    </div>
+            {chat.messages.concat(chat.tempMessages).map(message => (
+              <div key={message.id} className="w-full flex items-center mb-2">
+                <div
+                  className={
+                    message.sender.id === myProfile.id ? 'sent' : 'received'
+                  }
+                >
+                  <div id="message-content" className="p-2">
+                    <p className="color-headline break-words">
+                      {message.content}
+                    </p>
+                  </div>
+                  <div className="flex">
+                    <span id="message-details" className="text-sm">
+                      {message.created_at !== undefined
+                        ? renderTimestamp(message.created_at)
+                        : 'Enviando...'}
+                    </span>
                   </div>
                 </div>
-              ))
-            ) : (
-              <div className="w-full flex justify-center">
-                <CircularProgress size={20} />
               </div>
-            )}
+            ))}
           </div>
           <SendMessageForm
-            chat={chat}
-            chatRef={chatRef}
-            setMessages={setMessages}
+            useChat={useChat}
+            setChatMessages={setChatMessages}
             setErrorMsg={setErrorMsg}
           />
         </div>

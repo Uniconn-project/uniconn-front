@@ -19,7 +19,10 @@ export default function Messages() {
   const { getToken } = useContext(AuthContext)
 
   const [chats, setChats] = useState(null)
-  const [openedChat, setOpenedChat] = useState(null)
+  const [openedChat, setOpenedChat] = useState({
+    id: null,
+    messages: []
+  })
   const [errorMsg, setErrorMsg] = useState({
     isOpen: false,
     message: ''
@@ -33,7 +36,13 @@ export default function Messages() {
     }).then(response =>
       response.json().then(data => {
         if (response.ok) {
-          setChats(data)
+          setChats(
+            data.map(chat => ({
+              ...chat,
+              message: sortMessages(chat.messages),
+              tempMessages: []
+            }))
+          )
         } else {
           setErrorMsg({
             isOpen: true,
@@ -46,6 +55,22 @@ export default function Messages() {
 
   const chatsFilterInputRef = useRef(null)
   const chatRef = useRef(null)
+
+  const sortMessages = messages => {
+    return messages.sort((firstMessage, secondMessage) => {
+      return firstMessage.created_at < secondMessage.created_at ? -1 : 1
+    })
+  }
+
+  const setChatMessages = (messages, keepCurrent = false) => {
+    setOpenedChat(chat => ({
+      ...chat,
+      messages: keepCurrent
+        ? sortMessages([...chat.messages, ...messages])
+        : sortMessages(messages),
+      tempMessages: []
+    }))
+  }
 
   if (!myProfile.id) {
     return (
@@ -82,11 +107,11 @@ export default function Messages() {
               <h3 className="color-paragraph">Mensagens</h3>
             </div>
             <Chat
-              chat={openedChat}
               chatRef={chatRef}
-              fetchChats={fetchChats}
               chatsFilterInputRef={chatsFilterInputRef}
-              useMessages={() => [messages, setMessages]}
+              useChat={() => [openedChat, setOpenedChat]}
+              fetchChats={fetchChats}
+              setChatMessages={setChatMessages}
               setErrorMsg={setErrorMsg}
             />
           </div>

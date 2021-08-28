@@ -79,6 +79,31 @@ export default function Chats({
     )
   }
 
+  const openChat = async chat => {
+    setOpenedChat(chat)
+    fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/chats/visualize-chat-messages/${chat.id}`,
+      {
+        method: 'PATCH',
+        headers: {
+          'Content-type': 'application/json',
+          Authorization: 'JWT ' + (await getToken())
+        }
+      }
+    ).then(response =>
+      response.json().then(data => {
+        if (response.ok) {
+          fetchChats()
+        } else {
+          setErrorMsg({
+            isOpen: true,
+            message: data
+          })
+        }
+      })
+    )
+  }
+
   const createNewPrivateChat = async (e, profile) => {
     e.preventDefault()
 
@@ -158,10 +183,7 @@ export default function Chats({
                         ? 'b-right-primary'
                         : ''
                     }`}
-                    onClick={() => {
-                      setOpenedChat(chat)
-                      fetchChats()
-                    }}
+                    onClick={() => openChat(chat)}
                   >
                     <div className="flex w-full">
                       <div className="profile-img-sm mr-2">
@@ -172,11 +194,12 @@ export default function Chats({
                           <h5>
                             {otherProfile.first_name} {otherProfile.last_name}
                           </h5>
-                          {chat.unvisualized_messages_number > 0 && (
-                            <b className="absolute right-1 top-1 w-8 h-8 flex justify-center items-center rounded-3xl text-lg bg-primary color-headline">
-                              {chat.unvisualized_messages_number}
-                            </b>
-                          )}
+                          {chat.unvisualized_messages_number > 0 &&
+                            openedChat && (
+                              <b className="absolute right-1 top-1 w-8 h-8 flex justify-center items-center rounded-3xl text-lg bg-primary color-headline">
+                                {chat.unvisualized_messages_number}
+                              </b>
+                            )}
                         </div>
                         <p className="self-start break-all color-secondary">
                           @{otherProfile.user.username}
