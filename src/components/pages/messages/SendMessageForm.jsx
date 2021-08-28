@@ -5,6 +5,7 @@ import { WebSocketsContext } from '../../../contexts/WebSockets'
 import { AuthContext } from '../../../contexts/Auth'
 
 export default function SendMessageForm({
+  chatRef,
   useChat,
   setChatMessages,
   setErrorMsg
@@ -38,6 +39,7 @@ export default function SendMessageForm({
         }
       ]
     }))
+  
     if (messageContent.trim() === '') return
     fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/api/chats/create-message/${chat.id}`,

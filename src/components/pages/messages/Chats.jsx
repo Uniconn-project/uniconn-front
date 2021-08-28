@@ -18,7 +18,7 @@ export default function Chats({
 }) {
   const { myProfile } = useContext(MyProfileContext)
   const { getToken } = useContext(AuthContext)
-  const { socketEvent } = useContext(WebSocketsContext)
+  const { socket, socketEvent } = useContext(WebSocketsContext)
 
   const [chatSearch, setChatSearch] = useState('')
   const [renderedChats, setRenderedChats] = useState(null)
@@ -94,6 +94,11 @@ export default function Chats({
       response.json().then(data => {
         if (response.ok) {
           fetchChats()
+          socket.emit(
+            'message-visualization',
+            chat.members.map(profile => profile.id),
+            chat.id
+          )
         } else {
           setErrorMsg({
             isOpen: true,
@@ -195,7 +200,7 @@ export default function Chats({
                             {otherProfile.first_name} {otherProfile.last_name}
                           </h5>
                           {chat.unvisualized_messages_number > 0 &&
-                            openedChat && (
+                            openedChat.id !== chat.id && (
                               <b className="absolute right-1 top-1 w-8 h-8 flex justify-center items-center rounded-3xl text-lg bg-primary color-headline">
                                 {chat.unvisualized_messages_number}
                               </b>

@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 import Link from 'next/link'
 import MobileMenu from './components/MobileMenu'
 import DesktopMenu from './components/DesktopMenu'
@@ -6,9 +6,49 @@ import CircularProgress from '@material-ui/core/CircularProgress'
 import NotificationsIcon from '@material-ui/icons/Notifications'
 import Badge from '@material-ui/core/Badge'
 import { NotificationsContext } from '../../contexts/Notifications'
+import { WebSocketsContext } from '../../contexts/WebSockets'
+import { AuthContext } from '../../contexts/Auth'
 
 export default function Header({ page }) {
   const { notificationsNumber } = useContext(NotificationsContext)
+  const { socketEvent } = useContext(WebSocketsContext)
+  const { getToken } = useContext(AuthContext)
+
+  const [unvisualizedMessagesNumber, setUnvisualizedMessagesNumber] = useState(
+    0
+  )
+
+  useEffect(() => {
+    fetchUnvisualizedMessagesNumber()
+  }, [])
+
+  useEffect(() => {
+    console.log(socketEvent)
+    if (
+      socketEvent.type === 'message' ||
+      socketEvent.type === 'message-visualization'
+    ) {
+      fetchUnvisualizedMessagesNumber()
+    }
+  }, [socketEvent])
+
+  const fetchUnvisualizedMessagesNumber = async () => {
+    fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/chats/get-unvisualized-messages-number`,
+      {
+        headers: {
+          'Content-type': 'application/json',
+          Authorization: 'JWT ' + (await getToken())
+        }
+      }
+    ).then(response =>
+      response.json().then(data => {
+        if (response.ok) {
+          setUnvisualizedMessagesNumber(data)
+        }
+      })
+    )
+  }
 
   return (
     <header className="fixed z-20 top-0 w-full h-20 flex items-center px-4 pt-2 header bg-light shadow-md sm:pl-8 sm:pr-20">
@@ -53,11 +93,16 @@ export default function Header({ page }) {
         </Link>
         <Link href="/messages">
           <div
-            className={`p-3 ml-2 nav-link ${
+            className={`relative p-3 ml-2 nav-link ${
               page === 'messages' ? 'active' : ''
             }`}
           >
-            Mensagens
+            Mensagens{' '}
+            {unvisualizedMessagesNumber > 0 && (
+              <b className="absolute right-0 top-0 w-5 h-5 flex justify-center items-center rounded-3xl text-md bg-primary color-headline">
+                {unvisualizedMessagesNumber}
+              </b>
+            )}
           </div>
         </Link>
         <Link href="/profile">

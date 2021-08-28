@@ -26,11 +26,17 @@ export default function Chat({
   const { socketEvent } = useContext(WebSocketsContext)
 
   const [chat, setChat] = useChat()
+  const [scrollIndex, setScrollIndex] = useState(0)
+  const [wasFullyRendered, setWasFullyRendered] = useState(false)
 
   const otherProfile = useMemo(
     () => chat.id && chat.members.find(profile => profile.id !== myProfile.id),
     [chat, myProfile.id]
   )
+
+  useEffect(() => {
+    fetchMessages(scrollIndex)
+  }, [scrollIndex])
 
   useEffect(() => {
     if (
@@ -39,7 +45,7 @@ export default function Chat({
       chat.id &&
       socketEvent.chatId === chat.id
     ) {
-      fetchMessages()
+      fetchMessages(0, true)
     }
   }, [socketEvent])
 
@@ -47,13 +53,13 @@ export default function Chat({
     if (chatRef.current) {
       chatRef.current.scrollTop = chatRef.current.scrollHeight
     }
-  })
+  }, [])
 
-  const fetchMessages = async () => {
+  const fetchMessages = async (scrollIndex = 0, unvisualizedOnly = false) => {
     if (!chat || !chat.id) return
 
     fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/chats/get-chat-messages/${chat.id}`,
+      `${process.env.NEXT_PUBLIC_API_URL}/api/chats/get-chat-messages/${chat.id}?scroll-index=${scrollIndex}&unvisualized-only=${unvisualizedOnly}`,
       {
         headers: {
           Authorization: 'JWT ' + (await getToken())
@@ -62,7 +68,8 @@ export default function Chat({
     ).then(response =>
       response.json().then(data => {
         if (response.ok) {
-          setChatMessages(data)
+          setChatMessages(data.messages, true)
+          setWasFullyRendered(data.fully_rendered)
           fetchChats()
         } else {
           setErrorMsg({
@@ -141,6 +148,7 @@ export default function Chat({
             ref={chatRef}
             className="p-4 flex-grow b-bottom-light overflow-y-auto"
           >
+            {console.log(chat.messages, chat.tempMessages)}
             {chat.messages.concat(chat.tempMessages).map(message => (
               <div key={message.id} className="w-full flex items-center mb-2">
                 <div
@@ -165,6 +173,7 @@ export default function Chat({
             ))}
           </div>
           <SendMessageForm
+            chatRef={chatRef}
             useChat={useChat}
             setChatMessages={setChatMessages}
             setErrorMsg={setErrorMsg}
