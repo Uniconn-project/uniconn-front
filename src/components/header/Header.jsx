@@ -20,17 +20,16 @@ export default function Header({ page }) {
 
   useEffect(() => {
     fetchUnvisualizedMessagesNumber()
-  }, [])
+  }, []) // eslint-disable-line
 
   useEffect(() => {
-    console.log(socketEvent)
     if (
       socketEvent.type === 'message' ||
       socketEvent.type === 'message-visualization'
     ) {
       fetchUnvisualizedMessagesNumber()
     }
-  }, [socketEvent])
+  }, [socketEvent]) // eslint-disable-line
 
   const fetchUnvisualizedMessagesNumber = async () => {
     fetch(

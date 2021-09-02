@@ -1,12 +1,5 @@
-import React, {
-  useContext,
-  useCallback,
-  useEffect,
-  useMemo,
-  useState
-} from 'react'
+import React, { useContext, useEffect, useMemo, useState } from 'react'
 import Image from 'next/image'
-import CircularProgress from '@material-ui/core/CircularProgress'
 import SendMessageForm from './SendMessageForm'
 import { MyProfileContext } from '../../../contexts/MyProfile'
 import { AuthContext } from '../../../contexts/Auth'
@@ -23,7 +16,7 @@ export default function Chat({
 }) {
   const { myProfile } = useContext(MyProfileContext)
   const { getToken } = useContext(AuthContext)
-  const { socketEvent } = useContext(WebSocketsContext)
+  const { socketEvent, socket } = useContext(WebSocketsContext)
 
   const [chat, setChat] = useChat()
   const [scrollIndex, setScrollIndex] = useState(0)
@@ -36,7 +29,7 @@ export default function Chat({
 
   useEffect(() => {
     fetchMessages(scrollIndex)
-  }, [scrollIndex])
+  }, [scrollIndex]) // eslint-disable-line
 
   useEffect(() => {
     if (
@@ -47,13 +40,13 @@ export default function Chat({
     ) {
       fetchMessages(0, true)
     }
-  }, [socketEvent])
+  }, [socketEvent]) // eslint-disable-line
 
   useEffect(() => {
     if (chatRef.current) {
       chatRef.current.scrollTop = chatRef.current.scrollHeight
     }
-  }, [])
+  }, [chat]) // eslint-disable-line
 
   const fetchMessages = async (scrollIndex = 0, unvisualizedOnly = false) => {
     if (!chat || !chat.id) return
@@ -91,6 +84,11 @@ export default function Chat({
     ).then(response =>
       response.json().then(data => {
         if (response.ok) {
+          socket.emit(
+            'message-visualization',
+            chat.members.map(profile => profile.id),
+            chat.id
+          )
           fetchChats()
         } else {
           setErrorMsg({
@@ -148,7 +146,6 @@ export default function Chat({
             ref={chatRef}
             className="p-4 flex-grow b-bottom-light overflow-y-auto"
           >
-            {console.log(chat.messages, chat.tempMessages)}
             {chat.messages.concat(chat.tempMessages).map(message => (
               <div key={message.id} className="w-full flex items-center mb-2">
                 <div

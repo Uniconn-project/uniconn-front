@@ -39,7 +39,7 @@ export default function SendMessageForm({
         }
       ]
     }))
-  
+
     if (messageContent.trim() === '') return
     fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/api/chats/create-message/${chat.id}`,

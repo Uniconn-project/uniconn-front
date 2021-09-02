@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useCallback, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Image from 'next/image'
 import SearchIcon from '@material-ui/icons/Search'
 import ArrowBackIcon from '@material-ui/icons/ArrowBack'
@@ -36,7 +36,7 @@ export default function Chats({
     ) {
       fetchChats()
     }
-  }, [socketEvent])
+  }, [socketEvent]) // eslint-disable-line
 
   useEffect(() => {
     fetchChats()
