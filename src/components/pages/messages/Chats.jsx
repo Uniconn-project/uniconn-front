@@ -7,40 +7,25 @@ import ProfileListItem from '../../global/ProfileListItem'
 import { MyProfileContext } from '../../../contexts/MyProfile'
 import { AuthContext } from '../../../contexts/Auth'
 import { fetcher } from '../../../hooks/useFetch'
-import { WebSocketsContext } from '../../../contexts/WebSockets'
 
 export default function Chats({
-  chatsFilterInputRef,
   fetchChats,
   useChats,
-  useOpenedChat,
+  useOpenedChatId,
+  initializeChat,
   setErrorMsg
 }) {
   const { myProfile } = useContext(MyProfileContext)
   const { getToken } = useContext(AuthContext)
-  const { socket, socketEvent } = useContext(WebSocketsContext)
 
   const [chatSearch, setChatSearch] = useState('')
   const [renderedChats, setRenderedChats] = useState(null)
   const [searchedProfiles, setSearchedProfiles] = useState([])
 
   const [chats, setChats] = useChats()
-  const [openedChat, setOpenedChat] = useOpenedChat()
+  const [openedChatId, setOpenedChatId] = useOpenedChatId()
 
   const isFiltering = chatSearch !== ''
-
-  useEffect(() => {
-    if (
-      socketEvent.type === 'message' ||
-      socketEvent.type === 'message-visualization'
-    ) {
-      fetchChats()
-    }
-  }, [socketEvent]) // eslint-disable-line
-
-  useEffect(() => {
-    fetchChats()
-  }, [fetchChats])
 
   useEffect(() => {
     if (!isFiltering) {
@@ -79,36 +64,6 @@ export default function Chats({
     )
   }
 
-  const openChat = async chat => {
-    setOpenedChat(chat)
-    fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/chats/visualize-chat-messages/${chat.id}`,
-      {
-        method: 'PATCH',
-        headers: {
-          'Content-type': 'application/json',
-          Authorization: 'JWT ' + (await getToken())
-        }
-      }
-    ).then(response =>
-      response.json().then(data => {
-        if (response.ok) {
-          fetchChats()
-          socket.emit(
-            'message-visualization',
-            chat.members.map(profile => profile.id),
-            chat.id
-          )
-        } else {
-          setErrorMsg({
-            isOpen: true,
-            message: data
-          })
-        }
-      })
-    )
-  }
-
   const createNewPrivateChat = async (e, profile) => {
     e.preventDefault()
 
@@ -126,7 +81,11 @@ export default function Chats({
     }).then(response =>
       response.json().then(data => {
         if (response.ok) {
-          setOpenedChat(data)
+          setChats(chats => ({
+            ...chats,
+            [data.id]: initializeChat(data)
+          }))
+          setOpenedChatId(data.id)
         } else {
           setErrorMsg({
             isOpen: true,
@@ -135,11 +94,6 @@ export default function Chats({
         }
       })
     )
-
-    setOpenedChat({
-      members: [myProfile, profile],
-      last_message: ''
-    })
   }
 
   return (
@@ -158,7 +112,6 @@ export default function Chats({
             <SearchIcon className="icon-sm" />
           )}
           <input
-            ref={chatsFilterInputRef}
             type="text"
             placeholder="Pesquisar ou criar conversa..."
             className="w-full bg-none p-2"
@@ -175,7 +128,7 @@ export default function Chats({
                 <span>CONVERSAS</span>
               </div>
             )}
-            {renderedChats.map(chat => {
+            {Object.values(renderedChats).map(chat => {
               const otherProfile = chat.members.find(
                 profile => profile.id !== myProfile.id
               )
@@ -184,11 +137,11 @@ export default function Chats({
                 <div key={chat.id} className="b-bottom-light b-width-1px">
                   <div
                     className={`w-full flex flex-col items-start p-2 cursor-pointer bg-transparent-hover ${
-                      openedChat && openedChat.id === chat.id
+                      openedChatId && openedChatId === chat.id
                         ? 'b-right-primary'
                         : ''
                     }`}
-                    onClick={() => openChat(chat)}
+                    onClick={() => setOpenedChatId(chat.id)}
                   >
                     <div className="flex w-full">
                       <div className="profile-img-sm mr-2">
@@ -200,7 +153,7 @@ export default function Chats({
                             {otherProfile.first_name} {otherProfile.last_name}
                           </h5>
                           {chat.unvisualized_messages_number > 0 &&
-                            openedChat.id !== chat.id && (
+                            openedChatId !== chat.id && (
                               <b className="absolute right-1 top-1 w-8 h-8 flex justify-center items-center rounded-3xl text-lg bg-primary color-headline">
                                 {chat.unvisualized_messages_number}
                               </b>

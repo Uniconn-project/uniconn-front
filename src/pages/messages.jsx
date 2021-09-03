@@ -1,10 +1,4 @@
-import React, {
-  useContext,
-  useEffect,
-  useState,
-  useRef,
-  useCallback
-} from 'react'
+import React, { useContext, useState, useRef, useEffect } from 'react'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import Snackbar from '@material-ui/core/Snackbar'
 import Alert from '@material-ui/lab/Alert'
@@ -13,22 +7,43 @@ import Chat from '../components/pages/messages/Chat'
 import Chats from '../components/pages/messages/Chats'
 import { MyProfileContext } from '../contexts/MyProfile'
 import { AuthContext } from '../contexts/Auth'
+import { WebSocketsContext } from '../contexts/WebSockets'
 
 export default function Messages() {
   const { myProfile } = useContext(MyProfileContext)
-  const { getToken } = useContext(AuthContext)
+  const { isAuthenticated, getToken } = useContext(AuthContext)
+  const { socket, socketEvent } = useContext(WebSocketsContext)
 
   const [chats, setChats] = useState(null)
-  const [openedChat, setOpenedChat] = useState({
-    id: null,
-    messages: []
-  })
+  const [openedChatId, setOpenedChatId] = useState(null)
   const [errorMsg, setErrorMsg] = useState({
     isOpen: false,
     message: ''
   })
 
-  const fetchChats = useCallback(async () => {
+  const chatRef = useRef(null)
+
+  useEffect(() => {
+    if (!isAuthenticated) return
+    fetchInitialChats()
+  }, [isAuthenticated]) // eslint-disable-line
+
+  useEffect(() => {
+    if (socketEvent.type === 'message') {
+      fetchUnvisualizedMessages(socketEvent.chatId)
+    }
+  }, [socketEvent]) // eslint-disable-line
+
+  useEffect(() => {
+    if (openedChatId && chats[openedChatId].unvisualized_messages_number) {
+      visualizeChatMessages(openedChatId)
+      if (chatRef.current) {
+        chatRef.current.scrollTop = chatRef.current.scrollHeight
+      }
+    }
+  }, [openedChatId]) // eslint-disable-line
+
+  const fetchInitialChats = async () => {
     fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/chats/get-chats-list`, {
       headers: {
         Authorization: 'JWT ' + (await getToken())
@@ -36,13 +51,11 @@ export default function Messages() {
     }).then(response =>
       response.json().then(data => {
         if (response.ok) {
-          setChats(
-            data.map(chat => ({
-              ...chat,
-              message: sortMessages(chat.messages),
-              tempMessages: []
-            }))
-          )
+          const chatsObj = {}
+          for (const chat of data) {
+            chatsObj[chat.id] = initializeChat(chat)
+          }
+          setChats(chatsObj)
         } else {
           setErrorMsg({
             isOpen: true,
@@ -51,10 +64,14 @@ export default function Messages() {
         }
       })
     )
-  }, [getToken])
+  }
 
-  const chatsFilterInputRef = useRef(null)
-  const chatRef = useRef(null)
+  const initializeChat = chat => ({
+    ...chat,
+    scrollIndex: 1,
+    fullyRendered: false,
+    messages: sortMessages(chat.messages)
+  })
 
   const sortMessages = messages => {
     return messages.sort((firstMessage, secondMessage) => {
@@ -62,14 +79,83 @@ export default function Messages() {
     })
   }
 
-  const setChatMessages = (messages, keepCurrent = false) => {
-    setOpenedChat(chat => ({
-      ...chat,
-      messages: keepCurrent
-        ? sortMessages([...chat.messages, ...messages])
-        : sortMessages(messages),
-      tempMessages: []
+  const setChatMessages = (chatId, messages, keepCurrent = false) => {
+    setChats(chats => ({
+      ...chats,
+      [chatId]: {
+        ...chats[chatId],
+        messages: keepCurrent
+          ? sortMessages([...chats[chatId].messages, ...messages])
+          : sortMessages(messages)
+      }
     }))
+  }
+
+  const fetchUnvisualizedMessages = async chatId => {
+    fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/chats/get-chat-messages/${chatId}?unvisualized-only=true`,
+      {
+        headers: {
+          Authorization: 'JWT ' + (await getToken())
+        }
+      }
+    ).then(response =>
+      response.json().then(data => {
+        if (response.ok) {
+          const previousScrollHeight = chatRef.current.scrollHeight
+          if (chatId === openedChatId && data.messages.length) {
+            visualizeChatMessages(chatId)
+          }
+          setChatMessages(chatId, data.messages, true)
+          setChats(chats => ({
+            ...chats,
+            [chatId]: {
+              ...chats[chatId],
+              unvisualized_messages_number:
+                chats[chatId].unvisualized_messages_number +
+                data.messages.length
+            }
+          }))
+          if (chatId === openedChatId) {
+            chatRef.current.scrollTop =
+              chatRef.current.scrollHeight - previousScrollHeight
+          }
+        } else {
+          setErrorMsg({
+            isOpen: true,
+            message: data
+          })
+        }
+      })
+    )
+  }
+
+  const visualizeChatMessages = async chatId => {
+    fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/chats/visualize-chat-messages/${chatId}`,
+      {
+        method: 'PATCH',
+        headers: {
+          Authorization: 'JWT ' + (await getToken())
+        }
+      }
+    ).then(response =>
+      response.json().then(data => {
+        if (response.ok) {
+          socket.emit(
+            'message-visualization',
+            chats[chatId].members.map(profile => profile.id),
+            chatId
+          )
+          chats[chatId].unvisualized_messages_number = 0
+        } else {
+          setErrorMsg({
+            isOpen: true,
+            message: data
+          })
+        }
+      })
+    )
   }
 
   if (!myProfile.id) {
@@ -89,10 +175,9 @@ export default function Messages() {
           <div className="w-72">
             <div className="fixed top-32">
               <Chats
-                chatsFilterInputRef={chatsFilterInputRef}
-                fetchChats={fetchChats}
                 useChats={() => [chats, setChats]}
-                useOpenedChat={() => [openedChat, setOpenedChat]}
+                useOpenedChatId={() => [openedChatId, setOpenedChatId]}
+                initializeChat={initializeChat}
                 setErrorMsg={setErrorMsg}
               />
             </div>
@@ -106,14 +191,26 @@ export default function Messages() {
             <div className="flex-basis-14 flex-shrink-0 flex items-center bg-light rounded-md shadow-lg p-2 mb-4">
               <h3 className="color-paragraph">Mensagens</h3>
             </div>
-            <Chat
-              chatRef={chatRef}
-              chatsFilterInputRef={chatsFilterInputRef}
-              useChat={() => [openedChat, setOpenedChat]}
-              fetchChats={fetchChats}
-              setChatMessages={setChatMessages}
-              setErrorMsg={setErrorMsg}
-            />
+            {openedChatId === null ? (
+              <div className="flex-basis-full flex flex-col justify-center items-center">
+                <div className="w-4/5 flex flex-col items-start sm:w-1/2">
+                  <span className="text-2xl color-headline mb-2">
+                    Você não tem uma conversa selecionada!
+                  </span>
+                  <span className="text-sm mb-4">
+                    Escolha uma das conversas existentes ou crie uma nova.
+                  </span>
+                </div>
+              </div>
+            ) : (
+              <Chat
+                chatRef={chatRef}
+                useChats={() => [chats, setChats]}
+                openedChatId={openedChatId}
+                setChatMessages={setChatMessages}
+                setErrorMsg={setErrorMsg}
+              />
+            )}
           </div>
           <Snackbar
             open={errorMsg.isOpen}

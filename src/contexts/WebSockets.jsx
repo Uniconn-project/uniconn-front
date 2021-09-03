@@ -7,7 +7,6 @@ import React, {
 } from 'react'
 import io from 'socket.io-client'
 import { MyProfileContext } from './MyProfile'
-import { fetcher } from '../hooks/useFetch'
 
 const isDev = process.env.NODE_ENV === 'development'
 

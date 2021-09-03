@@ -1,21 +1,15 @@
 import React, { useContext, useState } from 'react'
 import SendIcon from '@material-ui/icons/Send'
 import { MyProfileContext } from '../../../contexts/MyProfile'
-import { WebSocketsContext } from '../../../contexts/WebSockets'
-import { AuthContext } from '../../../contexts/Auth'
 
 export default function SendMessageForm({
-  chatRef,
-  useChat,
-  setChatMessages,
+  createChatMessage,
+  setTempMessages,
   setErrorMsg
 }) {
   const { myProfile } = useContext(MyProfileContext)
-  const { socket } = useContext(WebSocketsContext)
-  const { getToken } = useContext(AuthContext)
 
   const [messageContent, setMessageContent] = useState('')
-  const [chat, setChat] = useChat()
 
   const handleSubmit = async e => {
     e.preventDefault()
@@ -26,50 +20,19 @@ export default function SendMessageForm({
       })
       return
     }
-    setChat(chat => ({
-      ...chat,
-      tempMessages: [
-        ...chat.tempMessages,
-        {
-          id: Math.random(),
-          sender: {
-            id: myProfile.id
-          },
-          content: messageContent
-        }
-      ]
-    }))
+    setTempMessages(tempMessages => [
+      ...tempMessages,
+      {
+        id: Math.random(),
+        sender: {
+          id: myProfile.id
+        },
+        content: messageContent
+      }
+    ])
 
     if (messageContent.trim() === '') return
-    fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/chats/create-message/${chat.id}`,
-      {
-        method: 'POST',
-        headers: {
-          'Content-type': 'application/json',
-          Authorization: 'JWT ' + (await getToken())
-        },
-        body: JSON.stringify({
-          content: messageContent
-        })
-      }
-    ).then(response =>
-      response.json().then(data => {
-        if (response.ok) {
-          setChatMessages([data], true)
-          socket.emit(
-            'message',
-            chat.members.map(profile => profile.id),
-            chat.id
-          )
-        } else {
-          setErrorMsg({
-            isOpen: true,
-            message: data
-          })
-        }
-      })
-    )
+    createChatMessage(messageContent)
     setMessageContent('')
   }
 
