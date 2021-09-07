@@ -44,13 +44,13 @@ export default function Chats({
     }
 
     setRenderedChats(
-      chats.filter(chat =>
+      Object.values(chats).filter(chat =>
         chat.members
           .find(profile => profile.id !== myProfile.id)
           .user.username.includes(chatSearch)
       )
     )
-    const chatsMembersId = chats
+    const chatsMembersId = Object.values(chats)
       .map(chat => chat.members.map(profile => profile.id))
       .flat()
     const profiles = await fetcher(
@@ -136,7 +136,7 @@ export default function Chats({
               return (
                 <div key={chat.id} className="b-bottom-light b-width-1px">
                   <div
-                    className={`w-full flex flex-col items-start p-2 cursor-pointer bg-transparent-hover ${
+                    className={`w-full h-24 flex flex-col items-start p-2 cursor-pointer bg-transparent-hover ${
                       openedChatId && openedChatId === chat.id
                         ? 'b-right-primary'
                         : ''
@@ -166,7 +166,7 @@ export default function Chats({
                     </div>
                     <div className="w-full flex items-start ml-auto mr-4 mt-1">
                       <span className="whitespace-nowrap overflow-ellipsis overflow-hidden">
-                        {chat.messages[chat.messages.length - 1].content}
+                        {chat.messages.length ? chat.messages[chat.messages.length - 1].content : ''}
                       </span>
                     </div>
                   </div>

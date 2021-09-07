@@ -16,6 +16,7 @@ export default function Messages() {
 
   const [chats, setChats] = useState(null)
   const [openedChatId, setOpenedChatId] = useState(null)
+  const [tempMessages, setTempMessages] = useState([])
   const [errorMsg, setErrorMsg] = useState({
     isOpen: false,
     message: ''
@@ -35,11 +36,12 @@ export default function Messages() {
   }, [socketEvent]) // eslint-disable-line
 
   useEffect(() => {
-    if (openedChatId && chats[openedChatId].unvisualized_messages_number) {
+    if (!openedChatId) return
+    if (chatRef.current) {
+      chatRef.current.scrollTop = chatRef.current.scrollHeight
+    }
+    if (chats[openedChatId].unvisualized_messages_number) {
       visualizeChatMessages(openedChatId)
-      if (chatRef.current) {
-        chatRef.current.scrollTop = chatRef.current.scrollHeight
-      }
     }
   }, [openedChatId]) // eslint-disable-line
 
@@ -89,6 +91,7 @@ export default function Messages() {
           : sortMessages(messages)
       }
     }))
+    setTempMessages([])
   }
 
   const fetchUnvisualizedMessages = async chatId => {
@@ -102,7 +105,6 @@ export default function Messages() {
     ).then(response =>
       response.json().then(data => {
         if (response.ok) {
-          const previousScrollHeight = chatRef.current.scrollHeight
           if (chatId === openedChatId && data.messages.length) {
             visualizeChatMessages(chatId)
           }
@@ -116,10 +118,6 @@ export default function Messages() {
                 data.messages.length
             }
           }))
-          if (chatId === openedChatId) {
-            chatRef.current.scrollTop =
-              chatRef.current.scrollHeight - previousScrollHeight
-          }
         } else {
           setErrorMsg({
             isOpen: true,
@@ -192,7 +190,7 @@ export default function Messages() {
               <h3 className="color-paragraph">Mensagens</h3>
             </div>
             {openedChatId === null ? (
-              <div className="flex-basis-full flex flex-col justify-center items-center">
+              <div className="flex-basis-full flex flex-col justify-center items-center bg-transparent rounded-md shadow-lg">
                 <div className="w-4/5 flex flex-col items-start sm:w-1/2">
                   <span className="text-2xl color-headline mb-2">
                     Você não tem uma conversa selecionada!
@@ -206,6 +204,7 @@ export default function Messages() {
               <Chat
                 chatRef={chatRef}
                 useChats={() => [chats, setChats]}
+                useTempMessages={() => [tempMessages, setTempMessages]}
                 openedChatId={openedChatId}
                 setChatMessages={setChatMessages}
                 setErrorMsg={setErrorMsg}

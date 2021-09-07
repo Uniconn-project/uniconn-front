@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useMemo, useState } from 'react'
+import React, { useContext, useEffect, useMemo } from 'react'
 import Image from 'next/image'
 import SendMessageForm from './SendMessageForm'
 import CircularProgress from '@material-ui/core/CircularProgress'
@@ -10,6 +10,7 @@ import { renderTimestamp } from '../../../utils/utils'
 export default function Chat({
   chatRef,
   useChats,
+  useTempMessages,
   openedChatId,
   setChatMessages,
   setErrorMsg
@@ -19,7 +20,7 @@ export default function Chat({
   const { socket } = useContext(WebSocketsContext)
 
   const [chats, setChats] = useChats()
-  const [tempMessages, setTempMessages] = useState([])
+  const [tempMessages, setTempMessages] = useTempMessages()
 
   const otherProfile = useMemo(
     () =>
@@ -63,8 +64,6 @@ export default function Chat({
           }))
           chatRef.current.scrollTop =
             chatRef.current.scrollHeight - previousScrollHeight
-
-          setTempMessages([])
         } else {
           setErrorMsg({
             isOpen: true,
@@ -131,7 +130,7 @@ export default function Chat({
           className="p-4 flex-grow b-bottom-light overflow-y-auto"
           onScroll={handleChatScroll}
         >
-          {!chats[openedChatId].fullyRendered && (
+          {(!chats[openedChatId].fullyRendered && chats[openedChatId].messages.length >= 20) && (
             <div className="flex justify-center">
               <CircularProgress size={30} />
             </div>
