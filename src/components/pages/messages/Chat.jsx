@@ -1,7 +1,9 @@
-import React, { useContext, useEffect, useMemo } from 'react'
+import React, { useContext, useMemo } from 'react'
 import Image from 'next/image'
-import SendMessageForm from './SendMessageForm'
 import CircularProgress from '@material-ui/core/CircularProgress'
+import DoneIcon from '@material-ui/icons/Done'
+import DoneAllIcon from '@material-ui/icons/DoneAll'
+import SendMessageForm from './SendMessageForm'
 import { MyProfileContext } from '../../../contexts/MyProfile'
 import { AuthContext } from '../../../contexts/Auth'
 import { WebSocketsContext } from '../../../contexts/WebSockets'
@@ -28,12 +30,6 @@ export default function Chat({
       chats[openedChatId].members.find(profile => profile.id !== myProfile.id),
     [openedChatId, chats, myProfile.id]
   )
-
-  useEffect(() => {
-    if (chatRef.current && tempMessages.length) {
-      chatRef.current.scrollTop = chatRef.current.scrollHeight
-    }
-  }, [tempMessages]) // eslint-disable-line
 
   const handleChatScroll = e => {
     if (e.target.scrollTop === 0) {
@@ -112,17 +108,10 @@ export default function Chat({
             <Image src={otherProfile.photo} layout="fill" />
           </div>
           <div>
-            <h5>
+            <h5 className="text-xl mt-2">
               {otherProfile.first_name} {otherProfile.last_name}
             </h5>
-            <p className="self-start break-all color-secondary">
-              @
-              {
-                chats[openedChatId].members.find(
-                  profile => profile.id !== myProfile.id
-                ).user.username
-              }
-            </p>
+            <p className="self-start break-all">online</p>
           </div>
         </div>
         <div
@@ -130,11 +119,12 @@ export default function Chat({
           className="p-4 flex-grow b-bottom-light overflow-y-auto"
           onScroll={handleChatScroll}
         >
-          {(!chats[openedChatId].fullyRendered && chats[openedChatId].messages.length >= 20) && (
-            <div className="flex justify-center">
-              <CircularProgress size={30} />
-            </div>
-          )}
+          {!chats[openedChatId].fullyRendered &&
+            chats[openedChatId].messages.length >= 20 && (
+              <div className="flex justify-center">
+                <CircularProgress size={30} />
+              </div>
+            )}
           {chats[openedChatId].messages.concat(tempMessages).map(message => (
             <div key={message.id} className="w-full flex items-center mb-2">
               <div
@@ -142,26 +132,37 @@ export default function Chat({
                   message.sender.id === myProfile.id ? 'sent' : 'received'
                 }
               >
-                <div id="message-content" className="p-2">
+                <div id="message-content" className="p-2 pb-1">
                   <p className="color-headline break-words">
                     {message.content}
                   </p>
-                </div>
-                <div className="flex">
-                  <span id="message-details" className="text-sm">
-                    {message.created_at !== undefined
-                      ? renderTimestamp(message.created_at)
-                      : 'Enviando...'}
-                  </span>
+                  <div className="flex">
+                    <span id="message-details" className="text-sm">
+                      {message.created_at !== undefined ? (
+                        <span className="flex items-center">
+                          {renderTimestamp(message.created_at)}
+                          {message.sender.id === myProfile.id &&
+                            (chats[openedChatId].members.length ===
+                            message.visualized_by.length ? (
+                              <DoneAllIcon className="icon-xs ml-1 mb-1" />
+                            ) : (
+                              <DoneIcon className="icon-xs ml-1 mb-1" />
+                            ))}
+                        </span>
+                      ) : (
+                        'Enviando...'
+                      )}
+                    </span>
+                  </div>
                 </div>
               </div>
             </div>
           ))}
         </div>
         <SendMessageForm
+          chat={chats[openedChatId]}
           createChatMessage={createChatMessage}
           setTempMessages={setTempMessages}
-          setChatMessages={setChatMessages}
           setErrorMsg={setErrorMsg}
         />
       </div>

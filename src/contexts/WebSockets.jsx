@@ -54,6 +54,18 @@ export default function WebSocketsProvider({ children }) {
       }
     )
 
+    socketRef.current.on(
+      'message-typing',
+      ({ boolean, typerProfileId, chatId }) => {
+        setSocketEvent({
+          type: 'message-typing',
+          boolean,
+          typerProfileId,
+          chatId
+        })
+      }
+    )
+
     return () => {
       isDev && console.log('WebSockets disconnected')
       socketRef.current.disconnect()

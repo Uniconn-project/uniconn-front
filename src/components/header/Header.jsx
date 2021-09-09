@@ -96,12 +96,7 @@ export default function Header({ page }) {
               page === 'messages' ? 'active' : ''
             }`}
           >
-            Mensagens{' '}
-            {unvisualizedMessagesNumber > 0 && (
-              <b className="absolute right-0 top-0 w-5 h-5 flex justify-center items-center rounded-3xl text-md bg-primary color-headline">
-                {unvisualizedMessagesNumber}
-              </b>
-            )}
+            <Badge badgeContent={unvisualizedMessagesNumber}>Mensagens</Badge>
           </div>
         </Link>
         <Link href="/profile">

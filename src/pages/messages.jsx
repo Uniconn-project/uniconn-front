@@ -30,8 +30,27 @@ export default function Messages() {
   }, [isAuthenticated]) // eslint-disable-line
 
   useEffect(() => {
+    if (!chats) return
+
     if (socketEvent.type === 'message') {
       fetchUnvisualizedMessages(socketEvent.chatId)
+    }
+
+    if (socketEvent.type === 'message-visualization') {
+      setChatMessagesVisualization(
+        socketEvent.viewerProfileId,
+        socketEvent.chatId
+      )
+    }
+
+    if (socketEvent.type === 'message-typing') {
+      if (socketEvent.typerProfileId === myProfile.id) return
+
+      setChatTyping(
+        socketEvent.boolean,
+        socketEvent.typerProfileId,
+        socketEvent.chatId
+      )
     }
   }, [socketEvent]) // eslint-disable-line
 
@@ -72,7 +91,11 @@ export default function Messages() {
     ...chat,
     scrollIndex: 1,
     fullyRendered: false,
-    messages: sortMessages(chat.messages)
+    messages: sortMessages(chat.messages),
+    typing: {
+      boolean: false,
+      typerProfile: null
+    }
   })
 
   const sortMessages = messages => {
@@ -94,6 +117,38 @@ export default function Messages() {
     setTempMessages([])
   }
 
+  const setChatMessagesVisualization = (visualizerProfileId, chatId) => {
+    setChats(chats => ({
+      ...chats,
+      [chatId]: {
+        ...chats[chatId],
+        messages: chats[chatId].messages.map(message =>
+          message.visualized_by.includes(visualizerProfileId)
+            ? message
+            : {
+                ...message,
+                visualized_by: [...message.visualized_by, visualizerProfileId]
+              }
+        )
+      }
+    }))
+  }
+
+  const setChatTyping = (boolean, typerProfileId, chatId) => {
+    setChats(chats => ({
+      ...chats,
+      [chatId]: {
+        ...chats[chatId],
+        typing: {
+          boolean,
+          typerProfile: chats[chatId].members.find(
+            profile => profile.id === typerProfileId
+          )
+        }
+      }
+    }))
+  }
+
   const fetchUnvisualizedMessages = async chatId => {
     fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/api/chats/get-chat-messages/${chatId}?unvisualized-only=true`,
@@ -113,11 +168,12 @@ export default function Messages() {
             ...chats,
             [chatId]: {
               ...chats[chatId],
-              unvisualized_messages_number:
-                chats[chatId].unvisualized_messages_number +
-                data.messages.length
+              unvisualized_messages_number: data.messages.length
             }
           }))
+          if (chatRef.current && chatId === openedChatId) {
+            chatRef.current.scrollTop = chatRef.current.scrollHeight
+          }
         } else {
           setErrorMsg({
             isOpen: true,
@@ -142,10 +198,17 @@ export default function Messages() {
         if (response.ok) {
           socket.emit(
             'message-visualization',
+            myProfile.id,
             chats[chatId].members.map(profile => profile.id),
             chatId
           )
-          chats[chatId].unvisualized_messages_number = 0
+          setChats(chats => ({
+            ...chats,
+            [chatId]: {
+              ...chats[chatId],
+              unvisualized_messages_number: 0
+            }
+          }))
         } else {
           setErrorMsg({
             isOpen: true,

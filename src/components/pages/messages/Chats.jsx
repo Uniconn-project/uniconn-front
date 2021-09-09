@@ -3,6 +3,7 @@ import Image from 'next/image'
 import SearchIcon from '@material-ui/icons/Search'
 import ArrowBackIcon from '@material-ui/icons/ArrowBack'
 import CircularProgress from '@material-ui/core/CircularProgress'
+import Badge from '@material-ui/core/Badge'
 import ProfileListItem from '../../global/ProfileListItem'
 import { MyProfileContext } from '../../../contexts/MyProfile'
 import { AuthContext } from '../../../contexts/Auth'
@@ -152,21 +153,24 @@ export default function Chats({
                           <h5>
                             {otherProfile.first_name} {otherProfile.last_name}
                           </h5>
-                          {chat.unvisualized_messages_number > 0 &&
-                            openedChatId !== chat.id && (
-                              <b className="absolute right-1 top-1 w-8 h-8 flex justify-center items-center rounded-3xl text-lg bg-primary color-headline">
-                                {chat.unvisualized_messages_number}
-                              </b>
-                            )}
                         </div>
-                        <p className="self-start break-all color-secondary">
-                          @{otherProfile.user.username}
-                        </p>
+                        <Badge
+                          badgeContent={chat.unvisualized_messages_number || 0}
+                          className="w-11/12"
+                        >
+                          <p className="self-start break-all color-secondary">
+                            @{otherProfile.user.username}
+                          </p>
+                        </Badge>
                       </div>
                     </div>
                     <div className="w-full flex items-start ml-auto mr-4 mt-1">
                       <span className="whitespace-nowrap overflow-ellipsis overflow-hidden">
-                        {chat.messages.length ? chat.messages[chat.messages.length - 1].content : ''}
+                        {chat.typing.boolean
+                          ? 'Digitando...'
+                          : chat.messages.length
+                          ? chat.messages[chat.messages.length - 1].content
+                          : ''}
                       </span>
                     </div>
                   </div>
