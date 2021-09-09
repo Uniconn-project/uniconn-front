@@ -3,7 +3,7 @@
     "*.ipynb": "jupyter.notebook.ipynb"
   },
   "[javascriptreact]": {
-    "editor.defaultFormatter": "ms-vsliveshare.vsliveshare"
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "editor.formatOnSave": true,
   "workbench.iconTheme": "material-icon-theme",

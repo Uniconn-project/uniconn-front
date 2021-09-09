@@ -3,6 +3,8 @@ import SendIcon from '@material-ui/icons/Send'
 import { MyProfileContext } from '../../../contexts/MyProfile'
 import { WebSocketsContext } from '../../../contexts/WebSockets'
 
+const typingCounterInitialValue = 5
+
 export default function SendMessageForm({
   chat,
   createChatMessage,
@@ -13,13 +15,13 @@ export default function SendMessageForm({
   const { socket } = useContext(WebSocketsContext)
 
   const [messageContent, setMessageContent] = useState('')
-  const [typingCounter, setTypingCounter] = useState(0)
 
+  const typingCounterRef = useRef(typingCounterInitialValue)
   const typingCounterDecrementIntervalRef = useRef(null)
 
   const handleChange = e => {
     setMessageContent(e.target.value)
-    setTypingCounter(5)
+
     if (!typingCounterDecrementIntervalRef.current) {
       socket.emit(
         'message-typing',
@@ -29,8 +31,9 @@ export default function SendMessageForm({
         chat.id
       )
       typingCounterDecrementIntervalRef.current = setInterval(() => {
-        if (typingCounter > 0) {
-          setTypingCounter(typingCounter => typingCounter - 1)
+        console.log(typingCounterRef.current)
+        if (typingCounterRef.current > 0) {
+          typingCounterRef.current--
         } else {
           socket.emit(
             'message-typing',
@@ -39,10 +42,13 @@ export default function SendMessageForm({
             chat.members.map(profile => profile.id),
             chat.id
           )
+          typingCounterRef.current = typingCounterInitialValue
           clearInterval(typingCounterDecrementIntervalRef.current)
           typingCounterDecrementIntervalRef.current = null
         }
       }, 1000)
+    } else {
+      typingCounterRef.current = typingCounterInitialValue
     }
   }
 
@@ -66,14 +72,12 @@ export default function SendMessageForm({
       }
     ])
 
-    if (messageContent.trim() === '') return
     createChatMessage(messageContent)
     setMessageContent('')
   }
 
   return (
     <form className="flex p-3" onSubmit={handleSubmit}>
-      {console.log(typingCounter)}
       <input
         type="text"
         className="bg-none flex-grow"

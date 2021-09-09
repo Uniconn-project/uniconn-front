@@ -165,13 +165,15 @@ export default function Chats({
                       </div>
                     </div>
                     <div className="w-full flex items-start ml-auto mr-4 mt-1">
-                      <span className="whitespace-nowrap overflow-ellipsis overflow-hidden">
-                        {chat.typing.boolean
-                          ? 'Digitando...'
-                          : chat.messages.length
-                          ? chat.messages[chat.messages.length - 1].content
-                          : ''}
-                      </span>
+                      {chat.typing.boolean ? (
+                        <b className="text-lg color-primary">Digitando...</b>
+                      ) : (
+                        <span className="whitespace-nowrap overflow-ellipsis overflow-hidden">
+                          {chat.messages.length
+                            ? chat.messages[chat.messages.length - 1].content
+                            : ''}
+                        </span>
+                      )}
                     </div>
                   </div>
                 </div>

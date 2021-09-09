@@ -168,7 +168,11 @@ export default function Messages() {
             ...chats,
             [chatId]: {
               ...chats[chatId],
-              unvisualized_messages_number: data.messages.length
+              unvisualized_messages_number: data.messages.length,
+              typing: {
+                boolean: false,
+                typerProfile: null
+              }
             }
           }))
           if (chatRef.current && chatId === openedChatId) {

@@ -111,7 +111,9 @@ export default function Chat({
             <h5 className="text-xl mt-2">
               {otherProfile.first_name} {otherProfile.last_name}
             </h5>
-            <p className="self-start break-all">online</p>
+            {chats[openedChatId].typing.boolean && (
+              <p className="self-start break-all">Digitando...</p>
+            )}
           </div>
         </div>
         <div
