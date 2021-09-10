@@ -9,24 +9,24 @@ export default function ProjectInfo({
   isProjectAdmin,
   refetchProject
 }) {
-  const mobileBreakpoint = tailwindConfig.theme.screens.sm
+  const mobileBreakpoint = Number(
+    tailwindConfig.theme.screens.sm.slice(
+      0,
+      tailwindConfig.theme.screens.sm.length - 2
+    )
+  )
 
-  return (
-    <>
-      {visualViewport.width >
-      Number(mobileBreakpoint.slice(0, mobileBreakpoint.length - 2)) ? (
-        <ProjectInfoDesktop
-          project={project}
-          isProjectAdmin={isProjectAdmin}
-          refetchProject={refetchProject}
-        />
-      ) : (
-        <ProjectInfoMobile
-          project={project}
-          isProjectAdmin={isProjectAdmin}
-          refetchProject={refetchProject}
-        />
-      )}
-    </>
+  return visualViewport.width > mobileBreakpoint ? (
+    <ProjectInfoDesktop
+      project={project}
+      isProjectAdmin={isProjectAdmin}
+      refetchProject={refetchProject}
+    />
+  ) : (
+    <ProjectInfoMobile
+      project={project}
+      isProjectAdmin={isProjectAdmin}
+      refetchProject={refetchProject}
+    />
   )
 }

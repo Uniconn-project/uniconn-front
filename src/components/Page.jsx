@@ -39,7 +39,7 @@ export default function Page({
           {header && <Header page={page} />}
           <main
             className={`w-full h-full flex flex-col justify-start items-center ${
-              header ? 'pt-24 sm:pt-32' : ''
+              header ? 'pt-24 md:pt-32' : ''
             } ${className}`}
           >
             {children}

@@ -50,8 +50,8 @@ export default function Header({ page }) {
   }
 
   return (
-    <header className="fixed z-20 top-0 w-full h-20 flex items-center px-4 pt-2 header bg-light shadow-md sm:pl-8 sm:pr-20">
-      <div className="sm:hidden">
+    <header className="fixed z-20 top-0 w-full h-20 flex items-center px-4 pt-2 header bg-light shadow-md md:pl-8 md:pr-20">
+      <div className="md:hidden">
         <MobileMenu />
       </div>
       <div>
@@ -59,7 +59,7 @@ export default function Header({ page }) {
           <h2 className="text-3xl cursor-pointer">Uniconn</h2>
         </Link>
       </div>
-      <div className="sm:hidden ml-auto mr-2">
+      <div className="md:hidden ml-auto mr-2">
         {notificationsNumber !== null ? (
           <Link href="/notifications">
             <Badge
@@ -73,7 +73,7 @@ export default function Header({ page }) {
           <CircularProgress size={20} />
         )}
       </div>
-      <nav className="hidden sm:flex sm:ml-10 lg:ml-32">
+      <nav className="hidden md:flex md:ml-10 lg:ml-32">
         <Link href="/projects">
           <div
             className={`p-3 mr-2 nav-link ${
@@ -118,7 +118,7 @@ export default function Header({ page }) {
           </div>
         </Link>
       </nav>
-      <div className="hidden sm:block sm:ml-auto">
+      <div className="hidden md:block md:ml-auto">
         <DesktopMenu />
       </div>
     </header>

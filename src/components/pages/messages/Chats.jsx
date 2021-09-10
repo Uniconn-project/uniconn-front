@@ -99,11 +99,11 @@ export default function Chats({
 
   return (
     <div
-      className="relative flex flex-col bg-transparent rounded-md shadow-lg w-full overflow-y-auto md:max-w-2xl lg:w-72"
-      style={{ height: '70vh', maxHeight: '50rem' }}
+      className="relative flex flex-col bg-transparent rounded-md shadow-lg w-full overflow-y-auto md:h-70vh md:w-72"
+      style={{ maxHeight: '50rem' }}
     >
       <div className="flex b-bottom-light b-width-1px">
-        <div className="flex items-center bg-light m-2 px-1 rounded-md">
+        <div className="flex-basis-full flex items-center bg-light m-2 px-1 rounded-md">
           {isFiltering ? (
             <ArrowBackIcon
               className="icon-sm color-primary cursor-pointer"

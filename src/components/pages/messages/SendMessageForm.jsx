@@ -31,7 +31,6 @@ export default function SendMessageForm({
         chat.id
       )
       typingCounterDecrementIntervalRef.current = setInterval(() => {
-        console.log(typingCounterRef.current)
         if (typingCounterRef.current > 0) {
           typingCounterRef.current--
         } else {

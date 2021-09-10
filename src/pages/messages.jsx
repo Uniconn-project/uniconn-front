@@ -1,5 +1,6 @@
 import React, { useContext, useState, useRef, useEffect } from 'react'
 import CircularProgress from '@material-ui/core/CircularProgress'
+import ArrowBackIcon from '@material-ui/icons/ArrowBack'
 import Snackbar from '@material-ui/core/Snackbar'
 import Alert from '@material-ui/lab/Alert'
 import Page from '../components/Page'
@@ -8,6 +9,14 @@ import Chats from '../components/pages/messages/Chats'
 import { MyProfileContext } from '../contexts/MyProfile'
 import { AuthContext } from '../contexts/Auth'
 import { WebSocketsContext } from '../contexts/WebSockets'
+
+const tailwindConfig = require('../../tailwind.config')
+const mobileBreakpoint = Number(
+  tailwindConfig.theme.screens.md.slice(
+    0,
+    tailwindConfig.theme.screens.md.length - 2
+  )
+)
 
 export default function Messages() {
   const { myProfile } = useContext(MyProfileContext)
@@ -23,10 +32,13 @@ export default function Messages() {
   })
 
   const chatRef = useRef(null)
+  const isMobileRef = useRef(null)
 
   useEffect(() => {
     if (!isAuthenticated) return
+
     fetchInitialChats()
+    isMobileRef.current = visualViewport.width < mobileBreakpoint
   }, [isAuthenticated]) // eslint-disable-line
 
   useEffect(() => {
@@ -235,62 +247,78 @@ export default function Messages() {
 
   return (
     <Page title="Mensagens | Uniconn" page="messages" loginRequired header>
-      <div className="flex justify-center w-full h-full">
-        <section className="hidden lg:w-1/3 lg:flex lg:justify-end lg:mr-10 lg:box-border">
-          <div className="w-72">
-            <div className="fixed top-32">
-              <Chats
-                useChats={() => [chats, setChats]}
-                useOpenedChatId={() => [openedChatId, setOpenedChatId]}
-                initializeChat={initializeChat}
-                setErrorMsg={setErrorMsg}
-              />
-            </div>
-          </div>
-        </section>
-        <section className="w-full flex justify-center p-2 pt-0 lg:p-0 lg:w-2/3 lg:justify-start lg:box-border">
-          <div
-            className="w-full flex flex-col items-stretch sm:h-70vh"
-            style={{ maxWidth: 600, maxHeight: '50rem' }}
-          >
-            <div className="flex-basis-14 flex-shrink-0 flex items-center bg-light rounded-md shadow-lg p-2 mb-4">
-              <h3 className="color-paragraph">Mensagens</h3>
-            </div>
-            {openedChatId === null ? (
-              <div className="flex-basis-full flex flex-col justify-center items-center bg-transparent rounded-md shadow-lg">
-                <div className="w-4/5 flex flex-col items-start sm:w-1/2">
-                  <span className="text-2xl color-headline mb-2">
-                    Você não tem uma conversa selecionada!
-                  </span>
-                  <span className="text-sm mb-4">
-                    Escolha uma das conversas existentes ou crie uma nova.
-                  </span>
-                </div>
+      <div className="flex justify-center w-full h-full px-2 sm:px-4 md:px-6 lg:p-0">
+        {(!isMobileRef.current || !openedChatId) && (
+          <section className="w-full md:w-1/3 md:flex md:justify-end md:mr-10 md:box-border">
+            <div className="flex flex-col md:w-72">
+              <div className="flex-basis-14 flex-shrink-0 flex items-center bg-light rounded-md shadow-lg p-2 mb-4 md:hidden">
+                <h3 className="color-paragraph">Mensagens</h3>
               </div>
-            ) : (
-              <Chat
-                chatRef={chatRef}
-                useChats={() => [chats, setChats]}
-                useTempMessages={() => [tempMessages, setTempMessages]}
-                openedChatId={openedChatId}
-                setChatMessages={setChatMessages}
-                setErrorMsg={setErrorMsg}
-              />
-            )}
-          </div>
-          <Snackbar
-            open={errorMsg.isOpen}
-            autoHideDuration={6000}
-            onClose={() =>
-              setErrorMsg({
-                isOpen: false,
-                message: ''
-              })
-            }
-          >
-            <Alert severity="error">{errorMsg.message}</Alert>
-          </Snackbar>
-        </section>
+              <div className="md:fixed md:top-32">
+                <Chats
+                  useChats={() => [chats, setChats]}
+                  useOpenedChatId={() => [openedChatId, setOpenedChatId]}
+                  initializeChat={initializeChat}
+                  setErrorMsg={setErrorMsg}
+                />
+              </div>
+            </div>
+          </section>
+        )}
+        {(!isMobileRef.current || openedChatId !== null) && (
+          <section className="w-full flex justify-center pb-4 md:p-0 md:w-2/3 md:justify-start md:box-border">
+            <div
+              className="w-full flex flex-col items-stretch md:max-w-600px md:h-70vh"
+              style={{ maxHeight: '50rem' }}
+            >
+              <div className="flex-basis-14 flex-shrink-0 flex items-center bg-light rounded-md shadow-lg p-2 mb-4">
+                {isMobileRef.current && openedChatId !== null && (
+                  <div
+                    className="p-1 mr-2 rounded-3xl bg-transparent-hover cursor-pointer"
+                    onClick={() => setOpenedChatId(null)}
+                  >
+                    <ArrowBackIcon className="icon-sm color-primary" />
+                  </div>
+                )}
+                <h3 className="color-paragraph">Mensagens</h3>
+              </div>
+              {openedChatId === null ? (
+                <div className="flex-basis-full hidden md:flex flex-col justify-center items-center bg-transparent rounded-md shadow-lg">
+                  <div className="w-4/5 flex flex-col items-start sm:w-1/2">
+                    <span className="text-2xl color-headline mb-2">
+                      Você não tem uma conversa selecionada!
+                    </span>
+                    <span className="text-sm mb-4">
+                      Escolha uma das conversas existentes ou crie uma nova.
+                    </span>
+                  </div>
+                </div>
+              ) : (
+                <Chat
+                  isMobile={isMobileRef.current}
+                  chatRef={chatRef}
+                  openedChatId={openedChatId}
+                  useChats={() => [chats, setChats]}
+                  useTempMessages={() => [tempMessages, setTempMessages]}
+                  setChatMessages={setChatMessages}
+                  setErrorMsg={setErrorMsg}
+                />
+              )}
+            </div>
+          </section>
+        )}
+        <Snackbar
+          open={errorMsg.isOpen}
+          autoHideDuration={6000}
+          onClose={() =>
+            setErrorMsg({
+              isOpen: false,
+              message: ''
+            })
+          }
+        >
+          <Alert severity="error">{errorMsg.message}</Alert>
+        </Snackbar>
       </div>
     </Page>
   )

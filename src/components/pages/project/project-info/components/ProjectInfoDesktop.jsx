@@ -101,7 +101,7 @@ export default function ProjectInfoDesktop({
   return (
     <div
       className="relative bg-transparent h-4/5 rounded-md shadow-lg w-full md:max-w-2xl lg:w-60"
-      style={{ maxHeight: '50rem' }}
+      style={{ height: '70vh', maxHeight: '50rem' }}
     >
       <div className="b-bottom-light">
         {window.history.length > 1 && (

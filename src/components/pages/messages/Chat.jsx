@@ -1,6 +1,7 @@
 import React, { useContext, useMemo } from 'react'
 import Image from 'next/image'
 import CircularProgress from '@material-ui/core/CircularProgress'
+import ArrowBackIcon from '@material-ui/icons/ArrowBack'
 import DoneIcon from '@material-ui/icons/Done'
 import DoneAllIcon from '@material-ui/icons/DoneAll'
 import SendMessageForm from './SendMessageForm'
@@ -11,9 +12,9 @@ import { renderTimestamp } from '../../../utils/utils'
 
 export default function Chat({
   chatRef,
+  openedChatId,
   useChats,
   useTempMessages,
-  openedChatId,
   setChatMessages,
   setErrorMsg
 }) {
