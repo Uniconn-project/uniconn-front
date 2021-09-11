@@ -32,14 +32,14 @@ export default function Chat({
   )
 
   const handleChatScroll = e => {
-    if (e.target.scrollTop === 0) {
+    if (e.target.scrollTop === 0 && !chats[openedChatId].fullyRendered) {
       fetchMessages(chats[openedChatId].scrollIndex)
     }
   }
 
   const fetchMessages = async scrollIndex => {
     fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/chats/get-chat-messages/${chats[openedChatId].id}?scroll-index=${scrollIndex}`,
+      `${process.env.NEXT_PUBLIC_API_URL}/api/chats/get-chat-messages/${openedChatId}?scroll-index=${scrollIndex}`,
       {
         headers: {
           Authorization: 'JWT ' + (await getToken())
@@ -49,7 +49,7 @@ export default function Chat({
       response.json().then(data => {
         if (response.ok) {
           const previousScrollHeight = chatRef.current.scrollHeight
-          setChatMessages(chats[openedChatId].id, data.messages, true)
+          setChatMessages(openedChatId, data.messages, true)
           setChats(chats => ({
             ...chats,
             [openedChatId]: {
