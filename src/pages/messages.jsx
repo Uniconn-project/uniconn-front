@@ -66,6 +66,12 @@ export default function Messages() {
     }
   }, [openedChatId]) // eslint-disable-line
 
+  useEffect(() => {
+    if (chatRef.current) {
+      chatRef.current.scrollTop = chatRef.current.scrollHeight
+    }
+  }, [tempMessages])
+
   const fetchInitialChats = async () => {
     fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/chats/get-chats-list`, {
       headers: {
