@@ -10,7 +10,6 @@ import { AuthContext } from '../../../contexts/Auth'
 import { fetcher } from '../../../hooks/useFetch'
 
 export default function Chats({
-  fetchChats,
   useChats,
   useOpenedChatId,
   initializeChat,

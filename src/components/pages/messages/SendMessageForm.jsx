@@ -3,8 +3,6 @@ import SendIcon from '@material-ui/icons/Send'
 import { MyProfileContext } from '../../../contexts/MyProfile'
 import { WebSocketsContext } from '../../../contexts/WebSockets'
 
-const typingCounterInitialValue = 5
-
 export default function SendMessageForm({
   chat,
   createChatMessage,
@@ -16,38 +14,36 @@ export default function SendMessageForm({
 
   const [messageContent, setMessageContent] = useState('')
 
-  const typingCounterRef = useRef(typingCounterInitialValue)
-  const typingCounterDecrementIntervalRef = useRef(null)
+  const typedInTheLastFiveSeconds = useRef(false)
+  const typingIntervalRef = useRef(null)
 
   const handleChange = e => {
     setMessageContent(e.target.value)
+    typedInTheLastFiveSeconds.current = true
 
-    if (!typingCounterDecrementIntervalRef.current) {
+    if (!typingIntervalRef.current) {
+      typedInTheLastFiveSeconds.current = false
       socket.emit(
         'message-typing',
-        true,
         myProfile.id,
         chat.members.map(profile => profile.id),
         chat.id
       )
-      typingCounterDecrementIntervalRef.current = setInterval(() => {
-        if (typingCounterRef.current > 0) {
-          typingCounterRef.current--
-        } else {
+
+      typingIntervalRef.current = setInterval(() => {
+        if (typedInTheLastFiveSeconds.current) {
+          typedInTheLastFiveSeconds.current = false
           socket.emit(
             'message-typing',
-            false,
             myProfile.id,
             chat.members.map(profile => profile.id),
             chat.id
           )
-          typingCounterRef.current = typingCounterInitialValue
-          clearInterval(typingCounterDecrementIntervalRef.current)
-          typingCounterDecrementIntervalRef.current = null
+        } else {
+          clearInterval(typingIntervalRef.current)
+          typingIntervalRef.current = null
         }
-      }, 1000)
-    } else {
-      typingCounterRef.current = typingCounterInitialValue
+      }, 5000)
     }
   }
 

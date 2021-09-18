@@ -24,6 +24,8 @@ export default function Messages() {
   })
 
   const chatRef = useRef(null)
+  const chatTypingTimerDictRef = useRef({})
+  const typingIntervalRef = useRef(null)
 
   useEffect(() => {
     if (!isAuthenticated) return
@@ -48,11 +50,13 @@ export default function Messages() {
     if (socketEvent.type === 'message-typing') {
       if (socketEvent.typerProfileId === myProfile.id) return
 
-      setChatTyping(
-        socketEvent.boolean,
-        socketEvent.typerProfileId,
-        socketEvent.chatId
-      )
+      chatTypingTimerDictRef.current[socketEvent.chatId].timer = 5
+      if (!chats[socketEvent.chatId].typing.boolean) {
+        setChatTyping(true, socketEvent.typerProfileId, socketEvent.chatId)
+      }
+      if (!typingIntervalRef.current) {
+        typingIntervalRef.current = setInterval(typingIntervalCallback, 1000)
+      }
     }
   }, [socketEvent]) // eslint-disable-line
 
@@ -83,6 +87,10 @@ export default function Messages() {
           const chatsObj = {}
           for (const chat of data) {
             chatsObj[chat.id] = initializeChat(chat)
+            chatTypingTimerDictRef.current[chat.id] = {
+              timer: 0,
+              typing: false
+            }
           }
           setChats(chatsObj)
         } else {
@@ -105,6 +113,24 @@ export default function Messages() {
       typerProfile: null
     }
   })
+
+  const typingIntervalCallback = () => {
+    let someoneIsTyping = false
+
+    for (const chatId of Object.keys(chatTypingTimerDictRef.current)) {
+      if (chatTypingTimerDictRef.current[chatId].timer) {
+        someoneIsTyping = true
+        chatTypingTimerDictRef.current[chatId].timer--
+      } else if (chatTypingTimerDictRef.current[chatId].typing) {
+        setChatTyping(false, null, chatId)
+      }
+    }
+
+    if (!someoneIsTyping) {
+      clearInterval(typingIntervalRef.current)
+      typingIntervalRef.current = null
+    }
+  }
 
   const sortMessages = messages => {
     return messages.sort((firstMessage, secondMessage) => {
@@ -143,6 +169,8 @@ export default function Messages() {
   }
 
   const setChatTyping = (boolean, typerProfileId, chatId) => {
+    chatTypingTimerDictRef.current[chatId].typing = boolean
+
     setChats(chats => ({
       ...chats,
       [chatId]: {
@@ -243,6 +271,7 @@ export default function Messages() {
 
   return (
     <Page title="Mensagens | Uniconn" page="messages" loginRequired header>
+      {console.log('current chats: ', chats)}
       <div className="flex justify-center w-full h-full px-2 sm:px-4 md:px-6 lg:p-0">
         <section
           className={`${
