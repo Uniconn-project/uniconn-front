@@ -127,39 +127,71 @@ export default function Chat({
                 <CircularProgress size={30} />
               </div>
             )}
-          {chats[openedChatId].messages.concat(tempMessages).map(message => (
-            <div key={message.id} className="w-full flex items-center mb-2">
-              <div
-                className={
-                  message.sender.id === myProfile.id ? 'sent' : 'received'
-                }
-              >
-                <div id="message-content" className="p-2 pb-1">
-                  <p className="color-headline break-words">
-                    {message.content}
-                  </p>
-                  <div className="flex">
-                    <span id="message-details" className="text-sm">
-                      {message.created_at !== undefined ? (
-                        <span className="flex items-center">
-                          {renderTimestamp(message.created_at)}
-                          {message.sender.id === myProfile.id &&
-                            (chats[openedChatId].members.length ===
-                            message.visualized_by.length ? (
-                              <DoneAllIcon className="icon-xs ml-1 mb-1" />
+          {chats[openedChatId].messages
+            .concat(tempMessages)
+            .map((message, index, messages) => {
+              const messageDate = renderTimestamp(message.created_at).split(
+                ' - '
+              )[0]
+              let dayChanged = true
+
+              if (index) {
+                const prevMessageDate = renderTimestamp(
+                  messages[index - 1].created_at
+                ).split(' - ')[0]
+                dayChanged = messageDate !== prevMessageDate
+              }
+
+              return (
+                <React.Fragment key={message.id}>
+                  {dayChanged && (
+                    <div
+                      className="flex justify-center sticky top-2"
+                      style={{ zIndex: index }}
+                    >
+                      <span className="bg-dark rounded-md p-2">
+                        {messageDate}
+                      </span>
+                    </div>
+                  )}
+                  <div className="w-full flex items-center mb-2">
+                    <div
+                      className={
+                        message.sender.id === myProfile.id ? 'sent' : 'received'
+                      }
+                    >
+                      <div id="message-content" className="p-2 pb-1">
+                        <p className="color-headline break-words">
+                          {message.content}
+                        </p>
+                        <div className="flex">
+                          <span id="message-details" className="text-sm">
+                            {message.created_at !== undefined ? (
+                              <span className="flex items-center">
+                                {
+                                  renderTimestamp(message.created_at).split(
+                                    ' - '
+                                  )[1]
+                                }
+                                {message.sender.id === myProfile.id &&
+                                  (chats[openedChatId].members.length ===
+                                  message.visualized_by.length ? (
+                                    <DoneAllIcon className="icon-xs ml-1 mb-1" />
+                                  ) : (
+                                    <DoneIcon className="icon-xs ml-1 mb-1" />
+                                  ))}
+                              </span>
                             ) : (
-                              <DoneIcon className="icon-xs ml-1 mb-1" />
-                            ))}
-                        </span>
-                      ) : (
-                        'Enviando...'
-                      )}
-                    </span>
+                              'Enviando...'
+                            )}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </div>
-            </div>
-          ))}
+                </React.Fragment>
+              )
+            })}
         </div>
         <SendMessageForm
           chat={chats[openedChatId]}
