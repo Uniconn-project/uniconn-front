@@ -5,10 +5,12 @@ import FilledInput from '@material-ui/core/FilledInput'
 import { mutate } from 'swr'
 import { MyProfileContext } from '../../../../../../contexts/MyProfile'
 import { AuthContext } from '../../../../../../contexts/Auth'
+import { WebSocketsContext } from '../../../../../../contexts/WebSockets'
 
 export default function ReplyFrom({ discussion, setErrorMsg }) {
   const { myProfile } = useContext(MyProfileContext)
   const { getToken } = useContext(AuthContext)
+  const { socket } = useContext(WebSocketsContext)
 
   const [postData, setPostData] = useState({
     content: ''
@@ -45,6 +47,7 @@ export default function ReplyFrom({ discussion, setErrorMsg }) {
           setPostData({
             content: ''
           })
+          socket.emit('notification', [discussion.profile.id])
         } else {
           setErrorMsg({
             isOpen: true,

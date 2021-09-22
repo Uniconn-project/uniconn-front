@@ -8,6 +8,7 @@ import ProjectsInvitations from '../components/pages/notifications/ProjectsInvit
 import ProjectsEntryRequests from '../components/pages/notifications/ProjectsEntryRequests'
 import DiscussionsStars from '../components/pages/notifications/DiscussionsStars'
 import { AuthContext } from '../contexts/Auth'
+import { WebSocketsContext } from '../contexts/WebSockets'
 import { MyProfileContext } from '../contexts/MyProfile'
 import { fetcher } from '../hooks/useFetch'
 import { NotificationsContext } from '../contexts/Notifications'
@@ -16,6 +17,7 @@ import DiscussionsReplies from '../components/pages/notifications/DiscussionsRep
 export default function Notifications() {
   const { myProfile } = useContext(MyProfileContext)
   const { getToken, isAuthenticated } = useContext(AuthContext)
+  const { socketEvent } = useContext(WebSocketsContext)
   const { fetchNotificationsNumber } = useContext(NotificationsContext)
 
   const [projectsInvitations, setProjectsInvitations] = useState(null)
@@ -30,11 +32,13 @@ export default function Notifications() {
 
     fetchNotifications()
     visualizeNotifications()
-
-    const interval = setInterval(fetchNotifications, 10000)
-
-    return () => clearInterval(interval)
   }, [isAuthenticated]) // eslint-disable-line
+
+  useEffect(() => {
+    if (socketEvent.type === 'notification') {
+      fetchNotifications()
+    }
+  }, [socketEvent]) // eslint-disable-line
 
   const fetchNotifications = async () => {
     const notifications = await fetcher('profiles/get-notifications', {

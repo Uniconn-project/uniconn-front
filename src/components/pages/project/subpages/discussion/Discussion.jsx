@@ -15,11 +15,13 @@ import { mutate } from 'swr'
 import { renderTimestamp } from '../../../../../utils/utils'
 import { MyProfileContext } from '../../../../../contexts/MyProfile'
 import { AuthContext } from '../../../../../contexts/Auth'
+import { WebSocketsContext } from '../../../../../contexts/WebSockets'
 import ReplyListItem from './components/ReplyListItem'
 
 export default function Discussion() {
   const { myProfile } = useContext(MyProfileContext)
   const { getToken } = useContext(AuthContext)
+  const { socket } = useContext(WebSocketsContext)
 
   const router = useRouter()
 
@@ -78,6 +80,8 @@ export default function Discussion() {
       .then(data => {
         if (data === 'success') {
           mutate(`projects/get-project-discussion/${discussion.id}`)
+          socket.emit('notification', [discussion.profile.id])
+          console.log('emmiting to ', [discussion.profile.id])
         } else {
           setErrorMsg({
             isOpen: true,
@@ -107,6 +111,7 @@ export default function Discussion() {
       .then(data => {
         if (data === 'success') {
           mutate(`projects/get-project-discussion/${discussion.id}`)
+          socket.emit('notification', [discussion.profile.id])
         } else {
           setErrorMsg({
             isOpen: true,

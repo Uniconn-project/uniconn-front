@@ -77,9 +77,9 @@ export default function MyApp({ Component, pageProps }) {
       </Head>
       <AuthProvider>
         <MyProfileProvider>
-          <NotificationsProvider>
-            <ThemeProvider>
-              <WebSocketsProvider>
+          <WebSocketsProvider>
+            <NotificationsProvider>
+              <ThemeProvider>
                 {loading ? (
                   <div className="w-full h-screen flex justify-center items-center">
                     <Header />
@@ -88,9 +88,9 @@ export default function MyApp({ Component, pageProps }) {
                 ) : (
                   <Component {...pageProps} />
                 )}
-              </WebSocketsProvider>
-            </ThemeProvider>
-          </NotificationsProvider>
+              </ThemeProvider>
+            </NotificationsProvider>
+          </WebSocketsProvider>
         </MyProfileProvider>
       </AuthProvider>
     </>

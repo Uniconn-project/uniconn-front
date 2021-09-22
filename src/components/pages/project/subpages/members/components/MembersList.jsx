@@ -4,6 +4,7 @@ import ProfileListItemWithIcon from '../../../../../global/ProfileListItemWithIc
 import SettingsPopover from './SettingsPopover'
 import { MyProfileContext } from '../../../../../../contexts/MyProfile'
 import { AuthContext } from '../../../../../../contexts/Auth'
+import { WebSocketsContext } from '../../../../../../contexts/WebSockets'
 
 export default function MembersList({
   project,
@@ -14,21 +15,22 @@ export default function MembersList({
 }) {
   const { myProfile } = useContext(MyProfileContext)
   const { getToken } = useContext(AuthContext)
+  const { socket } = useContext(WebSocketsContext)
 
-  const handleCancelProjectInvitation = async (e, type, username) => {
+  const handleCancelProjectInvitation = async (e, profile) => {
     e.stopPropagation()
 
     if (window.confirm('Remover convite?')) {
       fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/api/projects/uninvite-user-from-project/${project.id}`,
         {
-          method: 'PUT',
+          method: 'DELETE',
           headers: {
             Authorization: 'JWT ' + (await getToken()),
             'Content-type': 'application/json'
           },
           body: JSON.stringify({
-            username: username
+            username: profile.user.username
           })
         }
       )
@@ -36,6 +38,7 @@ export default function MembersList({
         .then(data => {
           if (data === 'success') {
             refetchProject('uninvite-user')
+            socket.emit('notification', [profile.id])
           } else {
             setErrorMsg({
               isOpen: true,
@@ -96,13 +99,7 @@ export default function MembersList({
               {isProjectAdmin && (
                 <CloseIcon
                   className="icon-sm color-red-hover"
-                  onClick={e =>
-                    handleCancelProjectInvitation(
-                      e,
-                      profile.type,
-                      profile.user.username
-                    )
-                  }
+                  onClick={e => handleCancelProjectInvitation(e, profile)}
                 />
               )}
             </ProfileListItemWithIcon>

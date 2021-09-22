@@ -7,6 +7,7 @@ import TextField from '@material-ui/core/TextField'
 import Snackbar from '@material-ui/core/Snackbar'
 import Alert from '@material-ui/lab/Alert'
 import { AuthContext } from '../../../../../../contexts/Auth'
+import { WebSocketsContext } from '../../../../../../contexts/WebSockets'
 
 export default function AskToJoinProjectModal({
   type,
@@ -14,6 +15,7 @@ export default function AskToJoinProjectModal({
   refetchProject
 }) {
   const { getToken } = useContext(AuthContext)
+  const { socket } = useContext(WebSocketsContext)
 
   const [isOpen, setIsOpen] = useState(false)
   const [message, setMessage] = useState(
@@ -43,6 +45,13 @@ export default function AskToJoinProjectModal({
         setIsOpen(false)
         if (data === 'success') {
           refetchProject('ask-to-join-project')
+          console.log(project.members)
+          socket.emit(
+            'notification',
+            project.members
+              .filter(membership => membership.role.readable === 'admin')
+              .map(membership => membership.profile.id)
+          )
         } else {
           setErrorMsg({
             isOpen: true,

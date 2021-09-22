@@ -15,10 +15,12 @@ import Alert from '@material-ui/lab/Alert'
 import { fetcher } from '../../../../../../hooks/useFetch'
 import { MyProfileContext } from '../../../../../../contexts/MyProfile'
 import { AuthContext } from '../../../../../../contexts/Auth'
+import { WebSocketsContext } from '../../../../../../contexts/WebSockets'
 
 export default function AddMembersModal({ project, refetchProject }) {
   const { myProfile } = useContext(MyProfileContext)
   const { getToken } = useContext(AuthContext)
+  const { socket } = useContext(WebSocketsContext)
 
   const [isOpen, setIsOpen] = useState(false)
   const [profilesSearch, setProfilesSearch] = useState('')
@@ -81,6 +83,10 @@ export default function AddMembersModal({ project, refetchProject }) {
         if (data === 'success') {
           refetchProject('invite-user')
           setIsOpen(false)
+          socket.emit(
+            'notification',
+            selectedProfiles.map(profile => profile.id)
+          )
         } else {
           handleClose()
           setErrorMsg({

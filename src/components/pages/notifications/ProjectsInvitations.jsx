@@ -97,13 +97,13 @@ export default function ProjectsInvitations({
             <div className="flex">
               <button
                 className="rounded-lg bg-green bg-hover color-bg-light p-1 mr-1"
-                onClick={() => handleSubmit('accept', request)}
+                onClick={() => handleSubmit('accept', request.project)}
               >
                 Aceitar
               </button>
               <button
                 className="rounded-lg bg-secondary bg-hover color-bg-light p-1 ml-1"
-                onClick={() => handleSubmit('decline', request)}
+                onClick={() => handleSubmit('decline', request.project)}
               >
                 Recusar
               </button>
