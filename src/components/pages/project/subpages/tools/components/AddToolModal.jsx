@@ -39,7 +39,7 @@ export default function AddToolModal({
 
   const handleSubmit = async () => {
     fetch(
-      `${process.env.NEXT_PUBLIC_API_HOST}/api/projects/create-tool/${project.id}`,
+      `${process.env.NEXT_PUBLIC_API_URL}/api/projects/create-tool/${project.id}`,
       {
         method: 'POST',
         headers: {

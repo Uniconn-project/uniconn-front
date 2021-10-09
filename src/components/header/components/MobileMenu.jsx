@@ -9,6 +9,7 @@ import CollectionsBookmarkOutlinedIcon from '@material-ui/icons/CollectionsBookm
 import PersonOutlineOutlinedIcon from '@material-ui/icons/PersonOutlineOutlined'
 import GroupOutlinedIcon from '@material-ui/icons/GroupOutlined'
 import SettingsOutlinedIcon from '@material-ui/icons/SettingsOutlined'
+import ChatIcon from '@material-ui/icons/Chat'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import ExitToAppOutlinedIcon from '@material-ui/icons/ExitToAppOutlined'
 import { MyProfileContext } from '../../../contexts/MyProfile'
@@ -20,13 +21,13 @@ export default function MobileMenu() {
 
   const [mobileMenuIsOpen, setMobileMenuIsOpen] = useState(false)
 
-  if (!myProfile) {
+  if (!myProfile.id) {
     return <CircularProgress size={20} />
   }
 
   return (
     <div>
-      <div className="profile-img-sm mr-2 cursor-pointer">
+      <div className="profile-img-xs mr-2 cursor-pointer">
         <Image
           src={myProfile.photo}
           layout="fill"
@@ -38,7 +39,7 @@ export default function MobileMenu() {
         open={mobileMenuIsOpen}
         onClose={() => setMobileMenuIsOpen(false)}
       >
-        <div
+        <nav
           role="presentation"
           onClick={() => setMobileMenuIsOpen(!mobileMenuIsOpen)}
         >
@@ -57,6 +58,14 @@ export default function MobileMenu() {
                   <GroupOutlinedIcon />
                 </ListItemIcon>
                 <ListItemText primary={'Usuários'} />
+              </ListItem>
+            </Link>
+            <Link href="/messages">
+              <ListItem button>
+                <ListItemIcon className="mr-2">
+                  <ChatIcon />
+                </ListItemIcon>
+                <ListItemText primary={'Mensagens'} />
               </ListItem>
             </Link>
             <Link href="/profile">
@@ -84,7 +93,7 @@ export default function MobileMenu() {
               </ListItem>
             </Logout>
           </List>
-        </div>
+        </nav>
       </Drawer>
     </div>
   )

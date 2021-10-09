@@ -17,12 +17,12 @@ export default function ProjectHeader({
 }) {
   const { myProfile } = useContext(MyProfileContext)
 
-  if (!project || !myProfile) {
+  if (!project || !myProfile.id) {
     return <CircularProgress />
   }
 
   return (
-    <div className="sticky z-10 top-24 w-full mb-4 z-10 sm:top-32">
+    <nav className="sticky z-10 top-24 w-full mb-4 z-10 sm:top-32">
       <div className="w-full bg-light h-14 rounded-md shadow-lg py-2 flex items-center">
         <div className="w-full flex">
           <Tooltip title="Descrição" placement="top" arrow>
@@ -119,6 +119,6 @@ export default function ProjectHeader({
           )}
         </div>
       </div>
-    </div>
+    </nav>
   )
 }

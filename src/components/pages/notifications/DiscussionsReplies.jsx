@@ -18,7 +18,7 @@ export default function DiscussionsReplies({ replies }) {
                 <Link href={`/user/${reply.profile.user.username}`}>
                   <div className="flex">
                     <CommentIcon className="color-paragraph self-center" />
-                    <div className="profile-img-sm cursor-pointer">
+                    <div className="profile-img-xs cursor-pointer">
                       <Image src={reply.profile.photo} layout="fill" />
                     </div>
                     <strong className="color-secondary cursor-pointer mx-1 hover:underline">

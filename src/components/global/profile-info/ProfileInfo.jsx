@@ -11,7 +11,7 @@ import Image from 'next/image'
 export default function ProfileInfo({ profile }) {
   const { myProfile } = useContext(MyProfileContext)
 
-  if (!myProfile) {
+  if (!myProfile.id) {
     return <CircularProgress />
   }
 

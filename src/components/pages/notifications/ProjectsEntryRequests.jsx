@@ -15,7 +15,7 @@ export default function ProjectsEntryRequests({
 
   const handleSubmit = async (reply, request) => {
     fetch(
-      `${process.env.NEXT_PUBLIC_API_HOST}/api/projects/reply-project-entry-request`,
+      `${process.env.NEXT_PUBLIC_API_URL}/api/projects/reply-project-entry-request`,
       {
         method: 'DELETE',
         headers: {

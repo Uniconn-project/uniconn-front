@@ -5,6 +5,7 @@ import '../styles/utils/background.scss'
 import '../styles/utils/border.scss'
 import '../styles/utils/breakpoints.scss'
 import '../styles/utils/color.scss'
+import '../styles/utils/flex.scss'
 import '../styles/utils/hover.scss'
 import '../styles/utils/transition.scss'
 import '../styles/utils/image.scss'
@@ -18,6 +19,7 @@ import '../styles/material-ui/loader.scss'
 import '../styles/material-ui/mobile_menu.scss'
 import '../styles/material-ui/popover.scss'
 import '../styles/material-ui/switch.scss'
+import '../styles/pages/messages.scss'
 
 import React, { useEffect, useState } from 'react'
 import Head from 'next/head'
@@ -28,6 +30,7 @@ import AuthProvider from '../contexts/Auth'
 import MyProfileProvider from '../contexts/MyProfile'
 import NotificationsProvider from '../contexts/Notifications'
 import ThemeProvider from '../contexts/Theme'
+import WebSocketsProvider from '../contexts/WebSockets'
 import Header from '../components/header/Header'
 
 export default function MyApp({ Component, pageProps }) {
@@ -74,18 +77,20 @@ export default function MyApp({ Component, pageProps }) {
       </Head>
       <AuthProvider>
         <MyProfileProvider>
-          <NotificationsProvider>
-            <ThemeProvider>
-              {loading ? (
-                <div className="w-full h-screen flex justify-center items-center">
-                  <Header />
-                  <CircularProgress />
-                </div>
-              ) : (
-                <Component {...pageProps} />
-              )}
-            </ThemeProvider>
-          </NotificationsProvider>
+          <WebSocketsProvider>
+            <NotificationsProvider>
+              <ThemeProvider>
+                {loading ? (
+                  <div className="w-full h-screen flex justify-center items-center">
+                    <Header />
+                    <CircularProgress />
+                  </div>
+                ) : (
+                  <Component {...pageProps} />
+                )}
+              </ThemeProvider>
+            </NotificationsProvider>
+          </WebSocketsProvider>
         </MyProfileProvider>
       </AuthProvider>
     </>

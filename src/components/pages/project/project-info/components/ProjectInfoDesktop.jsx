@@ -30,7 +30,7 @@ export default function ProjectInfoDesktop({
   })
 
   useEffect(() => {
-    if (!myProfile) return
+    if (!myProfile.id) return
     setStarred(
       project.stars.map(star => star.profile.id).includes(myProfile.id)
     )
@@ -41,7 +41,7 @@ export default function ProjectInfoDesktop({
     setStarred(true)
 
     fetch(
-      `${process.env.NEXT_PUBLIC_API_HOST}/api/projects/star-project/${project.id}`,
+      `${process.env.NEXT_PUBLIC_API_URL}/api/projects/star-project/${project.id}`,
       {
         method: 'POST',
         headers: {
@@ -70,7 +70,7 @@ export default function ProjectInfoDesktop({
     setStarred(false)
 
     fetch(
-      `${process.env.NEXT_PUBLIC_API_HOST}/api/projects/unstar-project/${project.id}`,
+      `${process.env.NEXT_PUBLIC_API_URL}/api/projects/unstar-project/${project.id}`,
       {
         method: 'DELETE',
         headers: {
@@ -94,14 +94,14 @@ export default function ProjectInfoDesktop({
       })
   }
 
-  if (!myProfile) {
+  if (!myProfile.id) {
     return <CircularProgress />
   }
 
   return (
     <div
       className="relative bg-transparent h-4/5 rounded-md shadow-lg w-full md:max-w-2xl lg:w-60"
-      style={{ maxHeight: '50rem' }}
+      style={{ height: '70vh', maxHeight: '50rem' }}
     >
       <div className="b-bottom-light">
         {window.history.length > 1 && (

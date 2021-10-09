@@ -17,7 +17,11 @@ import { mutate } from 'swr'
 import { MyProfileContext } from '../../contexts/MyProfile'
 
 export const getServerSideProps = async context => {
-  const project = await fetcher(`projects/get-project/${context.params.id}`)
+  const project = await fetcher(
+    `projects/get-project/${context.params.id}`,
+    {},
+    true
+  )
 
   if (!project || !project.id) {
     return {
@@ -56,7 +60,7 @@ export default function Project(props) {
       })
   }, []) // eslint-disable-line
 
-  if (!project || !myProfile) {
+  if (!project || !myProfile.id) {
     return (
       <Page loginRequired header>
         <div className="w-full flex justify-center mt-10">
@@ -181,8 +185,8 @@ export default function Project(props) {
       loginRequired
       header
     >
-      <div className="w-full h-full flex flex-col justify-center lg:flex-row">
-        <div className="mb-4 lg:mb-0 lg:w-1/3 lg:flex lg:justify-end lg:mr-10 lg:box-border">
+      <div className="w-full flex flex-col justify-center lg:flex-row">
+        <section className="mb-4 lg:mb-0 lg:w-1/3 lg:flex lg:justify-end lg:mr-10 lg:box-border">
           <div className="w-full lg:w-60">
             <div className="h-full flex flex-col items-center px-2 sm:px-12 lg:px-0 lg:fixed lg:top-32">
               <ProjectInfo
@@ -190,17 +194,10 @@ export default function Project(props) {
                 isProjectAdmin={isProjectAdmin}
                 refetchProject={refetchProject}
               />
-              <Snackbar
-                open={successMsg.isOpen}
-                autoHideDuration={6000}
-                onClose={() => setSuccessMsg({ isOpen: false, value: '' })}
-              >
-                <Alert severity="success">{successMsg.value}</Alert>
-              </Snackbar>
             </div>
           </div>
-        </div>
-        <div className="w-full flex justify-center p-2 pt-0 lg:p-0 lg:w-2/3 lg:justify-start lg:box-border">
+        </section>
+        <section className="w-full flex justify-center p-2 pt-0 lg:p-0 lg:w-2/3 lg:justify-start lg:box-border">
           <div className="w-full" style={{ maxWidth: 600 }}>
             <ProjectHeader
               project={project}
@@ -244,7 +241,14 @@ export default function Project(props) {
               )}
             </div>
           </div>
-        </div>
+          <Snackbar
+            open={successMsg.isOpen}
+            autoHideDuration={6000}
+            onClose={() => setSuccessMsg({ isOpen: false, value: '' })}
+          >
+            <Alert severity="success">{successMsg.value}</Alert>
+          </Snackbar>
+        </section>
       </div>
     </Page>
   )

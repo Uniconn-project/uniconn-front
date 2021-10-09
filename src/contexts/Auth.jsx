@@ -1,7 +1,7 @@
 import React, { useState, useEffect, createContext } from 'react'
 import Router from 'next/router'
 
-const API_BASE = process.env.NEXT_PUBLIC_API_HOST
+const API_BASE = process.env.NEXT_PUBLIC_API_URL
 const isDev = process.env.NODE_ENV === 'development'
 
 const fetchToken = (username, password) => {
@@ -41,7 +41,9 @@ export default function AuthProvider({ children }) {
     }
     const expiry = new Date(accessTokenExpiry)
     isDev && console.log('Checking token expiry:', expiry)
-    return expiry.getTime() > Date.now()
+
+    // subtracting 5000ms from the expiry to prevent the token from being valid in the client side but not in the server - due to the lattency
+    return expiry.getTime() - 5000 > Date.now()
   }
 
   const initAuth = async () => {
@@ -104,8 +106,8 @@ export default function AuthProvider({ children }) {
             clearInterval(interval)
             resolve(accessToken)
           }
-        })
-      }, 100)
+        }, 100)
+      })
     } else {
       isDev && console.log('Getting access token.. getting a new token')
       const token = await refreshToken()

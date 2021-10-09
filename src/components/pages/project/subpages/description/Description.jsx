@@ -32,7 +32,7 @@ export default function Description({
     setIsEditing(false)
 
     fetch(
-      `${process.env.NEXT_PUBLIC_API_HOST}/api/projects/edit-project-description/${project.id}`,
+      `${process.env.NEXT_PUBLIC_API_URL}/api/projects/edit-project-description/${project.id}`,
       {
         method: 'PATCH',
         headers: {
@@ -57,7 +57,7 @@ export default function Description({
       })
   }
 
-  if (!project || !myProfile) {
+  if (!project || !myProfile.id) {
     return (
       <div className="w-full flex justify-center mt-10">
         <CircularProgress />

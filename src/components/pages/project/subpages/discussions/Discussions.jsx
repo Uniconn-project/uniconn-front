@@ -42,7 +42,7 @@ export default function Discussions({
     e.stopPropagation()
     if (window.confirm('Deletar discussão?')) {
       fetch(
-        `${process.env.NEXT_PUBLIC_API_HOST}/api/projects/delete-project-discussion`,
+        `${process.env.NEXT_PUBLIC_API_URL}/api/projects/delete-project-discussion`,
         {
           method: 'DELETE',
           headers: {
@@ -111,7 +111,7 @@ export default function Discussions({
                       className="bg-light"
                       arrow
                     >
-                      <div className="profile-img-sm mx-0.5">
+                      <div className="profile-img-xs mx-0.5">
                         <Image
                           src={discussion.profile.photo}
                           layout="fill"

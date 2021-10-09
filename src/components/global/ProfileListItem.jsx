@@ -2,11 +2,18 @@ import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 
-export default function ProfileListItem({ profile, className = '' }) {
+export default function ProfileListItem({
+  profile,
+  className = null,
+  onClick = () => {}
+}) {
   return (
     <Link href={`/user/${profile.user.username}`}>
       <div
-        className={`w-full flex flex-col items-start bg-transparent rounded-md shadow-lg p-2 my-3 cursor-pointer bg-hover ${className}`}
+        className={`w-full flex flex-col items-start p-2 cursor-pointer ${
+          className || 'bg-transparent bg-hover rounded-md shadow-lg my-3'
+        }`}
+        onClick={onClick}
       >
         <div className="flex">
           <div className="profile-img-md mr-2">

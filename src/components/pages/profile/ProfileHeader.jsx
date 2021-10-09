@@ -5,12 +5,12 @@ import { MyProfileContext } from '../../../contexts/MyProfile'
 export default function ProfileHeader({ profile, page, setPage }) {
   const { myProfile } = useContext(MyProfileContext)
 
-  if (!profile || !myProfile) {
+  if (!profile || !myProfile.id) {
     return <CircularProgress />
   }
 
   return (
-    <div className="sticky z-10 top-24 w-full mb-4 z-10 sm:top-32">
+    <nav className="sticky z-10 top-24 w-full mb-4 z-10 sm:top-32">
       <div className="w-full bg-light h-14 rounded-md shadow-lg py-2 flex items-center">
         <div className="w-full flex">
           <div
@@ -33,6 +33,6 @@ export default function ProfileHeader({ profile, page, setPage }) {
           </div>
         </div>
       </div>
-    </div>
+    </nav>
   )
 }

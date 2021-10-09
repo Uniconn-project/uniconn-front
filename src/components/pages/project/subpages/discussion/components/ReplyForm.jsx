@@ -5,10 +5,12 @@ import FilledInput from '@material-ui/core/FilledInput'
 import { mutate } from 'swr'
 import { MyProfileContext } from '../../../../../../contexts/MyProfile'
 import { AuthContext } from '../../../../../../contexts/Auth'
+import { WebSocketsContext } from '../../../../../../contexts/WebSockets'
 
 export default function ReplyFrom({ discussion, setErrorMsg }) {
   const { myProfile } = useContext(MyProfileContext)
   const { getToken } = useContext(AuthContext)
+  const { socket } = useContext(WebSocketsContext)
 
   const [postData, setPostData] = useState({
     content: ''
@@ -28,7 +30,7 @@ export default function ReplyFrom({ discussion, setErrorMsg }) {
     }
 
     fetch(
-      `${process.env.NEXT_PUBLIC_API_HOST}/api/projects/reply-discussion/${discussion.id}`,
+      `${process.env.NEXT_PUBLIC_API_URL}/api/projects/reply-discussion/${discussion.id}`,
       {
         method: 'POST',
         headers: {
@@ -45,6 +47,7 @@ export default function ReplyFrom({ discussion, setErrorMsg }) {
           setPostData({
             content: ''
           })
+          socket.emit('notification', [discussion.profile.id])
         } else {
           setErrorMsg({
             isOpen: true,
@@ -60,7 +63,7 @@ export default function ReplyFrom({ discussion, setErrorMsg }) {
         <div className="flex flex-col sm:flex-row">
           <div className="mr-2">
             <Link href="/profile">
-              <div className="profile-img-sm mx-0.5">
+              <div className="profile-img-xs mx-0.5">
                 <Image
                   src={myProfile.photo}
                   layout="fill"

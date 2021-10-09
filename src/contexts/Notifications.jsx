@@ -1,34 +1,34 @@
-import React, {
-  createContext,
-  useState,
-  useEffect,
-  useContext,
-  useCallback
-} from 'react'
+import React, { createContext, useState, useEffect, useContext } from 'react'
 import { AuthContext } from './Auth'
+import { WebSocketsContext } from './WebSockets'
 import { fetcher } from '../hooks/useFetch'
 
 export const NotificationsContext = createContext()
 
 export default function NotificationsProvider({ children }) {
   const { isAuthenticated, getToken } = useContext(AuthContext)
+  const { socketEvent } = useContext(WebSocketsContext)
   const [notificationsNumber, setNotificationsNumber] = useState(null)
-
-  const fetchNotificationsNumber = useCallback(async () => {
-    const number = await fetcher('profiles/get-notifications-number', {
-      Authorization: 'JWT ' + (await getToken())
-    })
-    setNotificationsNumber(number)
-  }, [getToken])
 
   useEffect(() => {
     if (!isAuthenticated) return
 
     fetchNotificationsNumber()
-    const interval = setInterval(fetchNotificationsNumber, 10000)
+  }, [isAuthenticated]) // eslint-disable-line
 
-    return () => clearInterval(interval)
-  }, [isAuthenticated, fetchNotificationsNumber])
+  useEffect(() => {
+    console.log(socketEvent)
+    if (socketEvent.type === 'notification') {
+      fetchNotificationsNumber()
+    }
+  }, [socketEvent]) // eslint-disable-line
+
+  const fetchNotificationsNumber = async () => {
+    const number = await fetcher('profiles/get-notifications-number', {
+      Authorization: 'JWT ' + (await getToken())
+    })
+    setNotificationsNumber(number)
+  }
 
   return (
     <NotificationsContext.Provider

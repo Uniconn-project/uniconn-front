@@ -21,7 +21,7 @@ export default function ProjectListItem({
   const [starCount, setStarCount] = useState(project.stars.length)
 
   useEffect(() => {
-    if (!myProfile) return
+    if (!myProfile.id) return
 
     setStarred(
       project.stars.map(star => star.profile.id).includes(myProfile.id)
@@ -35,7 +35,7 @@ export default function ProjectListItem({
     setStarred(true)
 
     fetch(
-      `${process.env.NEXT_PUBLIC_API_HOST}/api/projects/star-project/${project.id}`,
+      `${process.env.NEXT_PUBLIC_API_URL}/api/projects/star-project/${project.id}`,
       {
         method: 'POST',
         headers: {
@@ -63,7 +63,7 @@ export default function ProjectListItem({
     setStarred(false)
 
     fetch(
-      `${process.env.NEXT_PUBLIC_API_HOST}/api/projects/unstar-project/${project.id}`,
+      `${process.env.NEXT_PUBLIC_API_URL}/api/projects/unstar-project/${project.id}`,
       {
         method: 'DELETE',
         headers: {
@@ -87,7 +87,7 @@ export default function ProjectListItem({
 
   return (
     <Link href={`/project/${project.id}?page=description`}>
-      <div className="w-full mb-4 rounded-md shadow-lg cursor-pointer bg-transparent bg-hover">
+      <article className="w-full mb-4 rounded-md shadow-lg cursor-pointer bg-transparent bg-hover">
         <div className="flex justify-between px-4 pt-4">
           <div style={{ maxWidth: '60%' }}>
             <h4 className="break-words">{project.name}</h4>
@@ -96,7 +96,7 @@ export default function ProjectListItem({
             {project.members_profiles.slice(0, 3).map(profile => (
               <Link href={`/user/${profile.user.username}`} key={profile.id}>
                 <Tooltip title={profile.user.username} arrow>
-                  <div className="profile-img-sm mx-0.5 cursor-pointer">
+                  <div className="profile-img-xs mx-0.5 cursor-pointer">
                     <Image src={profile.photo} layout="fill" />
                   </div>
                 </Tooltip>
@@ -160,7 +160,7 @@ export default function ProjectListItem({
             </div>
           </Tooltip>
         </div>
-      </div>
+      </article>
     </Link>
   )
 }

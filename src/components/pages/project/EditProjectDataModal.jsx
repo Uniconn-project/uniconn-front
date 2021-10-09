@@ -54,7 +54,7 @@ export default function EditProjectDataModal({ project, refetchProject }) {
 
   const handleSubmit = async () => {
     fetch(
-      `${process.env.NEXT_PUBLIC_API_HOST}/api/projects/edit-project/${project.id}`,
+      `${process.env.NEXT_PUBLIC_API_URL}/api/projects/edit-project/${project.id}`,
       {
         method: 'PUT',
         headers: {

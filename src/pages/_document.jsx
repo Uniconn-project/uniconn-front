@@ -8,12 +8,10 @@ export default class MyDocument extends Document {
       <Html lang="pt-br">
         <Head>
           <meta charSet="utf-8" />
-          <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
           <meta
             name="description"
-            content="Conectando universitários que buscam algo a mais"
+            content="Conectando jovens para a criação e desenvolvimento de projetos"
           />
-          <meta name="keywords" content="Keywords" />
           <link rel="manifest" href="manifest.json" />
           <link href="favicon.ico" rel="icon" type="png" sizes="32x32" />
           <link rel="apple-touch-icon" href="app-icon.jpg"></link>

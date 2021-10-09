@@ -14,7 +14,7 @@ export default function Logout({ children, className }) {
       )
     ) {
       logout()
-      setMyProfile(null)
+      setMyProfile({ id: null })
       Router.push('/')
     }
   }

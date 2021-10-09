@@ -1,0 +1,30 @@
+.sent,
+.received {
+  min-width: 8rem;
+  max-width: 75%;
+  > #message-content {
+    border-radius: 0.5rem;
+  }
+}
+
+.sent {
+  margin-left: auto;
+  > #message-content {
+    background-color: var(--primary-color-hover);
+    border-bottom-right-radius: 0;
+  }
+  #message-details {
+    margin-left: auto;
+  }
+}
+
+.received {
+  margin-right: auto;
+  > #message-content {
+    background-color: var(--background-light);
+    border-bottom-left-radius: 0;
+  }
+  #message-details {
+    margin-right: auto;
+  }
+}

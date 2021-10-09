@@ -8,6 +8,7 @@ import ProjectsInvitations from '../components/pages/notifications/ProjectsInvit
 import ProjectsEntryRequests from '../components/pages/notifications/ProjectsEntryRequests'
 import DiscussionsStars from '../components/pages/notifications/DiscussionsStars'
 import { AuthContext } from '../contexts/Auth'
+import { WebSocketsContext } from '../contexts/WebSockets'
 import { MyProfileContext } from '../contexts/MyProfile'
 import { fetcher } from '../hooks/useFetch'
 import { NotificationsContext } from '../contexts/Notifications'
@@ -16,6 +17,7 @@ import DiscussionsReplies from '../components/pages/notifications/DiscussionsRep
 export default function Notifications() {
   const { myProfile } = useContext(MyProfileContext)
   const { getToken, isAuthenticated } = useContext(AuthContext)
+  const { socketEvent } = useContext(WebSocketsContext)
   const { fetchNotificationsNumber } = useContext(NotificationsContext)
 
   const [projectsInvitations, setProjectsInvitations] = useState(null)
@@ -30,11 +32,13 @@ export default function Notifications() {
 
     fetchNotifications()
     visualizeNotifications()
-
-    const interval = setInterval(fetchNotifications, 10000)
-
-    return () => clearInterval(interval)
   }, [isAuthenticated]) // eslint-disable-line
+
+  useEffect(() => {
+    if (socketEvent.type === 'notification') {
+      fetchNotifications()
+    }
+  }, [socketEvent]) // eslint-disable-line
 
   const fetchNotifications = async () => {
     const notifications = await fetcher('profiles/get-notifications', {
@@ -49,7 +53,7 @@ export default function Notifications() {
 
   const visualizeNotifications = async () => {
     fetch(
-      `${process.env.NEXT_PUBLIC_API_HOST}/api/profiles/visualize-notifications`,
+      `${process.env.NEXT_PUBLIC_API_URL}/api/profiles/visualize-notifications`,
       {
         method: 'PATCH',
         headers: {
@@ -79,14 +83,14 @@ export default function Notifications() {
       header
     >
       <div className="justify-center w-full h-full flex">
-        <div className="hidden lg:w-1/3 lg:flex lg:justify-end lg:mr-10 lg:box-border">
+        <section className="hidden lg:w-1/3 lg:flex lg:justify-end lg:mr-10 lg:box-border">
           <div className="w-60">
             <div className="h-full fixed top-32">
               <ProfileInfo profile={myProfile} />
             </div>
           </div>
-        </div>
-        <div className="w-full flex justify-center p-2 pt-0 lg:p-0 lg:w-2/3 lg:justify-start lg:box-border">
+        </section>
+        <section className="w-full flex justify-center p-2 pt-0 lg:p-0 lg:w-2/3 lg:justify-start lg:box-border">
           <div className="w-full" style={{ maxWidth: 600 }}>
             <div className="sticky top-24 w-full mb-4 sm:top-32">
               <div className="w-full flex items-center bg-light h-14 rounded-md shadow-lg p-2 mb-4">
@@ -121,33 +125,33 @@ export default function Notifications() {
               <DiscussionsStars stars={discussionsStars} />
             )}
             {projectsInvitations &&
-              projectsInvitations.length == 0 &&
+              projectsInvitations.length === 0 &&
               projectsEntryRequests &&
-              projectsEntryRequests.length == 0 &&
+              projectsEntryRequests.length === 0 &&
               discussionsReplies &&
-              discussionsReplies.length == 0 &&
+              discussionsReplies.length === 0 &&
               discussionsStars &&
-              discussionsStars.length == 0 && (
+              discussionsStars.length === 0 && (
                 <div className="w-full p-5 pt-2 text-center sm:pt-5">
                   <span>Você não tem notificações.</span>
                 </div>
               )}
           </div>
-        </div>
-        <Snackbar
-          open={successMsg.isOpen}
-          autoHideDuration={6000}
-          onClose={() => setSuccessMsg({ isOpen: false, message: '' })}
-        >
-          <Alert severity="success">{successMsg.message}</Alert>
-        </Snackbar>
-        <Snackbar
-          open={errorMsg.isOpen}
-          autoHideDuration={6000}
-          onClose={() => setErrorMsg({ isOpen: false, message: '' })}
-        >
-          <Alert severity="error">{errorMsg.message}</Alert>
-        </Snackbar>
+          <Snackbar
+            open={successMsg.isOpen}
+            autoHideDuration={6000}
+            onClose={() => setSuccessMsg({ isOpen: false, message: '' })}
+          >
+            <Alert severity="success">{successMsg.message}</Alert>
+          </Snackbar>
+          <Snackbar
+            open={errorMsg.isOpen}
+            autoHideDuration={6000}
+            onClose={() => setErrorMsg({ isOpen: false, message: '' })}
+          >
+            <Alert severity="error">{errorMsg.message}</Alert>
+          </Snackbar>
+        </section>
       </div>
     </Page>
   )

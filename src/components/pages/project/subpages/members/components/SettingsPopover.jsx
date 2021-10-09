@@ -43,7 +43,7 @@ export default function SettingsPopover({
 
     if (window.confirm(`Remover ${profile.first_name} do projeto?`)) {
       fetch(
-        `${process.env.NEXT_PUBLIC_API_HOST}/api/projects/remove-user-from-project/${project.id}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/api/projects/remove-user-from-project/${project.id}`,
         {
           method: 'DELETE',
           headers: {
@@ -75,7 +75,7 @@ export default function SettingsPopover({
 
     if (window.confirm('Tem certeza que deseja sair do projeto?')) {
       fetch(
-        `${process.env.NEXT_PUBLIC_API_HOST}/api/projects/leave-project/${project.id}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/api/projects/leave-project/${project.id}`,
         {
           method: 'PATCH',
           headers: {
@@ -107,7 +107,7 @@ export default function SettingsPopover({
       )
     ) {
       fetch(
-        `${process.env.NEXT_PUBLIC_API_HOST}/api/projects/promote-project-member-to-admin/${project.id}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/api/projects/promote-project-member-to-admin/${project.id}`,
         {
           method: 'PATCH',
           headers: {

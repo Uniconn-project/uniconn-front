@@ -21,7 +21,7 @@ export default function Members({
     message: ''
   })
 
-  if (!myProfile || !project) {
+  if (!myProfile.id || !project) {
     return (
       <div className="w-full flex justify-center">
         <CircularProgress size={30} />

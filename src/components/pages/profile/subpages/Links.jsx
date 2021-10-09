@@ -30,7 +30,7 @@ export default function Links({ profile, refetchProfile }) {
     e.preventDefault()
     if (window.confirm('Remover link?')) {
       fetch(
-        `${process.env.NEXT_PUBLIC_API_HOST}/api/profiles/delete-link/${linkId}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/api/profiles/delete-link/${linkId}`,
         {
           method: 'DELETE',
           headers: {

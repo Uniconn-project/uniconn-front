@@ -9,7 +9,7 @@ export default function ToolList({ tools, refetchProject, setErrorMsg }) {
   const handleDelete = async toolId => {
     if (window.confirm('Remover ferramenta?')) {
       fetch(
-        `${process.env.NEXT_PUBLIC_API_HOST}/api/projects/delete-tool/${toolId}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/api/projects/delete-tool/${toolId}`,
         {
           method: 'DELETE',
           headers: {

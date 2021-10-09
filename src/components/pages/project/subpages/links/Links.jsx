@@ -29,7 +29,7 @@ export default function Links({ project, isProjectMember, refetchProject }) {
     e.preventDefault()
     if (window.confirm('Remover link?')) {
       fetch(
-        `${process.env.NEXT_PUBLIC_API_HOST}/api/projects/delete-link/${linkId}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/api/projects/delete-link/${linkId}`,
         {
           method: 'DELETE',
           headers: {
