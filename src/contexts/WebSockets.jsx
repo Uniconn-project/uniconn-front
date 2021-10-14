@@ -23,7 +23,7 @@ export default function WebSocketsProvider({ children }) {
   useEffect(() => {
     if (!myProfile.id) return
 
-    socketRef.current = io('ws://localhost:3030')
+    socketRef.current = io(process.env.NEXT_PUBLIC_WS_URL)
 
     socketRef.current.on('connect', () => {
       socketRef.current.emit('initialize', myProfile.id)
