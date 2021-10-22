@@ -271,7 +271,6 @@ export default function Messages() {
 
   return (
     <Page title="Mensagens | Uniconn" page="messages" loginRequired header>
-      {console.log('current chats: ', chats)}
       <div className="flex justify-center w-full h-full px-2 sm:px-4 md:px-6 lg:p-0">
         <section
           className={`${

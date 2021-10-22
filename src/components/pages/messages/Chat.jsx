@@ -144,7 +144,7 @@ export default function Chat({
 
               return (
                 <React.Fragment key={message.id}>
-                  {dayChanged && (
+                  {dayChanged && message.created_at !== undefined && (
                     <div
                       className="flex justify-center sticky top-2"
                       style={{ zIndex: index }}
